@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>대출이자 계산기 - 원리금균등·원금균등·만기일시 | modutools</title>
+<meta name="description" content="대출 원금, 금리, 기간을 입력하면 원리금균등·원금균등·만기일시 상환 방식별 월 납입금과 총 이자를 즉시 계산합니다.">
+<meta property="og:title" content="대출이자 계산기 - 상환 방식별 이자 비교 | modutools">
+<meta property="og:description" content="대출 원금·금리·기간 입력만으로 상환 방식별 월 납입금과 총 이자를 즉시 비교.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/calc/loan.html">
+<link rel="canonical" href="https://modutools.com/calc/loan.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.toggle-btn:hover:not(.active){border-color:var(--g300)}
+
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+
+/* Result */
+.result-area{display:none}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center}
+.stat-box.highlight{background:var(--primary-light);border-color:var(--primary)}
+.stat-value{font-size:20px;font-weight:800;color:var(--primary);margin-bottom:2px}
+.stat-label{font-size:12px;color:var(--g500);font-weight:600}
+
+/* Compare */
+.compare-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.compare-card{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px}
+.compare-card.active{background:var(--primary-light);border-color:var(--primary)}
+.compare-title{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.compare-row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.compare-row .label{color:var(--g500)}
+.compare-row .value{font-weight:700;color:var(--g900)}
+
+/* Table */
+.table-wrap{overflow-x:auto;margin-top:12px;border:1px solid var(--g200);border-radius:10px}
+.schedule-table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px}
+.schedule-table th{background:var(--g100);padding:10px 8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
+.schedule-table td{padding:8px;text-align:right;border-bottom:1px solid var(--g100);color:var(--g700)}
+.schedule-table td:first-child{text-align:center;color:var(--g500)}
+.schedule-table tr:last-child td{border-bottom:none}
+.table-toggle{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--primary);background:none;border:1px solid var(--g200);border-radius:10px;width:100%;font-family:inherit;transition:.2s;margin-top:12px}
+.table-toggle:hover{background:var(--primary-light)}
+
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .stat-value{font-size:17px}
+  .toggle-row{flex-wrap:wrap}
+  .toggle-btn{min-width:calc(50% - 4px)}
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"대출이자 계산기",
+  "url":"https://modutools.com/calc/loan.html",
+  "description":"원리금균등·원금균등·만기일시 상환 방식별 월 납입금과 총 이자를 계산하는 무료 온라인 도구",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}
+}
+</script>
+</head>
+<body>
+
+<header class="mt-header">
+<div class="mt-header-inner">
+<a href="/" class="mt-logo">modu<span>tools</span></a>
+<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+</div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<main class="page">
+<h1 class="page-title">대출이자 계산기</h1>
+<p class="page-sub">대출 조건을 입력하면 상환 방식별 월 납입금과 총 이자를 비교합니다</p>
+
+<!-- 입력 -->
+<div class="card">
+<div class="card-title">🏦 대출 조건 입력</div>
+
+<div class="input-group">
+<label class="input-label">대출 원금</label>
+<div class="input-row">
+<input type="text" class="input-field" id="principal" placeholder="0" inputmode="numeric">
+<span class="input-unit">만원</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">연 이자율</label>
+<div class="input-row">
+<input type="text" class="input-field" id="rate" placeholder="0.0" inputmode="decimal">
+<span class="input-unit">%</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">대출 기간</label>
+<div class="input-row">
+<input type="text" class="input-field" id="period" placeholder="0" inputmode="numeric">
+<span class="input-unit" id="periodUnit">년</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">기간 단위</label>
+<div class="toggle-row">
+<div class="toggle-btn active" data-unit="year" onclick="setUnit(this)">년</div>
+<div class="toggle-btn" data-unit="month" onclick="setUnit(this)">개월</div>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">상환 방식</label>
+<div class="toggle-row">
+<div class="toggle-btn active" data-type="equal_payment" onclick="setType(this)">원리금균등</div>
+<div class="toggle-btn" data-type="equal_principal" onclick="setType(this)">원금균등</div>
+<div class="toggle-btn" data-type="bullet" onclick="setType(this)">만기일시</div>
+</div>
+</div>
+
+<button class="calc-btn" onclick="calculate()">계산하기</button>
+</div>
+
+<!-- 결과 -->
+<div class="result-area" id="resultArea">
+
+<!-- 선택 방식 결과 -->
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="stats-grid">
+<div class="stat-box highlight">
+<div class="stat-value" id="monthlyPayment">-</div>
+<div class="stat-label" id="monthlyLabel">월 납입금</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="totalInterest">-</div>
+<div class="stat-label">총 이자</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="totalPayment">-</div>
+<div class="stat-label">총 상환금</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="principalAmt">-</div>
+<div class="stat-label">대출 원금</div>
+</div>
+</div>
+</div>
+
+<!-- 방식별 비교 -->
+<div class="card">
+<div class="card-title">📋 상환 방식별 비교</div>
+<div class="compare-grid" id="compareGrid"></div>
+</div>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<!-- 상환 스케줄 -->
+<div class="card">
+<div class="card-title">📅 월별 상환 스케줄</div>
+<div class="table-wrap" id="tableWrap" style="display:none">
+<table class="schedule-table">
+<thead>
+<tr><th>회차</th><th>납입금</th><th>원금</th><th>이자</th><th>잔금</th></tr>
+</thead>
+<tbody id="scheduleBody"></tbody>
+</table>
+</div>
+<button class="table-toggle" id="tableToggle" onclick="toggleTable()">📋 상환 스케줄 펼치기</button>
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="card">
+<div class="card-title">❓ 자주 묻는 질문</div>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">원리금균등 vs 원금균등, 어떤 게 유리한가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0"><strong>원리금균등</strong>은 매월 같은 금액을 내므로 자금 관리가 쉽습니다. <strong>원금균등</strong>은 초반 납입금이 크지만 총 이자가 적어 장기적으로 유리합니다. 여유 자금이 있다면 원금균등, 안정적 납입을 원하면 원리금균등을 추천합니다.</p>
+</details>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">만기일시상환이란?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">대출 기간 동안 매월 이자만 납부하고, 만기일에 원금 전액을 한꺼번에 상환하는 방식입니다. 월 부담이 가장 적지만 총 이자는 가장 많습니다. 전세자금 대출에서 주로 사용됩니다.</p>
+</details>
+<details>
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">실제 대출과 차이가 있나요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">본 계산기는 단순 이자 계산으로, 실제 대출에서는 중도상환수수료, 금리 변동, 거치기간, 보증료 등 추가 비용이 발생할 수 있습니다. 정확한 금액은 해당 금융기관에 확인하시기 바랍니다.</p>
+</details>
+</div>
+</main>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer">
+<p>
+<a href="/">← modutools 전체 도구 보기</a><br>
+&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+</p>
+</footer>
+
+<script>
+let currentUnit='year';
+let currentType='equal_payment';
+
+function setUnit(el){
+  document.querySelectorAll('[data-unit]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentUnit=el.dataset.unit;
+  document.getElementById('periodUnit').textContent=currentUnit==='year'?'년':'개월';
+}
+function setType(el){
+  document.querySelectorAll('[data-type]').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentType=el.dataset.type;
+}
+
+// 숫자 포맷
+function fmt(n){return Math.round(n).toLocaleString();}
+function fmtWon(n){
+  if(n>=10000)return fmt(Math.round(n/10000))+'억 '+fmt(n%10000)+'만원';
+  return fmt(n)+'만원';
+}
+
+// 콤마 입력 지원
+document.getElementById('principal').addEventListener('input',function(){
+  let v=this.value.replace(/[^\d]/g,'');
+  this.value=v?parseInt(v).toLocaleString():'';
+});
+
+function getValues(){
+  const p=parseInt(document.getElementById('principal').value.replace(/,/g,''))||0;
+  const r=parseFloat(document.getElementById('rate').value)||0;
+  let m=parseInt(document.getElementById('period').value)||0;
+  if(currentUnit==='year')m=m*12;
+  return{principal:p*10000,rate:r/100/12,months:m,principalMan:p};
+}
+
+function calcEqualPayment(P,r,n){
+  if(r===0)return{monthly:P/n,totalInterest:0,schedule:Array.from({length:n},(_,i)=>({payment:P/n,principal:P/n,interest:0,balance:P-P/n*(i+1)}))};
+  const monthly=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  let balance=P;const schedule=[];
+  for(let i=0;i<n;i++){
+    const interest=balance*r;
+    const princ=monthly-interest;
+    balance-=princ;
+    schedule.push({payment:monthly,principal:princ,interest,balance:Math.max(0,balance)});
+  }
+  return{monthly,totalInterest:monthly*n-P,schedule};
+}
+
+function calcEqualPrincipal(P,r,n){
+  const monthlyPrinc=P/n;
+  let balance=P;const schedule=[];let totalInterest=0;
+  for(let i=0;i<n;i++){
+    const interest=balance*r;
+    const payment=monthlyPrinc+interest;
+    balance-=monthlyPrinc;
+    totalInterest+=interest;
+    schedule.push({payment,principal:monthlyPrinc,interest,balance:Math.max(0,balance)});
+  }
+  return{monthlyFirst:schedule[0].payment,monthlyLast:schedule[n-1].payment,totalInterest,schedule};
+}
+
+function calcBullet(P,r,n){
+  const monthlyInterest=P*r;
+  const totalInterest=monthlyInterest*n;
+  const schedule=[];
+  for(let i=0;i<n;i++){
+    schedule.push({payment:i===n-1?monthlyInterest+P:monthlyInterest,principal:i===n-1?P:0,interest:monthlyInterest,balance:i===n-1?0:P});
+  }
+  return{monthly:monthlyInterest,totalInterest,schedule};
+}
+
+function calculate(){
+  const{principal:P,rate:r,months:n,principalMan}=getValues();
+  if(!P||P<=0){alert('대출 원금을 입력해주세요.');return;}
+  if(r<0){alert('이자율을 확인해주세요.');return;}
+  if(!n||n<=0){alert('대출 기간을 입력해주세요.');return;}
+
+  const ep=calcEqualPayment(P,r,n);
+  const epr=calcEqualPrincipal(P,r,n);
+  const bt=calcBullet(P,r,n);
+
+  // 선택 방식 결과
+  let selected;
+  if(currentType==='equal_payment')selected=ep;
+  else if(currentType==='equal_principal')selected=epr;
+  else selected=bt;
+
+  if(currentType==='equal_principal'){
+    document.getElementById('monthlyPayment').textContent=fmt(Math.round(epr.monthlyFirst/10000))+'만원';
+    document.getElementById('monthlyLabel').textContent='첫 달 납입금';
+  }else{
+    document.getElementById('monthlyPayment').textContent=fmt(Math.round(selected.monthly/10000))+'만원';
+    document.getElementById('monthlyLabel').textContent='월 납입금';
+  }
+  document.getElementById('totalInterest').textContent=fmt(Math.round(selected.totalInterest/10000))+'만원';
+  document.getElementById('totalPayment').textContent=fmt(Math.round((P+selected.totalInterest)/10000))+'만원';
+  document.getElementById('principalAmt').textContent=fmt(principalMan)+'만원';
+
+  // 비교
+  const types=[
+    {key:'equal_payment',name:'원리금균등',monthly:fmt(Math.round(ep.monthly/10000))+'만원',total:fmt(Math.round(ep.totalInterest/10000))+'만원',desc:'매월 동일 금액 납부'},
+    {key:'equal_principal',name:'원금균등',monthly:fmt(Math.round(epr.monthlyFirst/10000))+'~'+fmt(Math.round(epr.monthlyLast/10000))+'만원',total:fmt(Math.round(epr.totalInterest/10000))+'만원',desc:'매월 원금 균등 + 이자 감소'},
+    {key:'bullet',name:'만기일시',monthly:fmt(Math.round(bt.monthly/10000))+'만원',total:fmt(Math.round(bt.totalInterest/10000))+'만원',desc:'이자만 납부, 만기에 원금 상환'}
+  ];
+
+  const grid=document.getElementById('compareGrid');
+  grid.innerHTML=types.map(t=>`
+    <div class="compare-card${t.key===currentType?' active':''}">
+      <div class="compare-title">${t.key===currentType?'✅ ':''}${t.name}</div>
+      <div class="compare-row"><span class="label">월 납입금</span><span class="value">${t.monthly}</span></div>
+      <div class="compare-row"><span class="label">총 이자</span><span class="value">${t.total}</span></div>
+      <div class="compare-row"><span class="label">특징</span><span class="value">${t.desc}</span></div>
+    </div>
+  `).join('');
+
+  // 스케줄
+  const sch=selected.schedule;
+  const tbody=document.getElementById('scheduleBody');
+  tbody.innerHTML=sch.map((s,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td>${fmt(Math.round(s.payment))}원</td>
+      <td>${fmt(Math.round(s.principal))}원</td>
+      <td>${fmt(Math.round(s.interest))}원</td>
+      <td>${fmt(Math.round(s.balance))}원</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('tableWrap').style.display='none';
+  document.getElementById('tableToggle').textContent='📋 상환 스케줄 펼치기';
+
+  document.getElementById('resultArea').style.display='block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function toggleTable(){
+  const wrap=document.getElementById('tableWrap');
+  const btn=document.getElementById('tableToggle');
+  if(wrap.style.display==='none'){
+    wrap.style.display='block';
+    btn.textContent='📋 상환 스케줄 접기';
+  }else{
+    wrap.style.display='none';
+    btn.textContent='📋 상환 스케줄 펼치기';
+  }
+}
+</script>
+</body>
+</html>
