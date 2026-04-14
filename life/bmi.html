@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BMI 계산기 - 체질량지수 측정 | modutools</title>
+<meta name="description" content="키와 체중을 입력하면 BMI(체질량지수)를 즉시 계산하고, 저체중·정상·과체중·비만 단계를 확인합니다. 정상 체중 범위도 안내합니다.">
+<meta property="og:title" content="BMI 계산기 - 체질량지수 측정 | modutools">
+<meta property="og:description" content="키·체중 입력만으로 BMI 즉시 계산. 비만도 단계와 정상 체중 범위 확인.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/life/bmi.html">
+<link rel="canonical" href="https://modutools.com/life/bmi.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+
+/* Result */
+.result-area{display:none}
+.bmi-result{text-align:center;padding:20px 0}
+.bmi-number{font-size:48px;font-weight:800;margin-bottom:4px}
+.bmi-category{font-size:18px;font-weight:700;margin-bottom:4px}
+.bmi-range{font-size:13px;color:var(--g500)}
+
+/* BMI Bar */
+.bmi-bar-wrap{margin:24px 0 16px;position:relative}
+.bmi-bar{height:12px;border-radius:6px;background:linear-gradient(to right,#3B82F6 0%,#22C55E 27%,#EAB308 54%,#F97316 72%,#EF4444 100%);position:relative}
+.bmi-marker{width:4px;height:20px;background:var(--g900);border-radius:2px;position:absolute;top:-4px;transition:.3s}
+.bmi-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--g400)}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;text-align:center}
+.stat-value{font-size:18px;font-weight:800;color:var(--primary);margin-bottom:2px}
+.stat-label{font-size:11px;color:var(--g500);font-weight:600}
+
+/* Table */
+.bmi-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.bmi-table th{background:var(--g100);padding:10px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
+.bmi-table td{padding:10px;text-align:center;border-bottom:1px solid var(--g100);color:var(--g700)}
+.bmi-table tr.active{background:var(--primary-light);font-weight:700}
+.bmi-table tr.active td{color:var(--primary)}
+
+.color-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+
+@media(max-width:480px){
+  .bmi-number{font-size:40px}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:8px}
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"BMI 계산기",
+  "url":"https://modutools.com/life/bmi.html",
+  "description":"키와 체중을 입력하면 BMI(체질량지수)를 즉시 계산하고 비만도 단계를 확인하는 무료 온라인 도구",
+  "applicationCategory":"HealthApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}
+}
+</script>
+</head>
+<body>
+
+<header class="mt-header">
+<div class="mt-header-inner">
+<a href="/" class="mt-logo">modu<span>tools</span></a>
+<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+</div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<main class="page">
+<h1 class="page-title">BMI 계산기</h1>
+<p class="page-sub">키와 체중을 입력하면 체질량지수(BMI)와 비만도를 확인합니다</p>
+
+<!-- 입력 -->
+<div class="card">
+<div class="card-title">⚖️ 신체 정보 입력</div>
+<div class="input-group">
+<label class="input-label">키</label>
+<div class="input-row">
+<input type="number" class="input-field" id="height" placeholder="170" inputmode="decimal" step="0.1">
+<span class="input-unit">cm</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">체중</label>
+<div class="input-row">
+<input type="number" class="input-field" id="weight" placeholder="65" inputmode="decimal" step="0.1">
+<span class="input-unit">kg</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">BMI 계산하기</button>
+</div>
+
+<!-- 결과 -->
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 BMI 결과</div>
+<div class="bmi-result">
+<div class="bmi-number" id="bmiNumber">-</div>
+<div class="bmi-category" id="bmiCategory">-</div>
+<div class="bmi-range" id="bmiRange"></div>
+</div>
+
+<div class="bmi-bar-wrap">
+<div class="bmi-bar">
+<div class="bmi-marker" id="bmiMarker"></div>
+</div>
+<div class="bmi-labels">
+<span>저체중</span><span>정상</span><span>과체중</span><span>비만</span><span>고도비만</span>
+</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-box">
+<div class="stat-value" id="normalMin">-</div>
+<div class="stat-label">정상 체중 최소</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="normalMax">-</div>
+<div class="stat-label">정상 체중 최대</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="idealWeight">-</div>
+<div class="stat-label">표준 체중 (BMI 22)</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="weightDiff">-</div>
+<div class="stat-label">표준 체중과 차이</div>
+</div>
+</div>
+</div>
+
+<!-- 분류표 -->
+<div class="card">
+<div class="card-title">📋 BMI 분류 기준 (대한비만학회)</div>
+<table class="bmi-table">
+<thead><tr><th>분류</th><th>BMI 범위</th></tr></thead>
+<tbody id="bmiTableBody">
+<tr data-cat="underweight"><td><span class="color-dot" style="background:#3B82F6"></span>저체중</td><td>18.5 미만</td></tr>
+<tr data-cat="normal"><td><span class="color-dot" style="background:#22C55E"></span>정상</td><td>18.5 ~ 22.9</td></tr>
+<tr data-cat="overweight"><td><span class="color-dot" style="background:#EAB308"></span>과체중 (비만 전단계)</td><td>23.0 ~ 24.9</td></tr>
+<tr data-cat="obese1"><td><span class="color-dot" style="background:#F97316"></span>1단계 비만</td><td>25.0 ~ 29.9</td></tr>
+<tr data-cat="obese2"><td><span class="color-dot" style="background:#EF4444"></span>2단계 비만</td><td>30.0 ~ 34.9</td></tr>
+<tr data-cat="obese3"><td><span class="color-dot" style="background:#DC2626"></span>3단계 비만 (고도비만)</td><td>35.0 이상</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="card">
+<div class="card-title">❓ 자주 묻는 질문</div>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">BMI란 무엇인가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">BMI(Body Mass Index, 체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 비만도를 판단하는 가장 보편적인 지표로, 대한비만학회 기준 18.5~22.9가 정상 범위입니다.</p>
+</details>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">BMI의 한계는?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">BMI는 근육량, 체지방률, 체형을 반영하지 못합니다. 운동선수는 근육이 많아 BMI가 높게 나올 수 있고, 노인은 낮게 나올 수 있습니다. 정확한 건강 평가는 체지방률 측정과 전문의 상담을 권장합니다.</p>
+</details>
+<details>
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">한국 기준과 WHO 기준이 다른가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">네, 다릅니다. WHO는 25 이상을 과체중, 30 이상을 비만으로 분류하지만, 대한비만학회는 아시아인 체형을 고려해 23 이상을 과체중, 25 이상을 비만으로 분류합니다. 본 계산기는 한국 기준을 적용합니다.</p>
+</details>
+</div>
+</main>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer">
+<p>
+<a href="/">← modutools 전체 도구 보기</a><br>
+&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+</p>
+</footer>
+
+<script>
+const CATEGORIES=[
+  {key:'underweight',name:'저체중',min:0,max:18.5,color:'#3B82F6'},
+  {key:'normal',name:'정상',min:18.5,max:23,color:'#22C55E'},
+  {key:'overweight',name:'과체중',min:23,max:25,color:'#EAB308'},
+  {key:'obese1',name:'1단계 비만',min:25,max:30,color:'#F97316'},
+  {key:'obese2',name:'2단계 비만',min:30,max:35,color:'#EF4444'},
+  {key:'obese3',name:'3단계 비만 (고도비만)',min:35,max:100,color:'#DC2626'}
+];
+
+function calculate(){
+  const h=parseFloat(document.getElementById('height').value);
+  const w=parseFloat(document.getElementById('weight').value);
+  if(!h||h<=0){alert('키를 입력해주세요.');return;}
+  if(!w||w<=0){alert('체중을 입력해주세요.');return;}
+
+  const hm=h/100;
+  const bmi=w/(hm*hm);
+  const bmiRound=Math.round(bmi*10)/10;
+
+  // Category
+  let cat=CATEGORIES[CATEGORIES.length-1];
+  for(const c of CATEGORIES){
+    if(bmi<c.max){cat=c;break;}
+  }
+
+  // Display
+  document.getElementById('bmiNumber').textContent=bmiRound;
+  document.getElementById('bmiNumber').style.color=cat.color;
+  document.getElementById('bmiCategory').textContent=cat.name;
+  document.getElementById('bmiCategory').style.color=cat.color;
+
+  // Range text
+  if(cat.key==='normal'){
+    document.getElementById('bmiRange').textContent='정상 범위에 해당합니다';
+  }else if(cat.key==='underweight'){
+    const diff=(18.5*hm*hm-w).toFixed(1);
+    document.getElementById('bmiRange').textContent='정상 체중까지 약 '+diff+'kg 증량 필요';
+  }else{
+    const diff=(w-22.9*hm*hm).toFixed(1);
+    document.getElementById('bmiRange').textContent='정상 범위 초과 약 '+diff+'kg';
+  }
+
+  // Bar marker (0~40 range mapped to 0~100%)
+  const pct=Math.min(Math.max((bmi/40)*100,2),98);
+  document.getElementById('bmiMarker').style.left=pct+'%';
+
+  // Normal weight range
+  const normalMin=(18.5*hm*hm).toFixed(1);
+  const normalMax=(22.9*hm*hm).toFixed(1);
+  const ideal=(22*hm*hm).toFixed(1);
+  const diff=(w-ideal).toFixed(1);
+
+  document.getElementById('normalMin').textContent=normalMin+'kg';
+  document.getElementById('normalMax').textContent=normalMax+'kg';
+  document.getElementById('idealWeight').textContent=ideal+'kg';
+  document.getElementById('weightDiff').textContent=(diff>0?'+':'')+diff+'kg';
+
+  // Highlight table row
+  document.querySelectorAll('.bmi-table tbody tr').forEach(tr=>{
+    tr.classList.remove('active');
+    if(tr.dataset.cat===cat.key)tr.classList.add('active');
+  });
+
+  document.getElementById('resultArea').style.display='block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// Enter key
+document.querySelectorAll('.input-field').forEach(el=>{
+  el.addEventListener('keydown',e=>{if(e.key==='Enter')calculate();});
+});
+</script>
+</body>
+</html>
