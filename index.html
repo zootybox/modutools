@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>모두의 도구 | modutools - 무료 온라인 도구 모음</title>
+<meta name="description" content="연봉 실수령액 계산기, 이미지 압축, 글자수 세기 등 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 사용하세요.">
+<meta property="og:title" content="모두의 도구 | modutools">
+<meta property="og:description" content="110+ 무료 온라인 도구. 계산기, 변환기, 이미지 도구를 브라우저에서 바로.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com">
+<link rel="canonical" href="https://modutools.com">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+/* Hero */
+.hero{text-align:center;padding:48px 20px 32px;max-width:600px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.hero h1{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+.hero p{font-size:15px;color:var(--g500)}
+
+/* Search */
+.search-wrap{max-width:480px;margin:0 auto 32px;padding:0 20px}
+.search-box{display:flex;align-items:center;background:#fff;border:1.5px solid var(--g200);border-radius:12px;padding:0 16px;transition:.2s}
+.search-box:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.search-box svg{width:18px;height:18px;color:var(--g400);flex-shrink:0}
+.search-box input{flex:1;border:none;outline:none;padding:12px 10px;font-size:15px;font-family:inherit;background:transparent}
+.search-box input::placeholder{color:var(--g400)}
+
+/* Quick Tags */
+.quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:600px;margin:0 auto 36px;padding:0 20px}
+.quick-tag{font-size:13px;color:var(--g500);background:#fff;border:1px solid var(--g200);padding:6px 14px;border-radius:20px;cursor:pointer;transition:.2s}
+.quick-tag:hover,.quick-tag.active{color:var(--primary);border-color:var(--primary);background:var(--primary-light)}
+
+/* Category */
+.main{max-width:1080px;margin:0 auto;padding:0 20px 40px}
+.category{margin-bottom:36px}
+.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.cat-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.cat-title{font-size:17px;font-weight:700}
+.cat-count{font-size:12px;color:var(--g400);margin-left:2px}
+
+/* Tool Grid */
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer}
+.tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.tool-emoji{font-size:26px;line-height:1;flex-shrink:0;margin-top:2px}
+.tool-info{flex:1;min-width:0}
+.tool-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px}
+.tool-desc{font-size:12px;color:var(--g500);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.badge-new{background:#DCFCE7;color:#16A34A}
+.badge-hot{background:#FEE2E2;color:#DC2626}
+.badge-soon{background:var(--g100);color:var(--g400)}
+
+/* Responsive */
+@media(max-width:640px){
+  .hero{padding:36px 20px 24px}
+  .hero h1{font-size:24px}
+  .tool-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .tool-card{padding:14px;flex-direction:column;gap:8px}
+  .tool-emoji{font-size:24px}
+}
+@media(max-width:380px){
+  .tool-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav">
+      <a href="/" class="active">도구</a>
+      <a href="#calc">계산기</a>
+      <a href="#image">이미지</a>
+      <a href="#text">텍스트</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">🔒 100% 브라우저 처리 · 서버 전송 없음</div>
+  <h1>모두를 위한 무료 온라인 도구</h1>
+  <p>계산기, 변환기, 이미지 도구까지 — 설치 없이 바로 사용하세요</p>
+</section>
+
+<!-- Search -->
+<div class="search-wrap">
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="searchInput" placeholder="도구 검색 (예: 연봉, 이미지, 글자수)">
+  </div>
+</div>
+
+<!-- Quick Tags -->
+<div class="quick-tags" id="quickTags">
+  <span class="quick-tag active" data-filter="all">전체</span>
+  <span class="quick-tag" data-filter="calc">💰 계산기</span>
+  <span class="quick-tag" data-filter="image">🖼️ 이미지</span>
+  <span class="quick-tag" data-filter="text">📝 텍스트</span>
+  <span class="quick-tag" data-filter="convert">🔄 변환기</span>
+  <span class="quick-tag" data-filter="generate">⚡ 생성기</span>
+  <span class="quick-tag" data-filter="life">🏠 생활</span>
+</div>
+
+<!-- Ad Top -->
+<div class="mt-ad">
+  <div class="mt-ad-box">광고 영역 (AD)</div>
+</div>
+
+<!-- Main Content -->
+<main class="main">
+
+  <!-- 금융 계산기 -->
+  <section class="category" data-cat="calc" id="calc">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#DBEAFE">💰</div>
+      <div class="cat-title">금융 계산기</div>
+      <span class="cat-count">8개</span>
+    </div>
+    <div class="tool-grid">
+      <a href="/calc/salary.html" class="tool-card" data-name="연봉 실수령액 계산기" data-cat="calc">
+        <div class="tool-emoji">💵</div>
+        <div class="tool-info">
+          <div class="tool-name">연봉 실수령액 계산기 <span class="badge badge-hot">HOT</span></div>
+          <div class="tool-desc">2026년 4대보험·소득세 반영, 연봉/월급별 실수령액 즉시 계산</div>
+        </div>
+      </a>
+      <div class="tool-card" data-name="대출이자 계산기" data-cat="calc">
+        <div class="tool-emoji">🏦</div>
+        <div class="tool-info">
+          <div class="tool-name">대출이자 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">원리금균등·원금균등·만기일시 상환 방식별 이자 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="전월세 전환율 계산기" data-cat="calc">
+        <div class="tool-emoji">🏠</div>
+        <div class="tool-info">
+          <div class="tool-name">전월세 전환율 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">전세↔월세 전환 시 적정 보증금과 월세 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="퇴직금 계산기" data-cat="calc">
+        <div class="tool-emoji">📦</div>
+        <div class="tool-info">
+          <div class="tool-name">퇴직금 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">근속연수·평균임금 기준 퇴직금 자동 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="적금 이자 계산기" data-cat="calc">
+        <div class="tool-emoji">🐷</div>
+        <div class="tool-info">
+          <div class="tool-name">적금 이자 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">단리·복리, 세전·세후 이자 비교 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="종합소득세 계산기" data-cat="calc">
+        <div class="tool-emoji">🧾</div>
+        <div class="tool-info">
+          <div class="tool-name">종합소득세 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">과세표준 구간별 소득세·지방소득세 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="4대보험 계산기" data-cat="calc">
+        <div class="tool-emoji">🛡️</div>
+        <div class="tool-info">
+          <div class="tool-name">4대보험 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">국민연금·건강보험·고용보험·산재보험 공제액 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="최저시급 월급 계산기" data-cat="calc">
+        <div class="tool-emoji">⏰</div>
+        <div class="tool-info">
+          <div class="tool-name">최저시급 월급 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">2026년 최저시급 기준 주휴수당 포함 월급 계산</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 이미지 도구 -->
+  <section class="category" data-cat="image" id="image">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#FCE7F3">🖼️</div>
+      <div class="cat-title">이미지 도구</div>
+      <span class="cat-count">6개</span>
+    </div>
+    <div class="tool-grid">
+      <a href="/image/compress.html" class="tool-card" data-name="이미지 압축기" data-cat="image">
+        <div class="tool-emoji">🗜️</div>
+        <div class="tool-info">
+          <div class="tool-name">이미지 압축기 <span class="badge badge-new">NEW</span></div>
+          <div class="tool-desc">JPG·PNG·WEBP 이미지 용량을 화질 유지하며 줄이기</div>
+        </div>
+      </a>
+      <div class="tool-card" data-name="이미지 리사이즈" data-cat="image">
+        <div class="tool-emoji">📐</div>
+        <div class="tool-info">
+          <div class="tool-name">이미지 리사이즈 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">원하는 크기로 이미지 가로·세로 변경</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="이미지 포맷 변환" data-cat="image">
+        <div class="tool-emoji">🔄</div>
+        <div class="tool-info">
+          <div class="tool-name">이미지 포맷 변환 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">PNG↔JPG↔WEBP↔GIF 포맷 자유 변환</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="이미지 자르기" data-cat="image">
+        <div class="tool-emoji">✂️</div>
+        <div class="tool-info">
+          <div class="tool-name">이미지 자르기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">원하는 영역만 선택해서 자르기</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="증명사진 규격" data-cat="image">
+        <div class="tool-emoji">🪪</div>
+        <div class="tool-info">
+          <div class="tool-name">증명사진 규격 맞추기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">여권·이력서·주민등록증 사진 규격에 맞게 편집</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="워터마크 넣기" data-cat="image">
+        <div class="tool-emoji">💧</div>
+        <div class="tool-info">
+          <div class="tool-name">워터마크 넣기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">이미지에 텍스트·로고 워터마크 추가</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 텍스트 도구 -->
+  <section class="category" data-cat="text" id="text">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#D1FAE5">📝</div>
+      <div class="cat-title">텍스트 도구</div>
+      <span class="cat-count">4개</span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card" data-name="글자수 세기" data-cat="text">
+        <div class="tool-emoji">🔢</div>
+        <div class="tool-info">
+          <div class="tool-name">글자수 세기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">공백포함·제외·바이트수 실시간 카운트</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="중복 줄 제거" data-cat="text">
+        <div class="tool-emoji">🧹</div>
+        <div class="tool-info">
+          <div class="tool-name">중복 줄 제거 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">텍스트에서 중복된 줄을 자동으로 제거</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="대소문자 변환" data-cat="text">
+        <div class="tool-emoji">🔤</div>
+        <div class="tool-info">
+          <div class="tool-name">대소문자 변환 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">영문 대문자↔소문자 일괄 변환</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="공백 정리기" data-cat="text">
+        <div class="tool-emoji">✨</div>
+        <div class="tool-info">
+          <div class="tool-name">공백 정리기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">불필요한 공백·줄바꿈을 깔끔하게 정리</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad Mid -->
+  <div class="mt-ad" style="padding:0;margin-bottom:36px">
+    <div class="mt-ad-box">광고 영역 (AD)</div>
+  </div>
+
+  <!-- 변환기 -->
+  <section class="category" data-cat="convert">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#FEF3C7">🔄</div>
+      <div class="cat-title">변환기</div>
+      <span class="cat-count">5개</span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card" data-name="단위 변환기" data-cat="convert">
+        <div class="tool-emoji">📏</div>
+        <div class="tool-info">
+          <div class="tool-name">단위 변환기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">길이·무게·면적·부피 단위 변환</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="날짜 계산기" data-cat="convert">
+        <div class="tool-emoji">📅</div>
+        <div class="tool-info">
+          <div class="tool-name">날짜 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">D-Day 계산, 두 날짜 사이 일수 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="나이 계산기" data-cat="convert">
+        <div class="tool-emoji">🎂</div>
+        <div class="tool-info">
+          <div class="tool-name">나이 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">만나이·한국나이·띠 한번에 확인</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="색상 코드 변환" data-cat="convert">
+        <div class="tool-emoji">🎨</div>
+        <div class="tool-info">
+          <div class="tool-name">색상 코드 변환 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">HEX↔RGB↔HSL 색상 코드 상호 변환</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="시간대 변환기" data-cat="convert">
+        <div class="tool-emoji">🌍</div>
+        <div class="tool-info">
+          <div class="tool-name">시간대 변환기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">전 세계 시간대 실시간 변환</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 생성기 -->
+  <section class="category" data-cat="generate">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#EDE9FE">⚡</div>
+      <div class="cat-title">생성기</div>
+      <span class="cat-count">4개</span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card" data-name="QR코드 생성기" data-cat="generate">
+        <div class="tool-emoji">📱</div>
+        <div class="tool-info">
+          <div class="tool-name">QR코드 생성기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">URL·텍스트·연락처용 QR코드 즉시 생성</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="비밀번호 생성기" data-cat="generate">
+        <div class="tool-emoji">🔐</div>
+        <div class="tool-info">
+          <div class="tool-name">비밀번호 생성기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">안전한 랜덤 비밀번호 생성</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="닉네임 생성기" data-cat="generate">
+        <div class="tool-emoji">🏷️</div>
+        <div class="tool-info">
+          <div class="tool-name">닉네임 생성기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">게임·SNS용 랜덤 닉네임 추천</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="랜덤 숫자 생성기" data-cat="generate">
+        <div class="tool-emoji">🎲</div>
+        <div class="tool-info">
+          <div class="tool-name">랜덤 숫자 생성기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">범위 지정 랜덤 숫자·추첨번호 생성</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 생활 -->
+  <section class="category" data-cat="life">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#FFEDD5">🏠</div>
+      <div class="cat-title">생활 도구</div>
+      <span class="cat-count">4개</span>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card" data-name="BMI 계산기" data-cat="life">
+        <div class="tool-emoji">⚖️</div>
+        <div class="tool-info">
+          <div class="tool-name">BMI 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">키·체중으로 체질량지수(BMI) 확인</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="전기요금 계산기" data-cat="life">
+        <div class="tool-emoji">💡</div>
+        <div class="tool-info">
+          <div class="tool-name">전기요금 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">사용량 기준 예상 전기요금 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="학점 계산기" data-cat="life">
+        <div class="tool-emoji">🎓</div>
+        <div class="tool-info">
+          <div class="tool-name">학점 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">4.3/4.5 만점 기준 평균 학점 계산</div>
+        </div>
+      </div>
+      <div class="tool-card" data-name="연차 계산기" data-cat="life">
+        <div class="tool-emoji">🗓️</div>
+        <div class="tool-info">
+          <div class="tool-name">연차 계산기 <span class="badge badge-soon">준비중</span></div>
+          <div class="tool-desc">입사일 기준 연차 발생일수 자동 계산</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Ad Bottom -->
+<div class="mt-ad">
+  <div class="mt-ad-box">광고 영역 (AD)</div>
+</div>
+
+<!-- Footer -->
+<footer class="mt-footer">
+  <p>
+    <strong>modutools.com</strong> — 모두를 위한 무료 온라인 도구<br>
+    모든 도구는 브라우저에서 처리되며, 서버로 데이터가 전송되지 않습니다.<br>
+    <a href="/about.html">사이트 소개</a> · <a href="/privacy.html">개인정보처리방침</a> · <a href="/terms.html">이용약관</a><br>
+    &copy; 2026 modutools. All rights reserved.
+  </p>
+</footer>
+
+<script>
+// Search filter
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.tool-card');
+const categories = document.querySelectorAll('.category');
+
+searchInput.addEventListener('input', function(){
+  const q = this.value.toLowerCase().trim();
+  // Reset quick tags
+  document.querySelectorAll('.quick-tag').forEach(t => t.classList.remove('active'));
+  document.querySelector('[data-filter="all"]').classList.add('active');
+
+  cards.forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    card.style.display = name.includes(q) ? '' : 'none';
+  });
+  categories.forEach(cat => {
+    const visible = cat.querySelectorAll('.tool-card:not([style*="display: none"])');
+    cat.style.display = visible.length ? '' : 'none';
+  });
+});
+
+// Quick tag filter
+document.getElementById('quickTags').addEventListener('click', function(e){
+  const tag = e.target.closest('.quick-tag');
+  if(!tag) return;
+  const filter = tag.dataset.filter;
+
+  document.querySelectorAll('.quick-tag').forEach(t => t.classList.remove('active'));
+  tag.classList.add('active');
+  searchInput.value = '';
+
+  if(filter === 'all'){
+    cards.forEach(c => c.style.display = '');
+    categories.forEach(c => c.style.display = '');
+  } else {
+    categories.forEach(cat => {
+      cat.style.display = cat.dataset.cat === filter ? '' : 'none';
+    });
+    cards.forEach(c => c.style.display = '');
+  }
+});
+
+// "준비중" cards show alert
+cards.forEach(card => {
+  if(!card.href && card.querySelector('.badge-soon')){
+    card.addEventListener('click', () => alert('준비 중인 도구입니다. 곧 출시됩니다!'));
+  }
+});
+</script>
+</body>
+</html>
