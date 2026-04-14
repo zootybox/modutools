@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 압축기 - 무료 온라인 이미지 용량 줄이기 | modutools</title>
+<meta name="description" content="JPG, PNG, WEBP 이미지를 화질 유지하며 용량을 줄여보세요. 서버 전송 없이 브라우저에서 100% 로컬 처리됩니다.">
+<link rel="canonical" href="https://modutools.com/image/compress.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* Drop Zone */
+.dropzone{border:2px dashed var(--g300);border-radius:var(--radius);padding:48px 24px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.dropzone:hover,.dropzone.dragover{border-color:var(--primary);background:var(--primary-light)}
+.dropzone-icon{font-size:48px;margin-bottom:12px}
+.dropzone-text{font-size:15px;font-weight:600;color:var(--g700);margin-bottom:6px}
+.dropzone-sub{font-size:13px;color:var(--g400)}
+.dropzone input[type="file"]{display:none}
+
+/* Quality Slider */
+.quality-wrap{margin:20px 0}
+.quality-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.quality-label{font-size:13px;font-weight:600;color:var(--g700)}
+.quality-value{font-size:15px;font-weight:800;color:var(--primary)}
+input[type="range"]{width:100%;height:6px;-webkit-appearance:none;background:var(--g200);border-radius:3px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--primary);cursor:pointer;box-shadow:0 2px 6px rgba(37,99,235,.3)}
+
+/* Format Select */
+.format-row{display:flex;gap:8px;margin:16px 0}
+.format-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit}
+.format-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.format-btn:hover:not(.active){border-color:var(--g300)}
+
+/* Image List */
+.image-list{margin-top:16px}
+.image-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--g100)}
+.image-item:last-child{border-bottom:none}
+.image-thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--g100);flex-shrink:0}
+.image-info{flex:1;min-width:0}
+.image-name{font-size:13px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.image-sizes{font-size:12px;color:var(--g500);margin-top:3px;display:flex;align-items:center;gap:6px}
+.image-sizes .arrow{color:var(--primary);font-weight:700}
+.image-sizes .reduced{color:#16A34A;font-weight:700}
+.image-progress{width:100%;height:4px;background:var(--g100);border-radius:2px;margin-top:6px;overflow:hidden}
+.image-progress-bar{height:100%;background:var(--primary);border-radius:2px;transition:width .3s}
+.image-actions{flex-shrink:0}
+.btn-download{background:var(--primary);color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.btn-download:hover{background:var(--primary-dark)}
+.btn-download:disabled{background:var(--g300);cursor:default}
+
+/* Summary */
+.summary{background:linear-gradient(135deg,#2563EB,#1D4ED8);border-radius:var(--radius);padding:24px;color:#fff;text-align:center;margin:16px 0;display:none}
+.summary-value{font-size:28px;font-weight:800;margin:4px 0}
+.summary-label{font-size:13px;opacity:.8}
+.summary-row{display:flex;justify-content:center;gap:32px;margin-top:12px}
+.summary-item{text-align:center}
+
+/* Btn All */
+.btn-all{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:none}
+.btn-compress{background:var(--primary);color:#fff;margin-bottom:8px}
+.btn-compress:hover{background:var(--primary-dark)}
+.btn-download-all{background:#fff;color:var(--primary);border:1.5px solid var(--primary)}
+.btn-download-all:hover{background:var(--primary-light)}
+
+/* Info */
+.info-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;margin-top:16px}
+.info-box p{font-size:12px;color:var(--g500);line-height:1.7}
+.info-box strong{color:var(--g700)}
+
+/* Empty State */
+.empty{text-align:center;padding:24px;color:var(--g400);font-size:14px;display:none}
+
+@media(max-width:480px){
+  .page{padding:16px 16px 40px}
+  .page-title{font-size:20px}
+  .dropzone{padding:32px 16px}
+  .image-item{flex-wrap:wrap;gap:10px}
+  .summary-row{gap:16px}
+}
+</style>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<div class="page">
+  <h1 class="page-title">🗜️ 이미지 압축기</h1>
+  <p class="page-sub">JPG · PNG · WEBP 이미지 용량을 화질 유지하며 줄이기</p>
+
+  <div class="card">
+    <div class="card-title">📁 이미지 선택</div>
+
+    <div class="dropzone" id="dropzone">
+      <div class="dropzone-icon">📷</div>
+      <div class="dropzone-text">이미지를 드래그하거나 클릭하여 선택</div>
+      <div class="dropzone-sub">JPG, PNG, WEBP · 최대 10장 · 최대 20MB/장</div>
+      <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+    </div>
+
+    <div class="quality-wrap">
+      <div class="quality-header">
+        <span class="quality-label">압축 품질</span>
+        <span class="quality-value" id="qualityValue">80%</span>
+      </div>
+      <input type="range" id="qualitySlider" min="10" max="100" value="80" step="5">
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-size:11px;color:var(--g400)">최소 용량</span>
+        <span style="font-size:11px;color:var(--g400)">최고 화질</span>
+      </div>
+    </div>
+
+    <div class="format-row">
+      <div class="format-btn active" data-fmt="original" onclick="setFormat('original')">원본 형식 유지</div>
+      <div class="format-btn" data-fmt="jpeg" onclick="setFormat('jpeg')">JPG</div>
+      <div class="format-btn" data-fmt="webp" onclick="setFormat('webp')">WEBP</div>
+      <div class="format-btn" data-fmt="png" onclick="setFormat('png')">PNG</div>
+    </div>
+  </div>
+
+  <!-- Compress Button -->
+  <button class="btn-all btn-compress" id="btnCompress" onclick="compressAll()">🗜️ 압축 시작</button>
+
+  <!-- Summary -->
+  <div class="summary" id="summary">
+    <div class="summary-label">총 절감 용량</div>
+    <div class="summary-value" id="summaryValue">0 KB</div>
+    <div class="summary-row">
+      <div class="summary-item">
+        <div class="summary-label">원본 합계</div>
+        <div id="summaryOriginal" style="font-weight:700">0 KB</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">압축 후 합계</div>
+        <div id="summaryCompressed" style="font-weight:700">0 KB</div>
+      </div>
+      <div class="summary-item">
+        <div class="summary-label">절감률</div>
+        <div id="summaryPercent" style="font-weight:700">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-ad" style="padding:0;margin-bottom:16px"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+  <!-- Image List -->
+  <div class="card" id="listCard" style="display:none">
+    <div class="card-title">📊 압축 결과</div>
+    <div class="image-list" id="imageList"></div>
+  </div>
+
+  <!-- Download All -->
+  <button class="btn-all btn-download-all" id="btnDownloadAll" onclick="downloadAll()">⬇️ 전체 다운로드</button>
+
+  <div class="info-box">
+    <p>
+      <strong>🔒 개인정보 보호</strong><br>
+      모든 이미지는 브라우저에서만 처리되며, 서버로 전송되지 않습니다.<br>
+      페이지를 닫으면 모든 데이터가 즉시 삭제됩니다.<br><br>
+      <strong>💡 사용 팁</strong><br>
+      • JPG: 사진에 적합, 80% 품질로도 육안 차이 거의 없음<br>
+      • WEBP: 같은 화질 대비 용량이 가장 작음 (웹 최적화)<br>
+      • PNG: 투명 배경이 필요한 이미지에 사용
+    </p>
+  </div>
+</div>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer">
+  <p>
+    <a href="/">← modutools 전체 도구 보기</a><br>
+    &copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+  </p>
+</footer>
+
+<script>
+let files = [];
+let compressedBlobs = [];
+let outputFormat = 'original';
+
+function formatSize(bytes){
+  if(bytes < 1024) return bytes + ' B';
+  if(bytes < 1048576) return (bytes/1024).toFixed(1) + ' KB';
+  return (bytes/1048576).toFixed(1) + ' MB';
+}
+
+function setFormat(fmt){
+  outputFormat = fmt;
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.toggle('active', b.dataset.fmt===fmt));
+}
+
+// Quality slider
+document.getElementById('qualitySlider').addEventListener('input', function(){
+  document.getElementById('qualityValue').textContent = this.value + '%';
+});
+
+// Drop zone
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+
+dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+dropzone.addEventListener('drop', e => {
+  e.preventDefault();
+  dropzone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(fileList){
+  const validFiles = Array.from(fileList).filter(f =>
+    ['image/jpeg','image/png','image/webp'].includes(f.type) && f.size <= 20*1048576
+  ).slice(0, 10);
+
+  if(validFiles.length === 0){
+    alert('지원하는 이미지 파일(JPG, PNG, WEBP)을 선택해주세요.');
+    return;
+  }
+
+  files = validFiles;
+  compressedBlobs = new Array(files.length).fill(null);
+  renderList();
+  document.getElementById('btnCompress').style.display = 'block';
+  document.getElementById('btnDownloadAll').style.display = 'none';
+  document.getElementById('summary').style.display = 'none';
+  document.getElementById('listCard').style.display = 'block';
+
+  // Update dropzone text
+  dropzone.querySelector('.dropzone-text').textContent = files.length + '개 이미지 선택됨 (다시 선택하려면 클릭)';
+}
+
+function renderList(){
+  const list = document.getElementById('imageList');
+  list.innerHTML = files.map((f, i) => `
+    <div class="image-item" id="item-${i}">
+      <img class="image-thumb" id="thumb-${i}" src="" alt="">
+      <div class="image-info">
+        <div class="image-name">${f.name}</div>
+        <div class="image-sizes">
+          <span>원본: ${formatSize(f.size)}</span>
+          <span class="arrow" id="arrow-${i}" style="display:none">→</span>
+          <span id="compressed-size-${i}"></span>
+        </div>
+        <div class="image-progress" id="progress-wrap-${i}" style="display:none">
+          <div class="image-progress-bar" id="progress-${i}" style="width:0%"></div>
+        </div>
+      </div>
+      <div class="image-actions">
+        <button class="btn-download" id="dl-${i}" disabled onclick="downloadOne(${i})">대기중</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Generate thumbnails
+  files.forEach((f, i) => {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById('thumb-'+i).src = e.target.result;
+    reader.readAsDataURL(f);
+  });
+}
+
+async function compressAll(){
+  const quality = parseInt(document.getElementById('qualitySlider').value) / 100;
+  document.getElementById('btnCompress').disabled = true;
+  document.getElementById('btnCompress').textContent = '압축 중...';
+
+  let totalOriginal = 0;
+  let totalCompressed = 0;
+
+  for(let i = 0; i < files.length; i++){
+    const f = files[i];
+    totalOriginal += f.size;
+
+    document.getElementById('progress-wrap-'+i).style.display = 'block';
+    document.getElementById('progress-'+i).style.width = '50%';
+
+    try {
+      const blob = await compressImage(f, quality);
+      compressedBlobs[i] = blob;
+      totalCompressed += blob.size;
+
+      const reduction = ((1 - blob.size/f.size)*100).toFixed(1);
+      document.getElementById('progress-'+i).style.width = '100%';
+      document.getElementById('arrow-'+i).style.display = 'inline';
+      document.getElementById('compressed-size-'+i).innerHTML =
+        `<span class="reduced">${formatSize(blob.size)} (−${reduction}%)</span>`;
+      document.getElementById('dl-'+i).disabled = false;
+      document.getElementById('dl-'+i).textContent = '다운로드';
+    } catch(err){
+      document.getElementById('compressed-size-'+i).innerHTML = '<span style="color:#EF4444">오류 발생</span>';
+      document.getElementById('dl-'+i).textContent = '실패';
+    }
+  }
+
+  // Summary
+  const saved = totalOriginal - totalCompressed;
+  const percent = totalOriginal > 0 ? ((saved/totalOriginal)*100).toFixed(1) : 0;
+  document.getElementById('summaryValue').textContent = formatSize(saved);
+  document.getElementById('summaryOriginal').textContent = formatSize(totalOriginal);
+  document.getElementById('summaryCompressed').textContent = formatSize(totalCompressed);
+  document.getElementById('summaryPercent').textContent = percent + '%';
+  document.getElementById('summary').style.display = 'block';
+  document.getElementById('btnDownloadAll').style.display = 'block';
+  document.getElementById('btnCompress').textContent = '🗜️ 다시 압축';
+  document.getElementById('btnCompress').disabled = false;
+}
+
+function compressImage(file, quality){
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = function(){
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      let mime;
+      if(outputFormat === 'original'){
+        mime = file.type;
+      } else if(outputFormat === 'jpeg'){
+        mime = 'image/jpeg';
+      } else if(outputFormat === 'webp'){
+        mime = 'image/webp';
+      } else {
+        mime = 'image/png';
+      }
+
+      // PNG는 quality 무시됨 (무손실)
+      canvas.toBlob(blob => {
+        if(blob) resolve(blob);
+        else reject(new Error('압축 실패'));
+      }, mime, mime === 'image/png' ? undefined : quality);
+    };
+    img.onerror = () => reject(new Error('이미지 로드 실패'));
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+function downloadOne(index){
+  const blob = compressedBlobs[index];
+  if(!blob) return;
+  const ext = getExt(blob.type);
+  const name = files[index].name.replace(/\.[^.]+$/, '') + '_compressed.' + ext;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function downloadAll(){
+  compressedBlobs.forEach((blob, i) => {
+    if(blob) downloadOne(i);
+  });
+}
+
+function getExt(mime){
+  if(mime === 'image/jpeg') return 'jpg';
+  if(mime === 'image/webp') return 'webp';
+  if(mime === 'image/png') return 'png';
+  return 'jpg';
+}
+</script>
+</body>
+</html>
