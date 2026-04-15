@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>단위 변환기 - 길이·무게·면적·부피·온도 변환 | modutools</title>
+<meta name="description" content="길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 즉시 변환합니다. cm↔inch, kg↔lb, 평↔㎡ 등 실생활 단위 변환에 유용합니다.">
+<meta property="og:title" content="단위 변환기 - 길이·무게·면적·부피·온도 변환 | modutools">
+<meta property="og:description" content="길이, 무게, 면적, 부피, 온도 등 다양한 단위 즉시 변환.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/convert/unit.html">
+<link rel="canonical" href="https://modutools.com/convert/unit.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.cat-tab{padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.cat-tab.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.cat-tab:hover:not(.active){border-color:var(--g300)}
+.convert-wrap{display:flex;flex-direction:column;gap:12px}
+.convert-row{display:flex;gap:8px;align-items:center}
+.convert-input{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:18px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.convert-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.convert-select{width:120px;border:1.5px solid var(--g200);border-radius:10px;padding:14px 8px;font-size:14px;font-family:inherit;outline:none;background:#fff;cursor:pointer;color:var(--g700);font-weight:600}
+.convert-select:focus{border-color:var(--primary)}
+.swap-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:18px;transition:.2s;margin:0 auto;flex-shrink:0}
+.swap-btn:hover{border-color:var(--primary);background:var(--primary-light)}
+.swap-btn:active{transform:rotate(180deg)}
+.result-display{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center;margin-top:12px}
+.result-formula{font-size:13px;color:var(--g500);margin-top:8px}
+.result-value{font-size:24px;font-weight:800;color:var(--primary)}
+.result-unit{font-size:14px;color:var(--g500);margin-left:4px}
+.common-list{margin-top:16px}
+.common-title{font-size:13px;font-weight:600;color:var(--g400);margin-bottom:8px}
+.common-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700)}
+.common-item:last-child{border-bottom:none}
+
+@media(max-width:480px){.convert-input{font-size:16px;padding:12px}.convert-select{width:100px;font-size:12px;padding:12px 6px}.cat-tab{font-size:11px;padding:6px 10px}.result-value{font-size:20px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"단위 변환기","url":"https://modutools.com/convert/unit.html","description":"길이, 무게, 면적, 부피, 온도 등 다양한 단위를 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">단위 변환기</h1>
+<p class="page-sub">길이·무게·면적·부피·온도·속도·데이터 단위를 변환합니다</p>
+
+<div class="card">
+<div class="card-title">📏 카테고리</div>
+<div class="cat-tabs" id="catTabs">
+<button class="cat-tab active" data-cat="length" onclick="setCat(this)">📏 길이</button>
+<button class="cat-tab" data-cat="weight" onclick="setCat(this)">⚖️ 무게</button>
+<button class="cat-tab" data-cat="area" onclick="setCat(this)">📐 면적</button>
+<button class="cat-tab" data-cat="volume" onclick="setCat(this)">🧪 부피</button>
+<button class="cat-tab" data-cat="temp" onclick="setCat(this)">🌡️ 온도</button>
+<button class="cat-tab" data-cat="speed" onclick="setCat(this)">🚗 속도</button>
+<button class="cat-tab" data-cat="data" onclick="setCat(this)">💾 데이터</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title" id="convertTitle">📏 길이 변환</div>
+<div class="convert-wrap">
+<div class="convert-row">
+<input type="number" class="convert-input" id="fromVal" value="1" inputmode="decimal" step="any" oninput="convert()">
+<select class="convert-select" id="fromUnit" onchange="convert()"></select>
+</div>
+<div class="swap-btn" onclick="swap()">⇅</div>
+<div class="convert-row">
+<input type="number" class="convert-input" id="toVal" readonly style="background:var(--g50)">
+<select class="convert-select" id="toUnit" onchange="convert()"></select>
+</div>
+</div>
+<div class="result-display" id="resultDisplay">
+<span class="result-value" id="resultValue">-</span><span class="result-unit" id="resultUnit"></span>
+<div class="result-formula" id="resultFormula"></div>
+</div>
+</div>
+
+<div class="card" id="commonCard">
+<div class="card-title">📋 자주 쓰는 변환</div>
+<div class="common-list" id="commonList"></div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+const UNITS={
+  length:{
+    title:'📏 길이 변환',
+    units:{mm:'밀리미터(mm)',cm:'센티미터(cm)',m:'미터(m)',km:'킬로미터(km)',inch:'인치(in)',ft:'피트(ft)',yd:'야드(yd)',mi:'마일(mi)'},
+    base:{mm:0.001,cm:0.01,m:1,km:1000,inch:0.0254,ft:0.3048,yd:0.9144,mi:1609.344},
+    defaults:['cm','inch'],
+    common:[['1 cm','0.3937 inch'],['1 inch','2.54 cm'],['1 m','3.2808 ft'],['1 km','0.6214 mi'],['1 ft','30.48 cm']]
+  },
+  weight:{
+    title:'⚖️ 무게 변환',
+    units:{mg:'밀리그램(mg)',g:'그램(g)',kg:'킬로그램(kg)',t:'톤(t)',oz:'온스(oz)',lb:'파운드(lb)',근:'근'},
+    base:{mg:0.000001,g:0.001,kg:1,t:1000,oz:0.0283495,lb:0.453592,근:0.6},
+    defaults:['kg','lb'],
+    common:[['1 kg','2.2046 lb'],['1 lb','453.6 g'],['1 oz','28.35 g'],['1 근','600 g'],['1 t','1000 kg']]
+  },
+  area:{
+    title:'📐 면적 변환',
+    units:{㎡:'제곱미터(㎡)',㎢:'제곱킬로미터(㎢)',ha:'헥타르(ha)',평:'평',acre:'에이커',sqft:'제곱피트(ft²)'},
+    base:{㎡:1,㎢:1000000,ha:10000,평:3.305785,acre:4046.856,sqft:0.092903},
+    defaults:['평','㎡'],
+    common:[['1 평','3.3058 ㎡'],['1 ㎡','0.3025 평'],['30 평','99.17 ㎡'],['1 에이커','4046.9 ㎡'],['1 ha','3024.9 평']]
+  },
+  volume:{
+    title:'🧪 부피 변환',
+    units:{ml:'밀리리터(mL)',l:'리터(L)',㎥:'세제곱미터(㎥)',gal:'갤런(US)',qt:'쿼트(US)',cup:'컵(US)',floz:'액량온스(fl oz)'},
+    base:{ml:0.001,l:1,㎥:1000,gal:3.78541,qt:0.946353,cup:0.236588,floz:0.0295735},
+    defaults:['l','ml'],
+    common:[['1 L','1000 mL'],['1 갤런','3.7854 L'],['1 컵','236.6 mL'],['1 fl oz','29.57 mL'],['1 ㎥','1000 L']]
+  },
+  temp:{
+    title:'🌡️ 온도 변환',
+    units:{C:'섭씨(°C)',F:'화씨(°F)',K:'켈빈(K)'},
+    defaults:['C','F'],
+    common:[['0 °C','32 °F'],['100 °C','212 °F'],['36.5 °C','97.7 °F'],['−40 °C','−40 °F'],['0 K','−273.15 °C']]
+  },
+  speed:{
+    title:'🚗 속도 변환',
+    units:{mps:'m/s',kmh:'km/h',mph:'mph',knot:'노트(knot)',mach:'마하'},
+    base:{mps:1,kmh:0.277778,mph:0.44704,knot:0.514444,mach:340.29},
+    defaults:['kmh','mph'],
+    common:[['100 km/h','62.14 mph'],['1 마하','1225 km/h'],['1 노트','1.852 km/h'],['60 mph','96.56 km/h'],['1 m/s','3.6 km/h']]
+  },
+  data:{
+    title:'💾 데이터 변환',
+    units:{B:'바이트(B)',KB:'킬로바이트(KB)',MB:'메가바이트(MB)',GB:'기가바이트(GB)',TB:'테라바이트(TB)'},
+    base:{B:1,KB:1024,MB:1048576,GB:1073741824,TB:1099511627776},
+    defaults:['MB','GB'],
+    common:[['1 GB','1024 MB'],['1 TB','1024 GB'],['1 MB','1024 KB'],['1 KB','1024 B'],['100 GB','0.0977 TB']]
+  }
+};
+
+let currentCat='length';
+
+function setCat(el){
+  document.querySelectorAll('.cat-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentCat=el.dataset.cat;
+  initUnits();
+}
+
+function initUnits(){
+  const cat=UNITS[currentCat];
+  document.getElementById('convertTitle').textContent=cat.title;
+  const fromSel=document.getElementById('fromUnit');
+  const toSel=document.getElementById('toUnit');
+  fromSel.innerHTML='';toSel.innerHTML='';
+  for(const[k,v]of Object.entries(cat.units)){
+    fromSel.innerHTML+=`<option value="${k}">${v}</option>`;
+    toSel.innerHTML+=`<option value="${k}">${v}</option>`;
+  }
+  fromSel.value=cat.defaults[0];
+  toSel.value=cat.defaults[1];
+  document.getElementById('fromVal').value=1;
+
+  // Common conversions
+  const list=document.getElementById('commonList');
+  list.innerHTML=cat.common.map(c=>`<div class="common-item"><span>${c[0]}</span><span>${c[1]}</span></div>`).join('');
+
+  convert();
+}
+
+function convert(){
+  const cat=UNITS[currentCat];
+  const fromU=document.getElementById('fromUnit').value;
+  const toU=document.getElementById('toUnit').value;
+  const val=parseFloat(document.getElementById('fromVal').value)||0;
+  let result;
+
+  if(currentCat==='temp'){
+    result=convertTemp(val,fromU,toU);
+  }else{
+    const baseVal=val*cat.base[fromU];
+    result=baseVal/cat.base[toU];
+  }
+
+  // Format result
+  let formatted;
+  if(Math.abs(result)<0.001&&result!==0)formatted=result.toExponential(4);
+  else if(Math.abs(result)>=1000000)formatted=result.toLocaleString(undefined,{maximumFractionDigits:2});
+  else formatted=parseFloat(result.toPrecision(8)).toString();
+
+  document.getElementById('toVal').value=formatted;
+  document.getElementById('resultValue').textContent=formatted;
+  document.getElementById('resultUnit').textContent=cat.units[toU];
+  document.getElementById('resultFormula').textContent=val+' '+fromU+' = '+formatted+' '+toU;
+}
+
+function convertTemp(val,from,to){
+  let c;
+  if(from==='C')c=val;
+  else if(from==='F')c=(val-32)*5/9;
+  else c=val-273.15;
+
+  if(to==='C')return c;
+  if(to==='F')return c*9/5+32;
+  return c+273.15;
+}
+
+function swap(){
+  const fromSel=document.getElementById('fromUnit');
+  const toSel=document.getElementById('toUnit');
+  const tmp=fromSel.value;
+  fromSel.value=toSel.value;
+  toSel.value=tmp;
+  convert();
+}
+
+initUnits();
+</script>
+</body>
+</html>
