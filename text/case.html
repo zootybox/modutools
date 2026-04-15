@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>대소문자 변환 - 영문 대문자·소문자 일괄 변환 | modutools</title>
+<meta name="description" content="영문 텍스트를 대문자, 소문자, 첫 글자 대문자, 문장 첫 글자 대문자로 일괄 변환합니다. 프로그래밍, 문서 작성에 유용합니다.">
+<meta property="og:title" content="대소문자 변환 - 영문 대문자·소문자 변환 | modutools">
+<meta property="og:description" content="영문 대문자↔소문자 일괄 변환. 첫 글자 대문자, 문장 첫 글자 변환 지원.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/text/case.html">
+<link rel="canonical" href="https://modutools.com/text/case.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.text-area{width:100%;min-height:160px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.text-area::placeholder{color:var(--g400)}
+.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.convert-btn{padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
+.convert-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.convert-btn:active{transform:scale(.97)}
+.convert-btn .example{display:block;font-size:11px;color:var(--g400);margin-top:4px;font-weight:400}
+.copy-btn{padding:10px 20px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
+.copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.btn-grid{grid-template-columns:1fr 1fr;gap:6px}.convert-btn{padding:10px;font-size:12px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"대소문자 변환","url":"https://modutools.com/text/case.html","description":"영문 텍스트를 대문자, 소문자, 첫 글자 대문자로 일괄 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">대소문자 변환</h1>
+<p class="page-sub">영문 텍스트를 원하는 형식으로 일괄 변환합니다</p>
+<div class="card">
+<div class="card-title">📝 텍스트 입력</div>
+<textarea class="text-area" id="textInput" placeholder="여기에 영문 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
+<div class="btn-grid">
+<button class="convert-btn" onclick="convert('upper')">🔠 모두 대문자<span class="example">HELLO WORLD</span></button>
+<button class="convert-btn" onclick="convert('lower')">🔡 모두 소문자<span class="example">hello world</span></button>
+<button class="convert-btn" onclick="convert('title')">🔤 단어 첫 글자 대문자<span class="example">Hello World</span></button>
+<button class="convert-btn" onclick="convert('sentence')">📝 문장 첫 글자 대문자<span class="example">Hello world. This is.</span></button>
+<button class="convert-btn" onclick="convert('toggle')">🔀 대소문자 반전<span class="example">hELLO wORLD</span></button>
+<button class="convert-btn" onclick="convert('camel')">🐫 camelCase<span class="example">helloWorld</span></button>
+</div>
+</div>
+<div id="resultArea" style="display:none">
+<div class="card">
+<div class="card-title">✅ 변환 결과</div>
+<textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
+<div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
+</div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
+<script>
+function convert(type){
+  const input=document.getElementById('textInput').value;
+  if(!input.trim()){alert('텍스트를 입력해주세요.');return;}
+  let result='';
+  switch(type){
+    case 'upper':result=input.toUpperCase();break;
+    case 'lower':result=input.toLowerCase();break;
+    case 'title':result=input.replace(/\S+/g,w=>w.charAt(0).toUpperCase()+w.slice(1).toLowerCase());break;
+    case 'sentence':result=input.toLowerCase().replace(/(^\s*|[.!?]\s+)([a-z])/g,(m,p,c)=>p+c.toUpperCase());break;
+    case 'toggle':result=input.split('').map(c=>c===c.toUpperCase()?c.toLowerCase():c.toUpperCase()).join('');break;
+    case 'camel':result=input.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g,(_,c)=>c.toUpperCase());break;
+  }
+  document.getElementById('outputText').value=result;
+  document.getElementById('resultArea').style.display='block';
+  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+}
+function copyResult(){
+  const t=document.getElementById('outputText').value;
+  if(!t){showToast('복사할 내용이 없습니다');return;}
+  navigator.clipboard.writeText(t).then(()=>showToast('클립보드에 복사했습니다'));
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+</script>
+</body>
+</html>

@@ -26,6 +26,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://modutools.com/text/dedupe.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://modutools.com/text/case.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://modutools.com/text/space.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://modutools.com/convert/age.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
