@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>최저시급 월급 계산기 - 2026년 최저임금 기준 | modutools</title>
+<meta name="description" content="2026년 최저시급 기준으로 주휴수당 포함 월급, 연봉, 실수령액을 계산합니다. 근무시간 설정 가능.">
+<link rel="canonical" href="https://modutools.com/calc/minimum-wage.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;text-align:center}
+.stat-box.highlight{background:var(--primary-light);border-color:var(--primary)}
+.stat-value{font-size:20px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.info-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;margin-top:12px;font-size:13px;line-height:1.7;color:var(--g700)}
+.info-box strong{color:var(--primary)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.stat-value{font-size:17px}.stats-grid{gap:6px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"최저시급 월급 계산기","url":"https://modutools.com/calc/minimum-wage.html","description":"2026년 최저시급 기준 월급, 연봉, 실수령액을 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">최저시급 월급 계산기</h1>
+<p class="page-sub">2026년 최저시급 기준으로 주휴수당 포함 월급을 계산합니다</p>
+<div class="card">
+<div class="card-title">⏰ 근무 조건 입력</div>
+<div class="input-group">
+<label class="input-label">시급 (2026년 최저시급: 10,030원)</label>
+<div class="input-row">
+<input type="text" class="input-field comma-input" id="hourlyWage" value="10,030" inputmode="numeric">
+<span class="input-unit">원</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">일 근무시간</label>
+<div class="input-row">
+<input type="number" class="input-field" id="dailyHours" value="8" min="1" max="24" step="0.5" inputmode="decimal">
+<span class="input-unit">시간</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">주 근무일수</label>
+<div class="input-row">
+<input type="number" class="input-field" id="weeklyDays" value="5" min="1" max="7" inputmode="numeric">
+<span class="input-unit">일</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">주휴수당 포함</label>
+<div class="toggle-row" id="weeklyPayRow">
+<div class="toggle-btn active" data-val="yes" onclick="setWeekly(this)">포함 (주 15시간 이상)</div>
+<div class="toggle-btn" data-val="no" onclick="setWeekly(this)">미포함</div>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">월급 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="stats-grid">
+<div class="stat-box highlight"><div class="stat-value" id="monthlyPay">-</div><div class="stat-label">월급 (세전)</div></div>
+<div class="stat-box"><div class="stat-value" id="annualPay">-</div><div class="stat-label">연봉 환산</div></div>
+<div class="stat-box"><div class="stat-value" id="weeklyPay">-</div><div class="stat-label">주급</div></div>
+<div class="stat-box"><div class="stat-value" id="dailyPay">-</div><div class="stat-label">일급</div></div>
+</div>
+<div style="margin-top:16px" id="detailList"></div>
+</div>
+<div class="info-box">
+<strong>2026년 최저임금 안내</strong><br>
+시급: <strong>10,030원</strong><br>
+월급 (209시간 기준): <strong>2,096,270원</strong><br>
+전년 대비 인상률: 약 1.7%
+</div>
+<p class="disclaimer">※ 주휴수당은 주 15시간 이상 근무 시 지급됩니다.<br>월 근로시간은 (주 근무시간 + 주휴시간) x 4.345주로 계산합니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var includeWeekly="yes";
+
+document.querySelectorAll(".comma-input").forEach(function(el){
+  el.addEventListener("input",function(){
+    var v=this.value.replace(/[^\d]/g,"");
+    this.value=v?parseInt(v).toLocaleString():"";
+  });
+});
+
+function setWeekly(el){
+  var btns=document.querySelectorAll("#weeklyPayRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  includeWeekly=el.dataset.val;
+}
+
+function getNum(id){return parseInt((document.getElementById(id).value||"0").replace(/,/g,""))||0;}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+function calculate(){
+  var wage=getNum("hourlyWage");
+  var dailyH=parseFloat(document.getElementById("dailyHours").value)||0;
+  var weeklyD=parseInt(document.getElementById("weeklyDays").value)||0;
+
+  if(wage<=0){alert("시급을 입력해주세요.");return;}
+  if(dailyH<=0){alert("일 근무시간을 입력해주세요.");return;}
+  if(weeklyD<=0){alert("주 근무일수를 입력해주세요.");return;}
+
+  var weeklyHours=dailyH*weeklyD;
+  var weeklyAllowanceHours=0;
+  if(includeWeekly==="yes"&&weeklyHours>=15){
+    weeklyAllowanceHours=dailyH;
+  }
+
+  var totalWeeklyHours=weeklyHours+weeklyAllowanceHours;
+  var monthlyHours=totalWeeklyHours*4.345;
+  var monthlyPay=Math.round(wage*monthlyHours);
+  var annualPay=monthlyPay*12;
+  var weeklyPay=Math.round(wage*totalWeeklyHours);
+  var dailyPay=Math.round(wage*dailyH);
+  var weeklyAllowance=Math.round(wage*weeklyAllowanceHours);
+
+  document.getElementById("monthlyPay").textContent=fmt(monthlyPay)+"원";
+  document.getElementById("annualPay").textContent=fmt(annualPay)+"원";
+  document.getElementById("weeklyPay").textContent=fmt(weeklyPay)+"원";
+  document.getElementById("dailyPay").textContent=fmt(dailyPay)+"원";
+
+  var html="";
+  html+='<div class="detail-row"><span class="label">시급</span><span class="value">'+fmt(wage)+'원</span></div>';
+  html+='<div class="detail-row"><span class="label">주 근무시간</span><span class="value">'+weeklyHours+'시간 ('+dailyH+'h x '+weeklyD+'일)</span></div>';
+  if(weeklyAllowanceHours>0){
+    html+='<div class="detail-row"><span class="label">주휴시간</span><span class="value">'+weeklyAllowanceHours+'시간</span></div>';
+    html+='<div class="detail-row"><span class="label">주휴수당 (주)</span><span class="value">'+fmt(weeklyAllowance)+'원</span></div>';
+  }
+  html+='<div class="detail-row"><span class="label">월 유급시간</span><span class="value">'+monthlyHours.toFixed(1)+'시간</span></div>';
+  html+='<div class="detail-row"><span class="label">월급 (세전)</span><span class="value" style="color:var(--primary)">'+fmt(monthlyPay)+'원</span></div>';
+
+  document.getElementById("detailList").innerHTML=html;
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>

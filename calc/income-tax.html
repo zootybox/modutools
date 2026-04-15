@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>종합소득세 계산기 - 과세표준 구간별 세금 계산 | modutools</title>
+<meta name="description" content="연간 종합소득금액을 입력하면 과세표준 구간별 소득세와 지방소득세를 즉시 계산합니다. 2024년 세율 기준.">
+<link rel="canonical" href="https://modutools.com/calc/income-tax.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:32px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
+.detail-row.total .value{color:var(--primary)}
+.tier-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
+.tier-table th{background:var(--g100);padding:8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
+.tier-table td{padding:8px;text-align:right;border-bottom:1px solid var(--g100);color:var(--g700)}
+.tier-table td:first-child{text-align:left}
+.tier-table tr.active{background:var(--primary-light);font-weight:700}
+.tier-table tr.active td{color:var(--primary)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:26px}.tier-table{font-size:11px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"종합소득세 계산기","url":"https://modutools.com/calc/income-tax.html","description":"과세표준 구간별 소득세와 지방소득세를 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">종합소득세 계산기</h1>
+<p class="page-sub">과세표준을 입력하면 소득세와 지방소득세를 계산합니다</p>
+<div class="card">
+<div class="card-title">🧾 소득 정보 입력</div>
+<div class="input-group">
+<label class="input-label">연간 과세표준 (종합소득금액 - 소득공제)</label>
+<div class="input-row">
+<input type="text" class="input-field comma-input" id="taxBase" placeholder="50,000,000" inputmode="numeric">
+<span class="input-unit">원</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">소득세 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="mainResult">-</div>
+<div class="result-label">총 납부세액 (소득세 + 지방소득세)</div>
+</div>
+<div id="detailList"></div>
+</div>
+<div class="card">
+<div class="card-title">📋 과세표준 구간별 세율</div>
+<table class="tier-table">
+<thead><tr><th>과세표준</th><th>세율</th><th>누진공제</th><th>해당 세금</th></tr></thead>
+<tbody id="tierBody"></tbody>
+</table>
+</div>
+<p class="disclaimer">※ 2024년 소득세법 기준이며, 각종 세액공제(근로소득세액공제, 자녀세액공제 등)는 반영되지 않았습니다.<br>정확한 세액은 국세청 홈택스에서 확인하세요.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var BRACKETS=[
+  {limit:14000000,rate:0.06,deduction:0,label:"1,400만원 이하"},
+  {limit:50000000,rate:0.15,deduction:1260000,label:"1,400만~5,000만원"},
+  {limit:88000000,rate:0.24,deduction:5760000,label:"5,000만~8,800만원"},
+  {limit:150000000,rate:0.35,deduction:15440000,label:"8,800만~1.5억원"},
+  {limit:300000000,rate:0.38,deduction:19940000,label:"1.5억~3억원"},
+  {limit:500000000,rate:0.40,deduction:25940000,label:"3억~5억원"},
+  {limit:1000000000,rate:0.42,deduction:35940000,label:"5억~10억원"},
+  {limit:Infinity,rate:0.45,deduction:65940000,label:"10억원 초과"}
+];
+
+document.querySelectorAll(".comma-input").forEach(function(el){
+  el.addEventListener("input",function(){
+    var v=this.value.replace(/[^\d]/g,"");
+    this.value=v?parseInt(v).toLocaleString():"";
+  });
+});
+
+function getNum(id){return parseInt((document.getElementById(id).value||"0").replace(/,/g,""))||0;}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+function calculate(){
+  var taxBase=getNum("taxBase");
+  if(taxBase<=0){alert("과세표준을 입력해주세요.");return;}
+
+  var incomeTax=0;
+  var bracketIdx=0;
+  for(var i=0;i<BRACKETS.length;i++){
+    if(taxBase<=BRACKETS[i].limit){
+      incomeTax=taxBase*BRACKETS[i].rate-BRACKETS[i].deduction;
+      bracketIdx=i;
+      break;
+    }
+  }
+
+  incomeTax=Math.max(0,Math.round(incomeTax));
+  var localTax=Math.round(incomeTax*0.1);
+  var totalTax=incomeTax+localTax;
+  var effectiveRate=(totalTax/taxBase*100).toFixed(1);
+
+  document.getElementById("mainResult").textContent=fmt(totalTax)+"원";
+
+  var html="";
+  html+='<div class="detail-row"><span class="label">과세표준</span><span class="value">'+fmt(taxBase)+'원</span></div>';
+  html+='<div class="detail-row"><span class="label">적용 세율</span><span class="value">'+(BRACKETS[bracketIdx].rate*100)+'%</span></div>';
+  html+='<div class="detail-row"><span class="label">누진공제</span><span class="value">'+fmt(BRACKETS[bracketIdx].deduction)+'원</span></div>';
+  html+='<div class="detail-row"><span class="label">산출 소득세</span><span class="value">'+fmt(incomeTax)+'원</span></div>';
+  html+='<div class="detail-row"><span class="label">지방소득세 (10%)</span><span class="value">'+fmt(localTax)+'원</span></div>';
+  html+='<div class="detail-row total"><span class="label">총 납부세액</span><span class="value">'+fmt(totalTax)+'원</span></div>';
+  html+='<div class="detail-row"><span class="label">실효세율</span><span class="value">'+effectiveRate+'%</span></div>';
+  document.getElementById("detailList").innerHTML=html;
+
+  var tbody="";
+  var prev=0;
+  for(var j=0;j<BRACKETS.length;j++){
+    var b=BRACKETS[j];
+    var tierBase=Math.min(taxBase,b.limit)-prev;
+    if(tierBase<=0)tierBase=0;
+    var tierTax=tierBase*b.rate;
+    var isActive=j===bracketIdx;
+    tbody+='<tr'+(isActive?' class="active"':'')+'>';
+    tbody+='<td>'+b.label+'</td>';
+    tbody+='<td>'+(b.rate*100)+'%</td>';
+    tbody+='<td>'+fmt(b.deduction)+'원</td>';
+    tbody+='<td>'+(tierBase>0?fmt(Math.round(tierTax))+'원':'-')+'</td>';
+    tbody+='</tr>';
+    prev=b.limit;
+    if(taxBase<=b.limit)break;
+  }
+  document.getElementById("tierBody").innerHTML=tbody;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>

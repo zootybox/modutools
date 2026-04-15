@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>4대보험 계산기 - 국민연금·건강보험·고용보험 공제액 | modutools</title>
+<meta name="description" content="월 급여를 입력하면 국민연금, 건강보험, 장기요양보험, 고용보험 공제액을 즉시 계산합니다. 2026년 요율 기준.">
+<link rel="canonical" href="https://modutools.com/calc/insurance.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:32px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.ins-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}
+.ins-table th{background:var(--g100);padding:10px 8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
+.ins-table td{padding:10px 8px;border-bottom:1px solid var(--g100);color:var(--g700)}
+.ins-table td:first-child{font-weight:600}
+.ins-table td:nth-child(2),.ins-table td:nth-child(3),.ins-table td:nth-child(4){text-align:right}
+.ins-table tr:last-child{font-weight:700;background:var(--g50)}
+.ins-table tr:last-child td{border-top:2px solid var(--g200);color:var(--primary)}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:26px}.ins-table{font-size:11px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"4대보험 계산기","url":"https://modutools.com/calc/insurance.html","description":"월 급여로 4대보험 공제액을 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">4대보험 계산기</h1>
+<p class="page-sub">월 급여를 입력하면 4대보험 공제액을 계산합니다</p>
+<div class="card">
+<div class="card-title">🛡️ 급여 입력</div>
+<div class="input-group">
+<label class="input-label">월 급여 (세전, 비과세 제외)</label>
+<div class="input-row">
+<input type="text" class="input-field comma-input" id="salary" placeholder="3,000,000" inputmode="numeric">
+<span class="input-unit">원</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">4대보험 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="mainResult">-</div>
+<div class="result-label">근로자 부담 합계 (월)</div>
+</div>
+<table class="ins-table">
+<thead><tr><th>항목</th><th>요율</th><th>근로자</th><th>사업주</th></tr></thead>
+<tbody id="insBody"></tbody>
+</table>
+</div>
+<div class="card">
+<div class="card-title">📋 요율 기준 (2026년)</div>
+<div class="detail-row"><span class="label">국민연금</span><span class="value">4.5% + 4.5% (총 9%)</span></div>
+<div class="detail-row"><span class="label">건강보험</span><span class="value">3.545% + 3.545% (총 7.09%)</span></div>
+<div class="detail-row"><span class="label">장기요양보험</span><span class="value">건강보험의 12.81%</span></div>
+<div class="detail-row"><span class="label">고용보험</span><span class="value">0.9% + 0.9%~1.65%</span></div>
+<div class="detail-row"><span class="label">산재보험</span><span class="value">업종별 (사업주 전액)</span></div>
+<div class="detail-row"><span class="label">국민연금 상한</span><span class="value">기준소득월액 617만원</span></div>
+</div>
+<p class="disclaimer">※ 2026년 4대보험 요율 기준 참고용이며, 실제 공제액은 사업장에 따라 다를 수 있습니다.<br>산재보험은 업종별 요율이 다르므로 별도 확인이 필요합니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var NPS_RATE=0.045;
+var NPS_CAP=6170000;
+var HEALTH_RATE=0.03545;
+var LONGTERM_RATE=0.1281;
+var EMPLOY_WORKER=0.009;
+var EMPLOY_EMPLOYER=0.009;
+
+document.querySelectorAll(".comma-input").forEach(function(el){
+  el.addEventListener("input",function(){
+    var v=this.value.replace(/[^\d]/g,"");
+    this.value=v?parseInt(v).toLocaleString():"";
+  });
+});
+
+function getNum(id){return parseInt((document.getElementById(id).value||"0").replace(/,/g,""))||0;}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+function calculate(){
+  var salary=getNum("salary");
+  if(salary<=0){alert("월 급여를 입력해주세요.");return;}
+
+  var npsBase=Math.min(salary,NPS_CAP);
+  var npsWorker=Math.round(npsBase*NPS_RATE);
+  var npsEmployer=npsWorker;
+
+  var healthWorker=Math.round(salary*HEALTH_RATE);
+  var healthEmployer=healthWorker;
+
+  var longWorker=Math.round(healthWorker*LONGTERM_RATE);
+  var longEmployer=longWorker;
+
+  var empWorker=Math.round(salary*EMPLOY_WORKER);
+  var empEmployer=Math.round(salary*EMPLOY_EMPLOYER);
+
+  var totalWorker=npsWorker+healthWorker+longWorker+empWorker;
+  var totalEmployer=npsEmployer+healthEmployer+longEmployer+empEmployer;
+
+  document.getElementById("mainResult").textContent=fmt(totalWorker)+"원";
+
+  var html="";
+  html+='<tr><td>국민연금</td><td>4.5%</td><td>'+fmt(npsWorker)+'원</td><td>'+fmt(npsEmployer)+'원</td></tr>';
+  html+='<tr><td>건강보험</td><td>3.545%</td><td>'+fmt(healthWorker)+'원</td><td>'+fmt(healthEmployer)+'원</td></tr>';
+  html+='<tr><td>장기요양</td><td>12.81%</td><td>'+fmt(longWorker)+'원</td><td>'+fmt(longEmployer)+'원</td></tr>';
+  html+='<tr><td>고용보험</td><td>0.9%</td><td>'+fmt(empWorker)+'원</td><td>'+fmt(empEmployer)+'원</td></tr>';
+  html+='<tr><td>합계</td><td></td><td>'+fmt(totalWorker)+'원</td><td>'+fmt(totalEmployer)+'원</td></tr>';
+  document.getElementById("insBody").innerHTML=html;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>
