@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>색상 코드 변환 - HEX RGB HSL 상호 변환 | modutools</title>
+<meta name="description" content="HEX, RGB, HSL 색상 코드를 상호 변환합니다. 색상 미리보기, 복사 기능 지원. 웹 디자인, CSS 작업에 유용합니다.">
+<link rel="canonical" href="https://modutools.com/convert/color.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.color-preview{width:100%;height:120px;border-radius:10px;border:1px solid var(--g200);margin-bottom:16px;transition:background .2s}
+.picker-row{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.color-picker{width:60px;height:60px;border:none;border-radius:10px;cursor:pointer;padding:0;background:none}
+.color-picker::-webkit-color-swatch-wrapper{padding:0}
+.color-picker::-webkit-color-swatch{border-radius:10px;border:2px solid var(--g200)}
+.picker-label{font-size:13px;color:var(--g500)}
+.code-group{margin-bottom:12px}
+.code-label{font-size:12px;font-weight:600;color:var(--g400);margin-bottom:4px}
+.code-row{display:flex;gap:6px;align-items:center}
+.code-input{flex:1;border:1.5px solid var(--g200);border-radius:8px;padding:10px 12px;font-size:15px;font-family:'Courier New',monospace;outline:none;transition:.2s}
+.code-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.copy-btn{padding:10px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s;white-space:nowrap}
+.copy-btn:hover{border-color:var(--primary);color:var(--primary)}
+.rgb-sliders{margin-top:16px}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.slider-label{width:20px;font-size:13px;font-weight:700;text-align:center}
+.slider-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;outline:none}
+.slider-input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--g300);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.slider-val{width:40px;text-align:right;font-size:13px;font-weight:600;color:var(--g700)}
+.palette-title{font-size:13px;font-weight:600;color:var(--g400);margin:16px 0 8px}
+.palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.palette-item{aspect-ratio:1;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:.2s}
+.palette-item:hover{border-color:var(--g900);transform:scale(1.1)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.color-preview{height:80px}.palette-grid{grid-template-columns:repeat(6,1fr);gap:4px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"색상 코드 변환","url":"https://modutools.com/convert/color.html","description":"HEX, RGB, HSL 색상 코드를 상호 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">색상 코드 변환</h1>
+<p class="page-sub">HEX, RGB, HSL 색상 코드를 상호 변환합니다</p>
+<div class="card">
+<div class="card-title">🎨 색상 선택</div>
+<div class="color-preview" id="colorPreview" style="background:#2563EB"></div>
+<div class="picker-row">
+<input type="color" class="color-picker" id="colorPicker" value="#2563EB">
+<span class="picker-label">색상 선택기를 클릭하거나 아래 코드를 직접 입력하세요</span>
+</div>
+<div class="code-group">
+<div class="code-label">HEX</div>
+<div class="code-row">
+<input type="text" class="code-input" id="hexInput" value="#2563EB" maxlength="7">
+<button class="copy-btn" onclick="copyCode('hexInput')">복사</button>
+</div>
+</div>
+<div class="code-group">
+<div class="code-label">RGB</div>
+<div class="code-row">
+<input type="text" class="code-input" id="rgbInput" value="rgb(37, 99, 235)">
+<button class="copy-btn" onclick="copyCode('rgbInput')">복사</button>
+</div>
+</div>
+<div class="code-group">
+<div class="code-label">HSL</div>
+<div class="code-row">
+<input type="text" class="code-input" id="hslInput" value="hsl(221, 83%, 53%)">
+<button class="copy-btn" onclick="copyCode('hslInput')">복사</button>
+</div>
+</div>
+<div class="rgb-sliders">
+<div class="slider-row">
+<span class="slider-label" style="color:#EF4444">R</span>
+<input type="range" class="slider-input" id="rSlider" min="0" max="255" value="37" style="background:linear-gradient(to right,#000,#FF0000)">
+<span class="slider-val" id="rVal">37</span>
+</div>
+<div class="slider-row">
+<span class="slider-label" style="color:#22C55E">G</span>
+<input type="range" class="slider-input" id="gSlider" min="0" max="255" value="99" style="background:linear-gradient(to right,#000,#00FF00)">
+<span class="slider-val" id="gVal">99</span>
+</div>
+<div class="slider-row">
+<span class="slider-label" style="color:#3B82F6">B</span>
+<input type="range" class="slider-input" id="bSlider" min="0" max="255" value="235" style="background:linear-gradient(to right,#000,#0000FF)">
+<span class="slider-val" id="bVal">235</span>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">🎨 자주 쓰는 색상</div>
+<div class="palette-grid" id="palette"></div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
+<script>
+(function(){
+var PALETTE=["#EF4444","#F97316","#EAB308","#22C55E","#14B8A6","#3B82F6","#6366F1","#A855F7","#EC4899","#F43F5E","#000000","#374151","#6B7280","#9CA3AF","#D1D5DB","#FFFFFF","#1E40AF","#047857","#B91C1C","#92400E","#4C1D95","#831843","#FEF3C7","#DBEAFE","#D1FAE5","#FCE7F3","#EDE9FE","#FEE2E2","#CCFBF1","#FFF7ED"];
+
+var preview=document.getElementById("colorPreview");
+var picker=document.getElementById("colorPicker");
+var hexIn=document.getElementById("hexInput");
+var rgbIn=document.getElementById("rgbInput");
+var hslIn=document.getElementById("hslInput");
+var rS=document.getElementById("rSlider");
+var gS=document.getElementById("gSlider");
+var bS=document.getElementById("bSlider");
+
+function updateFromRGB(r,g,b){
+  var hex="#"+pad(r)+pad(g)+pad(b);
+  var hsl=rgbToHsl(r,g,b);
+  preview.style.background=hex;
+  picker.value=hex;
+  hexIn.value=hex.toUpperCase();
+  rgbIn.value="rgb("+r+", "+g+", "+b+")";
+  hslIn.value="hsl("+hsl[0]+", "+hsl[1]+"%, "+hsl[2]+"%)";
+  rS.value=r;gS.value=g;bS.value=b;
+  document.getElementById("rVal").textContent=r;
+  document.getElementById("gVal").textContent=g;
+  document.getElementById("bVal").textContent=b;
+}
+
+function pad(n){var s=n.toString(16);return s.length<2?"0"+s:s;}
+
+function rgbToHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  var max=Math.max(r,g,b),min=Math.min(r,g,b);
+  var h=0,s=0,l=(max+min)/2;
+  if(max!==min){
+    var d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    if(max===r)h=((g-b)/d+(g<b?6:0))/6;
+    else if(max===g)h=((b-r)/d+2)/6;
+    else h=((r-g)/d+4)/6;
+  }
+  return[Math.round(h*360),Math.round(s*100),Math.round(l*100)];
+}
+
+function hslToRgb(h,s,l){
+  h/=360;s/=100;l/=100;
+  var r,g,b;
+  if(s===0){r=g=b=l;}
+  else{
+    var q=l<0.5?l*(1+s):l+s-l*s;
+    var p=2*l-q;
+    r=hue2rgb(p,q,h+1/3);
+    g=hue2rgb(p,q,h);
+    b=hue2rgb(p,q,h-1/3);
+  }
+  return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];
+}
+
+function hue2rgb(p,q,t){
+  if(t<0)t+=1;if(t>1)t-=1;
+  if(t<1/6)return p+(q-p)*6*t;
+  if(t<1/2)return q;
+  if(t<2/3)return p+(q-p)*(2/3-t)*6;
+  return p;
+}
+
+picker.addEventListener("input",function(){
+  var hex=this.value;
+  var r=parseInt(hex.substr(1,2),16);
+  var g=parseInt(hex.substr(3,2),16);
+  var b=parseInt(hex.substr(5,2),16);
+  updateFromRGB(r,g,b);
+});
+
+hexIn.addEventListener("change",function(){
+  var v=this.value.replace(/[^0-9a-fA-F#]/g,"");
+  if(v.charAt(0)!=="#")v="#"+v;
+  if(v.length===4)v="#"+v[1]+v[1]+v[2]+v[2]+v[3]+v[3];
+  if(v.length===7){
+    var r=parseInt(v.substr(1,2),16);
+    var g=parseInt(v.substr(3,2),16);
+    var b=parseInt(v.substr(5,2),16);
+    if(!isNaN(r)&&!isNaN(g)&&!isNaN(b))updateFromRGB(r,g,b);
+  }
+});
+
+rgbIn.addEventListener("change",function(){
+  var m=this.value.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  if(m)updateFromRGB(parseInt(m[1]),parseInt(m[2]),parseInt(m[3]));
+});
+
+hslIn.addEventListener("change",function(){
+  var m=this.value.match(/(\d+)\s*,\s*(\d+)%?\s*,\s*(\d+)%?/);
+  if(m){
+    var rgb=hslToRgb(parseInt(m[1]),parseInt(m[2]),parseInt(m[3]));
+    updateFromRGB(rgb[0],rgb[1],rgb[2]);
+  }
+});
+
+rS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+gS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+bS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+
+var palEl=document.getElementById("palette");
+var palHTML="";
+for(var i=0;i<PALETTE.length;i++){
+  palHTML+='<div class="palette-item" style="background:'+PALETTE[i]+'" data-color="'+PALETTE[i]+'"></div>';
+}
+palEl.innerHTML=palHTML;
+palEl.addEventListener("click",function(e){
+  var item=e.target.closest(".palette-item");
+  if(!item)return;
+  var hex=item.dataset.color;
+  var r=parseInt(hex.substr(1,2),16);
+  var g=parseInt(hex.substr(3,2),16);
+  var b=parseInt(hex.substr(5,2),16);
+  updateFromRGB(r,g,b);
+});
+
+window.copyCode=function(id){
+  var val=document.getElementById(id).value;
+  navigator.clipboard.writeText(val).then(function(){
+    var t=document.getElementById("toast");
+    t.textContent=val+" 복사됨";
+    t.classList.add("show");
+    setTimeout(function(){t.classList.remove("show");},2000);
+  });
+};
+})();
+</script>
+</body>
+</html>

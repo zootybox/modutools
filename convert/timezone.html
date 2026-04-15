@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>시간대 변환기 - 전 세계 시간대 실시간 변환 | modutools</title>
+<meta name="description" content="전 세계 주요 도시의 시간대를 실시간으로 변환합니다. 한국, 미국, 유럽, 일본 등 주요 시간대 지원.">
+<link rel="canonical" href="https://modutools.com/convert/timezone.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.select-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;outline:none;background:#fff;cursor:pointer}
+.select-field:focus{border-color:var(--primary)}
+.swap-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:18px;transition:.2s;margin:8px auto}
+.swap-btn:hover{border-color:var(--primary);background:var(--primary-light)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-box{background:linear-gradient(135deg,#DBEAFE,#EDE9FE);border-radius:10px;padding:24px;text-align:center;margin-bottom:16px}
+.result-time{font-size:36px;font-weight:800;color:var(--primary)}
+.result-date{font-size:14px;color:var(--g500);margin-top:4px}
+.result-zone{font-size:13px;color:var(--g400);margin-top:2px}
+.world-list{margin-top:16px}
+.world-item{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--g100)}
+.world-item:last-child{border-bottom:none}
+.world-city{font-size:14px;font-weight:600;color:var(--g700)}
+.world-city .flag{margin-right:6px}
+.world-time{font-size:15px;font-weight:700;color:var(--g900)}
+.world-offset{font-size:11px;color:var(--g400)}
+.now-btn{padding:8px 16px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s;margin-left:8px}
+.now-btn:hover{border-color:var(--primary);color:var(--primary)}
+@media(max-width:480px){.result-time{font-size:28px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"시간대 변환기","url":"https://modutools.com/convert/timezone.html","description":"전 세계 주요 도시의 시간대를 실시간으로 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">시간대 변환기</h1>
+<p class="page-sub">전 세계 주요 도시의 시간대를 실시간으로 변환합니다</p>
+<div class="card">
+<div class="card-title">🌍 시간대 변환</div>
+<div class="input-group">
+<div style="display:flex;align-items:center">
+<label class="input-label" style="margin-bottom:0;flex:1">기준 시간대</label>
+<button class="now-btn" onclick="setNow()">현재 시간</button>
+</div>
+<select class="select-field" id="fromZone" style="margin-top:6px"></select>
+</div>
+<div class="input-group">
+<label class="input-label">날짜 및 시간</label>
+<input type="datetime-local" class="input-field" id="fromTime">
+</div>
+<div class="swap-btn" onclick="swapZones()">&#8693;</div>
+<div class="input-group">
+<label class="input-label">변환할 시간대</label>
+<select class="select-field" id="toZone"></select>
+</div>
+<button class="calc-btn" onclick="convert()">시간 변환하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="result-box">
+<div class="result-time" id="resultTime">-</div>
+<div class="result-date" id="resultDate">-</div>
+<div class="result-zone" id="resultZone">-</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">🕐 주요 도시 현재 시간</div>
+<div class="world-list" id="worldList"></div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+(function(){
+var ZONES=[
+  {id:"Asia/Seoul",name:"서울 (KST)",flag:"🇰🇷",offset:9},
+  {id:"Asia/Tokyo",name:"도쿄 (JST)",flag:"🇯🇵",offset:9},
+  {id:"Asia/Shanghai",name:"베이징 (CST)",flag:"🇨🇳",offset:8},
+  {id:"Asia/Hong_Kong",name:"홍콩 (HKT)",flag:"🇭🇰",offset:8},
+  {id:"Asia/Singapore",name:"싱가포르 (SGT)",flag:"🇸🇬",offset:8},
+  {id:"Asia/Bangkok",name:"방콕 (ICT)",flag:"🇹🇭",offset:7},
+  {id:"Asia/Kolkata",name:"뉴델리 (IST)",flag:"🇮🇳",offset:5.5},
+  {id:"Asia/Dubai",name:"두바이 (GST)",flag:"🇦🇪",offset:4},
+  {id:"Europe/London",name:"런던 (GMT/BST)",flag:"🇬🇧",offset:0},
+  {id:"Europe/Paris",name:"파리 (CET)",flag:"🇫🇷",offset:1},
+  {id:"Europe/Berlin",name:"베를린 (CET)",flag:"🇩🇪",offset:1},
+  {id:"Europe/Moscow",name:"모스크바 (MSK)",flag:"🇷🇺",offset:3},
+  {id:"America/New_York",name:"뉴욕 (EST)",flag:"🇺🇸",offset:-5},
+  {id:"America/Chicago",name:"시카고 (CST)",flag:"🇺🇸",offset:-6},
+  {id:"America/Denver",name:"덴버 (MST)",flag:"🇺🇸",offset:-7},
+  {id:"America/Los_Angeles",name:"LA (PST)",flag:"🇺🇸",offset:-8},
+  {id:"Pacific/Honolulu",name:"호놀룰루 (HST)",flag:"🇺🇸",offset:-10},
+  {id:"America/Sao_Paulo",name:"상파울루 (BRT)",flag:"🇧🇷",offset:-3},
+  {id:"Australia/Sydney",name:"시드니 (AEST)",flag:"🇦🇺",offset:10},
+  {id:"Pacific/Auckland",name:"오클랜드 (NZST)",flag:"🇳🇿",offset:12}
+];
+
+var DAYS=["일","월","화","수","목","금","토"];
+var fromZoneEl=document.getElementById("fromZone");
+var toZoneEl=document.getElementById("toZone");
+
+var opts="";
+for(var i=0;i<ZONES.length;i++){
+  var z=ZONES[i];
+  var sign=z.offset>=0?"+":"";
+  opts+='<option value="'+i+'">'+z.flag+" "+z.name+" (UTC"+sign+z.offset+")</option>";
+}
+fromZoneEl.innerHTML=opts;
+toZoneEl.innerHTML=opts;
+fromZoneEl.value="0";
+toZoneEl.value="12";
+
+function setNow(){
+  var now=new Date();
+  var y=now.getFullYear();
+  var m=String(now.getMonth()+1).padStart(2,"0");
+  var d=String(now.getDate()).padStart(2,"0");
+  var h=String(now.getHours()).padStart(2,"0");
+  var min=String(now.getMinutes()).padStart(2,"0");
+  document.getElementById("fromTime").value=y+"-"+m+"-"+d+"T"+h+":"+min;
+}
+
+function swapZones(){
+  var tmp=fromZoneEl.value;
+  fromZoneEl.value=toZoneEl.value;
+  toZoneEl.value=tmp;
+}
+
+function convert(){
+  var timeStr=document.getElementById("fromTime").value;
+  if(!timeStr){alert("날짜와 시간을 입력해주세요.");return;}
+  var fromIdx=parseInt(fromZoneEl.value);
+  var toIdx=parseInt(toZoneEl.value);
+  var fromOffset=ZONES[fromIdx].offset;
+  var toOffset=ZONES[toIdx].offset;
+
+  var inputDate=new Date(timeStr);
+  var utcMs=inputDate.getTime()-(fromOffset*60*60*1000);
+  var targetMs=utcMs+(toOffset*60*60*1000);
+  var targetDate=new Date(targetMs);
+
+  var hours=String(targetDate.getUTCHours()).padStart(2,"0");
+  var minutes=String(targetDate.getUTCMinutes()).padStart(2,"0");
+  var year=targetDate.getUTCFullYear();
+  var month=targetDate.getUTCMonth()+1;
+  var day=targetDate.getUTCDate();
+  var dayOfWeek=DAYS[targetDate.getUTCDay()];
+
+  document.getElementById("resultTime").textContent=hours+":"+minutes;
+  document.getElementById("resultDate").textContent=year+"년 "+month+"월 "+day+"일 ("+dayOfWeek+")";
+  document.getElementById("resultZone").textContent=ZONES[toIdx].flag+" "+ZONES[toIdx].name;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+
+function updateWorldClock(){
+  var now=new Date();
+  var utcMs=now.getTime()+(now.getTimezoneOffset()*60*1000);
+  var html="";
+  for(var i=0;i<ZONES.length;i++){
+    var z=ZONES[i];
+    var localMs=utcMs+(z.offset*60*60*1000);
+    var local=new Date(localMs);
+    var h=String(local.getUTCHours()).padStart(2,"0");
+    var m=String(local.getUTCMinutes()).padStart(2,"0");
+    var s=String(local.getUTCSeconds()).padStart(2,"0");
+    var sign=z.offset>=0?"+":"";
+    html+='<div class="world-item"><div><span class="world-city"><span class="flag">'+z.flag+"</span>"+z.name+'</span><br><span class="world-offset">UTC'+sign+z.offset+"</span></div>";
+    html+='<span class="world-time">'+h+":"+m+":"+s+"</span></div>";
+  }
+  document.getElementById("worldList").innerHTML=html;
+}
+
+setNow();
+updateWorldClock();
+setInterval(updateWorldClock,1000);
+
+window.setNow=setNow;
+window.swapZones=swapZones;
+window.convert=convert;
+})();
+</script>
+</body>
+</html>
