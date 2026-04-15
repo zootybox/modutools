@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>전기요금 계산기 - 주택용 전기요금 계산 | modutools</title>
+<meta name="description" content="월 사용량(kWh)을 입력하면 주택용 전기요금을 즉시 계산합니다. 누진세 구간별 요금, 부가세, 전력기금 포함.">
+<link rel="canonical" href="https://modutools.com/life/electric.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:36px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.detail-list{margin-top:12px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
+.detail-row.total .value{color:var(--primary)}
+.tier-bar{margin-top:16px}
+.tier-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.tier-fill{height:8px;border-radius:4px;transition:.3s}
+.tier-label{min-width:80px;color:var(--g500)}
+.tier-value{color:var(--g700);font-weight:600;min-width:70px;text-align:right}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:28px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"전기요금 계산기","url":"https://modutools.com/life/electric.html","description":"월 사용량으로 주택용 전기요금을 계산하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">전기요금 계산기</h1>
+<p class="page-sub">월 사용량을 입력하면 주택용 전기요금을 계산합니다</p>
+<div class="card">
+<div class="card-title">💡 사용량 입력</div>
+<div class="input-group">
+<label class="input-label">월 전력 사용량</label>
+<div class="input-row">
+<input type="number" class="input-field" id="kwh" placeholder="300" inputmode="numeric" min="0">
+<span class="input-unit">kWh</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">전기요금 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="totalBill">-</div>
+<div class="result-label">월 예상 전기요금 (VAT, 전력기금 포함)</div>
+</div>
+<div class="detail-list">
+<div class="detail-row"><span class="label">기본요금</span><span class="value" id="baseFee">-</span></div>
+<div class="detail-row"><span class="label">전력량요금</span><span class="value" id="usageFee">-</span></div>
+<div class="detail-row"><span class="label">기후환경요금</span><span class="value" id="climateFee">-</span></div>
+<div class="detail-row"><span class="label">연료비조정요금</span><span class="value" id="fuelFee">-</span></div>
+<div class="detail-row"><span class="label">부가가치세 (10%)</span><span class="value" id="vat">-</span></div>
+<div class="detail-row"><span class="label">전력산업기반기금 (3.7%)</span><span class="value" id="fund">-</span></div>
+<div class="detail-row total"><span class="label">합계</span><span class="value" id="totalFee">-</span></div>
+</div>
+<div class="tier-bar" id="tierBar"></div>
+</div>
+<p class="disclaimer">※ 본 계산은 2024년 주택용(저압) 전기요금 기준 참고용이며, 실제 요금과 차이가 있을 수 있습니다.<br>정확한 요금은 한국전력공사(KEPCO)에서 확인하세요.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var TIERS=[
+  {limit:200,base:910,rate:120.0,label:"1구간 (0~200kWh)"},
+  {limit:400,base:1600,rate:214.6,label:"2구간 (201~400kWh)"},
+  {limit:Infinity,base:7300,rate:307.3,label:"3구간 (401kWh~)"}
+];
+var CLIMATE_RATE=9.0;
+var FUEL_RATE=-1.8;
+
+function calculate(){
+  var kwh=parseInt(document.getElementById("kwh").value)||0;
+  if(kwh<=0){alert("사용량을 입력해주세요.");return;}
+
+  var baseFee=0,usageFee=0,remaining=kwh,tierIdx=0;
+  var tierDetails=[];
+
+  if(kwh<=200){baseFee=TIERS[0].base;tierIdx=0;}
+  else if(kwh<=400){baseFee=TIERS[1].base;tierIdx=1;}
+  else{baseFee=TIERS[2].base;tierIdx=2;}
+
+  remaining=kwh;
+  var prev=0;
+  for(var i=0;i<TIERS.length;i++){
+    var tierMax=TIERS[i].limit;
+    var tierKwh=Math.min(remaining,tierMax-prev);
+    if(tierKwh<=0)break;
+    var tierCost=tierKwh*TIERS[i].rate;
+    usageFee+=tierCost;
+    tierDetails.push({label:TIERS[i].label,kwh:tierKwh,cost:tierCost});
+    remaining-=tierKwh;
+    prev=tierMax;
+  }
+
+  var climateFee=kwh*CLIMATE_RATE;
+  var fuelFee=kwh*FUEL_RATE;
+  var subtotal=baseFee+usageFee+climateFee+fuelFee;
+  if(subtotal<0)subtotal=0;
+  var vat=Math.round(subtotal*0.1);
+  var fund=Math.floor(subtotal*0.037/10)*10;
+  var total=Math.round(subtotal)+vat+fund;
+
+  document.getElementById("baseFee").textContent=fmt(baseFee)+"원";
+  document.getElementById("usageFee").textContent=fmt(Math.round(usageFee))+"원";
+  document.getElementById("climateFee").textContent=fmt(Math.round(climateFee))+"원";
+  document.getElementById("fuelFee").textContent=fmt(Math.round(fuelFee))+"원";
+  document.getElementById("vat").textContent=fmt(vat)+"원";
+  document.getElementById("fund").textContent=fmt(fund)+"원";
+  document.getElementById("totalFee").textContent=fmt(total)+"원";
+  document.getElementById("totalBill").textContent=fmt(total)+"원";
+
+  var barHTML="";
+  for(var j=0;j<tierDetails.length;j++){
+    var pct=Math.round(tierDetails[j].kwh/kwh*100);
+    var colors=["#3B82F6","#EAB308","#EF4444"];
+    barHTML+='<div class="tier-item"><span class="tier-label">'+tierDetails[j].label+'</span><div class="tier-fill" style="width:'+pct+'%;background:'+colors[j]+'"></div><span class="tier-value">'+tierDetails[j].kwh+'kWh / '+fmt(Math.round(tierDetails[j].cost))+'원</span></div>';
+  }
+  document.getElementById("tierBar").innerHTML=barHTML;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+
+function fmt(n){return n.toLocaleString();}
+</script>
+</body>
+</html>

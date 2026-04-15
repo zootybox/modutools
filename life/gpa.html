@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>학점 계산기 - 평균 학점(GPA) 계산 | modutools</title>
+<meta name="description" content="과목별 학점과 성적을 입력하면 평균 학점(GPA)을 자동 계산합니다. 4.5만점, 4.3만점 기준 모두 지원.">
+<link rel="canonical" href="https://modutools.com/life/gpa.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.subject-row{display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.subject-name{flex:1;border:1.5px solid var(--g200);border-radius:8px;padding:10px;font-size:13px;font-family:inherit;outline:none}
+.subject-name:focus{border-color:var(--primary)}
+.subject-credit{width:56px;border:1.5px solid var(--g200);border-radius:8px;padding:10px;font-size:13px;font-family:inherit;outline:none;text-align:center}
+.subject-credit:focus{border-color:var(--primary)}
+.subject-grade{width:72px;border:1.5px solid var(--g200);border-radius:8px;padding:10px;font-size:13px;font-family:inherit;outline:none;background:#fff;cursor:pointer}
+.subject-grade:focus{border-color:var(--primary)}
+.remove-btn{width:32px;height:32px;border:none;border-radius:8px;background:var(--g100);color:var(--g400);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}
+.remove-btn:hover{background:#FEE2E2;color:#EF4444}
+.add-btn{width:100%;padding:10px;border:1.5px dashed var(--g300);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:transparent;font-family:inherit;color:var(--g500);transition:.2s;margin-top:4px}
+.add-btn:hover{border-color:var(--primary);color:var(--primary)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
+.calc-btn:hover{background:var(--primary-dark)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:42px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px;text-align:center}
+.stat-value{font-size:18px;font-weight:800;color:var(--g900)}
+.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
+.subject-header{display:flex;gap:6px;margin-bottom:6px;font-size:11px;color:var(--g400);font-weight:600}
+.subject-header span:nth-child(1){flex:1}
+.subject-header span:nth-child(2){width:56px;text-align:center}
+.subject-header span:nth-child(3){width:72px;text-align:center}
+.subject-header span:nth-child(4){width:32px}
+@media(max-width:480px){.result-number{font-size:34px}.stats-grid{gap:6px}.stat-value{font-size:15px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"학점 계산기","url":"https://modutools.com/life/gpa.html","description":"과목별 학점과 성적으로 평균 학점(GPA)을 계산하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">학점 계산기</h1>
+<p class="page-sub">과목별 학점과 성적을 입력하면 평균 학점(GPA)을 계산합니다</p>
+<div class="card">
+<div class="card-title">🎓 만점 기준</div>
+<div class="toggle-row" id="scaleRow">
+<div class="toggle-btn active" data-scale="4.5" onclick="setScale(this)">4.5 만점</div>
+<div class="toggle-btn" data-scale="4.3" onclick="setScale(this)">4.3 만점</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">📝 과목 입력</div>
+<div class="subject-header"><span>과목명</span><span>학점</span><span>성적</span><span></span></div>
+<div id="subjectList"></div>
+<button class="add-btn" onclick="addRow()">+ 과목 추가</button>
+<button class="calc-btn" onclick="calculate()">학점 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="gpaResult">-</div>
+<div class="result-label" id="gpaLabel">/ 4.5</div>
+</div>
+<div class="stats-grid">
+<div class="stat-box"><div class="stat-value" id="totalCredits">-</div><div class="stat-label">총 학점</div></div>
+<div class="stat-box"><div class="stat-value" id="totalSubjects">-</div><div class="stat-label">과목 수</div></div>
+<div class="stat-box"><div class="stat-value" id="totalPoints">-</div><div class="stat-label">총 성적점수</div></div>
+</div>
+</div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var currentScale="4.5";
+var GRADES_45={"A+":4.5,"A0":4.0,"B+":3.5,"B0":3.0,"C+":2.5,"C0":2.0,"D+":1.5,"D0":1.0,"F":0};
+var GRADES_43={"A+":4.3,"A0":4.0,"A-":3.7,"B+":3.3,"B0":3.0,"B-":2.7,"C+":2.3,"C0":2.0,"C-":1.7,"D+":1.3,"D0":1.0,"D-":0.7,"F":0};
+var rowCount=0;
+
+function setScale(el){
+  var btns=document.querySelectorAll("#scaleRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentScale=el.dataset.scale;
+  rebuildGrades();
+}
+
+function getGrades(){return currentScale==="4.5"?GRADES_45:GRADES_43;}
+
+function gradeOptions(){
+  var g=getGrades();
+  var html="";
+  for(var k in g)html+='<option value="'+k+'">'+k+"</option>";
+  return html;
+}
+
+function addRow(){
+  rowCount++;
+  var list=document.getElementById("subjectList");
+  var div=document.createElement("div");
+  div.className="subject-row";
+  div.id="row-"+rowCount;
+  div.innerHTML='<input class="subject-name" placeholder="과목명"><input class="subject-credit" type="number" value="3" min="1" max="6"><select class="subject-grade">'+gradeOptions()+'</select><button class="remove-btn" onclick="removeRow(\'row-'+rowCount+'\')">&times;</button>';
+  list.appendChild(div);
+}
+
+function removeRow(id){
+  var el=document.getElementById(id);
+  if(el)el.remove();
+}
+
+function rebuildGrades(){
+  var selects=document.querySelectorAll(".subject-grade");
+  var opts=gradeOptions();
+  for(var i=0;i<selects.length;i++){
+    var cur=selects[i].value;
+    selects[i].innerHTML=opts;
+    if(selects[i].querySelector('option[value="'+cur+'"]'))selects[i].value=cur;
+  }
+}
+
+function calculate(){
+  var rows=document.querySelectorAll(".subject-row");
+  if(rows.length===0){alert("과목을 추가해주세요.");return;}
+  var grades=getGrades();
+  var totalPoints=0,totalCredits=0,count=0;
+  for(var i=0;i<rows.length;i++){
+    var credit=parseInt(rows[i].querySelector(".subject-credit").value)||0;
+    var grade=rows[i].querySelector(".subject-grade").value;
+    if(credit>0&&grades[grade]!==undefined){
+      totalPoints+=credit*grades[grade];
+      totalCredits+=credit;
+      count++;
+    }
+  }
+  if(totalCredits===0){alert("학점을 올바르게 입력해주세요.");return;}
+  var gpa=totalPoints/totalCredits;
+  document.getElementById("gpaResult").textContent=gpa.toFixed(2);
+  document.getElementById("gpaLabel").textContent="/ "+currentScale;
+  document.getElementById("totalCredits").textContent=totalCredits;
+  document.getElementById("totalSubjects").textContent=count;
+  document.getElementById("totalPoints").textContent=totalPoints.toFixed(1);
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+
+for(var i=0;i<5;i++)addRow();
+</script>
+</body>
+</html>

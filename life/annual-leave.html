@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>연차 계산기 - 입사일 기준 연차 일수 계산 | modutools</title>
+<meta name="description" content="입사일을 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차를 자동 계산합니다. 1년 미만, 1년 이상 모두 지원.">
+<link rel="canonical" href="https://modutools.com/life/annual-leave.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:42px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;text-align:center}
+.stat-value{font-size:18px;font-weight:800;color:var(--g900)}
+.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
+.year-list{margin-top:16px}
+.year-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--g50);border-radius:8px;margin-bottom:6px;font-size:13px}
+.year-item.current{background:var(--primary-light);border:1px solid var(--primary)}
+.year-item .yr{color:var(--g500);min-width:80px}
+.year-item .days{font-weight:700;color:var(--g900)}
+.year-item.current .yr{color:var(--primary)}
+.year-item.current .days{color:var(--primary)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:34px}.stats-grid{gap:6px}.stat-value{font-size:15px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"연차 계산기","url":"https://modutools.com/life/annual-leave.html","description":"입사일 기준 연차 발생일수를 계산하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">연차 계산기</h1>
+<p class="page-sub">입사일을 입력하면 근로기준법 기준 연차 발생일수를 계산합니다</p>
+<div class="card">
+<div class="card-title">📅 입사일 입력</div>
+<div class="input-group">
+<label class="input-label">입사일</label>
+<input type="date" class="input-field" id="startDate">
+</div>
+<button class="calc-btn" onclick="calculate()">연차 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 연차 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="totalLeave">-</div>
+<div class="result-label">올해 연차 일수</div>
+</div>
+<div class="stats-grid">
+<div class="stat-box"><div class="stat-value" id="workYears">-</div><div class="stat-label">근속 연수</div></div>
+<div class="stat-box"><div class="stat-value" id="workDays">-</div><div class="stat-label">근무 일수</div></div>
+<div class="stat-box"><div class="stat-value" id="totalAccum">-</div><div class="stat-label">누적 총 연차</div></div>
+<div class="stat-box"><div class="stat-value" id="nextAnniv">-</div><div class="stat-label">다음 입사 기념일</div></div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">📋 연도별 연차 발생 내역</div>
+<div class="year-list" id="yearList"></div>
+</div>
+<p class="disclaimer">※ 근로기준법 제60조 기준이며, 회사 내규에 따라 다를 수 있습니다.<br>1년 미만: 1개월 개근 시 1일 / 1년 이상: 15일 + 2년마다 1일 가산 (최대 25일)</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+function calculate(){
+  var input=document.getElementById("startDate").value;
+  if(!input){alert("입사일을 입력해주세요.");return;}
+  var start=new Date(input);
+  var today=new Date();
+  if(start>today){alert("입사일이 오늘 이후입니다.");return;}
+
+  var diffMs=today.getTime()-start.getTime();
+  var diffDays=Math.floor(diffMs/(1000*60*60*24));
+  var years=yearsBetween(start,today);
+
+  var currentLeave=0;
+  var totalAccum=0;
+  var yearItems=[];
+
+  if(years<1){
+    var months=Math.floor(diffDays/30);
+    currentLeave=Math.min(months,11);
+    yearItems.push({label:"1년차 (월별)",days:currentLeave+" ("+months+"개월)",current:true});
+    totalAccum=currentLeave;
+  }else{
+    var firstYearLeave=11;
+    yearItems.push({label:"1년차 (월별)",days:firstYearLeave,current:false});
+    totalAccum+=firstYearLeave;
+
+    for(var y=1;y<=years;y++){
+      var leave=calcYearLeave(y);
+      totalAccum+=leave;
+      var isCurrent=(y===years);
+      if(isCurrent)currentLeave=leave;
+      yearItems.push({label:(y+1)+"년차",days:leave,current:isCurrent});
+    }
+  }
+
+  document.getElementById("totalLeave").textContent=currentLeave+"일";
+  document.getElementById("workYears").textContent=years+"년";
+  document.getElementById("workDays").textContent=diffDays.toLocaleString()+"일";
+  document.getElementById("totalAccum").textContent=totalAccum+"일";
+
+  var nextAnniv=new Date(today.getFullYear(),start.getMonth(),start.getDate());
+  if(nextAnniv<=today)nextAnniv.setFullYear(nextAnniv.getFullYear()+1);
+  var daysUntil=Math.ceil((nextAnniv.getTime()-today.getTime())/(1000*60*60*24));
+  document.getElementById("nextAnniv").textContent="D-"+daysUntil;
+
+  var listHTML="";
+  for(var i=yearItems.length-1;i>=0;i--){
+    var item=yearItems[i];
+    listHTML+='<div class="year-item'+(item.current?" current":"")+'"><span class="yr">'+item.label+'</span><span class="days">'+item.days+"일</span></div>";
+  }
+  document.getElementById("yearList").innerHTML=listHTML;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+
+function calcYearLeave(completedYears){
+  var base=15;
+  var extra=Math.floor((completedYears-1)/2);
+  var total=base+extra;
+  return Math.min(total,25);
+}
+
+function yearsBetween(a,b){
+  var years=b.getFullYear()-a.getFullYear();
+  var m=b.getMonth()-a.getMonth();
+  if(m<0||(m===0&&b.getDate()<a.getDate()))years--;
+  return Math.max(0,years);
+}
+</script>
+</body>
+</html>
