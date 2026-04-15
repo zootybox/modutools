@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>적금 이자 계산기 - 단리·복리 세전·세후 비교 | modutools</title>
+<meta name="description" content="월 적립액, 금리, 기간을 입력하면 단리·복리별 이자와 만기금액을 세전·세후로 비교 계산합니다.">
+<link rel="canonical" href="https://modutools.com/calc/savings.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:32px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.compare-card{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px}
+.compare-card.highlight{background:var(--primary-light);border-color:var(--primary)}
+.compare-title{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center}
+.compare-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px}
+.compare-row .label{color:var(--g500)}
+.compare-row .value{font-weight:700;color:var(--g900)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:26px}.compare-grid{grid-template-columns:1fr}.compare-row{font-size:11px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"적금 이자 계산기","url":"https://modutools.com/calc/savings.html","description":"월 적립액, 금리, 기간으로 단리/복리 이자를 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">적금 이자 계산기</h1>
+<p class="page-sub">월 적립액, 금리, 기간을 입력하면 이자와 만기금액을 계산합니다</p>
+<div class="card">
+<div class="card-title">🐷 적금 정보 입력</div>
+<div class="input-group">
+<label class="input-label">월 적립액</label>
+<div class="input-row">
+<input type="text" class="input-field comma-input" id="monthly" placeholder="500,000" inputmode="numeric">
+<span class="input-unit">원</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">연 이자율</label>
+<div class="input-row">
+<input type="number" class="input-field" id="rate" value="3.5" step="0.1" inputmode="decimal">
+<span class="input-unit">%</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">적금 기간</label>
+<div class="input-row">
+<input type="number" class="input-field" id="months" value="12" min="1" max="120" inputmode="numeric">
+<span class="input-unit">개월</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">세금 유형</label>
+<div class="toggle-row" id="taxRow">
+<div class="toggle-btn active" data-tax="normal" onclick="setTax(this)">일반과세 (15.4%)</div>
+<div class="toggle-btn" data-tax="low" onclick="setTax(this)">세금우대 (9.5%)</div>
+<div class="toggle-btn" data-tax="free" onclick="setTax(this)">비과세</div>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">이자 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="mainResult">-</div>
+<div class="result-label">세후 만기 수령액</div>
+</div>
+<div class="compare-grid" id="compareGrid"></div>
+</div>
+<p class="disclaimer">※ 본 결과는 참고용이며, 실제 이자는 금융기관 계산 방식에 따라 다를 수 있습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var currentTax="normal";
+var TAX_RATES={normal:0.154,low:0.095,free:0};
+
+document.querySelectorAll(".comma-input").forEach(function(el){
+  el.addEventListener("input",function(){
+    var v=this.value.replace(/[^\d]/g,"");
+    this.value=v?parseInt(v).toLocaleString():"";
+  });
+});
+
+function setTax(el){
+  var btns=document.querySelectorAll("#taxRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentTax=el.dataset.tax;
+}
+
+function getNum(id){return parseInt((document.getElementById(id).value||"0").replace(/,/g,""))||0;}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+function calculate(){
+  var monthly=getNum("monthly");
+  var rate=parseFloat(document.getElementById("rate").value)||0;
+  var months=parseInt(document.getElementById("months").value)||0;
+  if(monthly<=0){alert("월 적립액을 입력해주세요.");return;}
+  if(rate<=0){alert("이자율을 입력해주세요.");return;}
+  if(months<=0){alert("적금 기간을 입력해주세요.");return;}
+
+  var totalDeposit=monthly*months;
+  var taxRate=TAX_RATES[currentTax];
+  var monthlyRate=rate/100/12;
+
+  // 단리: 매월 불입금 x 잔여개월 x 월이자율
+  var simpleInterest=0;
+  for(var i=1;i<=months;i++){
+    simpleInterest+=monthly*(months-i+1)*monthlyRate;
+  }
+  var simpleTax=Math.round(simpleInterest*taxRate);
+  var simpleAfterTax=simpleInterest-simpleTax;
+  var simpleTotal=totalDeposit+Math.round(simpleAfterTax);
+
+  // 복리: 매월 불입금에 복리 적용
+  var compoundTotal=0;
+  for(var j=1;j<=months;j++){
+    compoundTotal+=monthly*Math.pow(1+monthlyRate,months-j+1);
+  }
+  var compoundInterest=compoundTotal-totalDeposit;
+  var compoundTax=Math.round(compoundInterest*taxRate);
+  var compoundAfterTax=compoundInterest-compoundTax;
+  var compoundFinal=totalDeposit+Math.round(compoundAfterTax);
+
+  document.getElementById("mainResult").textContent=fmt(simpleTotal)+"원";
+
+  var html="";
+  html+='<div class="compare-card highlight"><div class="compare-title">단리</div>';
+  html+='<div class="compare-row"><span class="label">총 납입액</span><span class="value">'+fmt(totalDeposit)+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">세전 이자</span><span class="value">'+fmt(Math.round(simpleInterest))+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">이자 과세</span><span class="value">-'+fmt(simpleTax)+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">세후 이자</span><span class="value">'+fmt(Math.round(simpleAfterTax))+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">만기 수령액</span><span class="value" style="color:var(--primary)">'+fmt(simpleTotal)+'원</span></div></div>';
+
+  html+='<div class="compare-card"><div class="compare-title">복리</div>';
+  html+='<div class="compare-row"><span class="label">총 납입액</span><span class="value">'+fmt(totalDeposit)+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">세전 이자</span><span class="value">'+fmt(Math.round(compoundInterest))+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">이자 과세</span><span class="value">-'+fmt(compoundTax)+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">세후 이자</span><span class="value">'+fmt(Math.round(compoundAfterTax))+'원</span></div>';
+  html+='<div class="compare-row"><span class="label">만기 수령액</span><span class="value" style="color:var(--primary)">'+fmt(compoundFinal)+'원</span></div></div>';
+
+  document.getElementById("compareGrid").innerHTML=html;
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+</script>
+</body>
+</html>

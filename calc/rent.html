@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>전월세 전환율 계산기 - 전세 월세 변환 | modutools</title>
+<meta name="description" content="전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산합니다. 전환율 기준 자동 계산.">
+<link rel="canonical" href="https://modutools.com/calc/rent.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:32px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:26px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"전월세 전환율 계산기","url":"https://modutools.com/calc/rent.html","description":"전세를 월세로, 월세를 전세로 전환할 때 적정 금액을 계산하는 무료 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">전월세 전환율 계산기</h1>
+<p class="page-sub">전세와 월세를 전환할 때 적정 금액을 계산합니다</p>
+<div class="card">
+<div class="card-title">🏠 변환 방식</div>
+<div class="toggle-row" id="modeRow">
+<div class="toggle-btn active" data-mode="toMonthly" onclick="setMode(this)">전세 → 월세</div>
+<div class="toggle-btn" data-mode="toDeposit" onclick="setMode(this)">월세 → 전세</div>
+</div>
+</div>
+<div class="card" id="inputCard">
+<div class="card-title">💰 금액 입력</div>
+<div id="inputFields"></div>
+<div class="input-group">
+<label class="input-label">전월세 전환율 (연 %)</label>
+<div class="input-row">
+<input type="number" class="input-field" id="convRate" value="4.5" step="0.1" inputmode="decimal">
+<span class="input-unit">%</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="mainResult">-</div>
+<div class="result-label" id="mainLabel">-</div>
+</div>
+<div id="detailList"></div>
+</div>
+<p class="disclaimer">※ 주택임대차보호법상 전월세 전환율 상한은 기준금리+2%입니다.<br>본 결과는 참고용이며, 실제 계약은 전문가와 상의하세요.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+var currentMode="toMonthly";
+function setMode(el){
+  var btns=document.querySelectorAll("#modeRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentMode=el.dataset.mode;
+  buildInputs();
+}
+function buildInputs(){
+  var html="";
+  if(currentMode==="toMonthly"){
+    html+='<div class="input-group"><label class="input-label">전세 보증금</label><div class="input-row"><input type="text" class="input-field comma-input" id="fullDeposit" placeholder="30000" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
+    html+='<div class="input-group"><label class="input-label">변경할 보증금 (월세 전환 시)</label><div class="input-row"><input type="text" class="input-field comma-input" id="newDeposit" placeholder="10000" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
+  }else{
+    html+='<div class="input-group"><label class="input-label">현재 보증금</label><div class="input-row"><input type="text" class="input-field comma-input" id="curDeposit" placeholder="5000" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
+    html+='<div class="input-group"><label class="input-label">월세</label><div class="input-row"><input type="text" class="input-field comma-input" id="monthlyRent" placeholder="50" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
+  }
+  document.getElementById("inputFields").innerHTML=html;
+  document.querySelectorAll(".comma-input").forEach(function(el){
+    el.addEventListener("input",function(){
+      var v=this.value.replace(/[^\d]/g,"");
+      this.value=v?parseInt(v).toLocaleString():"";
+    });
+  });
+}
+function getNum(id){return parseInt((document.getElementById(id).value||"0").replace(/,/g,""))||0;}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+function calculate(){
+  var rate=parseFloat(document.getElementById("convRate").value)||0;
+  if(rate<=0){alert("전환율을 입력해주세요.");return;}
+  var html="";
+  if(currentMode==="toMonthly"){
+    var full=getNum("fullDeposit");
+    var newDep=getNum("newDeposit");
+    if(full<=0){alert("전세 보증금을 입력해주세요.");return;}
+    if(newDep>=full){alert("변경할 보증금은 전세금보다 작아야 합니다.");return;}
+    var diff=full-newDep;
+    var monthly=diff*10000*(rate/100)/12;
+    var monthlyMan=Math.round(monthly/10000);
+    document.getElementById("mainResult").textContent="월세 "+fmt(monthlyMan)+"만원";
+    document.getElementById("mainLabel").textContent="보증금 "+fmt(newDep)+"만원 / 월 "+fmt(monthlyMan)+"만원";
+    html='<div class="detail-row"><span class="label">기존 전세금</span><span class="value">'+fmt(full)+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">변경 보증금</span><span class="value">'+fmt(newDep)+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">전환 대상 금액</span><span class="value">'+fmt(diff)+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">전환율</span><span class="value">연 '+rate+'%</span></div>';
+    html+='<div class="detail-row"><span class="label">월세</span><span class="value">'+fmt(monthlyMan)+'만원 ('+fmt(Math.round(monthly))+'원)</span></div>';
+    html+='<div class="detail-row"><span class="label">연간 월세 합계</span><span class="value">'+fmt(monthlyMan*12)+'만원</span></div>';
+  }else{
+    var curDep=getNum("curDeposit");
+    var rent=getNum("monthlyRent");
+    if(rent<=0){alert("월세를 입력해주세요.");return;}
+    var convertedDeposit=rent*10000*12/(rate/100);
+    var totalDeposit=curDep*10000+convertedDeposit;
+    var totalMan=Math.round(totalDeposit/10000);
+    document.getElementById("mainResult").textContent="전세 환산 "+fmt(totalMan)+"만원";
+    document.getElementById("mainLabel").textContent="보증금 "+fmt(curDep)+"만원 + 월세 "+fmt(rent)+"만원 환산";
+    html='<div class="detail-row"><span class="label">현재 보증금</span><span class="value">'+fmt(curDep)+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">월세</span><span class="value">'+fmt(rent)+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">전환율</span><span class="value">연 '+rate+'%</span></div>';
+    html+='<div class="detail-row"><span class="label">월세 전세환산액</span><span class="value">'+fmt(Math.round(convertedDeposit/10000))+'만원</span></div>';
+    html+='<div class="detail-row"><span class="label">전세 환산 총액</span><span class="value">'+fmt(totalMan)+'만원</span></div>';
+  }
+  document.getElementById("detailList").innerHTML=html;
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+buildInputs();
+</script>
+</body>
+</html>
