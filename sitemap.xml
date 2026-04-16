@@ -71,6 +71,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://modutools.com/image/watermark.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://modutools.com/text/count.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

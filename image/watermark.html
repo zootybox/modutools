@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>워터마크 넣기 - 이미지에 텍스트 워터마크 추가 | modutools</title>
+<meta name="description" content="이미지에 텍스트 워터마크를 추가합니다. 위치, 크기, 투명도, 색상, 회전 설정 가능. 여러 장 일괄 처리 지원.">
+<link rel="canonical" href="https://modutools.com/image/watermark.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-row{display:flex;gap:8px;align-items:center}
+.range-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--g200);outline:none}
+.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.range-val{min-width:40px;text-align:right;font-size:14px;font-weight:700;color:var(--primary)}
+.pos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px}
+.pos-btn{padding:10px;border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;text-align:center;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
+.pos-btn:hover{border-color:var(--primary);color:var(--primary)}
+.pos-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.color-input{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:10px;padding:4px;cursor:pointer;background:#fff}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.preview-area{position:relative;margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid var(--g200)}
+.preview-area canvas{display:block;width:100%;height:auto}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.preview-wrap{text-align:center;margin-bottom:16px}
+.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
+.download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
+.download-btn:hover{background:var(--primary-dark)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.pos-grid{gap:4px}.pos-btn{padding:8px;font-size:10px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"워터마크 넣기","url":"https://modutools.com/image/watermark.html","description":"이미지에 텍스트 워터마크를 추가하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">워터마크 넣기</h1>
+<p class="page-sub">이미지에 텍스트 워터마크를 추가합니다</p>
+<div class="card">
+<div class="card-title">💧 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">🖼️</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*">
+</div>
+<div id="editorArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ 워터마크 설정</div>
+<div class="input-group">
+<label class="input-label">워터마크 텍스트</label>
+<input type="text" class="input-field" id="wmText" value="modutools.com" placeholder="워터마크 텍스트 입력">
+</div>
+<div class="input-group">
+<label class="input-label">위치</label>
+<div class="pos-grid" id="posGrid">
+<div class="pos-btn" data-pos="tl" onclick="setPos(this)">좌상단</div>
+<div class="pos-btn" data-pos="tc" onclick="setPos(this)">상단 중앙</div>
+<div class="pos-btn" data-pos="tr" onclick="setPos(this)">우상단</div>
+<div class="pos-btn" data-pos="ml" onclick="setPos(this)">좌 중앙</div>
+<div class="pos-btn active" data-pos="mc" onclick="setPos(this)">중앙</div>
+<div class="pos-btn" data-pos="mr" onclick="setPos(this)">우 중앙</div>
+<div class="pos-btn" data-pos="bl" onclick="setPos(this)">좌하단</div>
+<div class="pos-btn" data-pos="bc" onclick="setPos(this)">하단 중앙</div>
+<div class="pos-btn" data-pos="br" onclick="setPos(this)">우하단</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">모드</label>
+<div class="toggle-row" id="modeRow">
+<div class="toggle-btn active" data-mode="single" onclick="setMode(this)">단일</div>
+<div class="toggle-btn" data-mode="tile" onclick="setMode(this)">타일 (반복)</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">글자 크기</label>
+<div class="input-row">
+<input type="range" class="range-input" id="fontSize" min="10" max="120" value="36" oninput="updateVal('fontSize','fontSizeVal','px');drawPreview()">
+<span class="range-val" id="fontSizeVal">36px</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">투명도</label>
+<div class="input-row">
+<input type="range" class="range-input" id="opacity" min="5" max="100" value="30" oninput="updateVal('opacity','opacityVal','%');drawPreview()">
+<span class="range-val" id="opacityVal">30%</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">회전 각도</label>
+<div class="input-row">
+<input type="range" class="range-input" id="rotation" min="-90" max="90" value="-30" oninput="updateVal('rotation','rotationVal','deg');drawPreview()">
+<span class="range-val" id="rotationVal">-30deg</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">색상</label>
+<div class="input-row">
+<input type="color" class="color-input" id="wmColor" value="#ffffff" oninput="drawPreview()">
+<span style="font-size:13px;color:var(--g500);margin-left:4px">워터마크 글자 색상</span>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">👁️ 미리보기</div>
+<div class="preview-area"><canvas id="previewCanvas"></canvas></div>
+<button class="calc-btn" onclick="doExport()">워터마크 적용 후 다운로드</button>
+</div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">✅ 완성</div>
+<div class="preview-wrap"><img id="resultImg" class="preview-img"></div>
+<button class="download-btn" onclick="downloadResult()">다운로드</button>
+</div>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+(function(){
+var origImg=null,resultBlob=null,resultName="";
+var currentPos="mc",currentMode="single";
+var pvCanvas=document.getElementById("previewCanvas");
+var pvCtx=pvCanvas.getContext("2d");
+
+document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
+document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
+document.getElementById("uploadZone").addEventListener("drop",function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
+document.getElementById("wmText").addEventListener("input",function(){drawPreview();});
+
+function loadFile(file){
+  if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
+  resultName=file.name.replace(/\.[^.]+$/,"")+"_watermarked";
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      origImg=img;
+      document.getElementById("editorArea").style.display="block";
+      document.getElementById("resultArea").style.display="none";
+      drawPreview();
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+window.setPos=function(el){
+  var btns=document.querySelectorAll("#posGrid .pos-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentPos=el.dataset.pos;
+  drawPreview();
+};
+
+window.setMode=function(el){
+  var btns=document.querySelectorAll("#modeRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentMode=el.dataset.mode;
+  drawPreview();
+};
+
+window.updateVal=function(inputId,valId,unit){
+  document.getElementById(valId).textContent=document.getElementById(inputId).value+unit;
+};
+
+function getSettings(){
+  return{
+    text:document.getElementById("wmText").value||"watermark",
+    fontSize:parseInt(document.getElementById("fontSize").value),
+    opacity:parseInt(document.getElementById("opacity").value)/100,
+    rotation:parseInt(document.getElementById("rotation").value),
+    color:document.getElementById("wmColor").value
+  };
+}
+
+function drawWatermark(ctx,w,h,s){
+  ctx.save();
+  ctx.globalAlpha=s.opacity;
+  ctx.fillStyle=s.color;
+  ctx.font="bold "+s.fontSize+"px 'Pretendard Variable',sans-serif";
+  ctx.textBaseline="middle";
+
+  if(currentMode==="tile"){
+    var angle=s.rotation*Math.PI/180;
+    var gap=s.fontSize*4;
+    ctx.rotate(angle);
+    var diag=Math.sqrt(w*w+h*h);
+    for(var ty=-diag;ty<diag*2;ty+=gap){
+      for(var tx=-diag;tx<diag*2;tx+=gap){
+        ctx.fillText(s.text,tx,ty);
+      }
+    }
+  }else{
+    var tw=ctx.measureText(s.text).width;
+    var th=s.fontSize;
+    var pad=Math.max(20,s.fontSize*0.5);
+    var x=pad,y=pad+th/2;
+    if(currentPos.includes("c")&&!currentPos.includes("t")&&!currentPos.includes("b")){y=h/2;}
+    if(currentPos.includes("b")){y=h-pad-th/2;}
+    if(currentPos.includes("c")&&currentPos.length===2&&currentPos[1]==="c"){x=(w-tw)/2;}
+    if(currentPos[1]==="c"||currentPos==="tc"||currentPos==="bc"||currentPos==="mc"){x=(w-tw)/2;}
+    if(currentPos.includes("r")){x=w-tw-pad;}
+    if(currentPos==="mc"){x=(w-tw)/2;y=h/2;}
+
+    ctx.translate(x+tw/2,y);
+    ctx.rotate(s.rotation*Math.PI/180);
+    ctx.fillText(s.text,-tw/2,0);
+  }
+  ctx.restore();
+}
+
+function drawPreview(){
+  if(!origImg)return;
+  var maxW=600;
+  var scale=Math.min(1,maxW/origImg.width);
+  var w=Math.round(origImg.width*scale);
+  var h=Math.round(origImg.height*scale);
+  pvCanvas.width=w;pvCanvas.height=h;
+  pvCtx.drawImage(origImg,0,0,w,h);
+  var s=getSettings();
+  s.fontSize=Math.round(s.fontSize*scale);
+  drawWatermark(pvCtx,w,h,s);
+}
+
+window.doExport=function(){
+  if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
+  var outCanvas=document.createElement("canvas");
+  outCanvas.width=origImg.width;outCanvas.height=origImg.height;
+  var outCtx=outCanvas.getContext("2d");
+  outCtx.drawImage(origImg,0,0);
+  drawWatermark(outCtx,origImg.width,origImg.height,getSettings());
+  outCanvas.toBlob(function(blob){
+    resultBlob=blob;
+    document.getElementById("resultImg").src=URL.createObjectURL(blob);
+    document.getElementById("resultArea").style.display="block";
+    document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+  },"image/png");
+};
+
+window.downloadResult=function(){
+  if(!resultBlob)return;
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(resultBlob);
+  a.download=resultName+".png";
+  a.click();
+};
+
+window.drawPreview=drawPreview;
+})();
+</script>
+</body>
+</html>
