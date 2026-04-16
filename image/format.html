@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 포맷 변환 - PNG JPG WEBP GIF 변환 | modutools</title>
+<meta name="description" content="이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환합니다. 여러 장 일괄 변환 지원. 서버 전송 없이 브라우저에서 처리.">
+<link rel="canonical" href="https://modutools.com/image/format.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-zone.active{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.file-list{margin-top:12px}
+.file-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:8px}
+.file-thumb{width:48px;height:48px;border-radius:6px;object-fit:cover;border:1px solid var(--g200)}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:13px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-meta{font-size:11px;color:var(--g400);margin-top:2px}
+.file-download{padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--primary);transition:.2s;white-space:nowrap}
+.file-download:hover{background:var(--primary-light);border-color:var(--primary)}
+.download-all-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
+.download-all-btn:hover{background:var(--primary-dark)}
+.quality-row{display:none;margin-top:12px}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.toggle-btn{font-size:12px;padding:10px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 포맷 변환","url":"https://modutools.com/image/format.html","description":"이미지를 PNG, JPG, WEBP 포맷으로 변환하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">이미지 포맷 변환</h1>
+<p class="page-sub">이미지를 PNG, JPG, WEBP 포맷으로 변환합니다</p>
+<div class="card">
+<div class="card-title">🔄 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">🖼️</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>여러 장 선택 가능 (최대 10장)</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
+<div class="file-list" id="uploadList"></div>
+</div>
+<div id="settingsArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ 변환 설정</div>
+<div class="input-group">
+<label class="input-label">변환할 포맷</label>
+<div class="toggle-row" id="formatRow">
+<div class="toggle-btn active" data-fmt="png" onclick="setFormat(this)">PNG</div>
+<div class="toggle-btn" data-fmt="jpeg" onclick="setFormat(this)">JPG</div>
+<div class="toggle-btn" data-fmt="webp" onclick="setFormat(this)">WEBP</div>
+</div>
+</div>
+<div class="quality-row" id="qualityRow">
+<div class="input-group">
+<label class="input-label">품질 (1~100)</label>
+<div class="input-row">
+<input type="range" style="flex:1" id="quality" min="1" max="100" value="90" oninput="document.getElementById('qualVal').textContent=this.value">
+<span id="qualVal" style="min-width:30px;text-align:right;font-weight:700;font-size:14px;color:var(--primary)">90</span>
+</div>
+</div>
+</div>
+<button class="calc-btn" onclick="doConvert()">변환하기</button>
+</div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">✅ 변환 결과</div>
+<div class="file-list" id="resultList"></div>
+<button class="download-all-btn" id="downloadAllBtn" onclick="downloadAll()" style="display:none">전체 다운로드</button>
+</div>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+(function(){
+var files=[];
+var results=[];
+var currentFormat="png";
+
+var fileInput=document.getElementById("fileInput");
+var uploadZone=document.getElementById("uploadZone");
+
+uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("active");});
+uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("active");});
+uploadZone.addEventListener("drop",function(e){e.preventDefault();uploadZone.classList.remove("active");handleFiles(e.dataTransfer.files);});
+fileInput.addEventListener("change",function(){handleFiles(this.files);});
+
+function handleFiles(fileList){
+  files=[];
+  var list=document.getElementById("uploadList");
+  list.innerHTML="";
+  var count=Math.min(fileList.length,10);
+  for(var i=0;i<count;i++){
+    if(!fileList[i].type.startsWith("image/"))continue;
+    files.push(fileList[i]);
+    var size=(fileList[i].size/1024).toFixed(1);
+    list.innerHTML+='<div class="file-item"><div class="file-info"><div class="file-name">'+fileList[i].name+'</div><div class="file-meta">'+size+' KB</div></div></div>';
+  }
+  if(files.length>0){
+    document.getElementById("settingsArea").style.display="block";
+    document.getElementById("resultArea").style.display="none";
+  }
+}
+
+window.setFormat=function(el){
+  var btns=document.querySelectorAll("#formatRow .toggle-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  currentFormat=el.dataset.fmt;
+  document.getElementById("qualityRow").style.display=(currentFormat==="png")?"none":"block";
+};
+
+window.doConvert=function(){
+  if(files.length===0){alert("이미지를 업로드해주세요.");return;}
+  results=[];
+  var quality=parseInt(document.getElementById("quality").value)/100;
+  var mimeType="image/"+currentFormat;
+  var ext=currentFormat==="jpeg"?"jpg":currentFormat;
+  var done=0;
+  var list=document.getElementById("resultList");
+  list.innerHTML="";
+
+  for(var i=0;i<files.length;i++){
+    (function(file,idx){
+      var reader=new FileReader();
+      reader.onload=function(e){
+        var img=new Image();
+        img.onload=function(){
+          var canvas=document.createElement("canvas");
+          canvas.width=img.width;canvas.height=img.height;
+          var ctx=canvas.getContext("2d");
+          if(currentFormat==="jpeg"){
+            ctx.fillStyle="#FFFFFF";
+            ctx.fillRect(0,0,canvas.width,canvas.height);
+          }
+          ctx.drawImage(img,0,0);
+          canvas.toBlob(function(blob){
+            var baseName=file.name.replace(/\.[^.]+$/,"");
+            var newName=baseName+"."+ext;
+            var url=URL.createObjectURL(blob);
+            results[idx]={blob:blob,name:newName,url:url};
+            var origSize=(file.size/1024).toFixed(1);
+            var newSize=(blob.size/1024).toFixed(1);
+            list.innerHTML+='<div class="file-item"><img src="'+url+'" class="file-thumb"><div class="file-info"><div class="file-name">'+newName+'</div><div class="file-meta">'+origSize+' KB → '+newSize+' KB</div></div><button class="file-download" onclick="downloadOne('+idx+')">다운로드</button></div>';
+            done++;
+            if(done===files.length){
+              if(files.length>1)document.getElementById("downloadAllBtn").style.display="block";
+              document.getElementById("resultArea").style.display="block";
+              document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+            }
+          },mimeType,currentFormat==="png"?undefined:quality);
+        };
+        img.src=e.target.result;
+      };
+      reader.readAsDataURL(file);
+    })(files[i],i);
+  }
+};
+
+window.downloadOne=function(idx){
+  if(!results[idx])return;
+  var a=document.createElement("a");
+  a.href=results[idx].url;
+  a.download=results[idx].name;
+  a.click();
+};
+
+window.downloadAll=function(){
+  for(var i=0;i<results.length;i++){
+    if(results[i])downloadOne(i);
+  }
+};
+})();
+</script>
+</body>
+</html>
