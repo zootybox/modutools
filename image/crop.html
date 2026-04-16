@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 자르기 - 원하는 영역 크롭 | modutools</title>
+<meta name="description" content="이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 등 비율 프리셋 지원. 서버 전송 없이 브라우저에서 처리.">
+<link rel="canonical" href="https://modutools.com/image/crop.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.crop-container{position:relative;margin:16px 0;overflow:hidden;border-radius:10px;border:1px solid var(--g200);touch-action:none;user-select:none;-webkit-user-select:none}
+.crop-container img{display:block;width:100%;height:auto}
+.crop-overlay{position:absolute;top:0;left:0;right:0;bottom:0}
+.crop-dim{position:absolute;background:rgba(0,0,0,0.5)}
+.crop-box{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);cursor:move}
+.crop-handle{position:absolute;width:20px;height:20px;background:#fff;border:2px solid var(--primary);border-radius:3px;z-index:10}
+.crop-handle-tl{top:-10px;left:-10px;cursor:nw-resize}
+.crop-handle-tr{top:-10px;right:-10px;cursor:ne-resize}
+.crop-handle-bl{bottom:-10px;left:-10px;cursor:sw-resize}
+.crop-handle-br{bottom:-10px;right:-10px;cursor:se-resize}
+.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.preset-btn{padding:7px 12px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
+.preset-btn:hover,.preset-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;text-align:center}
+.input-field:focus{border-color:var(--primary)}
+.input-sep{font-size:14px;color:var(--g400);font-weight:600}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.result-area{display:none}
+.preview-wrap{text-align:center;margin-bottom:16px}
+.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid var(--g100)}
+.info-row .label{color:var(--g500)}
+.info-row .value{font-weight:700;color:var(--g900)}
+.download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
+.download-btn:hover{background:var(--primary-dark)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.preset-btn{font-size:11px;padding:5px 8px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 자르기","url":"https://modutools.com/image/crop.html","description":"이미지에서 원하는 영역만 선택하여 자르는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">이미지 자르기</h1>
+<p class="page-sub">원하는 영역만 선택하여 이미지를 자릅니다</p>
+<div class="card">
+<div class="card-title">✂️ 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">🖼️</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*">
+</div>
+<div id="editorArea" style="display:none">
+<div class="card">
+<div class="card-title">✂️ 자르기 영역 설정</div>
+<div class="preset-row" id="presetRow">
+<button class="preset-btn active" onclick="setRatio(this,0)">자유</button>
+<button class="preset-btn" onclick="setRatio(this,1)">1:1</button>
+<button class="preset-btn" onclick="setRatio(this,4/3)">4:3</button>
+<button class="preset-btn" onclick="setRatio(this,3/4)">3:4</button>
+<button class="preset-btn" onclick="setRatio(this,16/9)">16:9</button>
+<button class="preset-btn" onclick="setRatio(this,9/16)">9:16</button>
+</div>
+<div class="crop-container" id="cropContainer">
+<img id="cropImage">
+<div class="crop-box" id="cropBox">
+<div class="crop-handle crop-handle-tl" data-handle="tl"></div>
+<div class="crop-handle crop-handle-tr" data-handle="tr"></div>
+<div class="crop-handle crop-handle-bl" data-handle="bl"></div>
+<div class="crop-handle crop-handle-br" data-handle="br"></div>
+</div>
+</div>
+<div class="input-group" style="margin-top:12px">
+<label class="input-label">자르기 크기 (px)</label>
+<div class="input-row">
+<input type="number" class="input-field" id="cropW" min="1">
+<span class="input-sep">x</span>
+<input type="number" class="input-field" id="cropH" min="1">
+</div>
+</div>
+<button class="calc-btn" onclick="doCrop()">자르기 실행</button>
+</div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">✅ 자르기 결과</div>
+<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
+<div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
+<div class="info-row"><span class="label">자른 크기</span><span class="value" id="infoCrop">-</span></div>
+<button class="download-btn" onclick="downloadResult()">다운로드</button>
+</div>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+(function(){
+var origImg=null,origW=0,origH=0,resultBlob=null,resultName="";
+var cropRatio=0;
+var box={x:10,y:10,w:80,h:80};
+var dragging=null,dragStart={x:0,y:0},boxStart={};
+var containerEl=document.getElementById("cropContainer");
+var boxEl=document.getElementById("cropBox");
+var imgEl=document.getElementById("cropImage");
+
+document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
+document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
+document.getElementById("uploadZone").addEventListener("drop",function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
+
+function loadFile(file){
+  if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
+  resultName=file.name.replace(/\.[^.]+$/,"")+"_cropped";
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      origImg=img;origW=img.width;origH=img.height;
+      imgEl.src=e.target.result;
+      box={x:10,y:10,w:80,h:80};
+      updateBox();updateInputs();
+      document.getElementById("editorArea").style.display="block";
+      document.getElementById("resultArea").style.display="none";
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function updateBox(){
+  boxEl.style.left=box.x+"%";boxEl.style.top=box.y+"%";
+  boxEl.style.width=box.w+"%";boxEl.style.height=box.h+"%";
+}
+function updateInputs(){
+  document.getElementById("cropW").value=Math.round(origW*box.w/100);
+  document.getElementById("cropH").value=Math.round(origH*box.h/100);
+}
+
+function getPos(e){
+  var rect=containerEl.getBoundingClientRect();
+  var clientX=e.touches?e.touches[0].clientX:e.clientX;
+  var clientY=e.touches?e.touches[0].clientY:e.clientY;
+  return{x:(clientX-rect.left)/rect.width*100,y:(clientY-rect.top)/rect.height*100};
+}
+
+boxEl.addEventListener("mousedown",startDrag);
+boxEl.addEventListener("touchstart",startDrag,{passive:false});
+
+function startDrag(e){
+  e.preventDefault();
+  var handle=e.target.dataset.handle;
+  dragging=handle||"move";
+  dragStart=getPos(e);
+  boxStart={x:box.x,y:box.y,w:box.w,h:box.h};
+  document.addEventListener("mousemove",onDrag);
+  document.addEventListener("mouseup",endDrag);
+  document.addEventListener("touchmove",onDrag,{passive:false});
+  document.addEventListener("touchend",endDrag);
+}
+
+function onDrag(e){
+  e.preventDefault();
+  if(!dragging)return;
+  var pos=getPos(e);
+  var dx=pos.x-dragStart.x;
+  var dy=pos.y-dragStart.y;
+
+  if(dragging==="move"){
+    box.x=Math.max(0,Math.min(100-box.w,boxStart.x+dx));
+    box.y=Math.max(0,Math.min(100-box.h,boxStart.y+dy));
+  }else{
+    var nx=boxStart.x,ny=boxStart.y,nw=boxStart.w,nh=boxStart.h;
+    if(dragging.includes("r")){nw=Math.max(5,boxStart.w+dx);}
+    if(dragging.includes("l")){nx=boxStart.x+dx;nw=Math.max(5,boxStart.w-dx);}
+    if(dragging.includes("b")){nh=Math.max(5,boxStart.h+dy);}
+    if(dragging.includes("t")){ny=boxStart.y+dy;nh=Math.max(5,boxStart.h-dy);}
+    if(cropRatio>0){
+      var imgAspect=origW/origH;
+      var boxAspectPx=(nw/100*origW)/(nh/100*origH);
+      if(dragging.includes("r")||dragging.includes("l")){
+        nh=nw/100*origW/cropRatio/origH*100;
+      }else{
+        nw=nh/100*origH*cropRatio/origW*100;
+      }
+    }
+    if(nx<0){nw+=nx;nx=0;}
+    if(ny<0){nh+=ny;ny=0;}
+    if(nx+nw>100)nw=100-nx;
+    if(ny+nh>100)nh=100-ny;
+    box.x=nx;box.y=ny;box.w=nw;box.h=nh;
+  }
+  updateBox();updateInputs();
+}
+
+function endDrag(){
+  dragging=null;
+  document.removeEventListener("mousemove",onDrag);
+  document.removeEventListener("mouseup",endDrag);
+  document.removeEventListener("touchmove",onDrag);
+  document.removeEventListener("touchend",endDrag);
+}
+
+window.setRatio=function(el,r){
+  var btns=document.querySelectorAll("#presetRow .preset-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  cropRatio=r;
+  if(r>0&&origImg){
+    var newH=box.w/100*origW/r/origH*100;
+    if(box.y+newH>100)newH=100-box.y;
+    box.h=newH;
+    updateBox();updateInputs();
+  }
+};
+
+document.getElementById("cropW").addEventListener("change",function(){
+  if(!origImg)return;
+  var w=parseInt(this.value)||1;
+  box.w=Math.min(100,w/origW*100);
+  if(cropRatio>0)box.h=box.w/100*origW/cropRatio/origH*100;
+  updateBox();updateInputs();
+});
+document.getElementById("cropH").addEventListener("change",function(){
+  if(!origImg)return;
+  var h=parseInt(this.value)||1;
+  box.h=Math.min(100,h/origH*100);
+  if(cropRatio>0)box.w=box.h/100*origH*cropRatio/origW*100;
+  updateBox();updateInputs();
+});
+
+window.doCrop=function(){
+  if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
+  var sx=Math.round(origW*box.x/100);
+  var sy=Math.round(origH*box.y/100);
+  var sw=Math.round(origW*box.w/100);
+  var sh=Math.round(origH*box.h/100);
+  var canvas=document.createElement("canvas");
+  canvas.width=sw;canvas.height=sh;
+  var ctx=canvas.getContext("2d");
+  ctx.drawImage(origImg,sx,sy,sw,sh,0,0,sw,sh);
+  canvas.toBlob(function(blob){
+    resultBlob=blob;
+    document.getElementById("previewImg").src=URL.createObjectURL(blob);
+    document.getElementById("infoOrig").textContent=origW+" x "+origH+" px";
+    document.getElementById("infoCrop").textContent=sw+" x "+sh+" px";
+    document.getElementById("resultArea").style.display="block";
+    document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+  },"image/png");
+};
+
+window.downloadResult=function(){
+  if(!resultBlob)return;
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(resultBlob);
+  a.download=resultName+".png";
+  a.click();
+};
+})();
+</script>
+</body>
+</html>
