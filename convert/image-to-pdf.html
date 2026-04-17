@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 PDF 변환 - 여러 장 이미지를 하나의 PDF로 | modutools</title>
+<meta name="description" content="여러 장의 이미지(JPG, PNG, WEBP)를 하나의 PDF 파일로 변환합니다. 순서 변경, 용지 설정 지원. 무제한 무료, 서버 전송 없음.">
+<link rel="canonical" href="https://modutools.com/convert/image-to-pdf.html">
+<link rel="stylesheet" href="/css/common.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.thumb-list{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.thumb-item{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:2px solid var(--g200);cursor:grab;background:var(--g100)}
+.thumb-item.dragging{opacity:.4;border-color:var(--primary)}
+.thumb-item.over{border-color:var(--primary);border-style:dashed}
+.thumb-img{width:100%;height:100%;object-fit:cover}
+.thumb-remove{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.thumb-num{position:absolute;bottom:4px;left:4px;background:var(--primary);color:#fff;font-size:10px;font-weight:700;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.thumb-count{font-size:13px;color:var(--g500);margin-top:8px;text-align:center}
+.toggle-row{display:flex;gap:8px;margin-bottom:12px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.input-group{margin-bottom:14px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.calc-btn{width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.calc-btn:disabled{background:var(--g300);cursor:not-allowed}
+.progress-bar{width:100%;height:6px;background:var(--g200);border-radius:3px;margin-top:12px;overflow:hidden;display:none}
+.progress-fill{height:100%;background:var(--primary);transition:width .3s;width:0%}
+.result-area{display:none}
+.result-box{background:linear-gradient(135deg,#10B981,#059669);border-radius:var(--radius);padding:24px;color:#fff;text-align:center;margin-bottom:16px}
+.result-icon{font-size:48px;margin-bottom:8px}
+.result-title{font-size:18px;font-weight:800}
+.result-sub{font-size:13px;opacity:.9;margin-top:4px}
+.download-btn{width:100%;padding:16px;border:none;border-radius:12px;background:#fff;color:var(--primary);font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;border:2px solid var(--primary);transition:.2s;margin-top:12px}
+.download-btn:hover{background:var(--primary-light)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.thumb-list{grid-template-columns:repeat(3,1fr)}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 PDF 변환","url":"https://modutools.com/convert/image-to-pdf.html","description":"여러 장의 이미지를 하나의 PDF로 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+<h1 class="page-title">📄 이미지 PDF 변환</h1>
+<p class="page-sub">여러 장의 이미지를 하나의 PDF 파일로 변환합니다</p>
+<div class="card">
+<div class="card-title">🖼️ 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">📁</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WEBP 지원 · 최대 30장</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
+<div class="thumb-list" id="thumbList"></div>
+<div class="thumb-count" id="thumbCount"></div>
+</div>
+<div id="settingsArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ PDF 설정</div>
+<div class="input-group">
+<label class="input-label">용지 크기</label>
+<div class="toggle-row" id="sizeRow">
+<div class="toggle-btn active" data-val="a4" onclick="setOpt(this,'sizeRow')">A4</div>
+<div class="toggle-btn" data-val="letter" onclick="setOpt(this,'sizeRow')">Letter</div>
+<div class="toggle-btn" data-val="a3" onclick="setOpt(this,'sizeRow')">A3</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">용지 방향</label>
+<div class="toggle-row" id="orientRow">
+<div class="toggle-btn active" data-val="portrait" onclick="setOpt(this,'orientRow')">📐 세로</div>
+<div class="toggle-btn" data-val="landscape" onclick="setOpt(this,'orientRow')">📏 가로</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">여백</label>
+<div class="toggle-row" id="marginRow">
+<div class="toggle-btn" data-val="0" onclick="setOpt(this,'marginRow')">없음</div>
+<div class="toggle-btn" data-val="10" onclick="setOpt(this,'marginRow')">작게</div>
+<div class="toggle-btn active" data-val="20" onclick="setOpt(this,'marginRow')">보통</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">이미지 맞춤</label>
+<div class="toggle-row" id="fitRow">
+<div class="toggle-btn active" data-val="fit" onclick="setOpt(this,'fitRow')">페이지에 맞춤</div>
+<div class="toggle-btn" data-val="fill" onclick="setOpt(this,'fitRow')">꽉 채우기</div>
+</div>
+</div>
+</div>
+<button class="calc-btn" id="convertBtn" onclick="convertPDF()">📄 PDF 만들기</button>
+<div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="result-box">
+<div class="result-icon">✅</div>
+<div class="result-title">PDF 변환 완료!</div>
+<div class="result-sub" id="resultSub">-</div>
+</div>
+<button class="download-btn" id="downloadBtn">📥 PDF 다운로드</button>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<script>
+(function(){
+var images=[];
+var pdfBlob=null;
+var dragIdx=null;
+var fileInput=document.getElementById("fileInput");
+var uploadZone=document.getElementById("uploadZone");
+
+uploadZone.addEventListener("dragover",function(e){e.preventDefault();});
+uploadZone.addEventListener("drop",function(e){e.preventDefault();addFiles(e.dataTransfer.files);});
+fileInput.addEventListener("change",function(){addFiles(this.files);this.value="";});
+
+function addFiles(fileList){
+  for(var i=0;i<fileList.length;i++){
+    if(!fileList[i].type.startsWith("image/"))continue;
+    if(images.length>=30)break;
+    images.push({file:fileList[i],url:URL.createObjectURL(fileList[i])});
+  }
+  renderThumbs();
+  document.getElementById("settingsArea").style.display=images.length?"block":"none";
+  document.getElementById("resultArea").style.display="none";
+}
+
+function renderThumbs(){
+  var list=document.getElementById("thumbList");
+  list.innerHTML="";
+  for(var i=0;i<images.length;i++){
+    var div=document.createElement("div");
+    div.className="thumb-item";
+    div.draggable=true;
+    div.dataset.idx=i;
+    div.innerHTML='<img class="thumb-img" src="'+images[i].url+'"><button class="thumb-remove" data-idx="'+i+'">&times;</button><div class="thumb-num">'+(i+1)+"</div>";
+    div.addEventListener("dragstart",onDragStart);
+    div.addEventListener("dragover",onDragOver);
+    div.addEventListener("dragleave",onDragLeave);
+    div.addEventListener("drop",onDrop);
+    div.addEventListener("dragend",onDragEnd);
+    list.appendChild(div);
+  }
+  list.querySelectorAll(".thumb-remove").forEach(function(btn){
+    btn.addEventListener("click",function(e){
+      e.stopPropagation();
+      images.splice(parseInt(this.dataset.idx),1);
+      renderThumbs();
+      if(!images.length)document.getElementById("settingsArea").style.display="none";
+    });
+  });
+  document.getElementById("thumbCount").textContent=images.length?images.length+"장 선택됨 (드래그로 순서 변경)":"";
+}
+
+function onDragStart(e){dragIdx=parseInt(this.dataset.idx);this.classList.add("dragging");}
+function onDragOver(e){e.preventDefault();this.classList.add("over");}
+function onDragLeave(){this.classList.remove("over");}
+function onDragEnd(){document.querySelectorAll(".thumb-item").forEach(function(el){el.classList.remove("dragging","over");});}
+function onDrop(e){
+  e.preventDefault();this.classList.remove("over");
+  var toIdx=parseInt(this.dataset.idx);
+  if(dragIdx===null||dragIdx===toIdx)return;
+  var item=images.splice(dragIdx,1)[0];
+  images.splice(toIdx,0,item);
+  renderThumbs();
+}
+
+window.setOpt=function(el,rowId){
+  document.querySelectorAll("#"+rowId+" .toggle-btn").forEach(function(b){b.classList.remove("active");});
+  el.classList.add("active");
+};
+
+function getOpt(rowId){
+  var active=document.querySelector("#"+rowId+" .toggle-btn.active");
+  return active?active.dataset.val:"";
+}
+
+window.convertPDF=function(){
+  if(!images.length)return;
+  var btn=document.getElementById("convertBtn");
+  btn.disabled=true;btn.textContent="변환 중...";
+  var bar=document.getElementById("progressBar");
+  var fill=document.getElementById("progressFill");
+  bar.style.display="block";fill.style.width="0%";
+
+  var size=getOpt("sizeRow");
+  var orient=getOpt("orientRow");
+  var margin=parseInt(getOpt("marginRow"));
+  var fitMode=getOpt("fitRow");
+
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF({orientation:orient==="landscape"?"l":"p",unit:"mm",format:size});
+
+  var pageW=doc.internal.pageSize.getWidth();
+  var pageH=doc.internal.pageSize.getHeight();
+  var idx=0;
+
+  function addNext(){
+    if(idx>=images.length){
+      pdfBlob=doc.output("blob");
+      var sizeKB=(pdfBlob.size/1024).toFixed(0);
+      var sizeMB=(pdfBlob.size/1048576).toFixed(1);
+      document.getElementById("resultSub").textContent=images.length+"장 · "+(pdfBlob.size>1048576?sizeMB+"MB":sizeKB+"KB");
+      document.getElementById("resultArea").style.display="block";
+      document.getElementById("downloadBtn").onclick=function(){
+        var a=document.createElement("a");
+        a.href=URL.createObjectURL(pdfBlob);
+        a.download="modutools_images.pdf";
+        a.click();
+      };
+      btn.disabled=false;btn.textContent="📄 PDF 만들기";
+      bar.style.display="none";
+      document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+      return;
+    }
+    if(idx>0)doc.addPage();
+    var img=new Image();
+    img.onload=function(){
+      var iw=img.width,ih=img.height;
+      var aw=pageW-margin*2,ah=pageH-margin*2;
+      var w,h,x,y;
+      if(fitMode==="fill"){
+        var scale=Math.max(aw/iw,ah/ih);
+        w=iw*scale;h=ih*scale;
+        x=(pageW-w)/2;y=(pageH-h)/2;
+      }else{
+        var scale=Math.min(aw/iw,ah/ih);
+        w=iw*scale;h=ih*scale;
+        x=(pageW-w)/2;y=(pageH-h)/2;
+      }
+      var canvas=document.createElement("canvas");
+      canvas.width=iw;canvas.height=ih;
+      var ctx=canvas.getContext("2d");
+      ctx.drawImage(img,0,0);
+      var dataUrl=canvas.toDataURL("image/jpeg",0.92);
+      doc.addImage(dataUrl,"JPEG",x,y,w,h);
+      idx++;
+      fill.style.width=Math.round(idx/images.length*100)+"%";
+      setTimeout(addNext,50);
+    };
+    img.src=images[idx].url;
+  }
+  addNext();
+};
+})();
+</script>
+</body>
+</html>
