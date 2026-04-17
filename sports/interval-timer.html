@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="google-site-verification" content="SSgzof6COd6DPSzZP8iQLjKNRy5BH7wyG2AgIrwVgc0">
+<meta name="naver-site-verification" content="ee88cc254c77d226856545bde3999001f1bced2c" />
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8031004347843172" crossorigin="anonymous"></script>
+<title>인터벌 타이머 - 타바타 HIIT 운동 타이머 | modutools</title>
+<meta name="description" content="타바타, HIIT 운동용 무료 인터벌 타이머. 운동/휴식 시간과 라운드 설정, 음성 안내, 화면 꺼짐 방지 지원. 설치 없이 바로 사용.">
+<link rel="canonical" href="https://modutools.com/sports/interval-timer.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* Ad Slot - 광고 미송출 시 완전 숨김 */
+.ad-slot{margin:16px 0;min-height:0;transition:opacity .3s}
+.ad-slot-inner{display:none}
+.ad-slot.has-ad .ad-slot-inner{display:block}
+.ad-slot.has-ad{margin:20px 0}
+.ad-label{font-size:10px;color:var(--g400);text-align:center;margin-bottom:4px;letter-spacing:.5px;text-transform:uppercase}
+
+/* Preset */
+.preset-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+.preset-btn{padding:14px 10px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;transition:.2s;background:#fff;text-align:center;font-family:inherit}
+.preset-btn:hover{border-color:var(--primary);background:var(--primary-light)}
+.preset-btn.active{border-color:var(--primary);background:var(--primary-light)}
+.preset-name{font-size:14px;font-weight:700;color:var(--g900)}
+.preset-desc{font-size:11px;color:var(--g500);margin-top:2px}
+
+/* Input */
+.input-group{margin-bottom:14px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.num-ctrl{display:flex;align-items:center;gap:8px;width:100%}
+.num-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:10px;background:#fff;font-size:20px;font-weight:700;cursor:pointer;color:var(--primary);font-family:inherit;user-select:none}
+.num-btn:hover{background:var(--primary-light)}
+.num-btn:active{transform:scale(.95)}
+.num-display{flex:1;text-align:center;font-size:20px;font-weight:800;color:var(--g900);font-variant-numeric:tabular-nums}
+.num-unit{font-size:13px;color:var(--g500);margin-left:4px}
+
+/* Start Button */
+.start-btn{width:100%;padding:20px;border:none;border-radius:14px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(239,68,68,.3);transition:.2s}
+.start-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(239,68,68,.4)}
+.start-btn:active{transform:scale(.98)}
+
+/* Tip card */
+.tip-card{background:linear-gradient(135deg,#EFF6FF,#EDE9FE);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:16px}
+.tip-title{font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px}
+.tip-text{font-size:12px;color:var(--g700);line-height:1.6}
+
+/* Workout Screen - Full Screen Mode */
+.workout-screen{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:#1F2937;color:#fff;flex-direction:column;overflow:hidden}
+.workout-screen.active{display:flex}
+.workout-header{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.2)}
+.workout-round{font-size:14px;opacity:.8}
+.workout-exit{background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit}
+.workout-body{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:20px;transition:background .4s}
+.workout-body.prep{background:linear-gradient(135deg,#F59E0B,#D97706)}
+.workout-body.work{background:linear-gradient(135deg,#EF4444,#DC2626)}
+.workout-body.rest{background:linear-gradient(135deg,#10B981,#059669)}
+.workout-phase{font-size:24px;font-weight:800;margin-bottom:16px;letter-spacing:2px}
+.workout-time{font-size:120px;font-weight:900;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-4px}
+.workout-progress{width:80%;max-width:300px;height:6px;background:rgba(255,255,255,0.2);border-radius:3px;margin-top:24px;overflow:hidden}
+.workout-progress-bar{height:100%;background:#fff;transition:width .3s;width:0%}
+.workout-controls{padding:20px;display:flex;gap:12px;background:rgba(0,0,0,0.2)}
+.workout-btn{flex:1;padding:16px;border:none;border-radius:12px;background:rgba(255,255,255,0.2);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+.workout-btn:active{transform:scale(.97)}
+.workout-btn.primary{background:#fff;color:var(--g900)}
+
+/* Complete Screen */
+.complete-area{display:none}
+.complete-area.active{display:block}
+.complete-header{text-align:center;padding:32px 20px;background:linear-gradient(135deg,#10B981,#059669);border-radius:var(--radius);margin-bottom:16px;color:#fff}
+.complete-emoji{font-size:48px;margin-bottom:8px}
+.complete-title{font-size:22px;font-weight:800;margin-bottom:4px}
+.complete-subtitle{font-size:13px;opacity:.9}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px 8px;text-align:center}
+.stat-value{font-size:22px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
+.action-row{display:flex;gap:8px;margin-top:16px}
+.action-btn{flex:1;padding:14px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit;transition:.2s}
+.action-btn.primary{border-color:var(--primary);background:var(--primary);color:#fff}
+.action-btn:hover{border-color:var(--primary)}
+
+@media(max-width:480px){
+  .workout-time{font-size:90px;letter-spacing:-2px}
+  .workout-phase{font-size:20px}
+  .preset-row{grid-template-columns:1fr}
+}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"인터벌 타이머","url":"https://modutools.com/sports/interval-timer.html","description":"타바타, HIIT 운동을 위한 인터벌 타이머","applicationCategory":"HealthApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+
+<!-- Ad Slot: Top (설정 화면) -->
+<div class="ad-slot" id="ad-slot-top">
+<div class="ad-label">광고</div>
+<div class="ad-slot-inner">
+<!-- AdSense 광고 코드 삽입 위치 -->
+</div>
+</div>
+
+<main class="page" id="setupArea">
+<h1 class="page-title">⏱️ 인터벌 타이머</h1>
+<p class="page-sub">타바타·HIIT 운동용 타이머. 시작 후 화면 없이도 음성 안내로 운동 가능.</p>
+
+<div class="card">
+<div class="card-title">🎯 프리셋</div>
+<div class="preset-row">
+<div class="preset-btn active" data-preset="tabata" onclick="setPreset('tabata',this)">
+<div class="preset-name">타바타</div>
+<div class="preset-desc">20초 운동 / 10초 휴식 × 8라운드</div>
+</div>
+<div class="preset-btn" data-preset="hiit" onclick="setPreset('hiit',this)">
+<div class="preset-name">HIIT</div>
+<div class="preset-desc">45초 운동 / 15초 휴식 × 10라운드</div>
+</div>
+<div class="preset-btn" data-preset="emom" onclick="setPreset('emom',this)">
+<div class="preset-name">EMOM</div>
+<div class="preset-desc">1분마다 시작 × 10라운드</div>
+</div>
+<div class="preset-btn" data-preset="custom" onclick="setPreset('custom',this)">
+<div class="preset-name">직접 설정</div>
+<div class="preset-desc">운동·휴식·라운드 자유 설정</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">⚙️ 상세 설정</div>
+<div class="input-group">
+<label class="input-label">준비 시간</label>
+<div class="num-ctrl">
+<button class="num-btn" onclick="adjustNum('prep',-1)">−</button>
+<div class="num-display"><span id="prepVal">3</span><span class="num-unit">초</span></div>
+<button class="num-btn" onclick="adjustNum('prep',1)">+</button>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">운동 시간</label>
+<div class="num-ctrl">
+<button class="num-btn" onclick="adjustNum('work',-5)">−</button>
+<div class="num-display"><span id="workVal">20</span><span class="num-unit">초</span></div>
+<button class="num-btn" onclick="adjustNum('work',5)">+</button>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">휴식 시간</label>
+<div class="num-ctrl">
+<button class="num-btn" onclick="adjustNum('rest',-5)">−</button>
+<div class="num-display"><span id="restVal">10</span><span class="num-unit">초</span></div>
+<button class="num-btn" onclick="adjustNum('rest',5)">+</button>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">라운드 수</label>
+<div class="num-ctrl">
+<button class="num-btn" onclick="adjustNum('rounds',-1)">−</button>
+<div class="num-display"><span id="roundsVal">8</span><span class="num-unit">회</span></div>
+<button class="num-btn" onclick="adjustNum('rounds',1)">+</button>
+</div>
+</div>
+</div>
+
+<!-- Ad Slot: Mid (시작 버튼 위 - 컨텍스트 배치) -->
+<div class="ad-slot" id="ad-slot-mid">
+<div class="ad-label">광고</div>
+<div class="ad-slot-inner">
+<!-- AdSense 광고 코드 삽입 위치 -->
+</div>
+</div>
+
+<button class="start-btn" onclick="startWorkout()">🚀 운동 시작하기</button>
+
+<div class="tip-card" style="margin-top:16px">
+<div class="tip-title">💡 인터벌 타이머 활용 팁</div>
+<div class="tip-text">타바타는 단 4분으로 유산소와 근력 효과를 동시에 얻을 수 있는 고강도 인터벌 운동입니다. 첫 시작은 쉬운 동작(버피, 점프 스쿼트)으로, 폼에 익숙해진 후 강도를 높이세요. 시작 후 화면을 볼 필요 없이 비프음과 음성 안내로 상태를 알려줍니다.</div>
+</div>
+
+<!-- Ad Slot: Bottom (콘텐츠 사이 인피드) -->
+<div class="ad-slot" id="ad-slot-bottom">
+<div class="ad-label">광고</div>
+<div class="ad-slot-inner">
+<!-- AdSense 광고 코드 삽입 위치 -->
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">📖 인터벌 타이머 가이드</div>
+<div style="font-size:13px;line-height:1.8;color:#64748B">
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">타바타(Tabata)란?</strong><br>1996년 일본의 이즈미 타바타 박사가 개발한 고강도 인터벌 운동법입니다. 20초 전력 운동과 10초 휴식을 8라운드 반복(총 4분)하는 방식으로, 짧은 시간에 유산소와 근력 효과를 동시에 얻을 수 있습니다. 올림픽 대표팀 훈련으로 사용되며, 일반인도 시간 효율적인 운동으로 널리 활용합니다.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">HIIT(고강도 인터벌 트레이닝)란?</strong><br>고강도 운동과 짧은 휴식을 반복하는 운동법으로, 타바타보다 운동 시간이 길고(30~60초) 라운드 수가 많습니다. 체지방 감소, 심폐지구력 향상에 효과적이며 운동 후에도 칼로리 소모가 지속되는 "애프터번 효과"를 기대할 수 있습니다.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">EMOM이란?</strong><br>"Every Minute On the Minute"의 약자로, 매분 정각에 정해진 동작을 수행하고 남은 시간은 휴식하는 운동법입니다. 예를 들어 1분 동안 버피 10개를 30초에 끝내면 30초 휴식, 다음 분에 다시 10개를 하는 식입니다. 심폐 능력과 근지구력 향상에 효과적입니다.</p>
+<p><strong style="font-size:15px;color:#0F172A">운동 중 주의사항</strong><br>고강도 운동 전 반드시 5~10분 웜업을 하고, 중간에 어지럼증이나 가슴 통증이 있으면 즉시 중단하세요. 심혈관 질환, 관절 문제가 있는 분은 전문의와 상담 후 시작하는 것이 안전합니다. 수분 섭취는 운동 전, 중, 후 꾸준히 하세요.</p>
+</div>
+</div>
+</main>
+
+<!-- 운동 완료 화면 -->
+<main class="page complete-area" id="completeArea">
+<div class="complete-header">
+<div class="complete-emoji">🎉</div>
+<div class="complete-title">수고하셨어요!</div>
+<div class="complete-subtitle">오늘도 한 걸음 더 강해졌어요</div>
+</div>
+
+<div class="card">
+<div class="card-title">📊 오늘의 운동 기록</div>
+<div class="stats-grid">
+<div class="stat-box"><div class="stat-value" id="statTime">0:00</div><div class="stat-label">총 운동 시간</div></div>
+<div class="stat-box"><div class="stat-value" id="statRounds">0</div><div class="stat-label">완료 라운드</div></div>
+<div class="stat-box"><div class="stat-value" id="statCal">0</div><div class="stat-label">예상 칼로리</div></div>
+</div>
+</div>
+
+<!-- Ad Slot: Complete 1 (긍정감정 피크 활용) -->
+<div class="ad-slot" id="ad-slot-complete-1">
+<div class="ad-label">광고</div>
+<div class="ad-slot-inner">
+<!-- AdSense 광고 코드 삽입 위치 -->
+</div>
+</div>
+
+<div class="tip-card">
+<div class="tip-title">💪 운동 후 회복 팁</div>
+<div class="tip-text">운동 후 15~30분 내 단백질(20g)과 탄수화물을 함께 섭취하면 근육 회복이 빨라집니다. 닭가슴살 100g, 그릭요거트, 계란 흰자 3개가 적당합니다. 물 500ml 이상 마시고, 5분 이상 가벼운 스트레칭으로 근육 피로를 풀어주세요.</div>
+</div>
+
+<!-- Ad Slot: Complete 2 (콘텐츠 사이 샌드위치) -->
+<div class="ad-slot" id="ad-slot-complete-2">
+<div class="ad-label">광고</div>
+<div class="ad-slot-inner">
+<!-- AdSense 광고 코드 삽입 위치 -->
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">🎯 다음 도전</div>
+<div style="font-size:13px;color:var(--g700);line-height:1.8">
+• 라운드를 1개 더 늘려보기<br>
+• 운동 시간을 5초 늘려보기<br>
+• 더 어려운 동작으로 업그레이드<br>
+• 주 3회 꾸준히 실천하기
+</div>
+<div class="action-row">
+<button class="action-btn primary" onclick="restart()">🔄 같은 설정으로 다시</button>
+<button class="action-btn" onclick="resetAll()">⚙️ 새로 설정</button>
+</div>
+</div>
+</main>
+
+<!-- 운동 중 풀스크린 -->
+<div class="workout-screen" id="workoutScreen">
+<div class="workout-header">
+<div class="workout-round" id="workoutRound">라운드 1 / 8</div>
+<button class="workout-exit" onclick="exitWorkout()">종료</button>
+</div>
+<div class="workout-body" id="workoutBody">
+<div class="workout-phase" id="workoutPhase">준비</div>
+<div class="workout-time" id="workoutTime">3</div>
+<div class="workout-progress"><div class="workout-progress-bar" id="workoutProgress"></div></div>
+</div>
+<div class="workout-controls">
+<button class="workout-btn" onclick="skipPhase()">⏭️ 다음</button>
+<button class="workout-btn primary" id="pauseBtn" onclick="togglePause()">⏸️ 일시정지</button>
+</div>
+</div>
+
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+<script>
+// ===== 광고 슬롯 관리 =====
+// AdSense가 실제로 광고를 채웠을 때만 ad-slot을 보이게 처리
+function checkAdSlots(){
+  document.querySelectorAll('.ad-slot').forEach(function(slot){
+    var inner=slot.querySelector('.ad-slot-inner');
+    if(!inner)return;
+    // 내부에 광고 콘텐츠(iframe 또는 ins[data-ad-status="filled"])가 있으면 표시
+    var hasIframe=inner.querySelector('iframe');
+    var hasFilled=inner.querySelector('ins[data-ad-status="filled"]');
+    var hasContent=inner.children.length>0&&inner.offsetHeight>10;
+    if(hasIframe||hasFilled||hasContent){
+      slot.classList.add('has-ad');
+    }else{
+      slot.classList.remove('has-ad');
+    }
+  });
+}
+// 페이지 로드 후 주기적으로 광고 상태 확인
+setTimeout(checkAdSlots,1500);
+setTimeout(checkAdSlots,3500);
+setTimeout(checkAdSlots,6000);
+
+// ===== 타이머 설정 =====
+var config={prep:3,work:20,rest:10,rounds:8};
+var PRESETS={
+  tabata:{prep:3,work:20,rest:10,rounds:8},
+  hiit:{prep:5,work:45,rest:15,rounds:10},
+  emom:{prep:5,work:60,rest:0,rounds:10},
+  custom:null
+};
+
+function setPreset(key,el){
+  document.querySelectorAll('.preset-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  if(PRESETS[key]){
+    config={...PRESETS[key]};
+    updateDisplay();
+  }
+}
+
+function adjustNum(key,delta){
+  config[key]=Math.max(key==='rest'?0:1,config[key]+delta);
+  if(key==='rounds')config.rounds=Math.min(50,config.rounds);
+  if(key==='work')config.work=Math.min(600,config.work);
+  if(key==='rest')config.rest=Math.min(300,config.rest);
+  if(key==='prep')config.prep=Math.min(30,config.prep);
+  updateDisplay();
+  // 수동 조정 시 직접 설정으로 변경
+  document.querySelectorAll('.preset-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('[data-preset="custom"]').classList.add('active');
+}
+
+function updateDisplay(){
+  document.getElementById('prepVal').textContent=config.prep;
+  document.getElementById('workVal').textContent=config.work;
+  document.getElementById('restVal').textContent=config.rest;
+  document.getElementById('roundsVal').textContent=config.rounds;
+}
+
+// ===== 소리 생성 (Web Audio API) =====
+var audioCtx=null;
+function initAudio(){
+  if(!audioCtx){
+    try{audioCtx=new (window.AudioContext||window.webkitAudioContext)();}catch(e){}
+  }
+}
+function beep(freq,duration){
+  if(!audioCtx)return;
+  var osc=audioCtx.createOscillator();
+  var gain=audioCtx.createGain();
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.frequency.value=freq;osc.type='sine';
+  gain.gain.setValueAtTime(0.3,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01,audioCtx.currentTime+duration);
+  osc.start();osc.stop(audioCtx.currentTime+duration);
+}
+function speak(text){
+  if(!('speechSynthesis' in window))return;
+  try{
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang='ko-KR';u.rate=1.1;u.volume=0.9;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+// ===== Wake Lock =====
+var wakeLock=null;
+async function requestWakeLock(){
+  try{
+    if('wakeLock' in navigator){
+      wakeLock=await navigator.wakeLock.request('screen');
+    }
+  }catch(e){}
+}
+function releaseWakeLock(){
+  if(wakeLock){wakeLock.release();wakeLock=null;}
+}
+
+// ===== 워크아웃 상태 =====
+var state={
+  phase:'idle',
+  currentRound:1,
+  timeLeft:0,
+  totalTime:0,
+  totalElapsed:0,
+  paused:false,
+  intervalId:null,
+  startTime:0
+};
+
+function startWorkout(){
+  initAudio();
+  requestWakeLock();
+  state.currentRound=1;
+  state.totalElapsed=0;
+  state.startTime=Date.now();
+  document.getElementById('setupArea').style.display='none';
+  document.getElementById('completeArea').classList.remove('active');
+  document.getElementById('workoutScreen').classList.add('active');
+  startPhase('prep',config.prep);
+}
+
+function startPhase(phase,duration){
+  state.phase=phase;
+  state.timeLeft=duration;
+  state.totalTime=duration;
+  state.paused=false;
+  document.getElementById('pauseBtn').textContent='⏸️ 일시정지';
+  var body=document.getElementById('workoutBody');
+  body.classList.remove('prep','work','rest');
+  body.classList.add(phase);
+  var phaseText={prep:'준비',work:'운동',rest:'휴식'}[phase];
+  document.getElementById('workoutPhase').textContent=phaseText;
+  document.getElementById('workoutRound').textContent='라운드 '+state.currentRound+' / '+config.rounds;
+
+  // 안내 음성
+  if(phase==='prep')speak(config.prep+'초 후 운동 시작');
+  else if(phase==='work')speak('운동 시작');
+  else if(phase==='rest')speak('휴식');
+
+  updateTimerDisplay();
+  if(state.intervalId)clearInterval(state.intervalId);
+  state.intervalId=setInterval(tick,1000);
+}
+
+function tick(){
+  if(state.paused)return;
+  state.timeLeft--;
+  state.totalElapsed++;
+  if(state.timeLeft<=3&&state.timeLeft>0)beep(800,0.15);
+  if(state.timeLeft===0){
+    beep(1200,0.4);
+    nextPhase();
+    return;
+  }
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay(){
+  document.getElementById('workoutTime').textContent=state.timeLeft;
+  var pct=((state.totalTime-state.timeLeft)/state.totalTime)*100;
+  document.getElementById('workoutProgress').style.width=pct+'%';
+}
+
+function nextPhase(){
+  clearInterval(state.intervalId);
+  if(state.phase==='prep'){
+    startPhase('work',config.work);
+  }else if(state.phase==='work'){
+    if(state.currentRound>=config.rounds){
+      completeWorkout();
+    }else if(config.rest>0){
+      startPhase('rest',config.rest);
+    }else{
+      state.currentRound++;
+      startPhase('work',config.work);
+    }
+  }else if(state.phase==='rest'){
+    state.currentRound++;
+    startPhase('work',config.work);
+  }
+}
+
+function skipPhase(){
+  state.timeLeft=0;
+  tick();
+}
+
+function togglePause(){
+  state.paused=!state.paused;
+  document.getElementById('pauseBtn').textContent=state.paused?'▶️ 재개':'⏸️ 일시정지';
+}
+
+function exitWorkout(){
+  if(confirm('운동을 종료할까요?')){
+    clearInterval(state.intervalId);
+    releaseWakeLock();
+    document.getElementById('workoutScreen').classList.remove('active');
+    document.getElementById('setupArea').style.display='block';
+    state.phase='idle';
+  }
+}
+
+function completeWorkout(){
+  clearInterval(state.intervalId);
+  releaseWakeLock();
+  speak('운동 완료. 수고하셨습니다.');
+  beep(1000,0.3);
+  setTimeout(function(){beep(1200,0.3);},200);
+  setTimeout(function(){beep(1500,0.5);},400);
+
+  document.getElementById('workoutScreen').classList.remove('active');
+  var totalSec=state.totalElapsed;
+  var min=Math.floor(totalSec/60);
+  var sec=totalSec%60;
+  document.getElementById('statTime').textContent=min+':'+(sec<10?'0':'')+sec;
+  document.getElementById('statRounds').textContent=config.rounds;
+  // 예상 칼로리: 고강도 운동 기준 분당 약 10kcal
+  var cal=Math.round((config.work*config.rounds/60)*10);
+  document.getElementById('statCal').textContent=cal;
+
+  setTimeout(function(){
+    document.getElementById('completeArea').classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    setTimeout(checkAdSlots,500);
+    setTimeout(checkAdSlots,2000);
+  },500);
+}
+
+function restart(){
+  document.getElementById('completeArea').classList.remove('active');
+  startWorkout();
+}
+function resetAll(){
+  document.getElementById('completeArea').classList.remove('active');
+  document.getElementById('setupArea').style.display='block';
+  window.scrollTo({top:0});
+}
+
+updateDisplay();
+</script>
+</body>
+</html>
