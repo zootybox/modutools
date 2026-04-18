@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>이미지 텍스트 추출 (OCR) - 사진 속 글자 복사 | modutools</title>
+<meta name="description" content="이미지 속 글자를 텍스트로 추출합니다. 한국어·영어 지원. 스캔 문서, 캡처 이미지, 명함, 영수증 등 글자 인식. 무료, 서버 전송 없음.">
+<link rel="canonical" href="https://modutools.com/text/ocr.html">
+<link rel="stylesheet" href="/css/common.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200);margin-top:12px;display:none}
+.toggle-row{display:flex;gap:8px;margin-bottom:12px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.action-btn{width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.action-btn:hover{background:var(--primary-dark)}
+.action-btn:active{transform:scale(.98)}
+.action-btn:disabled{background:var(--g300);cursor:not-allowed}
+.ad-slot{margin:16px 0;min-height:0;transition:opacity .3s}
+.ad-slot-inner{display:none}
+.ad-slot.has-ad .ad-slot-inner{display:block}
+.ad-slot.has-ad{margin:20px 0}
+.ad-label{font-size:10px;color:var(--g400);text-align:center;margin-bottom:4px;letter-spacing:.5px}
+.loading-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);z-index:9999;flex-direction:column;align-items:center;justify-content:center}
+.loading-overlay.active{display:flex}
+.loading-spinner{width:48px;height:48px;border:4px solid var(--g200);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:16px;font-weight:700;color:var(--g900);margin-top:16px}
+.loading-sub{font-size:13px;color:var(--g500);margin-top:4px}
+.loading-progress{width:260px;height:6px;background:var(--g200);border-radius:3px;margin-top:12px;overflow:hidden}
+.loading-progress-bar{height:100%;background:var(--primary);transition:width .3s;width:0%}
+.loading-ad{margin-top:24px;width:300px;max-width:90%}
+.loading-ad .ad-slot-inner{display:block}
+.result-area{display:none}
+.result-box{background:linear-gradient(135deg,#10B981,#059669);border-radius:var(--radius);padding:20px;color:#fff;text-align:center;margin-bottom:16px}
+.result-icon{font-size:36px;margin-bottom:6px}
+.result-title{font-size:16px;font-weight:800}
+.result-sub{font-size:12px;opacity:.9;margin-top:4px}
+.text-output{width:100%;min-height:200px;border:1.5px solid var(--g200);border-radius:10px;padding:16px;font-size:14px;font-family:inherit;line-height:1.8;resize:vertical;outline:none;color:var(--g900)}
+.text-output:focus{border-color:var(--primary)}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+.btn-secondary{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
+.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+.btn-primary{flex:1;padding:12px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:var(--primary);font-family:inherit;color:#fff;transition:.2s}
+.btn-primary:hover{background:var(--primary-dark)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 텍스트 추출 (OCR)","url":"https://modutools.com/text/ocr.html","description":"이미지 속 글자를 텍스트로 추출하는 무료 온라인 OCR 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+
+<div class="ad-slot" id="ad-slot-top"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<main class="page">
+<h1 class="page-title">🔍 이미지 텍스트 추출 (OCR)</h1>
+<p class="page-sub">이미지 속 글자를 인식하여 복사 가능한 텍스트로 변환합니다</p>
+
+<div class="card">
+<div class="card-title">🖼️ 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">📷</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WEBP 지원</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*">
+<img class="preview-img" id="previewImg">
+</div>
+
+<div id="settingsArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ 인식 언어</div>
+<div class="toggle-row">
+<div class="toggle-btn active" data-lang="kor" onclick="setLang(this)">🇰🇷 한국어</div>
+<div class="toggle-btn" data-lang="eng" onclick="setLang(this)">🇺🇸 영어</div>
+<div class="toggle-btn" data-lang="kor+eng" onclick="setLang(this)">🌐 한+영</div>
+</div>
+</div>
+
+<div class="ad-slot" id="ad-slot-mid"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<button class="action-btn" id="ocrBtn" onclick="doOCR()">🔍 텍스트 추출하기</button>
+</div>
+
+<div class="result-area" id="resultArea">
+<div class="ad-slot" id="ad-slot-complete1"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<div class="result-box">
+<div class="result-icon">✅</div>
+<div class="result-title">텍스트 추출 완료!</div>
+<div class="result-sub" id="resultSub">-</div>
+</div>
+
+<div class="card">
+<div class="card-title">📝 추출된 텍스트</div>
+<textarea class="text-output" id="textOutput" readonly></textarea>
+<div class="btn-row">
+<button class="btn-secondary" onclick="copyText()">📋 복사하기</button>
+<button class="btn-primary" onclick="downloadText()">📥 TXT 다운로드</button>
+</div>
+</div>
+
+<div class="ad-slot" id="ad-slot-complete2"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<button class="action-btn" style="background:var(--g100);color:var(--g700)" onclick="resetAll()">🔄 새 이미지 추출</button>
+</div>
+
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.<br>※ 손글씨, 흐린 이미지, 복잡한 배경은 인식률이 낮을 수 있습니다.</p>
+</main>
+
+<div class="ad-slot" id="ad-slot-bottom"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+<div class="loading-overlay" id="loadingOverlay">
+<div class="loading-spinner"></div>
+<div class="loading-text" id="loadingText">텍스트 인식 중...</div>
+<div class="loading-sub" id="loadingSub">이미지를 분석하고 있습니다</div>
+<div class="loading-progress"><div class="loading-progress-bar" id="loadingBar"></div></div>
+<div class="loading-ad">
+<div class="ad-slot" id="ad-slot-loading"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+var currentLang="kor";
+var imgFile=null;
+
+function checkAdSlots(){
+  document.querySelectorAll('.ad-slot').forEach(function(slot){
+    var inner=slot.querySelector('.ad-slot-inner');
+    if(!inner)return;
+    var hasContent=inner.querySelector('iframe')||inner.querySelector('ins[data-ad-status="filled"]')||(inner.children.length>0&&inner.offsetHeight>10);
+    slot.classList.toggle('has-ad',!!hasContent);
+  });
+}
+setTimeout(checkAdSlots,1500);
+setTimeout(checkAdSlots,3500);
+
+var fileInput=document.getElementById('fileInput');
+var uploadZone=document.getElementById('uploadZone');
+uploadZone.addEventListener('dragover',function(e){e.preventDefault();});
+uploadZone.addEventListener('drop',function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
+fileInput.addEventListener('change',function(){if(this.files.length)loadFile(this.files[0]);});
+
+function loadFile(file){
+  if(!file.type.startsWith('image/')){alert('이미지 파일만 업로드 가능합니다.');return;}
+  imgFile=file;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=document.getElementById('previewImg');
+    img.src=e.target.result;
+    img.style.display='block';
+    document.getElementById('settingsArea').style.display='block';
+    document.getElementById('resultArea').style.display='none';
+  };
+  reader.readAsDataURL(file);
+}
+
+window.setLang=function(el){
+  document.querySelectorAll('.toggle-btn[data-lang]').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  currentLang=el.dataset.lang;
+};
+
+window.doOCR=function(){
+  if(!imgFile)return;
+  var btn=document.getElementById('ocrBtn');
+  btn.disabled=true;btn.textContent='처리 중...';
+  document.getElementById('loadingOverlay').classList.add('active');
+  document.getElementById('loadingBar').style.width='0%';
+  document.getElementById('loadingSub').textContent='OCR 엔진 로딩 중...';
+  checkAdSlots();
+
+  var langMap={'kor':'kor','eng':'eng','kor+eng':'kor+eng'};
+  var lang=langMap[currentLang]||'kor';
+
+  Tesseract.recognize(imgFile,lang,{
+    logger:function(m){
+      if(m.status==='recognizing text'){
+        var pct=Math.round(m.progress*100);
+        document.getElementById('loadingBar').style.width=pct+'%';
+        document.getElementById('loadingSub').textContent='텍스트 인식 중... '+pct+'%';
+      }else if(m.status==='loading language traineddata'){
+        document.getElementById('loadingSub').textContent='언어 데이터 로딩 중...';
+        document.getElementById('loadingBar').style.width='10%';
+      }else if(m.status==='initializing api'){
+        document.getElementById('loadingSub').textContent='OCR 엔진 초기화 중...';
+        document.getElementById('loadingBar').style.width='5%';
+      }
+    }
+  }).then(function(result){
+    var text=result.data.text.trim();
+    var charCount=text.length;
+    var lineCount=text.split('\n').filter(function(l){return l.trim();}).length;
+
+    setTimeout(function(){
+      document.getElementById('loadingOverlay').classList.remove('active');
+      document.getElementById('textOutput').value=text||'(인식된 텍스트가 없습니다)';
+      document.getElementById('resultSub').textContent=charCount+'자 · '+lineCount+'줄 추출됨';
+      document.getElementById('resultArea').style.display='block';
+      document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+      btn.disabled=false;btn.textContent='🔍 텍스트 추출하기';
+      checkAdSlots();
+      setTimeout(checkAdSlots,1000);
+    },2000);
+  }).catch(function(err){
+    document.getElementById('loadingOverlay').classList.remove('active');
+    alert('텍스트 인식에 실패했습니다. 다른 이미지를 시도해주세요.');
+    btn.disabled=false;btn.textContent='🔍 텍스트 추출하기';
+  });
+};
+
+window.copyText=function(){
+  var text=document.getElementById('textOutput').value;
+  navigator.clipboard.writeText(text).then(function(){
+    showToast('텍스트가 복사되었습니다!');
+  });
+};
+
+window.downloadText=function(){
+  var text=document.getElementById('textOutput').value;
+  var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='modutools_ocr.txt';
+  a.click();
+  showToast('텍스트 파일 다운로드 완료!');
+};
+
+window.resetAll=function(){
+  imgFile=null;
+  document.getElementById('previewImg').style.display='none';
+  document.getElementById('settingsArea').style.display='none';
+  document.getElementById('resultArea').style.display='none';
+  document.getElementById('fileInput').value='';
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},2000);
+}
+})();
+</script>
+</body>
+</html>
