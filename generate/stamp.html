@@ -4,55 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>도장 만들기 - 무료 온라인 도장 이미지 생성 | modutools</title>
-<meta name="description" content="이력서, 계약서에 사용할 온라인 도장을 무료로 만듭니다. 개인도장, 결재도장, 회사도장. 투명 배경 PNG 다운로드. 회원가입 불필요.">
+<meta name="description" content="이력서, 계약서에 사용할 온라인 도장을 무료로 만듭니다. 20종 도장 한번에 생성, 회원가입 없이 바로 다운로드. 투명 배경 PNG.">
 <link rel="canonical" href="https://modutools.com/generate/stamp.html">
 <link rel="stylesheet" href="/css/common.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Gowun+Batang:wght@700&family=Nanum+Myeongjo:wght@700;800&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Gaegu:wght@700&family=Black+Han+Sans&family=Jua&family=Do+Hyeon&family=Hi+Melody&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Gowun+Batang:wght@700&family=Nanum+Myeongjo:wght@700;800&family=Nanum+Brush+Script&family=Nanum+Pen+Script&family=Black+Han+Sans&family=Do+Hyeon&family=Jua&family=Gaegu:wght@700&family=Hi+Melody&display=swap" rel="stylesheet">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
 .page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
 .page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:18px;font-family:inherit;outline:none;transition:.2s;text-align:center;letter-spacing:4px}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.shape-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
-.shape-item{border:2px solid var(--g200);border-radius:12px;padding:12px 8px;cursor:pointer;text-align:center;transition:.2s;background:#fff}
-.shape-item:hover{border-color:var(--primary)}
-.shape-item.active{border-color:var(--primary);background:var(--primary-light)}
-.shape-canvas{display:block;margin:0 auto 6px}
-.shape-name{font-size:11px;color:var(--g500);font-weight:600}
-.shape-chars{font-size:10px;color:var(--g400)}
-.font-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
-.font-item{border:1.5px solid var(--g200);border-radius:10px;padding:10px;cursor:pointer;text-align:center;transition:.2s;background:#fff}
-.font-item:hover{border-color:var(--primary)}
-.font-item.active{border-color:var(--primary);background:var(--primary-light)}
-.font-sample{font-size:20px;color:#C41E1E;margin-bottom:2px}
-.font-name{font-size:10px;color:var(--g400)}
-.color-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.color-btn{width:40px;height:40px;border-radius:10px;cursor:pointer;border:3px solid var(--g200);transition:.2s}
-.color-btn.active{border-color:var(--g900);box-shadow:0 0 0 2px var(--primary)}
-.color-btn:hover{transform:scale(1.1)}
-.toggle-row{display:flex;gap:8px;margin-bottom:12px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.preview-area{text-align:center;padding:24px;margin-bottom:16px;background:repeating-conic-gradient(var(--g100) 0% 25%,#fff 0% 50%) 50%/16px 16px;border:1px solid var(--g200);border-radius:12px}
-.preview-area canvas{display:block;margin:0 auto}
-.download-row{display:flex;gap:8px}
-.download-btn{flex:1;padding:14px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
-.download-btn.primary{background:var(--primary);color:#fff}
-.download-btn.primary:hover{background:var(--primary-dark)}
-.download-btn.secondary{background:#fff;color:var(--g700);border:1.5px solid var(--g200)}
-.download-btn.secondary:hover{border-color:var(--primary);color:var(--primary)}
+.input-row{display:flex;gap:10px;align-items:center}
+.name-input{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:14px 16px;font-size:18px;font-family:inherit;outline:none;transition:.2s;text-align:center;letter-spacing:4px}
+.name-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.char-count{font-size:12px;color:var(--g400);min-width:40px;text-align:right}
+.make-btn{padding:14px 28px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+.make-btn:hover{background:var(--primary-dark)}
+.make-btn:active{transform:scale(.98)}
+.stamp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--g200);border:1px solid var(--g200);border-radius:12px;overflow:hidden}
+.stamp-cell{background:#fff;aspect-ratio:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.15s;position:relative}
+.stamp-cell:hover{background:#FEF2F2;transform:scale(1.02);z-index:1;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.stamp-cell canvas{display:block;max-width:90%;max-height:90%}
+.stamp-hint{text-align:center;font-size:12px;color:var(--g400);margin-top:10px}
+.download-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.download-toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-.range-row{display:flex;align-items:center;gap:10px}
-.range-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--g200);outline:none}
-.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
-.range-val{min-width:40px;text-align:right;font-size:14px;font-weight:700;color:var(--primary)}
-@media(max-width:480px){.shape-grid{grid-template-columns:repeat(2,1fr)}.font-grid{grid-template-columns:1fr 1fr}}
+.no-stamps{text-align:center;padding:60px 20px;color:var(--g400);font-size:14px}
+@media(max-width:480px){.stamp-grid{grid-template-columns:repeat(3,1fr)}.input-row{flex-direction:column}.make-btn{width:100%}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"도장 만들기","url":"https://modutools.com/generate/stamp.html","description":"이력서, 계약서에 사용할 온라인 도장을 무료로 만드는 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -63,275 +42,201 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">🔴 도장 만들기</h1>
-<p class="page-sub">이력서·계약서용 도장을 무료로 만들어 다운로드하세요</p>
-
+<p class="page-sub">이름을 입력하면 20종 도장을 한번에 생성합니다. 클릭하면 바로 다운로드!</p>
 <div class="card">
 <div class="card-title">✏️ 이름 입력</div>
-<div class="input-group">
-<label class="input-label">도장에 새길 이름 (1~4자)</label>
-<input type="text" class="input-field" id="nameInput" placeholder="홍길동" maxlength="4" oninput="onNameChange()">
+<div class="input-row">
+<input type="text" class="name-input" id="nameInput" placeholder="홍길동" maxlength="4">
+<span class="char-count" id="charCount">0/4</span>
+<button class="make-btn" id="makeBtn" onclick="generateAll()">만들기</button>
 </div>
 </div>
-
-<div class="card">
-<div class="card-title">📋 도장 모양 선택</div>
-<div class="shape-grid" id="shapeGrid"></div>
+<div class="card" id="resultCard" style="display:none">
+<div class="card-title">📋 도장 선택 (클릭하면 다운로드)</div>
+<div class="stamp-grid" id="stampGrid"></div>
+<div class="stamp-hint">💡 원하는 도장을 클릭하면 투명 배경 PNG로 바로 다운로드됩니다</div>
 </div>
-
-<div class="card">
-<div class="card-title">🖋️ 서체 선택</div>
-<div class="font-grid" id="fontGrid"></div>
-</div>
-
-<div class="card">
-<div class="card-title">🎨 색상 & 스타일</div>
-<div class="input-group">
-<label class="input-label">도장 색상</label>
-<div class="color-row" id="colorRow"></div>
-</div>
-<div class="input-group">
-<label class="input-label">테두리 굵기</label>
-<div class="toggle-row" id="borderRow">
-<div class="toggle-btn" data-val="2" onclick="setStyleOpt(this,'borderRow')">얇게</div>
-<div class="toggle-btn active" data-val="4" onclick="setStyleOpt(this,'borderRow')">보통</div>
-<div class="toggle-btn" data-val="6" onclick="setStyleOpt(this,'borderRow')">굵게</div>
-</div>
-</div>
-<div class="input-group">
-<label class="input-label">크기</label>
-<div class="range-row">
-<input type="range" class="range-input" id="sizeSlider" min="150" max="500" value="300" oninput="document.getElementById('sizeVal').textContent=this.value+'px';drawPreview()">
-<span class="range-val" id="sizeVal">300px</span>
-</div>
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">👁️ 미리보기</div>
-<div class="preview-area"><canvas id="previewCanvas" width="300" height="300"></canvas></div>
-<div class="download-row" style="margin-top:16px">
-<button class="download-btn primary" onclick="downloadStamp('png')">📥 PNG 다운로드 (투명)</button>
-<button class="download-btn secondary" onclick="downloadStamp('jpg')">📥 JPG (흰배경)</button>
-</div>
-</div>
-
 <p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 입력한 정보가 서버로 전송되지 않습니다.<br>※ 본 도구로 생성한 도장은 참고용이며, 공식 인감 등록에는 사용할 수 없습니다.</p>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="download-toast" id="toast"></div>
 <script>
 (function(){
-var SHAPES=[
-  {id:"circle",name:"원형",chars:"1~4자",draw:drawCircle},
-  {id:"ellipse",name:"타원형",chars:"1~3자",draw:drawEllipse},
-  {id:"square",name:"정사각형",chars:"2~4자",draw:drawSquare},
-  {id:"roundsq",name:"둥근사각형",chars:"2~4자",draw:drawRoundSquare},
-  {id:"approval",name:"결재도장",chars:"이름+날짜",draw:drawApproval},
-  {id:"rect",name:"직사각형",chars:"2~4자",draw:drawRect}
-];
+var COLOR="#C41E1E";
 var FONTS=[
-  {family:"'Noto Serif KR'",name:"명조체",weight:900},
-  {family:"'Gowun Batang'",name:"고운바탕",weight:700},
-  {family:"'Nanum Myeongjo'",name:"나눔명조",weight:800},
-  {family:"'Nanum Brush Script'",name:"붓글씨",weight:400},
-  {family:"'Nanum Pen Script'",name:"펜글씨",weight:400},
-  {family:"'Black Han Sans'",name:"블랙한산스",weight:400},
-  {family:"'Do Hyeon'",name:"도현체",weight:400},
-  {family:"'Jua'",name:"주아체",weight:400},
-  {family:"'Hi Melody'",name:"하이멜로디",weight:400},
-  {family:"'Gaegu'",name:"개구체",weight:700}
+  {f:"'Noto Serif KR'",w:900,n:"명조"},
+  {f:"'Gowun Batang'",w:700,n:"바탕"},
+  {f:"'Nanum Myeongjo'",w:800,n:"나눔명조"},
+  {f:"'Nanum Brush Script'",w:400,n:"붓글씨"},
+  {f:"'Nanum Pen Script'",w:400,n:"펜글씨"},
+  {f:"'Black Han Sans'",w:400,n:"블랙한산스"},
+  {f:"'Do Hyeon'",w:400,n:"도현"},
+  {f:"'Jua'",w:400,n:"주아"},
+  {f:"'Gaegu'",w:700,n:"개구"},
+  {f:"'Hi Melody'",w:400,n:"하이멜로디"}
 ];
-var COLORS=["#C41E1E","#1E3A8A","#1E1E1E","#7C2D12","#064E3B","#581C87"];
-var currentShape="circle";
-var currentFont=0;
-var currentColor="#C41E1E";
-var currentBorder=4;
 
-// Build shape grid
-var shapeGrid=document.getElementById("shapeGrid");
-SHAPES.forEach(function(s,i){
-  var div=document.createElement("div");
-  div.className="shape-item"+(i===0?" active":"");
-  div.dataset.shape=s.id;
-  div.innerHTML='<canvas class="shape-canvas" width="80" height="80"></canvas><div class="shape-name">'+s.name+'</div><div class="shape-chars">'+s.chars+'</div>';
-  div.addEventListener("click",function(){
-    document.querySelectorAll(".shape-item").forEach(function(el){el.classList.remove("active");});
-    div.classList.add("active");
-    currentShape=s.id;
-    drawPreview();
-  });
-  shapeGrid.appendChild(div);
+// 20개 도장 템플릿: {shape, fontIdx, layout}
+var TEMPLATES=[
+  // 행1: 테두리 없는 세로 글씨 (4종 서체)
+  {shape:"none",fi:0,layout:"v"},
+  {shape:"none",fi:3,layout:"v"},
+  {shape:"none",fi:1,layout:"v"},
+  {shape:"none",fi:4,layout:"v"},
+  // 행2: 원형 테두리 (4종 서체)
+  {shape:"circle",fi:0,layout:"v"},
+  {shape:"circle",fi:1,layout:"v"},
+  {shape:"circle",fi:3,layout:"v"},
+  {shape:"circle",fi:5,layout:"v"},
+  // 행3: 정사각형 테두리 (4종 서체)
+  {shape:"square",fi:0,layout:"g"},
+  {shape:"square",fi:2,layout:"g"},
+  {shape:"square",fi:3,layout:"g"},
+  {shape:"square",fi:6,layout:"g"},
+  // 행4: 타원형 테두리 (4종 서체)
+  {shape:"ellipse",fi:0,layout:"h"},
+  {shape:"ellipse",fi:1,layout:"h"},
+  {shape:"ellipse",fi:7,layout:"h"},
+  {shape:"ellipse",fi:8,layout:"h"},
+  // 행5: 둥근사각형 테두리 (4종 서체)
+  {shape:"roundsq",fi:2,layout:"g"},
+  {shape:"roundsq",fi:5,layout:"g"},
+  {shape:"roundsq",fi:9,layout:"g"},
+  {shape:"roundsq",fi:4,layout:"g"}
+];
+
+var nameInput=document.getElementById("nameInput");
+var charCount=document.getElementById("charCount");
+nameInput.addEventListener("input",function(){
+  charCount.textContent=this.value.length+"/4";
 });
 
-// Build font grid
-var fontGrid=document.getElementById("fontGrid");
-FONTS.forEach(function(f,i){
-  var div=document.createElement("div");
-  div.className="font-item"+(i===0?" active":"");
-  div.innerHTML='<div class="font-sample" style="font-family:'+f.family+';font-weight:'+f.weight+'">도장</div><div class="font-name">'+f.name+'</div>';
-  div.addEventListener("click",function(){
-    document.querySelectorAll(".font-item").forEach(function(el){el.classList.remove("active");});
-    div.classList.add("active");
-    currentFont=i;
-    drawPreview();
-  });
-  fontGrid.appendChild(div);
-});
-
-// Build color row
-var colorRow=document.getElementById("colorRow");
-COLORS.forEach(function(c,i){
-  var div=document.createElement("div");
-  div.className="color-btn"+(i===0?" active":"");
-  div.style.background=c;
-  div.addEventListener("click",function(){
-    document.querySelectorAll(".color-btn").forEach(function(el){el.classList.remove("active");});
-    div.classList.add("active");
-    currentColor=c;
-    drawPreview();
-    drawShapePreviews();
-  });
-  colorRow.appendChild(div);
-});
-
-window.setStyleOpt=function(el,rowId){
-  document.querySelectorAll("#"+rowId+" .toggle-btn").forEach(function(b){b.classList.remove("active");});
-  el.classList.add("active");
-  currentBorder=parseInt(el.dataset.val);
-  drawPreview();
-  drawShapePreviews();
+window.generateAll=function(){
+  var name=nameInput.value.trim();
+  if(!name){alert("이름을 입력해주세요.");nameInput.focus();return;}
+  var grid=document.getElementById("stampGrid");
+  grid.innerHTML="";
+  for(var i=0;i<TEMPLATES.length;i++){
+    var t=TEMPLATES[i];
+    var cell=document.createElement("div");
+    cell.className="stamp-cell";
+    var canvas=document.createElement("canvas");
+    var size=200;
+    canvas.width=size;canvas.height=size;
+    var ctx=canvas.getContext("2d");
+    drawStamp(ctx,size,name,t);
+    cell.appendChild(canvas);
+    cell.dataset.idx=i;
+    cell.addEventListener("click",(function(nm,tmpl){
+      return function(){downloadStamp(nm,tmpl);};
+    })(name,t));
+    grid.appendChild(cell);
+  }
+  document.getElementById("resultCard").style.display="block";
+  document.getElementById("resultCard").scrollIntoView({behavior:"smooth"});
 };
 
-window.onNameChange=function(){
-  drawPreview();
-  drawShapePreviews();
-};
-
-function getName(){return document.getElementById("nameInput").value||"홍길동";}
-
-// Shape drawing functions
-function drawCircle(ctx,size,name,font,color,border){
-  var r=size/2-border;
+function drawStamp(ctx,size,name,t){
   ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  ctx.beginPath();ctx.arc(size/2,size/2,r,0,Math.PI*2);ctx.stroke();
-  // inner circle
-  ctx.lineWidth=border*0.5;
-  ctx.beginPath();ctx.arc(size/2,size/2,r-border*2,0,Math.PI*2);ctx.stroke();
-  ctx.fillStyle=color;
-  ctx.textAlign="center";ctx.textBaseline="middle";
+  var font=FONTS[t.fi];
   var chars=name.split("");
   var len=chars.length;
-  var fSize=Math.floor(r*0.7/Math.max(len,1));
-  ctx.font=font.weight+" "+fSize+"px "+font.family;
-  if(len===1){
-    ctx.fillText(chars[0],size/2,size/2);
-  }else{
-    var totalH=fSize*len*0.9;
-    var startY=size/2-totalH/2+fSize*0.45;
+  var cx=size/2,cy=size/2;
+  var bw=3;
+
+  // 테두리 그리기
+  ctx.strokeStyle=COLOR;
+  ctx.lineWidth=bw;
+  if(t.shape==="circle"){
+    var r=size/2-bw-4;
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+    ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(cx,cy,r-6,0,Math.PI*2);ctx.stroke();
+  }else if(t.shape==="square"){
+    var m=bw+4;
+    ctx.strokeRect(m,m,size-m*2,size-m*2);
+    ctx.lineWidth=1.5;
+    ctx.strokeRect(m+6,m+6,size-m*2-12,size-m*2-12);
+  }else if(t.shape==="ellipse"){
+    var rx=size/2-bw-4;
+    var ry=size*0.35;
+    ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();
+    ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.ellipse(cx,cy,rx-6,ry-6,0,0,Math.PI*2);ctx.stroke();
+  }else if(t.shape==="roundsq"){
+    var m=bw+4;var rr=14;
+    ctx.beginPath();
+    roundRect(ctx,m,m,size-m*2,size-m*2,rr);
+    ctx.stroke();
+    ctx.lineWidth=1.5;
+    ctx.beginPath();
+    roundRect(ctx,m+6,m+6,size-m*2-12,size-m*2-12,rr-3);
+    ctx.stroke();
+  }
+
+  // 글자 그리기
+  ctx.fillStyle=COLOR;
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+
+  if(t.layout==="v"){
+    // 세로 배치
+    var fs=calcFontSize(t.shape,size,len,"v");
+    ctx.font=font.w+" "+fs+"px "+font.f+",serif";
+    var gap=fs*0.95;
+    var startY=cy-(len-1)*gap/2;
     for(var i=0;i<len;i++){
-      ctx.fillText(chars[i],size/2,startY+i*fSize*0.9);
+      ctx.fillText(chars[i],cx,startY+i*gap);
+    }
+  }else if(t.layout==="h"){
+    // 가로 배치
+    var fs=calcFontSize(t.shape,size,len,"h");
+    ctx.font=font.w+" "+fs+"px "+font.f+",serif";
+    var gap=fs*0.85;
+    var startX=cx-(len-1)*gap/2;
+    for(var i=0;i<len;i++){
+      ctx.fillText(chars[i],startX+i*gap,cy);
+    }
+  }else if(t.layout==="g"){
+    // 격자 배치 (2x2 또는 적응)
+    var fs=calcFontSize(t.shape,size,len,"g");
+    ctx.font=font.w+" "+fs+"px "+font.f+",serif";
+    if(len<=2){
+      // 세로 2칸
+      var gap=fs*0.9;
+      ctx.fillText(chars[0],cx,cy-gap/2);
+      if(len>1)ctx.fillText(chars[1],cx,cy+gap/2);
+    }else if(len===3){
+      // 우상→좌상→우하→좌하 (도장 전통 배치: 3자는 우상좌상우하)
+      var off=fs*0.5;
+      ctx.fillText(chars[0],cx+off,cy-off);
+      ctx.fillText(chars[1],cx-off,cy-off);
+      ctx.fillText(chars[2],cx,cy+off);
+    }else{
+      // 4자: 2x2 (우상→좌상→우하→좌하)
+      var off=fs*0.5;
+      ctx.fillText(chars[0],cx+off,cy-off);
+      ctx.fillText(chars[1],cx-off,cy-off);
+      ctx.fillText(chars[2],cx+off,cy+off);
+      ctx.fillText(chars[3],cx-off,cy+off);
     }
   }
 }
 
-function drawEllipse(ctx,size,name,font,color,border){
-  var rx=size/2-border;
-  var ry=size*0.38-border;
-  ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  ctx.beginPath();ctx.ellipse(size/2,size/2,rx,ry,0,0,Math.PI*2);ctx.stroke();
-  ctx.lineWidth=border*0.5;
-  ctx.beginPath();ctx.ellipse(size/2,size/2,rx-border*2,ry-border*2,0,0,Math.PI*2);ctx.stroke();
-  ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
-  var chars=name.split("");
-  var fSize=Math.floor(ry*0.8);
-  ctx.font=font.weight+" "+fSize+"px "+font.family;
-  var totalW=fSize*chars.length*0.7;
-  var startX=size/2-totalW/2+fSize*0.35;
-  for(var i=0;i<chars.length;i++){
-    ctx.fillText(chars[i],startX+i*fSize*0.7,size/2);
+function calcFontSize(shape,size,len,layout){
+  var area=size;
+  if(shape!=="none")area=size*0.6;
+  if(layout==="v")return Math.floor(area/Math.max(len,1)*0.85);
+  if(layout==="h")return Math.floor(area/Math.max(len,1)*0.9);
+  if(layout==="g"){
+    if(len<=2)return Math.floor(area*0.45);
+    return Math.floor(area*0.4);
   }
-}
-
-function drawSquare(ctx,size,name,font,color,border){
-  var m=border;
-  ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  ctx.strokeRect(m,m,size-m*2,size-m*2);
-  ctx.lineWidth=border*0.5;
-  ctx.strokeRect(m+border*2,m+border*2,size-m*2-border*4,size-m*2-border*4);
-  ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
-  var chars=name.split("");
-  var len=chars.length;
-  var fSize=Math.floor((size-m*4)*0.6/Math.max(len,1));
-  ctx.font=font.weight+" "+fSize+"px "+font.family;
-  if(len<=2){
-    var totalW=fSize*len*0.8;
-    var startX=size/2-totalW/2+fSize*0.4;
-    for(var i=0;i<len;i++)ctx.fillText(chars[i],startX+i*fSize*0.8,size/2);
-  }else{
-    var totalH=fSize*len*0.85;
-    var startY=size/2-totalH/2+fSize*0.42;
-    for(var i=0;i<len;i++)ctx.fillText(chars[i],size/2,startY+i*fSize*0.85);
-  }
-}
-
-function drawRoundSquare(ctx,size,name,font,color,border){
-  var m=border;var r=size*0.12;
-  ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  roundRect(ctx,m,m,size-m*2,size-m*2,r);ctx.stroke();
-  ctx.lineWidth=border*0.5;
-  roundRect(ctx,m+border*2,m+border*2,size-m*2-border*4,size-m*2-border*4,r*0.7);ctx.stroke();
-  ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
-  var chars=name.split("");var len=chars.length;
-  var fSize=Math.floor((size-m*4)*0.6/Math.max(len,1));
-  ctx.font=font.weight+" "+fSize+"px "+font.family;
-  var totalH=fSize*len*0.85;
-  var startY=size/2-totalH/2+fSize*0.42;
-  for(var i=0;i<len;i++)ctx.fillText(chars[i],size/2,startY+i*fSize*0.85);
-}
-
-function drawApproval(ctx,size,name,font,color,border){
-  var m=border;var w=size-m*2;var h=size-m*2;
-  var rowH=h/3;
-  ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  ctx.strokeRect(m,m,w,h);
-  ctx.beginPath();ctx.moveTo(m,m+rowH);ctx.lineTo(m+w,m+rowH);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(m,m+rowH*2);ctx.lineTo(m+w,m+rowH*2);ctx.stroke();
-  ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
-  var fSmall=Math.floor(rowH*0.45);
-  var fBig=Math.floor(rowH*0.55);
-  ctx.font=font.weight+" "+fSmall+"px "+font.family;
-  ctx.fillText("결 재",size/2,m+rowH*0.5);
-  ctx.font=font.weight+" "+fBig+"px "+font.family;
-  ctx.fillText(name,size/2,m+rowH*1.5);
-  ctx.font=font.weight+" "+fSmall*0.8+"px "+font.family;
-  var today=new Date();
-  var dateStr=(today.getMonth()+1)+"/"+today.getDate();
-  ctx.fillText(dateStr,size/2,m+rowH*2.5);
-}
-
-function drawRect(ctx,size,name,font,color,border){
-  var m=border;var w=size-m*2;var h=size*0.5;var y0=(size-h)/2;
-  ctx.clearRect(0,0,size,size);
-  ctx.strokeStyle=color;ctx.lineWidth=border;
-  ctx.strokeRect(m,y0,w,h);
-  ctx.lineWidth=border*0.5;
-  ctx.strokeRect(m+border*2,y0+border*2,w-border*4,h-border*4);
-  ctx.fillStyle=color;ctx.textAlign="center";ctx.textBaseline="middle";
-  var chars=name.split("");
-  var fSize=Math.floor(h*0.5);
-  ctx.font=font.weight+" "+fSize+"px "+font.family;
-  var totalW=fSize*chars.length*0.75;
-  var startX=size/2-totalW/2+fSize*0.375;
-  for(var i=0;i<chars.length;i++)ctx.fillText(chars[i],startX+i*fSize*0.75,size/2);
+  return Math.floor(area*0.4);
 }
 
 function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
   ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);
   ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
   ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);
@@ -339,52 +244,26 @@ function roundRect(ctx,x,y,w,h,r){
   ctx.closePath();
 }
 
-function drawShapePreviews(){
-  var name=getName().substring(0,2)||"홍길";
-  var font=FONTS[currentFont];
-  document.querySelectorAll(".shape-canvas").forEach(function(canvas,i){
-    var ctx=canvas.getContext("2d");
-    var s=SHAPES[i];
-    s.draw(ctx,80,name,font,currentColor,2);
-  });
-}
-
-function drawPreview(){
-  var size=parseInt(document.getElementById("sizeSlider").value);
-  var canvas=document.getElementById("previewCanvas");
-  canvas.width=size;canvas.height=size;
-  var ctx=canvas.getContext("2d");
-  var name=getName();
-  var font=FONTS[currentFont];
-  var shape=SHAPES.find(function(s){return s.id===currentShape;});
-  if(shape)shape.draw(ctx,size,name,font,currentColor,currentBorder);
-}
-
-window.downloadStamp=function(format){
-  var size=parseInt(document.getElementById("sizeSlider").value);
+function downloadStamp(name,t){
+  var size=500;
   var canvas=document.createElement("canvas");
   canvas.width=size;canvas.height=size;
   var ctx=canvas.getContext("2d");
-  if(format==="jpg"){
-    ctx.fillStyle="#fff";
-    ctx.fillRect(0,0,size,size);
-  }
-  var name=getName();
-  var font=FONTS[currentFont];
-  var shape=SHAPES.find(function(s){return s.id===currentShape;});
-  if(shape)shape.draw(ctx,size,name,font,currentColor,currentBorder);
-  var ext=format==="jpg"?"jpeg":"png";
+  drawStamp(ctx,size,name,t);
   canvas.toBlob(function(blob){
     var a=document.createElement("a");
     a.href=URL.createObjectURL(blob);
-    a.download="stamp_"+getName()+"."+format;
+    a.download="stamp_"+name+".png";
     a.click();
-  },"image/"+ext,0.95);
-};
+    showToast("도장 다운로드 완료!");
+  },"image/png");
+}
 
-// Init after fonts load
-setTimeout(function(){drawPreview();drawShapePreviews();},500);
-setTimeout(function(){drawPreview();drawShapePreviews();},1500);
+function showToast(msg){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  setTimeout(function(){t.classList.remove("show");},2000);
+}
 })();
 </script>
 </body>
