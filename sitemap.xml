@@ -131,6 +131,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://modutools.com/convert/pdf-merge.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://modutools.com/generate/qr.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

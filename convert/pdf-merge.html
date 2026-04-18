@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>PDF 합치기 분할 - 여러 PDF를 하나로 합치기 | modutools</title>
+<meta name="description" content="여러 개의 PDF 파일을 하나로 합치거나, 하나의 PDF를 페이지별로 분할합니다. 무제한 무료, 서버 전송 없음.">
+<link rel="canonical" href="https://modutools.com/convert/pdf-merge.html">
+<link rel="stylesheet" href="/css/common.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:14px;border:1.5px solid var(--g200);border-radius:10px;font-size:15px;font-weight:700;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.file-list{margin-top:12px}
+.file-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:6px;cursor:grab}
+.file-item.dragging{opacity:.4}
+.file-item.over{border-color:var(--primary);border-style:dashed}
+.file-icon{font-size:24px}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:13px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-meta{font-size:11px;color:var(--g400);margin-top:2px}
+.file-remove{width:28px;height:28px;border:none;border-radius:6px;background:var(--g100);color:var(--g400);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.file-remove:hover{background:#FEE2E2;color:#EF4444}
+.file-num{width:24px;height:24px;background:var(--primary);color:#fff;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.action-btn{width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.action-btn:hover{background:var(--primary-dark)}
+.action-btn:active{transform:scale(.98)}
+.action-btn:disabled{background:var(--g300);cursor:not-allowed}
+/* 광고 슬롯 */
+.ad-slot{margin:16px 0;min-height:0;transition:opacity .3s}
+.ad-slot-inner{display:none}
+.ad-slot.has-ad .ad-slot-inner{display:block}
+.ad-slot.has-ad{margin:20px 0}
+.ad-label{font-size:10px;color:var(--g400);text-align:center;margin-bottom:4px;letter-spacing:.5px}
+/* 로딩 오버레이 */
+.loading-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);z-index:9999;flex-direction:column;align-items:center;justify-content:center}
+.loading-overlay.active{display:flex}
+.loading-spinner{width:48px;height:48px;border:4px solid var(--g200);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:16px;font-weight:700;color:var(--g900);margin-top:16px}
+.loading-sub{font-size:13px;color:var(--g500);margin-top:4px}
+.loading-ad{margin-top:24px;width:300px;max-width:90%}
+.loading-ad .ad-slot-inner{display:block}
+/* 결과 */
+.result-area{display:none}
+.result-box{background:linear-gradient(135deg,#10B981,#059669);border-radius:var(--radius);padding:24px;color:#fff;text-align:center;margin-bottom:16px}
+.result-icon{font-size:48px;margin-bottom:8px}
+.result-title{font-size:18px;font-weight:800}
+.result-sub{font-size:13px;opacity:.9;margin-top:4px}
+.download-btn{width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+.download-btn:hover{background:var(--primary-dark)}
+.split-results{margin-top:12px}
+.split-item{display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:6px}
+.split-item-name{font-size:13px;font-weight:600;color:var(--g900)}
+.split-item-btn{padding:8px 16px;border:1px solid var(--primary);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--primary);font-family:inherit}
+.split-item-btn:hover{background:var(--primary-light)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+.input-group{margin-bottom:14px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:14px;font-family:inherit;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--primary)}
+@media(max-width:480px){.toggle-btn{font-size:13px;padding:12px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"PDF 합치기 분할","url":"https://modutools.com/convert/pdf-merge.html","description":"여러 PDF를 하나로 합치거나 페이지별로 분할하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+
+<!-- Ad Top -->
+<div class="ad-slot" id="ad-slot-top"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<main class="page">
+<h1 class="page-title">📑 PDF 합치기 / 분할</h1>
+<p class="page-sub">여러 PDF를 하나로 합치거나, PDF를 페이지별로 분할합니다</p>
+
+<div class="card">
+<div class="card-title">🔧 기능 선택</div>
+<div class="toggle-row">
+<div class="toggle-btn active" data-mode="merge" onclick="setMode('merge',this)">📎 PDF 합치기</div>
+<div class="toggle-btn" data-mode="split" onclick="setMode('split',this)">✂️ PDF 분할</div>
+</div>
+</div>
+
+<!-- 합치기 모드 -->
+<div id="mergeArea">
+<div class="card">
+<div class="card-title">📁 PDF 파일 업로드</div>
+<div class="upload-zone" id="mergeUpload" onclick="document.getElementById('mergeInput').click()">
+<div class="upload-icon">📄</div>
+<div class="upload-text"><strong>클릭</strong> 또는 PDF를 드래그하여 업로드<br>여러 파일 선택 가능 · 드래그로 순서 변경</div>
+</div>
+<input type="file" class="file-input" id="mergeInput" accept=".pdf" multiple>
+<div class="file-list" id="mergeList"></div>
+</div>
+
+<!-- Ad Mid -->
+<div class="ad-slot" id="ad-slot-mid"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<button class="action-btn" id="mergeBtn" onclick="doMerge()" disabled>📎 PDF 합치기</button>
+</div>
+
+<!-- 분할 모드 -->
+<div id="splitArea" style="display:none">
+<div class="card">
+<div class="card-title">📁 PDF 파일 업로드</div>
+<div class="upload-zone" id="splitUpload" onclick="document.getElementById('splitInput').click()">
+<div class="upload-icon">📄</div>
+<div class="upload-text"><strong>클릭</strong> 또는 PDF를 드래그하여 업로드<br>분할할 PDF 1개 선택</div>
+</div>
+<input type="file" class="file-input" id="splitInput" accept=".pdf">
+<div class="file-list" id="splitFileInfo"></div>
+</div>
+<div class="card" id="splitOptions" style="display:none">
+<div class="card-title">⚙️ 분할 설정</div>
+<div class="toggle-row">
+<div class="toggle-btn active" data-smode="all" onclick="setSplitMode('all',this)">전체 페이지별</div>
+<div class="toggle-btn" data-smode="range" onclick="setSplitMode('range',this)">페이지 범위</div>
+</div>
+<div id="rangeInput" style="display:none">
+<div class="input-group">
+<label class="input-label">추출할 페이지 (예: 1-3, 5, 7-9)</label>
+<input type="text" class="input-field" id="pageRange" placeholder="1-3, 5, 7-9">
+</div>
+</div>
+</div>
+
+<div class="ad-slot" id="ad-slot-mid2"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<button class="action-btn" id="splitBtn" onclick="doSplit()" disabled>✂️ PDF 분할하기</button>
+</div>
+
+<!-- 결과 영역 -->
+<div class="result-area" id="resultArea">
+<!-- Ad Complete 1 -->
+<div class="ad-slot" id="ad-slot-complete1"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<div class="result-box">
+<div class="result-icon">✅</div>
+<div class="result-title" id="resultTitle">완료!</div>
+<div class="result-sub" id="resultSub">-</div>
+</div>
+<div id="mergeResult" style="display:none">
+<button class="download-btn" id="mergeDownBtn">📥 합쳐진 PDF 다운로드</button>
+</div>
+<div id="splitResult" style="display:none">
+<div class="split-results" id="splitResults"></div>
+</div>
+
+<!-- Ad Complete 2 -->
+<div class="ad-slot" id="ad-slot-complete2"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<button class="action-btn" style="margin-top:12px;background:var(--g100);color:var(--g700)" onclick="resetAll()">🔄 새로 시작</button>
+</div>
+
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, PDF가 서버로 전송되지 않습니다.<br>※ 무제한 무료, 회원가입 불필요.</p>
+</main>
+
+<!-- Ad Bottom -->
+<div class="ad-slot" id="ad-slot-bottom"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+<!-- 로딩 오버레이 (광고 노출 시간 확보) -->
+<div class="loading-overlay" id="loadingOverlay">
+<div class="loading-spinner"></div>
+<div class="loading-text" id="loadingText">PDF 처리 중...</div>
+<div class="loading-sub" id="loadingSub">잠시만 기다려주세요</div>
+<div class="loading-ad">
+<div class="ad-slot" id="ad-slot-loading"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+</div>
+</div>
+
+<script>
+(function(){
+var mode="merge";
+var mergeFiles=[];
+var splitFile=null;
+var splitPageCount=0;
+var splitMode="all";
+var dragIdx=null;
+
+// 광고 슬롯 체크
+function checkAdSlots(){
+  document.querySelectorAll('.ad-slot').forEach(function(slot){
+    var inner=slot.querySelector('.ad-slot-inner');
+    if(!inner)return;
+    var hasContent=inner.querySelector('iframe')||inner.querySelector('ins[data-ad-status="filled"]')||(inner.children.length>0&&inner.offsetHeight>10);
+    slot.classList.toggle('has-ad',!!hasContent);
+  });
+}
+setTimeout(checkAdSlots,1500);
+setTimeout(checkAdSlots,3500);
+
+// 모드 전환
+window.setMode=function(m,el){
+  mode=m;
+  document.querySelectorAll('.toggle-btn[data-mode]').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('mergeArea').style.display=m==='merge'?'block':'none';
+  document.getElementById('splitArea').style.display=m==='split'?'block':'none';
+  document.getElementById('resultArea').style.display='none';
+};
+
+window.setSplitMode=function(m,el){
+  splitMode=m;
+  document.querySelectorAll('.toggle-btn[data-smode]').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  document.getElementById('rangeInput').style.display=m==='range'?'block':'none';
+};
+
+// 합치기: 파일 업로드
+var mergeInput=document.getElementById('mergeInput');
+var mergeUpload=document.getElementById('mergeUpload');
+mergeUpload.addEventListener('dragover',function(e){e.preventDefault();});
+mergeUpload.addEventListener('drop',function(e){e.preventDefault();addMergeFiles(e.dataTransfer.files);});
+mergeInput.addEventListener('change',function(){addMergeFiles(this.files);this.value='';});
+
+function addMergeFiles(fileList){
+  for(var i=0;i<fileList.length;i++){
+    if(fileList[i].type!=='application/pdf')continue;
+    mergeFiles.push(fileList[i]);
+  }
+  renderMergeList();
+}
+
+function renderMergeList(){
+  var list=document.getElementById('mergeList');
+  list.innerHTML='';
+  for(var i=0;i<mergeFiles.length;i++){
+    var f=mergeFiles[i];
+    var size=(f.size/1024).toFixed(0);
+    var div=document.createElement('div');
+    div.className='file-item';
+    div.draggable=true;
+    div.dataset.idx=i;
+    div.innerHTML='<div class="file-num">'+(i+1)+'</div><div class="file-icon">📄</div><div class="file-info"><div class="file-name">'+f.name+'</div><div class="file-meta">'+size+' KB</div></div><button class="file-remove" data-idx="'+i+'">&times;</button>';
+    div.addEventListener('dragstart',function(e){dragIdx=parseInt(this.dataset.idx);this.classList.add('dragging');});
+    div.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('over');});
+    div.addEventListener('dragleave',function(){this.classList.remove('over');});
+    div.addEventListener('drop',function(e){e.preventDefault();this.classList.remove('over');var to=parseInt(this.dataset.idx);if(dragIdx===null||dragIdx===to)return;var item=mergeFiles.splice(dragIdx,1)[0];mergeFiles.splice(to,0,item);renderMergeList();});
+    div.addEventListener('dragend',function(){document.querySelectorAll('.file-item').forEach(function(el){el.classList.remove('dragging','over');});});
+    list.appendChild(div);
+  }
+  list.querySelectorAll('.file-remove').forEach(function(btn){
+    btn.addEventListener('click',function(e){e.stopPropagation();mergeFiles.splice(parseInt(this.dataset.idx),1);renderMergeList();});
+  });
+  document.getElementById('mergeBtn').disabled=mergeFiles.length<2;
+}
+
+// 분할: 파일 업로드
+var splitInput=document.getElementById('splitInput');
+var splitUpload=document.getElementById('splitUpload');
+splitUpload.addEventListener('dragover',function(e){e.preventDefault();});
+splitUpload.addEventListener('drop',function(e){e.preventDefault();loadSplitFile(e.dataTransfer.files[0]);});
+splitInput.addEventListener('change',function(){if(this.files.length)loadSplitFile(this.files[0]);this.value='';});
+
+function loadSplitFile(file){
+  if(!file||file.type!=='application/pdf'){alert('PDF 파일만 업로드 가능합니다.');return;}
+  splitFile=file;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    PDFLib.PDFDocument.load(e.target.result).then(function(doc){
+      splitPageCount=doc.getPageCount();
+      document.getElementById('splitFileInfo').innerHTML='<div class="file-item"><div class="file-icon">📄</div><div class="file-info"><div class="file-name">'+file.name+'</div><div class="file-meta">'+(file.size/1024).toFixed(0)+' KB · '+splitPageCount+'페이지</div></div></div>';
+      document.getElementById('splitOptions').style.display='block';
+      document.getElementById('splitBtn').disabled=false;
+    });
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+// 로딩 표시 (광고 노출 시간 확보)
+function showLoading(text,sub){
+  document.getElementById('loadingText').textContent=text;
+  document.getElementById('loadingSub').textContent=sub;
+  document.getElementById('loadingOverlay').classList.add('active');
+  checkAdSlots();
+}
+function hideLoading(){
+  document.getElementById('loadingOverlay').classList.remove('active');
+}
+
+// PDF 합치기 실행
+window.doMerge=function(){
+  if(mergeFiles.length<2)return;
+  showLoading('PDF 합치는 중...','파일 '+mergeFiles.length+'개를 합치고 있습니다');
+  var btn=document.getElementById('mergeBtn');
+  btn.disabled=true;btn.textContent='처리 중...';
+
+  setTimeout(function(){
+    var readers=[];
+    var loaded=0;
+    for(var i=0;i<mergeFiles.length;i++){
+      (function(idx){
+        var r=new FileReader();
+        r.onload=function(e){
+          readers[idx]=e.target.result;
+          loaded++;
+          document.getElementById('loadingSub').textContent='파일 읽는 중... ('+loaded+'/'+mergeFiles.length+')';
+          if(loaded===mergeFiles.length)mergePDFs(readers);
+        };
+        r.readAsArrayBuffer(mergeFiles[idx]);
+      })(i);
+    }
+  },1500);
+};
+
+function mergePDFs(buffers){
+  PDFLib.PDFDocument.create().then(function(merged){
+    var idx=0;
+    function addNext(){
+      if(idx>=buffers.length){
+        merged.save().then(function(bytes){
+          var blob=new Blob([bytes],{type:'application/pdf'});
+          showResult('merge',blob,mergeFiles.length);
+        });
+        return;
+      }
+      document.getElementById('loadingSub').textContent='합치는 중... ('+(idx+1)+'/'+buffers.length+')';
+      PDFLib.PDFDocument.load(buffers[idx]).then(function(doc){
+        merged.copyPages(doc,doc.getPageIndices()).then(function(pages){
+          pages.forEach(function(p){merged.addPage(p);});
+          idx++;
+          addNext();
+        });
+      });
+    }
+    addNext();
+  });
+}
+
+// PDF 분할 실행
+window.doSplit=function(){
+  if(!splitFile)return;
+  showLoading('PDF 분할 중...','페이지를 분리하고 있습니다');
+  var btn=document.getElementById('splitBtn');
+  btn.disabled=true;btn.textContent='처리 중...';
+
+  setTimeout(function(){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      PDFLib.PDFDocument.load(e.target.result).then(function(doc){
+        var pages=[];
+        if(splitMode==='all'){
+          for(var i=0;i<doc.getPageCount();i++)pages.push(i);
+        }else{
+          pages=parseRange(document.getElementById('pageRange').value,doc.getPageCount());
+        }
+        splitPages(doc,pages);
+      });
+    };
+    reader.readAsArrayBuffer(splitFile);
+  },1500);
+};
+
+function parseRange(str,max){
+  var result=[];
+  var parts=str.split(',');
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i].trim();
+    if(p.includes('-')){
+      var ab=p.split('-');
+      var a=parseInt(ab[0])-1,b=parseInt(ab[1])-1;
+      for(var j=Math.max(0,a);j<=Math.min(max-1,b);j++)result.push(j);
+    }else{
+      var n=parseInt(p)-1;
+      if(n>=0&&n<max)result.push(n);
+    }
+  }
+  return result;
+}
+
+function splitPages(doc,pageIndices){
+  var results=[];
+  var idx=0;
+  function nextPage(){
+    if(idx>=pageIndices.length){
+      showSplitResult(results);
+      return;
+    }
+    document.getElementById('loadingSub').textContent='분할 중... ('+(idx+1)+'/'+pageIndices.length+')';
+    PDFLib.PDFDocument.create().then(function(newDoc){
+      newDoc.copyPages(doc,[pageIndices[idx]]).then(function(pages){
+        newDoc.addPage(pages[0]);
+        newDoc.save().then(function(bytes){
+          var blob=new Blob([bytes],{type:'application/pdf'});
+          results.push({name:'page_'+(pageIndices[idx]+1)+'.pdf',blob:blob});
+          idx++;
+          nextPage();
+        });
+      });
+    });
+  }
+  nextPage();
+}
+
+function showResult(type,blob,count){
+  setTimeout(function(){
+    hideLoading();
+    var sizeKB=(blob.size/1024).toFixed(0);
+    var sizeMB=(blob.size/1048576).toFixed(1);
+    var sizeStr=blob.size>1048576?sizeMB+'MB':sizeKB+'KB';
+    document.getElementById('resultTitle').textContent='PDF 합치기 완료!';
+    document.getElementById('resultSub').textContent=count+'개 파일 합침 · '+sizeStr;
+    document.getElementById('mergeResult').style.display='block';
+    document.getElementById('splitResult').style.display='none';
+    document.getElementById('mergeDownBtn').onclick=function(){
+      var a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download='modutools_merged.pdf';
+      a.click();
+    };
+    document.getElementById('resultArea').style.display='block';
+    document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+    document.getElementById('mergeBtn').disabled=false;
+    document.getElementById('mergeBtn').textContent='📎 PDF 합치기';
+    checkAdSlots();
+    setTimeout(checkAdSlots,1000);
+  },2000);
+}
+
+function showSplitResult(results){
+  setTimeout(function(){
+    hideLoading();
+    document.getElementById('resultTitle').textContent='PDF 분할 완료!';
+    document.getElementById('resultSub').textContent=results.length+'개 페이지로 분할됨';
+    document.getElementById('mergeResult').style.display='none';
+    document.getElementById('splitResult').style.display='block';
+    var html='';
+    for(var i=0;i<results.length;i++){
+      html+='<div class="split-item"><span class="split-item-name">📄 '+results[i].name+' ('+(results[i].blob.size/1024).toFixed(0)+' KB)</span><button class="split-item-btn" data-idx="'+i+'">다운로드</button></div>';
+    }
+    document.getElementById('splitResults').innerHTML=html;
+    document.querySelectorAll('.split-item-btn').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var r=results[parseInt(this.dataset.idx)];
+        var a=document.createElement('a');
+        a.href=URL.createObjectURL(r.blob);
+        a.download=r.name;
+        a.click();
+      });
+    });
+    document.getElementById('resultArea').style.display='block';
+    document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+    document.getElementById('splitBtn').disabled=false;
+    document.getElementById('splitBtn').textContent='✂️ PDF 분할하기';
+    checkAdSlots();
+    setTimeout(checkAdSlots,1000);
+  },2000);
+}
+
+window.resetAll=function(){
+  mergeFiles=[];splitFile=null;splitPageCount=0;
+  document.getElementById('mergeList').innerHTML='';
+  document.getElementById('splitFileInfo').innerHTML='';
+  document.getElementById('splitOptions').style.display='none';
+  document.getElementById('resultArea').style.display='none';
+  document.getElementById('mergeBtn').disabled=true;
+  document.getElementById('splitBtn').disabled=true;
+  document.getElementById('mergeBtn').textContent='📎 PDF 합치기';
+  document.getElementById('splitBtn').textContent='✂️ PDF 분할하기';
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+})();
+</script>
+</body>
+</html>
