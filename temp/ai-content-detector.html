@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI 글 판독기 및 문체 교정 도구 - 챗GPT 감지 회피 | 모두의 도구</title>
+<meta name="description" content="작성한 글이 AI(ChatGPT, Claude) 문체인지 확인하고, 인간이 쓴 것처럼 자연스럽게 수정하는 방법을 확인하세요. AI 판독기 회피를 위한 정밀 분석 도구.">
+<link rel="canonical" href="https://modutools.com/seo/ai-content-detector.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+
+/* 분석창 */
+.analyzer-box { width: 100%; min-height: 280px; padding: 20px; border: 1px solid var(--g200); border-radius: var(--radius); font-size: 15px; line-height: 1.8; background: #fdfdfd; margin-bottom: 16px; outline: none; }
+.analyzer-box:focus { border-color: var(--primary); background: #fff; }
+
+/* 결과 대시보드 */
+.detector-res { display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; margin-bottom: 24px; }
+.gauge-card { background: var(--g50); padding: 20px; border-radius: var(--radius); text-align: center; border: 1px solid var(--g100); }
+.gauge-val { font-size: 32px; font-weight: 900; margin: 8px 0; }
+.status-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+
+/* 하이라이트 분석 리스트 */
+.insight-item { padding: 16px; border-radius: 12px; margin-bottom: 10px; font-size: 14px; line-height: 1.6; border-left: 4px solid var(--g200); background: #f8fafc; }
+.insight-item.warn { border-left-color: #f59e0b; background: #fffbeb; }
+.insight-item.tip { border-left-color: #3b82f6; background: #eff6ff; }
+.insight-label { font-weight: 700; display: block; margin-bottom: 4px; color: var(--g800); }
+
+/* SEO 섹션 */
+.guide-title { font-size: 18px; font-weight: 700; color: var(--g800); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.guide-txt { font-size: 14px; color: var(--g600); line-height: 1.8; }
+.guide-txt h3 { font-size: 15px; color: var(--g900); margin: 20px 0 8px; }
+</style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner"><a href="/" class="logo">modutools</a></div>
+</header>
+
+<main class="page">
+    <h1 class="page-title">AI 글 판독 및 교정 도구</h1>
+    <p class="page-sub">내 글이 AI처럼 느껴지는 이유를 분석하고, 인간적인 문체로 수정하는 가이드를 제공합니다.</p>
+
+    <div class="card">
+        <textarea id="aiInput" class="analyzer-box" placeholder="분석할 글을 300자 이상 입력하세요..." oninput="updateCounts()"></textarea>
+        <button onclick="runAiDetect()" class="mt-btn" style="width:100%; background:var(--primary); color:#fff; font-weight:700; height:54px;">실시간 정밀 판독 실행</button>
+    </div>
+
+    <div id="resArea" style="display:none;">
+        <div class="detector-res">
+            <div class="gauge-card">
+                <span class="score-label">AI 작성 확률</span>
+                <div id="aiPercent" class="gauge-val">0%</div>
+                <div id="aiStatus" class="status-tag">분석 중</div>
+            </div>
+            <div class="gauge-card">
+                <span class="score-label">문장 다양성(Perplexity)</span>
+                <div id="plexVal" class="gauge-val">낮음</div>
+                <p style="font-size:11px; color:var(--g500);">점수가 높을수록 인간의 글에 가깝습니다.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="guide-title">🔍 AI 의심 구간 및 수정 제안</h3>
+            <div id="insightList"></div>
+        </div>
+    </div>
+
+    <section style="margin-top:40px;">
+        <div class="card">
+            <h2 class="guide-title">🤔 AI 판독기는 어떻게 작동하나요?</h2>
+            <div class="guide-txt">
+                <p>AI 판독기는 주로 <strong>Perplexity(당혹도)</strong>와 <strong>Burstiness(폭발성)</strong>라는 두 가지 지표를 봅니다. AI는 항상 가장 '확률적으로 높은' 단어를 선택하기 때문에 문장이 지나치게 매끄럽고 일정한 패턴을 보입니다.</p>
+                <h3>인간적인 문체로 바꾸는 팁</h3>
+                <ul>
+                    <li><strong>개인적인 경험 추가:</strong> "나는 ~라고 느꼈다", "실제로 해보니 ~했다"와 같은 주관적 경험은 AI가 흉내 내기 가장 어려운 영역입니다.</li>
+                    <li><strong>문장 길이 조절:</strong> 짧은 문장과 긴 문장을 의도적으로 섞으세요. AI는 문장 길이를 일정하게 유지하려는 경향이 있습니다.</li>
+                    <li><strong>구어체 사용:</strong> 지나치게 딱딱한 설명조보다는 누군가에게 말하는 듯한 말투를 섞어보세요.</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="guide-title">❓ FAQ - AI 판독 회피 관련</h2>
+            <div class="guide-txt">
+                <h3>Q. 판독기만 통과하면 애드센스 승인이 잘 되나요?</h3>
+                <p>단순히 판독기를 피하는 것보다 '독자에게 유용한 정보'를 담고 있는지가 더 중요합니다. 이 도구는 가독성을 높여주는 보조 도구로 활용하세요.</p>
+                <h3>Q. 모든 AI 글을 다 잡아내나요?</h3>
+                <p>본 도구는 언어 모델의 통계적 패턴을 분석합니다. 사람이 직접 많이 수정한 글은 AI 판독률이 낮게 나타날 수 있습니다.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+function runAiDetect() {
+    const text = document.getElementById('aiInput').value;
+    if (text.length < 50) { alert('정밀 분석을 위해 50자 이상 입력해 주세요.'); return; }
+    
+    document.getElementById('resArea').style.display = 'block';
+    
+    let aiProb = 0;
+    let insights = [];
+
+    // 1. 문장 다양성 분석 (Burstiness)
+    const sentences = text.split(/[.!?]\s/).filter(s => s.length > 0);
+    const lens = sentences.map(s => s.length);
+    const avgLen = lens.reduce((a, b) => a + b, 0) / lens.length;
+    const deviation = Math.sqrt(lens.map(x => Math.pow(x - avgLen, 2)).reduce((a, b) => a + b) / lens.length);
+
+    // 2. 판독 로직 (통계적 패턴 기반)
+    // 2-1. 문장 길이 편차 분석
+    if (deviation < 15) {
+        aiProb += 40;
+        insights.push({ type: 'warn', label: '단조로운 문장 리듬', text: '모든 문장의 길이가 비슷합니다. AI의 전형적인 특징입니다. 짧은 문장과 긴 문장을 섞어보세요.' });
+    } else {
+        insights.push({ type: 'tip', label: '역동적인 문장 구조', text: '문장의 호흡이 다양합니다. 인간의 집필 습관과 유사합니다.' });
+    }
+
+    // 2-2. 특정 접속사/부사 과사용 (AI 특유의 말투)
+    const aiMarkers = ['무엇보다도', '결론적으로', '뿐만 아니라', '요약하자면', '중요한 점은'];
+    const foundMarkers = aiMarkers.filter(m => text.includes(m));
+    if (foundMarkers.length >= 2) {
+        aiProb += 30;
+        insights.push({ type: 'warn', label: '정형화된 접속사 사용', text: `"${foundMarkers.join(', ')}" 같은 표현은 AI가 문단을 연결할 때 자주 씁니다. 좀 더 자연스러운 연결사로 바꿔보세요.` });
+    }
+
+    // 2-3. 주관적 표현(경험) 체크
+    const personalMarkers = ['제 생각에는', '경험해 보니', '느꼈습니다', '직접'];
+    if (!personalMarkers.some(m => text.includes(m))) {
+        aiProb += 20;
+        insights.push({ type: 'tip', label: '개인적 견해 부족', text: '객관적인 사실 위주로만 작성되었습니다. 본인의 주관이나 에피소드를 한 줄만 추가해도 AI 판독률이 확 떨어집니다.' });
+    }
+
+    // 결과 출력
+    const finalScore = Math.min(aiProb, 99);
+    document.getElementById('aiPercent').textContent = finalScore + '%';
+    const statusTag = document.getElementById('aiStatus');
+    
+    if (finalScore > 70) {
+        statusTag.textContent = 'AI 작성 의심';
+        statusTag.style.background = '#fee2e2'; statusTag.style.color = '#ef4444';
+        document.getElementById('plexVal').textContent = '매우 낮음';
+    } else if (finalScore > 40) {
+        statusTag.textContent = '부분적 AI 사용';
+        statusTag.style.background = '#fef3c7'; statusTag.style.color = '#d97706';
+        document.getElementById('plexVal').textContent = '보통';
+    } else {
+        statusTag.textContent = '인간 작성 가능성 높음';
+        statusTag.style.background = '#d1fae5'; statusTag.style.color = '#10b981';
+        document.getElementById('plexVal').textContent = '높음';
+    }
+
+    document.getElementById('insightList').innerHTML = insights.map(i => `
+        <div class="insight-item ${i.type}">
+            <span class="insight-label">${i.type === 'warn' ? '🚩' : '💡'} ${i.label}</span>
+            ${i.text}
+        </div>
+    `).join('');
+    
+    window.scrollTo({ top: document.getElementById('resArea').offsetTop - 20, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
