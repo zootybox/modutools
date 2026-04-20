@@ -191,8 +191,13 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
       <span class="tool-faq-q">Q. 음성 파일 저장이 안 돼요</span>
       <div class="tool-faq-a">파일 저장은 PC Chrome 브라우저에서 가장 안정적으로 작동합니다. 모바일이나 Safari에서는 브라우저 보안 정책에 의해 제한될 수 있습니다. 이 경우 '미리 듣기' 기능을 이용해 주세요.</div>
 
-      <span class="tool-faq-q">Q. 한국어 음성이 하나뿐이에요</span>
-      <div class="tool-faq-a">음성 목록은 기기 운영체제(Windows, Mac, Android, iOS)에 따라 달라집니다. 윈도우에서는 '설정 → 시간 및 언어 → 음성'에서 추가 음성을 설치할 수 있습니다.</div>
+      <span class="tool-faq-q">Q. 한국어 음성이 적거나 하나뿐이에요</span>
+      <div class="tool-faq-a">음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. 아래 방법으로 무료 음성을 추가할 수 있습니다.<br><br>
+      <strong>▸ Windows 10/11:</strong> 설정 → 시간 및 언어 → 음성 → '음성 추가' 클릭 → 한국어 선택 후 설치 (해미, 인준 등 추가됨)<br>
+      <strong>▸ Mac:</strong> 시스템 설정 → 손쉬운 사용 → 음성 콘텐츠 → 시스템 음성 관리 → 한국어 음성 다운로드<br>
+      <strong>▸ Android:</strong> 설정 → 접근성 → TTS 출력 → Google TTS 엔진 → 언어에서 한국어 설치<br>
+      <strong>▸ iPhone/iPad:</strong> 설정 → 손쉬운 사용 → 음성 콘텐츠 → 음성 → 한국어에서 추가 음성 다운로드<br><br>
+      설치 후 브라우저를 새로고침하면 새 음성이 자동으로 목록에 나타납니다.</div>
     </div>
   </div>
 
@@ -264,9 +269,14 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   function loadVoices(){
     allVoices=synth.getVoices();
     var ko=[],en=[];
+    var enSeen={};
     allVoices.forEach(function(v){
       if(/^ko/i.test(v.lang)) ko.push(v);
-      else if(/^en/i.test(v.lang)) en.push(v);
+      else if(/^en-(US|GB)/i.test(v.lang)){
+        /* \uc911\ubcf5 \uc774\ub984 \ubc29\uc9c0 + \ucd5c\ub300 8\uac1c */
+        var shortName=v.name.replace(/ Online \(Natural\)| Desktop| - .+$/g,'');
+        if(!enSeen[shortName]&&en.length<8){enSeen[shortName]=true;en.push(v);}
+      }
     });
     var html='';
     if(ko.length){
@@ -435,17 +445,69 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 
       recorder.ondataavailable=function(e){if(e.data.size>0)chunks.push(e.data);};
       recorder.onstop=function(){
-        var blob=new Blob(chunks,{type:'audio/webm'});
-        var url=URL.createObjectURL(blob);
-        var a=document.createElement('a');
-        a.href=url;
-        a.download='modutools-tts-'+Date.now()+'.webm';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        setTimeout(function(){URL.revokeObjectURL(url);},3000);
+        var webmBlob=new Blob(chunks,{type:'audio/webm'});
+        /* webm → wav 변환 */
+        var fileReader=new FileReader();
+        fileReader.onload=function(){
+          var arrBuf=this.result;
+          var decodeCtx=new(window.AudioContext||window.webkitAudioContext)();
+          decodeCtx.decodeAudioData(arrBuf,function(audioBuf){
+            var numCh=audioBuf.numberOfChannels;
+            var sampleRate=audioBuf.sampleRate;
+            var length=audioBuf.length;
+            var wavBuf=new ArrayBuffer(44+length*numCh*2);
+            var view=new DataView(wavBuf);
+            function writeStr(off,str){for(var i=0;i<str.length;i++)view.setUint8(off+i,str.charCodeAt(i));}
+            writeStr(0,'RIFF');
+            view.setUint32(4,36+length*numCh*2,true);
+            writeStr(8,'WAVE');
+            writeStr(12,'fmt ');
+            view.setUint32(16,16,true);
+            view.setUint16(20,1,true);
+            view.setUint16(22,numCh,true);
+            view.setUint32(24,sampleRate,true);
+            view.setUint32(28,sampleRate*numCh*2,true);
+            view.setUint16(32,numCh*2,true);
+            view.setUint16(34,16,true);
+            writeStr(36,'data');
+            view.setUint32(40,length*numCh*2,true);
+            var offset=44;
+            var channels=[];
+            for(var c=0;c<numCh;c++) channels.push(audioBuf.getChannelData(c));
+            for(var i=0;i<length;i++){
+              for(var c=0;c<numCh;c++){
+                var sample=Math.max(-1,Math.min(1,channels[c][i]));
+                view.setInt16(offset,sample<0?sample*0x8000:sample*0x7FFF,true);
+                offset+=2;
+              }
+            }
+            var wavBlob=new Blob([wavBuf],{type:'audio/wav'});
+            var url=URL.createObjectURL(wavBlob);
+            var a=document.createElement('a');
+            a.href=url;
+            a.download='modutools-tts-'+Date.now()+'.wav';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function(){URL.revokeObjectURL(url);},3000);
+            decodeCtx.close();
+            showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. (WAV)','ok');
+          },function(){
+            /* 디코딩 실패 시 webm으로 fallback */
+            var url=URL.createObjectURL(webmBlob);
+            var a=document.createElement('a');
+            a.href=url;
+            a.download='modutools-tts-'+Date.now()+'.webm';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(function(){URL.revokeObjectURL(url);},3000);
+            showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4.','ok');
+          });
+          decodeCtx=null;
+        };
+        fileReader.readAsArrayBuffer(webmBlob);
         audioCtx.close();
-        showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4.','ok');
         btnDownload.disabled=false;
         btnDownload.style.opacity='1';
         stopResumeHack();
@@ -520,7 +582,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   "mainEntity":[
     {"@type":"Question","name":"TTS 음성이 나오지 않아요","acceptedAnswer":{"@type":"Answer","text":"기기 음량이 켜져 있는지 확인하세요. Chrome 또는 Edge 브라우저 사용을 권장합니다. 일부 모바일 기기에서는 무음 모드를 해제해야 합니다."}},
     {"@type":"Question","name":"음성 파일 저장이 안 돼요","acceptedAnswer":{"@type":"Answer","text":"파일 저장은 PC Chrome 브라우저에서 가장 안정적으로 작동합니다. 모바일이나 Safari에서는 브라우저 보안 정책에 의해 제한될 수 있습니다."}},
-    {"@type":"Question","name":"한국어 음성이 하나뿐이에요","acceptedAnswer":{"@type":"Answer","text":"음성 목록은 기기 운영체제에 따라 달라집니다. 윈도우에서는 설정 → 시간 및 언어 → 음성에서 추가 음성을 설치할 수 있습니다."}}
+    {"@type":"Question","name":"한국어 음성이 적거나 하나뿐이에요","acceptedAnswer":{"@type":"Answer","text":"음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. Windows는 설정 → 시간 및 언어 → 음성에서, Mac은 시스템 설정 → 손쉬운 사용 → 음성 콘텐츠에서 무료로 추가 음성을 설치할 수 있습니다. 설치 후 브라우저를 새로고침하면 새 음성이 자동으로 목록에 나타납니다."}}
   ]
 }
 </script>
