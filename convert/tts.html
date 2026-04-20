@@ -231,7 +231,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     'Daniel':'\uc601\uc5b4 \ub0a8\uc131 (Daniel)','Karen':'\uc601\uc5b4 \uc5ec\uc131 (Karen)'
   };
   function getLabel(v,lang,idx){
-    var key=v.name.replace(/ Online \(Natural\)| Desktop/g,'');
+    var key=v.name.replace(/ Online \(Natural\)| Desktop| - .+$/g,'');
     if(nameMap[key]) return nameMap[key];
     var pre=lang==='ko'?'\ud55c\uad6d\uc5b4':'\uc601\uc5b4';
     if(/female/i.test(v.name)) return pre+' \uc5ec\uc131 '+(idx+1);
