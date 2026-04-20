@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>자막 파일 텍스트 추출기 : SRT VTT ASS 대본 변환 | modutools</title>
+<meta name="description" content="자막 파일(SRT, VTT, ASS)에서 시간 정보를 제거하고 순수 텍스트만 추출하세요. 유튜브 대본 제작, 블로그 원고 작성에 최적화된 무료 도구입니다.">
+<link rel="canonical" href="https://modutools.com/convert/subtitle-extractor.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.tool-page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.tool-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.tool-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.tool-card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* 업로드 박스 */
+.tool-upload{border:2px dashed var(--g200);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;background:var(--g50);transition:.2s}
+.tool-upload:hover{border-color:var(--primary);background:#fff}
+.tool-upload.dragover{border-color:var(--primary);background:var(--primary-light)}
+.tool-upload-icon{font-size:32px;display:block;margin-bottom:12px}
+.tool-upload-label{font-weight:700;color:var(--g800)}
+.tool-upload-hint{font-size:13px;color:var(--g500);margin-top:6px}
+
+/* 파일 정보 */
+.tool-file-info{display:none;margin-top:12px;padding:12px 14px;background:var(--g50);border-radius:8px;font-size:13px;color:var(--g600);align-items:center;justify-content:space-between}
+.tool-file-info span{font-weight:600;color:var(--g800)}
+.tool-file-reset{background:none;border:none;color:var(--primary);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+
+/* 옵션 */
+.tool-option-row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px}
+.tool-option-item{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--g600);cursor:pointer}
+.tool-option-item input{accent-color:var(--primary)}
+
+/* 결과 영역 */
+.tool-result{display:none}
+.tool-textarea{width:100%;min-height:250px;padding:16px;border:1.5px solid var(--g200);border-radius:var(--radius);font-size:14px;line-height:1.7;background:#fdfdfd;resize:vertical;font-family:inherit;outline:none;transition:.2s}
+.tool-textarea:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.tool-char-count{text-align:right;font-size:12px;color:var(--g400);margin-top:6px}
+
+/* 버튼 */
+.tool-btn-area{display:flex;gap:8px;margin-top:16px}
+.tool-btn{flex:1;height:52px;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.tool-btn:hover{transform:translateY(-1px)}
+.tool-btn:active{transform:translateY(0)}
+.tool-btn-sub{background:var(--g100);color:var(--g700)}
+.tool-btn-sub:hover{background:var(--g200)}
+.tool-btn-main{flex:1.5;background:var(--primary);color:#fff}
+.tool-btn-main:hover{background:var(--primary-dark)}
+
+/* 상태 메시지 */
+.tool-status{margin-top:12px;padding:14px;border-radius:var(--radius);font-size:13px;text-align:center;font-weight:600;display:none}
+.tool-status.ok{background:#D1FAE5;color:#059669;display:block}
+
+/* 브라우저 지원 안내 */
+.tool-compat{background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.tool-compat-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tool-compat-list{font-size:12px;color:var(--g500);line-height:1.8}
+
+/* 가이드 섹션 (SEO) */
+.tool-guide{margin-top:40px}
+.tool-guide-title{font-size:18px;font-weight:700;color:var(--g900);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.tool-guide-body{font-size:14px;color:var(--g600);line-height:1.8}
+.tool-guide-body h3{font-size:15px;color:var(--g800);margin:24px 0 8px;font-weight:700}
+.tool-faq-q{font-weight:700;color:var(--primary);margin-top:16px;display:block}
+.tool-faq-a{background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7}
+
+/* 면책 */
+.tool-disclaimer{margin-top:32px;padding:16px;background:var(--g50);border-radius:var(--radius);border:1px solid var(--g200)}
+.tool-disclaimer p{font-size:11px;color:var(--g400);line-height:1.7}
+.tool-disclaimer strong{color:var(--g500)}
+
+@media(max-width:480px){
+  .tool-btn-area{flex-direction:column}
+  .tool-btn{height:48px}
+  .tool-btn-main{flex:1}
+}
+</style>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav">
+      <a href="/">홈</a>
+      <a href="/about.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+<main class="tool-page">
+  <h1 class="tool-title">자막 텍스트 추출기</h1>
+  <p class="tool-sub">SRT, VTT, ASS 자막 파일에서 시간 정보와 태그를 제거하고 깔끔한 대본을 만듭니다.</p>
+
+  <!-- 업로드 카드 -->
+  <div class="tool-card">
+    <div class="tool-card-title">📄 자막 파일 업로드</div>
+    <div id="uploadBox" class="tool-upload">
+      <span class="tool-upload-icon">📂</span>
+      <div class="tool-upload-label">자막 파일 선택 (SRT, VTT, ASS)</div>
+      <p class="tool-upload-hint">클릭하거나 파일을 드래그해서 놓으세요</p>
+      <input type="file" id="fileInput" accept=".srt,.vtt,.ass,.ssa" style="display:none">
+    </div>
+    <div id="fileInfo" class="tool-file-info">
+      <span id="fileName"></span>
+      <button class="tool-file-reset" onclick="resetFile()">다른 파일 선택</button>
+    </div>
+  </div>
+
+  <!-- 결과 카드 -->
+  <div id="resultArea" class="tool-result">
+    <div class="tool-card">
+      <div class="tool-card-title">✏️ 추출 결과</div>
+
+      <div class="tool-option-row">
+        <label class="tool-option-item"><input type="checkbox" id="removeEmpty" checked onchange="processText()"> 빈 줄 제거</label>
+        <label class="tool-option-item"><input type="checkbox" id="joinLines" checked onchange="processText()"> 문장 이어붙이기</label>
+        <label class="tool-option-item"><input type="checkbox" id="removeDup" onchange="processText()"> 중복 줄 제거</label>
+      </div>
+
+      <textarea id="textResult" class="tool-textarea" spellcheck="false" readonly></textarea>
+      <div class="tool-char-count">글자 수: <span id="charCount">0</span>자</div>
+
+      <div class="tool-btn-area">
+        <button onclick="copyText()" class="tool-btn tool-btn-sub">📋 전체 복사</button>
+        <button onclick="downloadTxt()" class="tool-btn tool-btn-main">⬇ TXT 파일 저장</button>
+      </div>
+
+      <div id="statusMsg" class="tool-status"></div>
+    </div>
+  </div>
+
+  <!-- 브라우저 호환 안내 -->
+  <div class="tool-compat">
+    <div class="tool-compat-title">💡 사용 안내</div>
+    <div class="tool-compat-list">
+      · SRT, VTT, ASS(SSA) 자막 형식을 모두 지원합니다.<br>
+      · 모든 처리는 사용자의 기기에서 이루어지며, 서버로 전송되지 않습니다.<br>
+      · UTF-8 인코딩 파일에서 가장 정확하게 동작합니다.<br>
+      · Chrome, Edge, Firefox, Safari 등 최신 브라우저를 권장합니다.
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- SEO 가이드 섹션 -->
+  <div class="tool-guide">
+    <div class="tool-guide-title">📖 자막 텍스트 추출 활용 가이드</div>
+    <div class="tool-guide-body">
+      <h3>어떤 도구인가요?</h3>
+      유튜브나 영상 사이트에서 다운로드한 자막 파일(SRT, VTT, ASS)에는 타임코드·인덱스·스타일 태그 등 편집용 데이터가 포함되어 있습니다. 이 도구는 복잡한 데이터를 자동으로 제거하고, 순수 텍스트(대본)만 깔끔하게 추출해 드립니다.
+
+      <h3>활용 사례</h3>
+      유튜브 영상 대본 정리, 블로그 포스팅 원고 변환, 강의 내용 텍스트화, 번역 원문 준비, 자막 내용 검수 등 다양한 용도로 사용할 수 있습니다.
+
+      <h3>옵션 설명</h3>
+      빈 줄 제거는 자막 사이의 불필요한 공백을 삭제합니다. 문장 이어붙이기는 짧게 끊긴 자막들을 하나의 문단으로 합쳐 읽기 편하게 만듭니다. 중복 줄 제거는 반복 표시되는 동일 자막을 한 번만 남깁니다.
+
+      <span class="tool-faq-q">Q. SRT, VTT, ASS 파일의 차이점은?</span>
+      <div class="tool-faq-a">SRT는 가장 보편적인 자막 형식이고, VTT는 웹 환경에 최적화된 형식입니다. ASS(SSA)는 애니메이션·자막 스타일링에 많이 사용되며, 글꼴·색상·위치 정보를 포함합니다. 세 형식 모두 본 도구에서 텍스트 추출이 가능합니다.</div>
+
+      <span class="tool-faq-q">Q. 한글이 깨져서 나와요</span>
+      <div class="tool-faq-a">자막 파일이 EUC-KR 등 구형 인코딩으로 저장된 경우 깨질 수 있습니다. 메모장에서 파일을 열고 '다른 이름으로 저장' → 인코딩을 UTF-8로 변경한 뒤 다시 업로드해 보세요.</div>
+
+      <span class="tool-faq-q">Q. 보안 문제는 없나요?</span>
+      <div class="tool-faq-a">자막 파일은 서버로 전송되지 않고 브라우저 내에서 즉시 처리됩니다. 개인정보 노출 걱정 없이 안전하게 사용할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- 면책 조항 -->
+  <div class="tool-disclaimer">
+    <p><strong>면책 조항</strong> — 본 도구는 자막 파일에서 텍스트를 추출하는 무료 서비스로, 추출 결과의 정확성은 원본 자막 파일의 형식·인코딩 상태에 따라 달라질 수 있습니다. 추출된 텍스트의 저작권은 원본 영상 제작자에게 있으며, 상업적 사용 시 저작권 확인은 사용자 본인의 책임입니다. 모든 데이터는 사용자 기기에서만 처리되며, 외부 서버로 전송되지 않습니다.</p>
+  </div>
+</main>
+
+<footer class="mt-footer">
+  <p>© 2026 modutools. All rights reserved.<br>
+  <a href="/privacy.html">개인정보처리방침</a> · <a href="/terms.html">이용약관</a></p>
+</footer>
+
+<script>
+(function(){
+  var uploadBox=document.getElementById('uploadBox');
+  var fileInput=document.getElementById('fileInput');
+  var fileInfo=document.getElementById('fileInfo');
+  var fileName=document.getElementById('fileName');
+  var resultArea=document.getElementById('resultArea');
+  var textResult=document.getElementById('textResult');
+  var statusEl=document.getElementById('statusMsg');
+  var originalContent='';
+  var currentFileName='';
+
+  /* 클릭 업로드 */
+  uploadBox.addEventListener('click',function(){fileInput.click();});
+  fileInput.addEventListener('change',function(){if(this.files[0])loadFile(this.files[0]);});
+
+  /* 드래그 앤 드롭 */
+  uploadBox.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover');});
+  uploadBox.addEventListener('dragleave',function(){this.classList.remove('dragover');});
+  uploadBox.addEventListener('drop',function(e){
+    e.preventDefault();this.classList.remove('dragover');
+    var f=e.dataTransfer.files[0];
+    if(f&&/\.(srt|vtt|ass|ssa)$/i.test(f.name)) loadFile(f);
+  });
+
+  /* 파일 로드 */
+  function loadFile(file){
+    currentFileName=file.name;
+    var reader=new FileReader();
+    reader.onload=function(e){
+      originalContent=e.target.result;
+      fileName.textContent=file.name+' ('+formatSize(file.size)+')';
+      fileInfo.style.display='flex';
+      uploadBox.style.display='none';
+      processText();
+      resultArea.style.display='block';
+      setTimeout(function(){resultArea.scrollIntoView({behavior:'smooth',block:'start'});},100);
+    };
+    reader.readAsText(file,'UTF-8');
+  }
+
+  function formatSize(b){
+    if(b<1024) return b+'B';
+    if(b<1048576) return (b/1024).toFixed(1)+'KB';
+    return (b/1048576).toFixed(1)+'MB';
+  }
+
+  /* 파일 초기화 */
+  window.resetFile=function(){
+    fileInput.value='';
+    originalContent='';
+    currentFileName='';
+    uploadBox.style.display='';
+    fileInfo.style.display='none';
+    resultArea.style.display='none';
+    statusEl.style.display='none';
+  };
+
+  /* 텍스트 처리 */
+  window.processText=function(){
+    if(!originalContent) return;
+    var text=originalContent;
+    var isASS=/^\[Script Info\]/m.test(text)||/^ScriptType:/m.test(text);
+
+    if(isASS){
+      /* ASS/SSA 처리 */
+      var lines=text.split(/\r?\n/);
+      var dialogues=[];
+      lines.forEach(function(line){
+        var m=line.match(/^Dialogue:\s*[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,[^,]*,(.*)/);
+        if(m) dialogues.push(m[1].replace(/\{[^}]*\}/g,'').replace(/\\[Nn]/g,' ').trim());
+      });
+      text=dialogues.join('\n');
+    } else {
+      /* SRT/VTT 처리 */
+      text=text.replace(/\d+\s*\r?\n\d{2}:\d{2}:\d{2}[,.]\d{3}\s*-->.*\d{2}:\d{2}:\d{2}[,.]\d{3}[^\n]*/g,'');
+      text=text.replace(/\d{2}:\d{2}:\d{2}[,.]\d{3}\s*-->.*\d{2}:\d{2}:\d{2}[,.]\d{3}[^\n]*/g,'');
+      text=text.replace(/WEBVTT[^\n]*/g,'');
+      text=text.replace(/NOTE[^\n]*/g,'');
+      text=text.replace(/<[^>]*>/g,'');
+    }
+
+    var arr=text.split(/\r?\n/).map(function(l){return l.trim();});
+
+    /* 빈 줄 제거 */
+    if(document.getElementById('removeEmpty').checked){
+      arr=arr.filter(function(l){return l.length>0&&!/^\d+$/.test(l);});
+    }
+
+    /* 중복 줄 제거 */
+    if(document.getElementById('removeDup').checked){
+      var seen={};
+      arr=arr.filter(function(l){if(!l)return true;if(seen[l])return false;seen[l]=true;return true;});
+    }
+
+    /* 문장 이어붙이기 */
+    var final=document.getElementById('joinLines').checked
+      ? arr.join(' ').replace(/\s+/g,' ')
+      : arr.join('\n');
+
+    textResult.value=final.trim();
+    document.getElementById('charCount').textContent=textResult.value.length.toLocaleString();
+  };
+
+  /* 복사 */
+  window.copyText=function(){
+    var text=textResult.value;
+    if(!text) return;
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){showStatus('클립보드에 복사되었습니다.');});
+    } else {
+      textResult.select();
+      document.execCommand('copy');
+      showStatus('클립보드에 복사되었습니다.');
+    }
+  };
+
+  /* 다운로드 */
+  window.downloadTxt=function(){
+    var content=textResult.value;
+    if(!content) return;
+    var blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;
+    var base=currentFileName.replace(/\.[^.]+$/,'');
+    a.download=base+'_text.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},3000);
+  };
+
+  /* 상태 표시 */
+  function showStatus(msg){
+    statusEl.className='tool-status ok';
+    statusEl.textContent=msg;
+    statusEl.style.display='block';
+    setTimeout(function(){statusEl.style.display='none';},2500);
+  }
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"자막 텍스트 추출기",
+  "url":"https://modutools.com/convert/subtitle-extractor.html",
+  "applicationCategory":"UtilityApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+  "description":"SRT, VTT, ASS 자막 파일에서 시간 정보를 제거하고 순수 텍스트만 추출하는 무료 온라인 도구입니다."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"SRT, VTT, ASS 파일의 차이점은?","acceptedAnswer":{"@type":"Answer","text":"SRT는 가장 보편적인 자막 형식이고, VTT는 웹 환경에 최적화된 형식입니다. ASS(SSA)는 애니메이션·자막 스타일링에 많이 사용되며, 세 형식 모두 본 도구에서 텍스트 추출이 가능합니다."}},
+    {"@type":"Question","name":"한글이 깨져서 나와요","acceptedAnswer":{"@type":"Answer","text":"자막 파일이 EUC-KR 등 구형 인코딩으로 저장된 경우 깨질 수 있습니다. 메모장에서 파일을 열고 다른 이름으로 저장 → 인코딩을 UTF-8로 변경한 뒤 다시 업로드해 보세요."}},
+    {"@type":"Question","name":"자막 추출 시 보안 문제는 없나요?","acceptedAnswer":{"@type":"Answer","text":"자막 파일은 서버로 전송되지 않고 브라우저 내에서 즉시 처리됩니다. 개인정보 노출 걱정 없이 안전하게 사용할 수 있습니다."}}
+  ]
+}
+</script>
+</body>
+</html>
