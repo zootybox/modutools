@@ -70,6 +70,16 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 .tool-disclaimer p{font-size:11px;color:var(--g400);line-height:1.7}
 .tool-disclaimer strong{color:var(--g500)}
 
+/* 자연스러운 읽기 토글 */
+.tool-natural-toggle{margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tool-toggle-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--g800)}
+.tool-toggle-label input{display:none}
+.tool-toggle-switch{width:40px;height:22px;background:var(--g200);border-radius:11px;position:relative;transition:.2s;flex-shrink:0}
+.tool-toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.tool-toggle-label input:checked+.tool-toggle-switch{background:var(--primary)}
+.tool-toggle-label input:checked+.tool-toggle-switch::after{left:21px}
+.tool-toggle-desc{font-size:11px;color:var(--g400)}
+
 @media(max-width:480px){
   .tool-setting-grid.triple{grid-template-columns:1fr 1fr;gap:8px}
   .tool-setting-grid.triple .tool-range-card:last-child{grid-column:1/-1}
@@ -115,10 +125,19 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
       </select>
     </div>
 
+    <div class="tool-natural-toggle">
+      <label class="tool-toggle-label">
+        <input type="checkbox" id="naturalMode" checked>
+        <span class="tool-toggle-switch"></span>
+        <span class="tool-toggle-text">🗣️ 자연스러운 읽기</span>
+      </label>
+      <span class="tool-toggle-desc">문장 사이에 쉼을 넣어 사람처럼 읽어줍니다</span>
+    </div>
+
     <div class="tool-setting-grid triple">
       <div class="tool-range-card">
-        <div class="tool-range-header"><span>속도</span><b id="speedVal">1.0x</b></div>
-        <input type="range" id="speed" min="0.3" max="2.0" step="0.1" value="1.0">
+        <div class="tool-range-header"><span>속도</span><b id="speedVal">0.9x</b></div>
+        <input type="range" id="speed" min="0.3" max="2.0" step="0.1" value="0.9">
       </div>
       <div class="tool-range-card">
         <div class="tool-range-header"><span>톤 (높낮이)</span><b id="pitchVal">1.0</b></div>
@@ -198,28 +217,30 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   var speedEl=document.getElementById('speed');
   var pitchEl=document.getElementById('pitch');
   var volumeEl=document.getElementById('volume');
+  var naturalEl=document.getElementById('naturalMode');
   var statusEl=document.getElementById('statusMsg');
   var btnPreview=document.getElementById('btnPreview');
   var btnStop=document.getElementById('btnStop');
   var btnDownload=document.getElementById('btnDownload');
   var allVoices=[];
   var LIMIT=5000;
+  var stopRequested=false;
 
-  /* 글자 수 카운트 */
+  /* \uae00\uc790 \uc218 \uce74\uc6b4\ud2b8 */
   inputEl.addEventListener('input',function(){
     var len=this.value.length;
     document.getElementById('charCount').textContent=len.toLocaleString();
     if(len>=LIMIT){showStatus('\uc785\ub825 \uac00\ub2a5\ud55c \ucd5c\ub300 \uae00\uc790 \uc218(5,000\uc790)\uc5d0 \ub3c4\ub2ec\ud588\uc2b5\ub2c8\ub2e4.','warn');}
   });
 
-  /* 슬라이더 값 표시 */
+  /* \uc2ac\ub77c\uc774\ub354 \uac12 \ud45c\uc2dc */
   speedEl.oninput=function(){document.getElementById('speedVal').textContent=Number(this.value).toFixed(1)+'x';};
   pitchEl.oninput=function(){document.getElementById('pitchVal').textContent=Number(this.value).toFixed(1);};
   volumeEl.oninput=function(){document.getElementById('volumeVal').textContent=Math.round(this.value*100)+'%';};
 
-  /* 음성 이름 매핑 */
+  /* \uc74c\uc131 \uc774\ub984 \ub9e4\ud551 */
   var nameMap={
-    'Google 한국어':'\ud55c\uad6d\uc5b4 \uae30\ubcf8','Google Korean':'\ud55c\uad6d\uc5b4 \uae30\ubcf8',
+    'Google \ud55c\uad6d\uc5b4':'\ud55c\uad6d\uc5b4 \uae30\ubcf8','Google Korean':'\ud55c\uad6d\uc5b4 \uae30\ubcf8',
     'Microsoft Heami':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\ud574\ubbf8)','Microsoft SunHi':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc120\ud76c)',
     'Microsoft InJoon':'\ud55c\uad6d\uc5b4 \ub0a8\uc131 (\uc778\uc900)','Microsoft Jian':'\ud55c\uad6d\uc5b4 \ub0a8\uc131 (\uc9c0\uc548)',
     'Yuna':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc720\ub098)','Sora':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc18c\ub77c)',
@@ -239,7 +260,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     return pre+' \uc74c\uc131 '+(idx+1);
   }
 
-  /* 음성 로드 */
+  /* \uc74c\uc131 \ub85c\ub4dc */
   function loadVoices(){
     allVoices=synth.getVoices();
     var ko=[],en=[];
@@ -264,7 +285,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   loadVoices();
   if(synth.onvoiceschanged!==undefined) synth.onvoiceschanged=loadVoices;
 
-  /* 상태 표시 */
+  /* \uc0c1\ud0dc \ud45c\uc2dc */
   function showStatus(msg,type){
     statusEl.className='tool-status '+(type||'info');
     statusEl.textContent=msg;
@@ -272,13 +293,13 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   }
   function hideStatus(){statusEl.style.display='none';}
 
-  /* 재생 상태 UI */
+  /* \uc7ac\uc0dd \uc0c1\ud0dc UI */
   function setPlaying(on){
     btnPreview.style.display=on?'none':'flex';
     btnStop.style.display=on?'flex':'none';
   }
 
-  /* 유효성 검사 */
+  /* \uc720\ud6a8\uc131 \uac80\uc0ac */
   function validate(){
     var text=inputEl.value.trim();
     if(!text){showStatus('\ud14d\uc2a4\ud2b8\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.','warn');return null;}
@@ -286,7 +307,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     return text;
   }
 
-  /* utterance 생성 */
+  /* utterance \uc0dd\uc131 */
   function createUtterance(text){
     var u=new SpeechSynthesisUtterance(text);
     var voice=allVoices.find(function(v){return v.name===voiceSel.value;});
@@ -297,7 +318,57 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     return u;
   }
 
-  /* Chrome 긴 텍스트 버그 우회: 14초마다 resume */
+  /* \ubb38\uc7a5 \ubd84\ud560 (\uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uc77d\uae30\uc6a9) */
+  function splitSentences(text){
+    var parts=text.split(/(?<=[.!?\u3002\uff01\uff1f])\s*/);
+    var result=[];
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i].trim();
+      if(!p) continue;
+      /* \ub108\ubb34 \uae34 \ubb38\uc7a5\uc740 \uc27c\ud45c\ub85c \ucd94\uac00 \ubd84\ud560 */
+      if(p.length>80){
+        var subs=p.split(/(?<=[,;:\uff0c\u3001])\s*/);
+        for(var j=0;j<subs.length;j++){
+          if(subs[j].trim()) result.push(subs[j].trim());
+        }
+      } else {
+        result.push(p);
+      }
+    }
+    return result.length?result:[text];
+  }
+
+  /* \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uc77d\uae30: \ubb38\uc7a5\ubcc4 \uc7ac\uc0dd + \ub51c\ub808\uc774 */
+  function speakNatural(sentences,onAllDone,onError){
+    var idx=0;
+    stopRequested=false;
+    function next(){
+      if(stopRequested||idx>=sentences.length){
+        if(!stopRequested&&onAllDone) onAllDone();
+        return;
+      }
+      var s=sentences[idx];
+      var u=createUtterance(s);
+      /* \ubb38\uc7a5 \ub05d\uc5d0\uc11c \uc0b4\uc9dd \ub290\ub9ac\uac8c */
+      var isEnd=/[.!?\u3002\uff01\uff1f]$/.test(s);
+      var isComma=/[,;:\uff0c\u3001]$/.test(s);
+      var delay=isEnd?380:isComma?200:120;
+
+      u.onend=function(){
+        idx++;
+        if(!stopRequested) setTimeout(next,delay);
+      };
+      u.onerror=function(){
+        if(onError) onError();
+      };
+      startResumeHack();
+      synth.speak(u);
+    }
+    if(idx===0) setPlaying(true);
+    next();
+  }
+
+  /* Chrome \uae34 \ud14d\uc2a4\ud2b8 \ubc84\uadf8 \uc6b0\ud68c */
   var resumeTimer=null;
   function startResumeHack(){
     clearInterval(resumeTimer);
@@ -305,35 +376,48 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   }
   function stopResumeHack(){clearInterval(resumeTimer);resumeTimer=null;}
 
-  /* 미리 듣기 */
+  /* \ubbf8\ub9ac \ub4e3\uae30 */
   window.handlePreview=function(){
     var text=validate();
     if(!text)return;
     if(synth.speaking)synth.cancel();
     hideStatus();
-    var u=createUtterance(text);
-    u.onstart=function(){setPlaying(true);};
-    u.onend=function(){setPlaying(false);stopResumeHack();};
-    u.onerror=function(){setPlaying(false);stopResumeHack();showStatus('\uc74c\uc131 \uc7ac\uc0dd \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');};
-    synth.speak(u);
-    startResumeHack();
+    stopRequested=false;
+
+    if(naturalEl.checked){
+      var sentences=splitSentences(text);
+      speakNatural(sentences,function(){
+        setPlaying(false);stopResumeHack();
+      },function(){
+        setPlaying(false);stopResumeHack();
+        showStatus('\uc74c\uc131 \uc7ac\uc0dd \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
+      });
+    } else {
+      var u=createUtterance(text);
+      u.onstart=function(){setPlaying(true);};
+      u.onend=function(){setPlaying(false);stopResumeHack();};
+      u.onerror=function(){setPlaying(false);stopResumeHack();showStatus('\uc74c\uc131 \uc7ac\uc0dd \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');};
+      synth.speak(u);
+      startResumeHack();
+    }
   };
 
-  /* 정지 */
+  /* \uc815\uc9c0 */
   window.handleStop=function(){
+    stopRequested=true;
     synth.cancel();
     setPlaying(false);
     stopResumeHack();
     hideStatus();
   };
 
-  /* 파일 저장 */
+  /* \ud30c\uc77c \uc800\uc7a5 */
   window.handleDownload=function(){
     var text=validate();
     if(!text)return;
     if(synth.speaking)synth.cancel();
+    stopRequested=false;
 
-    /* MediaRecorder 지원 확인 */
     if(typeof MediaRecorder==='undefined'||typeof AudioContext==='undefined'){
       showStatus('\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \uc74c\uc131 \ud30c\uc77c \uc800\uc7a5\uc744 \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4. PC Chrome \ube0c\ub77c\uc6b0\uc800\ub97c \uc774\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');
       return;
@@ -367,25 +451,40 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
         stopResumeHack();
       };
 
-      var u=createUtterance(text);
-      u.onstart=function(){setPlaying(true);};
-      u.onend=function(){
-        setPlaying(false);
-        setTimeout(function(){recorder.stop();},500);
-      };
-      u.onerror=function(){
-        setPlaying(false);
-        stopResumeHack();
-        try{recorder.stop();}catch(e){}
-        audioCtx.close();
-        showStatus('\ub179\uc74c \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
-        btnDownload.disabled=false;
-        btnDownload.style.opacity='1';
-      };
-
       recorder.start();
-      synth.speak(u);
-      startResumeHack();
+
+      if(naturalEl.checked){
+        var sentences=splitSentences(text);
+        setPlaying(true);
+        speakNatural(sentences,function(){
+          setPlaying(false);
+          setTimeout(function(){recorder.stop();},500);
+        },function(){
+          setPlaying(false);stopResumeHack();
+          try{recorder.stop();}catch(e){}
+          audioCtx.close();
+          showStatus('\ub179\uc74c \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
+          btnDownload.disabled=false;
+          btnDownload.style.opacity='1';
+        });
+      } else {
+        var u=createUtterance(text);
+        u.onstart=function(){setPlaying(true);};
+        u.onend=function(){
+          setPlaying(false);
+          setTimeout(function(){recorder.stop();},500);
+        };
+        u.onerror=function(){
+          setPlaying(false);stopResumeHack();
+          try{recorder.stop();}catch(e){}
+          audioCtx.close();
+          showStatus('\ub179\uc74c \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
+          btnDownload.disabled=false;
+          btnDownload.style.opacity='1';
+        };
+        synth.speak(u);
+        startResumeHack();
+      }
     }catch(e){
       showStatus('\ud30c\uc77c \uc800\uc7a5 \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4: '+e.message,'warn');
       btnDownload.disabled=false;
@@ -393,7 +492,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     }
   };
 
-  /* API 미지원 브라우저 대응 */
+  /* API \ubbf8\uc9c0\uc6d0 \ube0c\ub77c\uc6b0\uc800 */
   if(!('speechSynthesis' in window)){
     showStatus('\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \uc74c\uc131 \ubcc0\ud658\uc744 \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4. Chrome \ub610\ub294 Edge \ube0c\ub77c\uc6b0\uc800\ub97c \uc774\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');
     btnPreview.disabled=true;
