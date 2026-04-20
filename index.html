@@ -55,6 +55,11 @@
 .badge-soon{background:var(--g100);color:var(--g400)}
 
 /* Responsive */
+.recent-section{padding:0 0 8px}
+.recent-section .main{padding-bottom:0}
+.recent-clear{margin-left:auto;background:none;border:1px solid var(--g200);color:var(--g400);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s}
+.recent-clear:hover{color:var(--g600);border-color:var(--g300)}
+
 @media(max-width:640px){
   .hero{padding:36px 20px 24px}
   .hero h1{font-size:24px}
@@ -113,6 +118,18 @@
 <div class="mt-ad">
   <div class="mt-ad-box">광고 영역 (AD)</div>
 </div>
+
+<!-- 최근 사용한 도구 -->
+<section class="recent-section" id="recentSection" style="display:none">
+  <div class="main">
+    <div class="cat-head">
+      <div class="cat-icon" style="background:#EDE9FE">⏱️</div>
+      <div class="cat-title">최근 사용한 도구</div>
+      <button class="recent-clear" id="recentClear" title="기록 삭제">✕ 초기화</button>
+    </div>
+    <div class="tool-grid" id="recentGrid"></div>
+  </div>
+</section>
 
 <!-- Main Content -->
 <main class="main">
@@ -524,6 +541,62 @@ cards.forEach(card => {
     card.addEventListener('click', () => alert('준비 중인 도구입니다. 곧 출시됩니다!'));
   }
 });
+
+// 최근 사용한 도구
+(function(){
+  var KEY='modutools_recent';
+  var MAX=6;
+  var section=document.getElementById('recentSection');
+  var grid=document.getElementById('recentGrid');
+
+  function getRecent(){
+    try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return [];}
+  }
+  function saveRecent(list){
+    try{localStorage.setItem(KEY,JSON.stringify(list));}catch(e){}
+  }
+
+  // 도구 클릭 시 기록
+  document.querySelectorAll('.tool-card[href]').forEach(function(card){
+    card.addEventListener('click',function(){
+      var href=this.getAttribute('href');
+      var name=this.dataset.name||'';
+      var emoji=this.querySelector('.tool-emoji');
+      emoji=emoji?emoji.textContent.trim():'🔧';
+      var desc=this.querySelector('.tool-desc');
+      desc=desc?desc.textContent.trim():'';
+
+      var list=getRecent();
+      // 이미 있으면 제거 후 맨 앞에 추가
+      list=list.filter(function(item){return item.href!==href;});
+      list.unshift({href:href,name:name,emoji:emoji,desc:desc,time:Date.now()});
+      if(list.length>MAX) list=list.slice(0,MAX);
+      saveRecent(list);
+    });
+  });
+
+  // 최근 사용 도구 렌더링
+  function render(){
+    var list=getRecent();
+    if(!list.length){section.style.display='none';return;}
+    section.style.display='';
+    grid.innerHTML=list.map(function(item){
+      return '<a href="'+item.href+'" class="tool-card">'
+        +'<div class="tool-emoji">'+item.emoji+'</div>'
+        +'<div class="tool-info">'
+        +'<div class="tool-name">'+item.name+'</div>'
+        +'<div class="tool-desc">'+item.desc+'</div>'
+        +'</div></a>';
+    }).join('');
+  }
+  render();
+
+  // 초기화 버튼
+  document.getElementById('recentClear').addEventListener('click',function(){
+    localStorage.removeItem(KEY);
+    section.style.display='none';
+  });
+})();
 </script>
 </body>
 </html>
