@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>무료 오디오 편집기 : 음성파일 합치기 자르기 병합 | modutools</title>
+<meta name="description" content="여러 음성 파일(MP3, WAV, OGG)을 불러와 순서를 바꾸고, 하나로 합쳐서 저장하세요. 서버 전송 없이 브라우저에서 100% 안전하게 작동합니다.">
+<link rel="canonical" href="https://modutools.com/convert/audio-editor.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.tool-page{max-width:720px;margin:0 auto;padding:24px 20px 60px}
+.tool-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.tool-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.tool-card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* 업로드 */
+.tool-upload{border:2px dashed var(--g200);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;background:var(--g50);transition:.2s}
+.tool-upload:hover{border-color:var(--primary);background:#fff}
+.tool-upload.dragover{border-color:var(--primary);background:var(--primary-light)}
+.tool-upload-icon{font-size:32px;display:block;margin-bottom:12px}
+.tool-upload-label{font-weight:700;color:var(--g800)}
+.tool-upload-hint{font-size:13px;color:var(--g500);margin-top:6px}
+
+/* 클립 리스트 */
+.tool-clip-list{display:flex;flex-direction:column;gap:8px;min-height:60px}
+.tool-clip{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.15s;cursor:grab}
+.tool-clip:active{cursor:grabbing}
+.tool-clip.dragging{opacity:.4;border-color:var(--primary)}
+.tool-clip.drag-over{border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.15)}
+.tool-clip-handle{color:var(--g300);font-size:18px;flex-shrink:0;cursor:grab}
+.tool-clip-wave{flex:1;height:48px;background:var(--g50);border-radius:6px;overflow:hidden}
+.tool-clip-wave canvas{width:100%;height:100%;display:block}
+.tool-clip-meta{display:flex;flex-direction:column;gap:2px;min-width:70px;text-align:right}
+.tool-clip-name{font-size:12px;font-weight:600;color:var(--g800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px}
+.tool-clip-dur{font-size:11px;color:var(--g400)}
+.tool-clip-btns{display:flex;gap:4px;flex-shrink:0}
+.tool-clip-btn{width:32px;height:32px;border:none;border-radius:8px;background:var(--g50);color:var(--g600);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.tool-clip-btn:hover{background:var(--g100);color:var(--g800)}
+.tool-clip-btn.danger:hover{background:#FEE2E2;color:#DC2626}
+
+/* 통합 파형 */
+.tool-merged{margin-top:16px}
+.tool-merged-wave{width:100%;height:64px;background:var(--g50);border-radius:var(--radius);border:1px solid var(--g200);overflow:hidden}
+.tool-merged-wave canvas{width:100%;height:100%;display:block}
+.tool-merged-info{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--g400)}
+
+/* 버튼 */
+.tool-btn-area{display:flex;gap:8px;margin-top:16px}
+.tool-btn{flex:1;height:52px;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.tool-btn:hover{transform:translateY(-1px)}
+.tool-btn:active{transform:translateY(0)}
+.tool-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.tool-btn-sub{background:var(--g100);color:var(--g700)}
+.tool-btn-sub:hover:not(:disabled){background:var(--g200)}
+.tool-btn-main{flex:1.5;background:var(--primary);color:#fff}
+.tool-btn-main:hover:not(:disabled){background:var(--primary-dark)}
+
+/* 상태 */
+.tool-status{margin-top:12px;padding:14px;border-radius:var(--radius);font-size:13px;text-align:center;font-weight:600;display:none}
+.tool-status.info{background:var(--primary-light);color:var(--primary);display:block}
+.tool-status.ok{background:#D1FAE5;color:#059669;display:block}
+.tool-status.warn{background:#FEF3C7;color:#D97706;display:block}
+
+/* 빈 상태 */
+.tool-empty{text-align:center;padding:32px 20px;color:var(--g400);font-size:13px}
+
+/* 브라우저 안내 */
+.tool-compat{background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.tool-compat-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tool-compat-list{font-size:12px;color:var(--g500);line-height:1.8}
+
+/* 가이드 */
+.tool-guide{margin-top:40px}
+.tool-guide-title{font-size:18px;font-weight:700;color:var(--g900);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.tool-guide-body{font-size:14px;color:var(--g600);line-height:1.8}
+.tool-guide-body h3{font-size:15px;color:var(--g800);margin:24px 0 8px;font-weight:700}
+.tool-faq-q{font-weight:700;color:var(--primary);margin-top:16px;display:block}
+.tool-faq-a{background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7}
+
+/* 면책 */
+.tool-disclaimer{margin-top:32px;padding:16px;background:var(--g50);border-radius:var(--radius);border:1px solid var(--g200)}
+.tool-disclaimer p{font-size:11px;color:var(--g400);line-height:1.7}
+.tool-disclaimer strong{color:var(--g500)}
+
+@media(max-width:480px){
+  .tool-btn-area{flex-direction:column}
+  .tool-btn{height:48px}
+  .tool-btn-main{flex:1}
+  .tool-clip-name{max-width:60px}
+}
+</style>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav">
+      <a href="/">홈</a>
+      <a href="/about.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+<main class="tool-page">
+  <h1 class="tool-title">오디오 편집기</h1>
+  <p class="tool-sub">여러 음성 파일을 불러와 순서를 바꾸고, 하나로 합쳐서 저장하세요.</p>
+
+  <!-- 업로드 카드 -->
+  <div class="tool-card">
+    <div class="tool-card-title">📂 오디오 파일 추가</div>
+    <div id="uploadBox" class="tool-upload">
+      <span class="tool-upload-icon">🎵</span>
+      <div class="tool-upload-label">오디오 파일 선택 (MP3, WAV, OGG, M4A)</div>
+      <p class="tool-upload-hint">클릭하거나 드래그해서 놓으세요 · 여러 파일 동시 선택 가능</p>
+      <input type="file" id="fileInput" accept=".mp3,.wav,.ogg,.m4a,.webm,.aac" multiple style="display:none">
+    </div>
+  </div>
+
+  <!-- 클립 편집 카드 -->
+  <div class="tool-card" id="editorCard" style="display:none">
+    <div class="tool-card-title">🎚️ 클립 목록 <span style="font-size:12px;color:var(--g400);font-weight:400;margin-left:auto" id="clipCount"></span></div>
+    <div class="tool-clip-list" id="clipList"></div>
+
+    <!-- 통합 미리보기 -->
+    <div class="tool-merged" id="mergedArea" style="display:none">
+      <div style="font-size:13px;font-weight:600;color:var(--g700);margin-bottom:8px">📊 합친 결과 미리보기</div>
+      <div class="tool-merged-wave"><canvas id="mergedCanvas"></canvas></div>
+      <div class="tool-merged-info">
+        <span id="mergedClips"></span>
+        <span id="mergedDur"></span>
+      </div>
+    </div>
+
+    <div class="tool-btn-area">
+      <button id="btnPlayAll" class="tool-btn tool-btn-sub" onclick="playMerged()">▶ 전체 재생</button>
+      <button id="btnStopAll" class="tool-btn tool-btn-sub" onclick="stopAll()" style="display:none">■ 정지</button>
+      <button id="btnAdd" class="tool-btn tool-btn-sub" onclick="document.getElementById('fileInput').click()">+ 추가</button>
+      <button id="btnSave" class="tool-btn tool-btn-main" onclick="saveMerged()">⬇ WAV 파일 저장</button>
+    </div>
+
+    <div id="statusMsg" class="tool-status"></div>
+  </div>
+
+  <!-- 브라우저 안내 -->
+  <div class="tool-compat">
+    <div class="tool-compat-title">💡 사용 안내</div>
+    <div class="tool-compat-list">
+      · MP3, WAV, OGG, M4A, AAC, WebM 오디오 형식을 지원합니다.<br>
+      · 드래그로 클립 순서를 자유롭게 변경할 수 있습니다.<br>
+      · 모든 처리는 사용자의 기기에서 이루어지며, 서버로 전송되지 않습니다.<br>
+      · 파일이 너무 크면(30분 이상) 브라우저 메모리 한계로 느려질 수 있습니다.<br>
+      · Chrome, Edge 브라우저에서 가장 안정적으로 동작합니다.
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- 가이드 -->
+  <div class="tool-guide">
+    <div class="tool-guide-title">📖 오디오 편집기 활용 가이드</div>
+    <div class="tool-guide-body">
+      <h3>어떤 도구인가요?</h3>
+      여러 개의 음성 파일을 브라우저에서 불러와 순서를 바꾸고, 하나의 파일로 합쳐서 저장할 수 있는 도구입니다. 팟캐스트 편집, 강의 녹음 정리, 음성 메시지 합치기, TTS 결과물 병합 등 다양한 용도로 활용할 수 있습니다.
+
+      <h3>사용 방법</h3>
+      오디오 파일을 업로드하면 파형과 함께 클립 목록이 나타납니다. 클립을 드래그해서 순서를 변경하고, 재생 버튼으로 개별 또는 전체를 미리 들어본 뒤 WAV 파일로 저장하세요.
+
+      <span class="tool-faq-q">Q. 합칠 수 있는 파일 수에 제한이 있나요?</span>
+      <div class="tool-faq-a">파일 수 자체에는 제한이 없지만, 전체 오디오 길이가 30분을 넘으면 브라우저 메모리 사용량이 커져 느려질 수 있습니다.</div>
+
+      <span class="tool-faq-q">Q. MP3로 저장할 수 없나요?</span>
+      <div class="tool-faq-a">현재 외부 라이브러리 없이 브라우저에서 직접 처리하기 위해 WAV 형식으로 저장됩니다. WAV 파일은 대부분의 기기와 프로그램에서 호환됩니다.</div>
+
+      <span class="tool-faq-q">Q. 보안 문제는 없나요?</span>
+      <div class="tool-faq-a">모든 오디오 파일은 서버로 전송되지 않고 브라우저 내에서 즉시 처리됩니다. 개인 녹음 파일도 안전하게 편집할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- 면책 -->
+  <div class="tool-disclaimer">
+    <p><strong>면책 조항</strong> — 본 도구는 브라우저 내장 Web Audio API를 활용한 무료 서비스로, 오디오 처리 성능은 사용자의 기기 사양·브라우저 환경에 따라 달라질 수 있습니다. 오디오 파일의 저작권은 원본 제작자에게 있으며, 상업적 사용 시 저작권 확인은 사용자 본인의 책임입니다. 모든 데이터는 사용자 기기에서만 처리되며, 외부 서버로 전송되지 않습니다.</p>
+  </div>
+</main>
+
+<footer class="mt-footer">
+  <p>© 2026 modutools. All rights reserved.<br>
+  <a href="/privacy.html">개인정보처리방침</a> · <a href="/terms.html">이용약관</a></p>
+</footer>
+
+<script>
+(function(){
+  var audioCtx=null;
+  var clips=[];  /* {id, name, buffer, size} */
+  var clipIdCounter=0;
+  var playingSource=null;
+  var uploadBox=document.getElementById('uploadBox');
+  var fileInput=document.getElementById('fileInput');
+  var editorCard=document.getElementById('editorCard');
+  var clipList=document.getElementById('clipList');
+  var statusEl=document.getElementById('statusMsg');
+  var mergedArea=document.getElementById('mergedArea');
+  var btnPlayAll=document.getElementById('btnPlayAll');
+  var btnStopAll=document.getElementById('btnStopAll');
+
+  function getCtx(){
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  /* 업로드 */
+  uploadBox.addEventListener('click',function(){fileInput.click();});
+  fileInput.addEventListener('change',function(){
+    if(this.files.length) addFiles(this.files);
+    this.value='';
+  });
+  uploadBox.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover');});
+  uploadBox.addEventListener('dragleave',function(){this.classList.remove('dragover');});
+  uploadBox.addEventListener('drop',function(e){
+    e.preventDefault();this.classList.remove('dragover');
+    if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+
+  /* 파일 추가 */
+  function addFiles(fileList){
+    var ctx=getCtx();
+    var loaded=0;
+    var total=fileList.length;
+    showStatus(total+'\uac1c \ud30c\uc77c \ubd88\ub7ec\uc624\ub294 \uc911...','info');
+
+    Array.from(fileList).forEach(function(file){
+      var reader=new FileReader();
+      reader.onload=function(e){
+        ctx.decodeAudioData(e.target.result,function(buffer){
+          clips.push({id:++clipIdCounter,name:file.name,buffer:buffer,size:file.size});
+          loaded++;
+          if(loaded>=total){
+            hideStatus();
+            renderClips();
+            updateMergedPreview();
+          }
+        },function(){
+          loaded++;
+          showStatus(file.name+' \ud30c\uc77c\uc744 \ub514\ucf54\ub529\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4.','warn');
+        });
+      };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  /* 시간 포맷 */
+  function fmtTime(sec){
+    var m=Math.floor(sec/60);
+    var s=Math.floor(sec%60);
+    return m+':'+('0'+s).slice(-2);
+  }
+  function fmtSize(b){
+    if(b<1024) return b+'B';
+    if(b<1048576) return (b/1024).toFixed(1)+'KB';
+    return (b/1048576).toFixed(1)+'MB';
+  }
+
+  /* 클립 렌더링 */
+  function renderClips(){
+    editorCard.style.display=clips.length?'':'none';
+    document.getElementById('clipCount').textContent=clips.length+'\uac1c \ud074\ub9bd';
+
+    clipList.innerHTML='';
+    clips.forEach(function(clip,idx){
+      var el=document.createElement('div');
+      el.className='tool-clip';
+      el.dataset.idx=idx;
+      el.draggable=true;
+      el.innerHTML=
+        '<span class="tool-clip-handle">\u2261</span>'+
+        '<div class="tool-clip-wave"><canvas data-clip-id="'+clip.id+'"></canvas></div>'+
+        '<div class="tool-clip-meta">'+
+          '<span class="tool-clip-name" title="'+clip.name+'">'+clip.name+'</span>'+
+          '<span class="tool-clip-dur">'+fmtTime(clip.buffer.duration)+' · '+fmtSize(clip.size)+'</span>'+
+        '</div>'+
+        '<div class="tool-clip-btns">'+
+          '<button class="tool-clip-btn" data-action="play" data-idx="'+idx+'" title="\uc7ac\uc0dd">\u25b6</button>'+
+          '<button class="tool-clip-btn danger" data-action="delete" data-idx="'+idx+'" title="\uc0ad\uc81c">\u2715</button>'+
+        '</div>';
+      clipList.appendChild(el);
+
+      /* 파형 그리기 */
+      var canvas=el.querySelector('canvas');
+      drawWaveform(canvas,clip.buffer);
+    });
+
+    /* 드래그 앤 드롭 */
+    initDrag();
+  }
+
+  /* 파형 그리기 */
+  function drawWaveform(canvas,buffer,color){
+    var rect=canvas.parentElement.getBoundingClientRect();
+    var w=Math.floor(rect.width*2)||400;
+    var h=Math.floor(rect.height*2)||96;
+    canvas.width=w;canvas.height=h;
+    var ctx=canvas.getContext('2d');
+    var data=buffer.getChannelData(0);
+    var step=Math.ceil(data.length/w);
+    var mid=h/2;
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle=color||'#2563EB';
+    for(var i=0;i<w;i++){
+      var min=1,max=-1;
+      for(var j=0;j<step;j++){
+        var d=data[i*step+j];
+        if(d!==undefined){
+          if(d<min)min=d;
+          if(d>max)max=d;
+        }
+      }
+      var top=mid-max*mid;
+      var bot=mid-min*mid;
+      var barH=Math.max(bot-top,1);
+      ctx.fillRect(i,top,1,barH);
+    }
+  }
+
+  /* 드래그 순서 변경 */
+  function initDrag(){
+    var dragIdx=null;
+    var items=clipList.querySelectorAll('.tool-clip');
+    items.forEach(function(el){
+      el.addEventListener('dragstart',function(e){
+        dragIdx=parseInt(this.dataset.idx);
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed='move';
+      });
+      el.addEventListener('dragend',function(){
+        this.classList.remove('dragging');
+        items.forEach(function(x){x.classList.remove('drag-over');});
+      });
+      el.addEventListener('dragover',function(e){
+        e.preventDefault();
+        e.dataTransfer.dropEffect='move';
+        this.classList.add('drag-over');
+      });
+      el.addEventListener('dragleave',function(){
+        this.classList.remove('drag-over');
+      });
+      el.addEventListener('drop',function(e){
+        e.preventDefault();
+        this.classList.remove('drag-over');
+        var dropIdx=parseInt(this.dataset.idx);
+        if(dragIdx===null||dragIdx===dropIdx) return;
+        var moved=clips.splice(dragIdx,1)[0];
+        clips.splice(dropIdx,0,moved);
+        renderClips();
+        updateMergedPreview();
+      });
+    });
+  }
+
+  /* 클립 버튼 이벤트 */
+  clipList.addEventListener('click',function(e){
+    var btn=e.target.closest('.tool-clip-btn');
+    if(!btn) return;
+    var idx=parseInt(btn.dataset.idx);
+    var action=btn.dataset.action;
+    if(action==='play') playClip(idx);
+    else if(action==='delete') deleteClip(idx);
+  });
+
+  /* 개별 재생 */
+  function playClip(idx){
+    stopAll();
+    var ctx=getCtx();
+    var source=ctx.createBufferSource();
+    source.buffer=clips[idx].buffer;
+    source.connect(ctx.destination);
+    source.onended=function(){playingSource=null;};
+    source.start();
+    playingSource=source;
+  }
+
+  /* 삭제 */
+  function deleteClip(idx){
+    clips.splice(idx,1);
+    renderClips();
+    updateMergedPreview();
+    if(!clips.length) editorCard.style.display='none';
+  }
+
+  /* 통합 미리보기 */
+  function updateMergedPreview(){
+    if(clips.length<1){mergedArea.style.display='none';return;}
+    mergedArea.style.display='';
+
+    var merged=mergeBuffers();
+    var canvas=document.getElementById('mergedCanvas');
+    drawWaveform(canvas,merged,'#2563EB');
+
+    document.getElementById('mergedClips').textContent=clips.length+'\uac1c \ud074\ub9bd';
+    document.getElementById('mergedDur').textContent='\ucd1d '+fmtTime(merged.duration);
+  }
+
+  /* 버퍼 합치기 */
+  function mergeBuffers(){
+    var ctx=getCtx();
+    var sampleRate=clips[0].buffer.sampleRate;
+    var totalLength=0;
+    clips.forEach(function(c){totalLength+=c.buffer.length;});
+
+    var merged=ctx.createBuffer(1,totalLength,sampleRate);
+    var output=merged.getChannelData(0);
+    var offset=0;
+    clips.forEach(function(c){
+      /* 샘플레이트 다른 경우 리샘플링 */
+      var buf=c.buffer;
+      var data;
+      if(buf.sampleRate!==sampleRate){
+        var ratio=buf.sampleRate/sampleRate;
+        var newLen=Math.round(buf.length/ratio);
+        data=new Float32Array(newLen);
+        var srcData=buf.getChannelData(0);
+        for(var i=0;i<newLen;i++){
+          var srcIdx=i*ratio;
+          var low=Math.floor(srcIdx);
+          var high=Math.min(low+1,srcData.length-1);
+          var frac=srcIdx-low;
+          data[i]=srcData[low]*(1-frac)+srcData[high]*frac;
+        }
+      } else {
+        data=buf.getChannelData(0);
+      }
+      output.set(data,offset);
+      offset+=data.length;
+    });
+    return merged;
+  }
+
+  /* 전체 재생 */
+  window.playMerged=function(){
+    if(!clips.length) return;
+    stopAll();
+    var ctx=getCtx();
+    var merged=mergeBuffers();
+    var source=ctx.createBufferSource();
+    source.buffer=merged;
+    source.connect(ctx.destination);
+    source.onended=function(){
+      playingSource=null;
+      btnPlayAll.style.display='flex';
+      btnStopAll.style.display='none';
+    };
+    source.start();
+    playingSource=source;
+    btnPlayAll.style.display='none';
+    btnStopAll.style.display='flex';
+  };
+
+  /* 정지 */
+  window.stopAll=function(){
+    if(playingSource){
+      try{playingSource.stop();}catch(e){}
+      playingSource=null;
+    }
+    btnPlayAll.style.display='flex';
+    btnStopAll.style.display='none';
+  };
+
+  /* WAV 저장 */
+  window.saveMerged=function(){
+    if(!clips.length) return;
+    showStatus('\uc74c\uc131 \ud30c\uc77c\uc744 \uc0dd\uc131\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4...','info');
+
+    setTimeout(function(){
+      var merged=mergeBuffers();
+      var numCh=1;
+      var sampleRate=merged.sampleRate;
+      var length=merged.length;
+      var wavBuf=new ArrayBuffer(44+length*numCh*2);
+      var view=new DataView(wavBuf);
+      function writeStr(off,str){for(var i=0;i<str.length;i++)view.setUint8(off+i,str.charCodeAt(i));}
+      writeStr(0,'RIFF');
+      view.setUint32(4,36+length*numCh*2,true);
+      writeStr(8,'WAVE');
+      writeStr(12,'fmt ');
+      view.setUint32(16,16,true);
+      view.setUint16(20,1,true);
+      view.setUint16(22,numCh,true);
+      view.setUint32(24,sampleRate,true);
+      view.setUint32(28,sampleRate*numCh*2,true);
+      view.setUint16(32,numCh*2,true);
+      view.setUint16(34,16,true);
+      writeStr(36,'data');
+      view.setUint32(40,length*numCh*2,true);
+      var channelData=merged.getChannelData(0);
+      var offset=44;
+      for(var i=0;i<length;i++){
+        var sample=Math.max(-1,Math.min(1,channelData[i]));
+        view.setInt16(offset,sample<0?sample*0x8000:sample*0x7FFF,true);
+        offset+=2;
+      }
+      var blob=new Blob([wavBuf],{type:'audio/wav'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');
+      a.href=url;
+      a.download='modutools-audio-merged-'+Date.now()+'.wav';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(url);},3000);
+      showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. (WAV)','ok');
+      setTimeout(hideStatus,3000);
+    },100);
+  };
+
+  /* 상태 */
+  function showStatus(msg,type){
+    statusEl.className='tool-status '+(type||'info');
+    statusEl.textContent=msg;
+    statusEl.style.display='block';
+  }
+  function hideStatus(){statusEl.style.display='none';}
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"오디오 편집기",
+  "url":"https://modutools.com/convert/audio-editor.html",
+  "applicationCategory":"MultimediaApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+  "description":"여러 음성 파일(MP3, WAV, OGG)을 불러와 순서를 바꾸고 하나로 합쳐서 저장하는 무료 온라인 오디오 편집기입니다."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"합칠 수 있는 파일 수에 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"파일 수 자체에는 제한이 없지만, 전체 오디오 길이가 30분을 넘으면 브라우저 메모리 사용량이 커져 느려질 수 있습니다."}},
+    {"@type":"Question","name":"MP3로 저장할 수 없나요?","acceptedAnswer":{"@type":"Answer","text":"현재 외부 라이브러리 없이 브라우저에서 직접 처리하기 위해 WAV 형식으로 저장됩니다. WAV 파일은 대부분의 기기와 프로그램에서 호환됩니다."}},
+    {"@type":"Question","name":"오디오 편집 시 보안 문제는 없나요?","acceptedAnswer":{"@type":"Answer","text":"모든 오디오 파일은 서버로 전송되지 않고 브라우저 내에서 즉시 처리됩니다. 개인 녹음 파일도 안전하게 편집할 수 있습니다."}}
+  ]
+}
+</script>
+</body>
+</html>
