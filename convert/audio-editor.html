@@ -431,6 +431,7 @@
       var idx=parseInt(btn.dataset.idx);
       var action=btn.dataset.action;
       if(action==='play') playClip(idx);
+      else if(action==='stop-clip') stopClip();
       else if(action==='delete') deleteClip(idx);
       else if(action==='trim') openEditor(idx);
     }
@@ -439,6 +440,7 @@
       var ea=editBtn.dataset.editAction;
       if(ea==='close') closeEditor(idx2);
       else if(ea==='play-sel') playSelection(idx2);
+      else if(ea==='stop-sel') stopSelection(idx2);
       else if(ea==='keep') keepSelection(idx2);
       else if(ea==='remove') removeSelection(idx2);
       else if(ea==='split') splitAtSelection(idx2);
@@ -612,9 +614,56 @@
     source.connect(ctx.destination);
     var startTime=sel.start*buf.duration;
     var duration=(sel.end-sel.start)*buf.duration;
-    source.onended=function(){playingSource=null;};
+
+    /* 재생 버튼 → 정지 버튼 */
+    var playBtn=document.querySelector('[data-edit-action="play-sel"][data-idx="'+idx+'"]');
+    if(playBtn){
+      playBtn.textContent='\u25a0 \uc815\uc9c0';
+      playBtn.dataset.editAction='stop-sel';
+    }
+
+    /* 재생 커서 표시 */
+    var cursorEl=document.querySelector('[data-cursor="'+idx+'"]');
+    if(cursorEl) cursorEl.style.display='block';
+    var startMs=Date.now();
+    var cursorTimer=setInterval(function(){
+      var elapsed=(Date.now()-startMs)/1000;
+      var progress=sel.start+elapsed/buf.duration;
+      if(progress>=sel.end||!playingSource){
+        clearInterval(cursorTimer);
+        if(cursorEl) cursorEl.style.display='none';
+        return;
+      }
+      if(cursorEl) cursorEl.style.left=(progress*100)+'%';
+    },30);
+
+    source.onended=function(){
+      playingSource=null;
+      clearInterval(cursorTimer);
+      if(cursorEl) cursorEl.style.display='none';
+      /* 정지 버튼 → 재생 버튼 복원 */
+      if(playBtn){
+        playBtn.textContent='\u25b6 \uc120\ud0dd \uad6c\uac04 \uc7ac\uc0dd';
+        playBtn.dataset.editAction='play-sel';
+      }
+    };
     source.start(0,startTime,duration);
     playingSource=source;
+    playingCursorTimer=cursorTimer;
+  }
+
+  var playingCursorTimer=null;
+
+  function stopSelection(idx){
+    stopAll();
+    if(playingCursorTimer){clearInterval(playingCursorTimer);playingCursorTimer=null;}
+    var cursorEl=document.querySelector('[data-cursor="'+idx+'"]');
+    if(cursorEl) cursorEl.style.display='none';
+    var playBtn=document.querySelector('[data-edit-action="stop-sel"][data-idx="'+idx+'"]');
+    if(playBtn){
+      playBtn.textContent='\u25b6 \uc120\ud0dd \uad6c\uac04 \uc7ac\uc0dd';
+      playBtn.dataset.editAction='play-sel';
+    }
   }
 
   /* 선택 구간만 유지 (나머지 삭제) */
@@ -823,9 +872,29 @@
     var source=ctx.createBufferSource();
     source.buffer=clips[idx].buffer;
     source.connect(ctx.destination);
-    source.onended=function(){playingSource=null;};
+
+    /* 재생 → 정지 버튼 전환 */
+    var btn=document.querySelector('[data-action="play"][data-idx="'+idx+'"]');
+    if(btn){btn.textContent='\u25a0';btn.dataset.action='stop-clip';}
+
+    source.onended=function(){
+      playingSource=null;
+      if(btn){btn.textContent='\u25b6';btn.dataset.action='play';}
+    };
     source.start();
     playingSource=source;
+    playingClipBtn=btn;
+  }
+
+  var playingClipBtn=null;
+
+  function stopClip(){
+    stopAll();
+    if(playingClipBtn){
+      playingClipBtn.textContent='\u25b6';
+      playingClipBtn.dataset.action='play';
+      playingClipBtn=null;
+    }
   }
 
   /* 삭제 */
@@ -909,6 +978,20 @@
     if(playingSource){
       try{playingSource.stop();}catch(e){}
       playingSource=null;
+    }
+    if(playingCursorTimer){clearInterval(playingCursorTimer);playingCursorTimer=null;}
+    /* 모든 커서 숨기기 */
+    document.querySelectorAll('[data-cursor]').forEach(function(el){el.style.display='none';});
+    /* 선택재생 버튼 복원 */
+    document.querySelectorAll('[data-edit-action="stop-sel"]').forEach(function(el){
+      el.textContent='\u25b6 \uc120\ud0dd \uad6c\uac04 \uc7ac\uc0dd';
+      el.dataset.editAction='play-sel';
+    });
+    /* 클립재생 버튼 복원 */
+    if(playingClipBtn){
+      playingClipBtn.textContent='\u25b6';
+      playingClipBtn.dataset.action='play';
+      playingClipBtn=null;
     }
     btnPlayAll.style.display='flex';
     btnStopAll.style.display='none';
