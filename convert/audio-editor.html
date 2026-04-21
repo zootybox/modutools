@@ -65,6 +65,31 @@
 /* 빈 상태 */
 .tool-empty{text-align:center;padding:32px 20px;color:var(--g400);font-size:13px}
 
+/* 클립 편집 모드 */
+.tool-clip.editing{border-color:var(--primary);box-shadow:0 0 0 2px rgba(37,99,235,.1);cursor:default}
+.tool-clip-editor{display:none;width:100%;margin-top:12px}
+.tool-clip.editing .tool-clip-editor{display:block}
+.tool-edit-wave{position:relative;width:100%;height:96px;background:var(--g50);border-radius:8px;border:1px solid var(--g200);overflow:hidden;cursor:crosshair}
+.tool-edit-wave canvas{width:100%;height:100%;display:block}
+.tool-edit-selection{position:absolute;top:0;height:100%;background:rgba(37,99,235,.15);border-left:2px solid var(--primary);border-right:2px solid var(--primary);pointer-events:none}
+.tool-edit-cursor{position:absolute;top:0;width:2px;height:100%;background:#EF4444;pointer-events:none;display:none}
+.tool-edit-time{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--g400)}
+.tool-edit-time b{color:var(--primary);font-weight:700}
+.tool-edit-btns{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.tool-edit-btn{height:36px;padding:0 14px;border:1px solid var(--g200);border-radius:8px;background:#fff;font-size:12px;font-weight:600;color:var(--g700);cursor:pointer;font-family:inherit;transition:.15s;display:flex;align-items:center;gap:4px}
+.tool-edit-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.tool-edit-btn.accent{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tool-edit-btn.accent:hover{background:var(--primary-dark)}
+.tool-edit-btn:disabled{opacity:.4;cursor:not-allowed}
+.tool-edit-effects{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;padding:12px 14px;background:var(--g50);border-radius:8px;border:1px solid var(--g100)}
+.tool-effect-label{font-size:12px;font-weight:600;color:var(--g600);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tool-effect-label b{font-variant-numeric:tabular-nums;min-width:32px;color:var(--g800)}
+.tool-effect-range{width:100px;height:5px;-webkit-appearance:none;background:var(--g200);border-radius:3px;outline:none}
+.tool-effect-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);cursor:pointer;box-shadow:0 1px 4px rgba(37,99,235,.3)}
+.tool-effect-sep{width:1px;height:24px;background:var(--g200)}
+.tool-effect-btn{height:30px;padding:0 10px;border:1px solid var(--g200);border-radius:6px;background:#fff;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:inherit;transition:.15s;white-space:nowrap}
+.tool-effect-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+
 /* 브라우저 안내 */
 .tool-compat{background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:16px;margin-bottom:16px}
 .tool-compat-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
@@ -167,7 +192,10 @@
       여러 개의 음성 파일을 브라우저에서 불러와 순서를 바꾸고, 하나의 파일로 합쳐서 저장할 수 있는 도구입니다. 팟캐스트 편집, 강의 녹음 정리, 음성 메시지 합치기, TTS 결과물 병합 등 다양한 용도로 활용할 수 있습니다.
 
       <h3>사용 방법</h3>
-      오디오 파일을 업로드하면 파형과 함께 클립 목록이 나타납니다. 클립을 드래그해서 순서를 변경하고, 재생 버튼으로 개별 또는 전체를 미리 들어본 뒤 WAV 파일로 저장하세요.
+      오디오 파일을 업로드하면 파형과 함께 클립 목록이 나타납니다. 클립을 드래그해서 순서를 변경하고, ✂️ 버튼으로 편집 모드를 열어 구간 자르기·페이드·볼륨 조절을 한 뒤, WAV 파일로 저장하세요.
+
+      <h3>편집 기능 설명</h3>
+      편집 모드에서 파형을 드래그하면 구간이 선택됩니다. 선택 구간만 유지하거나 삭제할 수 있고, 해당 위치에서 클립을 2개로 분할할 수도 있습니다. 볼륨 슬라이더로 소리 크기를 조절하고, Fade In/Out으로 자연스럽게 시작·끝을 처리하세요. Normalize는 전체 볼륨을 최대로 키우고, Reverse는 역재생 효과를 적용합니다.
 
       <span class="tool-faq-q">Q. 합칠 수 있는 파일 수에 제한이 있나요?</span>
       <div class="tool-faq-a">파일 수 자체에는 제한이 없지만, 전체 오디오 길이가 30분을 넘으면 브라우저 메모리 사용량이 커져 느려질 수 있습니다.</div>
@@ -281,21 +309,55 @@
         '<div class="tool-clip-wave"><canvas data-clip-id="'+clip.id+'"></canvas></div>'+
         '<div class="tool-clip-meta">'+
           '<span class="tool-clip-name" title="'+clip.name+'">'+clip.name+'</span>'+
-          '<span class="tool-clip-dur">'+fmtTime(clip.buffer.duration)+' · '+fmtSize(clip.size)+'</span>'+
+          '<span class="tool-clip-dur">'+fmtTime(clip.buffer.duration)+' \xb7 '+fmtSize(clip.size)+'</span>'+
         '</div>'+
         '<div class="tool-clip-btns">'+
           '<button class="tool-clip-btn" data-action="play" data-idx="'+idx+'" title="\uc7ac\uc0dd">\u25b6</button>'+
+          '<button class="tool-clip-btn" data-action="trim" data-idx="'+idx+'" title="\uc790\ub974\uae30">\u2702</button>'+
           '<button class="tool-clip-btn danger" data-action="delete" data-idx="'+idx+'" title="\uc0ad\uc81c">\u2715</button>'+
+        '</div>'+
+        '<div class="tool-clip-editor">'+
+          '<div class="tool-edit-wave" data-edit-idx="'+idx+'">'+
+            '<canvas data-edit-canvas="'+idx+'"></canvas>'+
+            '<div class="tool-edit-selection" data-sel="'+idx+'" style="display:none"></div>'+
+            '<div class="tool-edit-cursor" data-cursor="'+idx+'"></div>'+
+          '</div>'+
+          '<div class="tool-edit-time">'+
+            '<span>\uc120\ud0dd: <b data-sel-start="'+idx+'">-</b> ~ <b data-sel-end="'+idx+'">-</b></span>'+
+            '<span>\uc804\uccb4: '+fmtTimePrecise(clip.buffer.duration)+'</span>'+
+          '</div>'+
+          '<div class="tool-edit-btns">'+
+            '<button class="tool-edit-btn" data-edit-action="play-sel" data-idx="'+idx+'" disabled>\u25b6 \uc120\ud0dd \uad6c\uac04 \uc7ac\uc0dd</button>'+
+            '<button class="tool-edit-btn accent" data-edit-action="keep" data-idx="'+idx+'" disabled>\u2702 \uc120\ud0dd \uad6c\uac04\ub9cc \uc720\uc9c0</button>'+
+            '<button class="tool-edit-btn" data-edit-action="remove" data-idx="'+idx+'" disabled>\ud83d\uddd1 \uc120\ud0dd \uad6c\uac04 \uc0ad\uc81c</button>'+
+            '<button class="tool-edit-btn" data-edit-action="split" data-idx="'+idx+'" disabled>\u2702 \uc120\ud0dd \uc704\uce58\uc5d0\uc11c \ubd84\ud560</button>'+
+            '<button class="tool-edit-btn" data-edit-action="close" data-idx="'+idx+'">\u2715 \ub2eb\uae30</button>'+
+          '</div>'+
+          '<div class="tool-edit-effects">'+
+            '<label class="tool-effect-label">\ud83d\udd0a \ubcfc\ub968 <b data-vol-val="'+idx+'">100%</b></label>'+
+            '<input type="range" class="tool-effect-range" data-vol-range="'+idx+'" min="0" max="200" value="100">'+
+            '<div class="tool-effect-sep"></div>'+
+            '<button class="tool-effect-btn" data-edit-action="fade-in" data-idx="'+idx+'">Fade In</button>'+
+            '<button class="tool-effect-btn" data-edit-action="fade-out" data-idx="'+idx+'">Fade Out</button>'+
+            '<button class="tool-effect-btn" data-edit-action="normalize" data-idx="'+idx+'">Normalize</button>'+
+            '<button class="tool-effect-btn" data-edit-action="reverse" data-idx="'+idx+'">\u21c4 Reverse</button>'+
+          '</div>'+
         '</div>';
       clipList.appendChild(el);
 
       /* 파형 그리기 */
-      var canvas=el.querySelector('canvas');
+      var canvas=el.querySelector('canvas[data-clip-id]');
       drawWaveform(canvas,clip.buffer);
     });
 
     /* 드래그 앤 드롭 */
     initDrag();
+  }
+
+  function fmtTimePrecise(sec){
+    var m=Math.floor(sec/60);
+    var s=(sec%60).toFixed(1);
+    return m+':'+('0'+s).slice(s<10?0:-4);
   }
 
   /* 파형 그리기 */
@@ -364,14 +426,397 @@
   /* 클립 버튼 이벤트 */
   clipList.addEventListener('click',function(e){
     var btn=e.target.closest('.tool-clip-btn');
-    if(!btn) return;
-    var idx=parseInt(btn.dataset.idx);
-    var action=btn.dataset.action;
-    if(action==='play') playClip(idx);
-    else if(action==='delete') deleteClip(idx);
+    var editBtn=e.target.closest('.tool-edit-btn');
+    if(btn){
+      var idx=parseInt(btn.dataset.idx);
+      var action=btn.dataset.action;
+      if(action==='play') playClip(idx);
+      else if(action==='delete') deleteClip(idx);
+      else if(action==='trim') openEditor(idx);
+    }
+    if(editBtn){
+      var idx2=parseInt(editBtn.dataset.idx);
+      var ea=editBtn.dataset.editAction;
+      if(ea==='close') closeEditor(idx2);
+      else if(ea==='play-sel') playSelection(idx2);
+      else if(ea==='keep') keepSelection(idx2);
+      else if(ea==='remove') removeSelection(idx2);
+      else if(ea==='split') splitAtSelection(idx2);
+      else if(ea==='fade-in') applyFadeIn(idx2);
+      else if(ea==='fade-out') applyFadeOut(idx2);
+      else if(ea==='normalize') applyNormalize(idx2);
+      else if(ea==='reverse') applyReverse(idx2);
+    }
+    /* 이펙트 버튼 */
+    var effBtn=e.target.closest('.tool-effect-btn');
+    if(effBtn){
+      var idx3=parseInt(effBtn.dataset.idx);
+      var ea2=effBtn.dataset.editAction;
+      if(ea2==='fade-in') applyFadeIn(idx3);
+      else if(ea2==='fade-out') applyFadeOut(idx3);
+      else if(ea2==='normalize') applyNormalize(idx3);
+      else if(ea2==='reverse') applyReverse(idx3);
+    }
   });
 
-  /* 개별 재생 */
+  /* 볼륨 슬라이더 이벤트 (이벤트 위임) */
+  clipList.addEventListener('input',function(e){
+    var range=e.target.closest('[data-vol-range]');
+    if(!range) return;
+    var idx=parseInt(range.dataset.volRange);
+    var val=parseInt(range.value);
+    var label=document.querySelector('[data-vol-val="'+idx+'"]');
+    if(label) label.textContent=val+'%';
+  });
+  clipList.addEventListener('change',function(e){
+    var range=e.target.closest('[data-vol-range]');
+    if(!range) return;
+    var idx=parseInt(range.dataset.volRange);
+    var val=parseInt(range.value)/100;
+    applyVolume(idx,val);
+  });
+
+  /* 편집 모드 열기 */
+  var editSelections={};  /* idx: {start, end} in ratio 0~1 */
+
+  function openEditor(idx){
+    /* 다른 편집 닫기 */
+    clipList.querySelectorAll('.tool-clip.editing').forEach(function(el){
+      el.classList.remove('editing');
+    });
+    var clipEl=clipList.children[idx];
+    clipEl.classList.add('editing');
+    clipEl.draggable=false;
+    editSelections[idx]={start:null,end:null};
+
+    /* 큰 파형 그리기 */
+    var editCanvas=clipEl.querySelector('[data-edit-canvas="'+idx+'"]');
+    drawWaveform(editCanvas,clips[idx].buffer,'#2563EB');
+
+    /* 선택 영역 이벤트 */
+    var waveEl=clipEl.querySelector('[data-edit-idx="'+idx+'"]');
+    initSelectionDrag(waveEl,idx);
+  }
+
+  function closeEditor(idx){
+    var clipEl=clipList.children[idx];
+    if(clipEl){
+      clipEl.classList.remove('editing');
+      clipEl.draggable=true;
+    }
+    delete editSelections[idx];
+  }
+
+  /* 파형 위 드래그로 구간 선택 */
+  function initSelectionDrag(waveEl,idx){
+    var isDragging=false;
+    var startX=0;
+
+    function getRatio(e){
+      var rect=waveEl.getBoundingClientRect();
+      return Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+    }
+
+    waveEl.addEventListener('mousedown',function(e){
+      if(e.target.closest('.tool-edit-btn')) return;
+      isDragging=true;
+      startX=getRatio(e);
+      editSelections[idx]={start:startX,end:startX};
+      updateSelectionUI(idx);
+    });
+    waveEl.addEventListener('mousemove',function(e){
+      if(!isDragging) return;
+      var cur=getRatio(e);
+      editSelections[idx].start=Math.min(startX,cur);
+      editSelections[idx].end=Math.max(startX,cur);
+      updateSelectionUI(idx);
+    });
+    document.addEventListener('mouseup',function(){
+      if(isDragging){
+        isDragging=false;
+        /* 너무 작은 선택 무시 */
+        var sel=editSelections[idx];
+        if(sel&&sel.end-sel.start<0.005){
+          editSelections[idx]={start:null,end:null};
+          updateSelectionUI(idx);
+        }
+      }
+    });
+
+    /* 터치 지원 */
+    waveEl.addEventListener('touchstart',function(e){
+      var touch=e.touches[0];
+      isDragging=true;
+      startX=getRatioTouch(touch,waveEl);
+      editSelections[idx]={start:startX,end:startX};
+      updateSelectionUI(idx);
+    },{passive:true});
+    waveEl.addEventListener('touchmove',function(e){
+      if(!isDragging) return;
+      var touch=e.touches[0];
+      var cur=getRatioTouch(touch,waveEl);
+      editSelections[idx].start=Math.min(startX,cur);
+      editSelections[idx].end=Math.max(startX,cur);
+      updateSelectionUI(idx);
+    },{passive:true});
+    waveEl.addEventListener('touchend',function(){
+      if(isDragging){
+        isDragging=false;
+        var sel=editSelections[idx];
+        if(sel&&sel.end-sel.start<0.01){
+          editSelections[idx]={start:null,end:null};
+          updateSelectionUI(idx);
+        }
+      }
+    });
+  }
+
+  function getRatioTouch(touch,el){
+    var rect=el.getBoundingClientRect();
+    return Math.max(0,Math.min(1,(touch.clientX-rect.left)/rect.width));
+  }
+
+  function updateSelectionUI(idx){
+    var sel=editSelections[idx];
+    var selEl=document.querySelector('[data-sel="'+idx+'"]');
+    var startLabel=document.querySelector('[data-sel-start="'+idx+'"]');
+    var endLabel=document.querySelector('[data-sel-end="'+idx+'"]');
+    var btns=clipList.querySelectorAll('[data-idx="'+idx+'"][data-edit-action]');
+    var dur=clips[idx].buffer.duration;
+
+    if(!sel||sel.start===null){
+      selEl.style.display='none';
+      startLabel.textContent='-';
+      endLabel.textContent='-';
+      btns.forEach(function(b){if(b.dataset.editAction!=='close') b.disabled=true;});
+      return;
+    }
+
+    selEl.style.display='';
+    selEl.style.left=(sel.start*100)+'%';
+    selEl.style.width=((sel.end-sel.start)*100)+'%';
+    startLabel.textContent=fmtTimePrecise(sel.start*dur);
+    endLabel.textContent=fmtTimePrecise(sel.end*dur);
+    btns.forEach(function(b){if(b.dataset.editAction!=='close') b.disabled=false;});
+  }
+
+  /* 선택 구간 재생 */
+  function playSelection(idx){
+    var sel=editSelections[idx];
+    if(!sel||sel.start===null) return;
+    stopAll();
+    var ctx=getCtx();
+    var buf=clips[idx].buffer;
+    var source=ctx.createBufferSource();
+    source.buffer=buf;
+    source.connect(ctx.destination);
+    var startTime=sel.start*buf.duration;
+    var duration=(sel.end-sel.start)*buf.duration;
+    source.onended=function(){playingSource=null;};
+    source.start(0,startTime,duration);
+    playingSource=source;
+  }
+
+  /* 선택 구간만 유지 (나머지 삭제) */
+  function keepSelection(idx){
+    var sel=editSelections[idx];
+    if(!sel||sel.start===null) return;
+    var buf=clips[idx].buffer;
+    var sr=buf.sampleRate;
+    var startSample=Math.floor(sel.start*buf.length);
+    var endSample=Math.floor(sel.end*buf.length);
+    var newLen=endSample-startSample;
+    if(newLen<100) return;
+
+    var ctx=getCtx();
+    var newBuf=ctx.createBuffer(buf.numberOfChannels,newLen,sr);
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var src=buf.getChannelData(c);
+      var dst=newBuf.getChannelData(c);
+      for(var i=0;i<newLen;i++) dst[i]=src[startSample+i];
+    }
+    clips[idx].buffer=newBuf;
+    clips[idx].name=clips[idx].name.replace(/(\.[^.]+)$/,'_cut$1');
+    closeEditor(idx);
+    renderClips();
+    updateMergedPreview();
+  }
+
+  /* 선택 구간 삭제 (양쪽 유지) */
+  function removeSelection(idx){
+    var sel=editSelections[idx];
+    if(!sel||sel.start===null) return;
+    var buf=clips[idx].buffer;
+    var sr=buf.sampleRate;
+    var startSample=Math.floor(sel.start*buf.length);
+    var endSample=Math.floor(sel.end*buf.length);
+    var keepLen=buf.length-(endSample-startSample);
+    if(keepLen<100) return;
+
+    var ctx=getCtx();
+    var newBuf=ctx.createBuffer(buf.numberOfChannels,keepLen,sr);
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var src=buf.getChannelData(c);
+      var dst=newBuf.getChannelData(c);
+      var wi=0;
+      for(var i=0;i<startSample;i++) dst[wi++]=src[i];
+      for(var i=endSample;i<buf.length;i++) dst[wi++]=src[i];
+    }
+    clips[idx].buffer=newBuf;
+    closeEditor(idx);
+    renderClips();
+    updateMergedPreview();
+  }
+
+  /* 선택 위치에서 2개로 분할 */
+  function splitAtSelection(idx){
+    var sel=editSelections[idx];
+    if(!sel||sel.start===null) return;
+    var buf=clips[idx].buffer;
+    var sr=buf.sampleRate;
+    var splitPoint=Math.floor(((sel.start+sel.end)/2)*buf.length);
+    if(splitPoint<100||buf.length-splitPoint<100) return;
+
+    var ctx=getCtx();
+    /* 앞 부분 */
+    var buf1=ctx.createBuffer(buf.numberOfChannels,splitPoint,sr);
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var src=buf.getChannelData(c);
+      var dst=buf1.getChannelData(c);
+      for(var i=0;i<splitPoint;i++) dst[i]=src[i];
+    }
+    /* 뒷 부분 */
+    var len2=buf.length-splitPoint;
+    var buf2=ctx.createBuffer(buf.numberOfChannels,len2,sr);
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var src=buf.getChannelData(c);
+      var dst=buf2.getChannelData(c);
+      for(var i=0;i<len2;i++) dst[i]=src[splitPoint+i];
+    }
+
+    var baseName=clips[idx].name.replace(/(\.[^.]+)$/,'');
+    var ext=clips[idx].name.match(/(\.[^.]+)$/);
+    ext=ext?ext[1]:'.wav';
+    var origSize=clips[idx].size;
+
+    clips.splice(idx,1,
+      {id:++clipIdCounter,name:baseName+'_1'+ext,buffer:buf1,size:Math.round(origSize*splitPoint/buf.length)},
+      {id:++clipIdCounter,name:baseName+'_2'+ext,buffer:buf2,size:origSize-Math.round(origSize*splitPoint/buf.length)}
+    );
+    closeEditor(idx);
+    renderClips();
+    updateMergedPreview();
+  }
+
+  /* 볼륨 조절 */
+  function applyVolume(idx,gain){
+    var buf=clips[idx].buffer;
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      for(var i=0;i<data.length;i++){
+        data[i]=Math.max(-1,Math.min(1,data[i]*gain));
+      }
+    }
+    refreshEditor(idx);
+  }
+
+  /* 페이드 인 (처음 1초 또는 선택 구간) */
+  function applyFadeIn(idx){
+    var buf=clips[idx].buffer;
+    var sr=buf.sampleRate;
+    var sel=editSelections[idx];
+    var startSample=0;
+    var fadeSamples;
+    if(sel&&sel.start!==null){
+      startSample=Math.floor(sel.start*buf.length);
+      fadeSamples=Math.floor((sel.end-sel.start)*buf.length);
+    } else {
+      fadeSamples=Math.min(sr,buf.length); /* 기본 1초 */
+    }
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      for(var i=0;i<fadeSamples;i++){
+        var t=i/fadeSamples;
+        data[startSample+i]*=t*t; /* 이차 곡선으로 부드럽게 */
+      }
+    }
+    refreshEditor(idx);
+  }
+
+  /* 페이드 아웃 (마지막 1초 또는 선택 구간) */
+  function applyFadeOut(idx){
+    var buf=clips[idx].buffer;
+    var sr=buf.sampleRate;
+    var sel=editSelections[idx];
+    var endSample,fadeSamples;
+    if(sel&&sel.start!==null){
+      endSample=Math.floor(sel.end*buf.length);
+      fadeSamples=Math.floor((sel.end-sel.start)*buf.length);
+    } else {
+      endSample=buf.length;
+      fadeSamples=Math.min(sr,buf.length);
+    }
+    var startSample=endSample-fadeSamples;
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      for(var i=0;i<fadeSamples;i++){
+        var t=1-i/fadeSamples;
+        data[startSample+i]*=t*t;
+      }
+    }
+    refreshEditor(idx);
+  }
+
+  /* 노멀라이즈 (최대 볼륨으로 증폭) */
+  function applyNormalize(idx){
+    var buf=clips[idx].buffer;
+    var peak=0;
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      for(var i=0;i<data.length;i++){
+        var abs=Math.abs(data[i]);
+        if(abs>peak) peak=abs;
+      }
+    }
+    if(peak===0||peak>=0.99) return;
+    var gain=0.99/peak;
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      for(var i=0;i<data.length;i++) data[i]*=gain;
+    }
+    refreshEditor(idx);
+  }
+
+  /* 리버스 (역재생) */
+  function applyReverse(idx){
+    var buf=clips[idx].buffer;
+    for(var c=0;c<buf.numberOfChannels;c++){
+      var data=buf.getChannelData(c);
+      Array.prototype.reverse.call(data);
+    }
+    refreshEditor(idx);
+  }
+
+  /* 편집 후 파형 새로고침 */
+  function refreshEditor(idx){
+    var clipEl=clipList.children[idx];
+    if(!clipEl) return;
+    /* 미니 파형 */
+    var miniCanvas=clipEl.querySelector('canvas[data-clip-id]');
+    if(miniCanvas) drawWaveform(miniCanvas,clips[idx].buffer);
+    /* 편집 파형 */
+    var editCanvas=clipEl.querySelector('[data-edit-canvas="'+idx+'"]');
+    if(editCanvas) drawWaveform(editCanvas,clips[idx].buffer,'#2563EB');
+    /* 시간 업데이트 */
+    var durEl=clipEl.querySelector('.tool-clip-dur');
+    if(durEl) durEl.textContent=fmtTime(clips[idx].buffer.duration)+' \xb7 '+fmtSize(clips[idx].size);
+    /* 볼륨 슬라이더 리셋 */
+    var volRange=clipEl.querySelector('[data-vol-range="'+idx+'"]');
+    if(volRange){volRange.value=100;}
+    var volVal=document.querySelector('[data-vol-val="'+idx+'"]');
+    if(volVal) volVal.textContent='100%';
+    updateMergedPreview();
+  }
   function playClip(idx){
     stopAll();
     var ctx=getCtx();
