@@ -150,9 +150,11 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     </div>
 
     <div class="tool-btn-area">
-      <button id="btnPreview" class="tool-btn tool-btn-sub" onclick="handlePreview()">▶ 미리 듣기</button>
+      <button id="btnPreview" class="tool-btn tool-btn-main" onclick="handlePreview()">▶ 미리 듣기</button>
       <button id="btnStop" class="tool-btn tool-btn-stop" onclick="handleStop()">■ 정지</button>
-      <button id="btnDownload" class="tool-btn tool-btn-main" onclick="handleDownload()">⬇ 음성 파일 저장</button>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:var(--g50);border-radius:8px;font-size:11px;color:var(--g400);line-height:1.6">
+      💡 음성 파일 저장이 필요하시면 PC 녹음 프로그램(OBS Studio, Windows 녹음기 등)으로 시스템 오디오를 녹음해 주세요.
     </div>
 
     <div id="statusMsg" class="tool-status"></div>
@@ -165,7 +167,6 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
       · 이 도구는 브라우저 내장 음성(Web Speech API)을 사용합니다.<br>
       · 음성 종류는 사용 중인 기기·브라우저에 따라 다를 수 있습니다.<br>
       · Chrome, Edge 브라우저에서 가장 많은 음성을 지원합니다.<br>
-      · 파일 저장 기능은 일부 환경에서 제한될 수 있습니다.<br>
       · 모든 처리는 사용자의 기기에서 이루어지며, 서버로 전송되지 않습니다.
     </div>
   </div>
@@ -188,8 +189,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
       <span class="tool-faq-q">Q. 음성이 나오지 않아요</span>
       <div class="tool-faq-a">기기 음량이 켜져 있는지 확인하세요. Chrome 또는 Edge 브라우저 사용을 권장합니다. 일부 모바일 기기에서는 무음 모드를 해제해야 합니다.</div>
 
-      <span class="tool-faq-q">Q. 음성 파일 저장이 안 돼요</span>
-      <div class="tool-faq-a">파일 저장은 PC Chrome 브라우저에서 가장 안정적으로 작동합니다. 모바일이나 Safari에서는 브라우저 보안 정책에 의해 제한될 수 있습니다. 이 경우 '미리 듣기' 기능을 이용해 주세요.</div>
+      <span class="tool-faq-q">Q. 음성을 파일로 저장할 수 없나요?</span>
+      <div class="tool-faq-a">현재 브라우저 보안 정책으로 인해 TTS 음성을 직접 파일로 저장하는 기능은 지원되지 않습니다. 파일이 필요하시면 OBS Studio, Windows 녹음기 등 PC 녹음 프로그램으로 시스템 오디오를 녹음해 주세요.</div>
 
       <span class="tool-faq-q">Q. 한국어 음성이 적거나 하나뿐이에요</span>
       <div class="tool-faq-a">음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. 아래 방법으로 무료 음성을 추가할 수 있습니다.<br><br>
@@ -205,7 +206,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 
   <!-- 면책 조항 -->
   <div class="tool-disclaimer">
-    <p><strong>면책 조항</strong> — 본 도구는 브라우저 내장 Web Speech API를 활용한 무료 서비스로, 음성 합성의 품질·정확도·자연스러움은 사용자의 기기·운영체제·브라우저 환경에 따라 달라질 수 있습니다. 음성 파일 저장 기능은 브라우저 보안 정책에 따라 일부 환경에서 제한되며, 이에 대해 modutools는 기술적 보증을 하지 않습니다. 상업적 용도의 음성 파일 사용 시 해당 플랫폼의 이용약관을 별도로 확인하시기 바랍니다. 모든 텍스트 데이터는 사용자 기기에서만 처리되며, 외부 서버로 전송되지 않습니다.</p>
+    <p><strong>면책 조항</strong> — 본 도구는 브라우저 내장 Web Speech API를 활용한 무료 서비스로, 음성 합성의 품질·정확도·자연스러움은 사용자의 기기·운영체제·브라우저 환경에 따라 달라질 수 있습니다. 이에 대해 modutools는 기술적 보증을 하지 않습니다. 모든 텍스트 데이터는 사용자 기기에서만 처리되며, 외부 서버로 전송되지 않습니다.</p>
   </div>
 </main>
 
@@ -226,7 +227,6 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   var statusEl=document.getElementById('statusMsg');
   var btnPreview=document.getElementById('btnPreview');
   var btnStop=document.getElementById('btnStop');
-  var btnDownload=document.getElementById('btnDownload');
   var allVoices=[];
   var LIMIT=5000;
   var stopRequested=false;
@@ -421,144 +421,10 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
     hideStatus();
   };
 
-  /* \ud30c\uc77c \uc800\uc7a5 */
-  window.handleDownload=function(){
-    var text=validate();
-    if(!text)return;
-    if(synth.speaking)synth.cancel();
-    stopRequested=false;
-
-    if(typeof MediaRecorder==='undefined'||typeof AudioContext==='undefined'){
-      showStatus('\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \uc74c\uc131 \ud30c\uc77c \uc800\uc7a5\uc744 \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4. PC Chrome \ube0c\ub77c\uc6b0\uc800\ub97c \uc774\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');
-      return;
-    }
-
-    showStatus('\uc74c\uc131\uc744 \ub179\uc74c\ud558\uace0 \uc788\uc2b5\ub2c8\ub2e4. \uc7ac\uc0dd\uc774 \ub05d\ub0a0 \ub54c\uae4c\uc9c0 \uae30\ub2e4\ub824 \uc8fc\uc138\uc694...','info');
-    btnDownload.disabled=true;
-    btnDownload.style.opacity='0.6';
-
-    try{
-      var audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-      var dest=audioCtx.createMediaStreamDestination();
-      var recorder=new MediaRecorder(dest.stream);
-      var chunks=[];
-
-      recorder.ondataavailable=function(e){if(e.data.size>0)chunks.push(e.data);};
-      recorder.onstop=function(){
-        var webmBlob=new Blob(chunks,{type:'audio/webm'});
-        /* webm → wav 변환 */
-        var fileReader=new FileReader();
-        fileReader.onload=function(){
-          var arrBuf=this.result;
-          var decodeCtx=new(window.AudioContext||window.webkitAudioContext)();
-          decodeCtx.decodeAudioData(arrBuf,function(audioBuf){
-            var numCh=audioBuf.numberOfChannels;
-            var sampleRate=audioBuf.sampleRate;
-            var length=audioBuf.length;
-            var wavBuf=new ArrayBuffer(44+length*numCh*2);
-            var view=new DataView(wavBuf);
-            function writeStr(off,str){for(var i=0;i<str.length;i++)view.setUint8(off+i,str.charCodeAt(i));}
-            writeStr(0,'RIFF');
-            view.setUint32(4,36+length*numCh*2,true);
-            writeStr(8,'WAVE');
-            writeStr(12,'fmt ');
-            view.setUint32(16,16,true);
-            view.setUint16(20,1,true);
-            view.setUint16(22,numCh,true);
-            view.setUint32(24,sampleRate,true);
-            view.setUint32(28,sampleRate*numCh*2,true);
-            view.setUint16(32,numCh*2,true);
-            view.setUint16(34,16,true);
-            writeStr(36,'data');
-            view.setUint32(40,length*numCh*2,true);
-            var offset=44;
-            var channels=[];
-            for(var c=0;c<numCh;c++) channels.push(audioBuf.getChannelData(c));
-            for(var i=0;i<length;i++){
-              for(var c=0;c<numCh;c++){
-                var sample=Math.max(-1,Math.min(1,channels[c][i]));
-                view.setInt16(offset,sample<0?sample*0x8000:sample*0x7FFF,true);
-                offset+=2;
-              }
-            }
-            var wavBlob=new Blob([wavBuf],{type:'audio/wav'});
-            var url=URL.createObjectURL(wavBlob);
-            var a=document.createElement('a');
-            a.href=url;
-            a.download='modutools-tts-'+Date.now()+'.wav';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(function(){URL.revokeObjectURL(url);},3000);
-            decodeCtx.close();
-            showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4. (WAV)','ok');
-          },function(){
-            /* 디코딩 실패 시 webm으로 fallback */
-            var url=URL.createObjectURL(webmBlob);
-            var a=document.createElement('a');
-            a.href=url;
-            a.download='modutools-tts-'+Date.now()+'.webm';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(function(){URL.revokeObjectURL(url);},3000);
-            showStatus('\uc74c\uc131 \ud30c\uc77c\uc774 \uc800\uc7a5\ub418\uc5c8\uc2b5\ub2c8\ub2e4.','ok');
-          });
-          decodeCtx=null;
-        };
-        fileReader.readAsArrayBuffer(webmBlob);
-        audioCtx.close();
-        btnDownload.disabled=false;
-        btnDownload.style.opacity='1';
-        stopResumeHack();
-      };
-
-      recorder.start();
-
-      if(naturalEl.checked){
-        var sentences=splitSentences(text);
-        setPlaying(true);
-        speakNatural(sentences,function(){
-          setPlaying(false);
-          setTimeout(function(){recorder.stop();},500);
-        },function(){
-          setPlaying(false);stopResumeHack();
-          try{recorder.stop();}catch(e){}
-          audioCtx.close();
-          showStatus('\ub179\uc74c \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
-          btnDownload.disabled=false;
-          btnDownload.style.opacity='1';
-        });
-      } else {
-        var u=createUtterance(text);
-        u.onstart=function(){setPlaying(true);};
-        u.onend=function(){
-          setPlaying(false);
-          setTimeout(function(){recorder.stop();},500);
-        };
-        u.onerror=function(){
-          setPlaying(false);stopResumeHack();
-          try{recorder.stop();}catch(e){}
-          audioCtx.close();
-          showStatus('\ub179\uc74c \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
-          btnDownload.disabled=false;
-          btnDownload.style.opacity='1';
-        };
-        synth.speak(u);
-        startResumeHack();
-      }
-    }catch(e){
-      showStatus('\ud30c\uc77c \uc800\uc7a5 \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4: '+e.message,'warn');
-      btnDownload.disabled=false;
-      btnDownload.style.opacity='1';
-    }
-  };
-
   /* API \ubbf8\uc9c0\uc6d0 \ube0c\ub77c\uc6b0\uc800 */
   if(!('speechSynthesis' in window)){
     showStatus('\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \uc74c\uc131 \ubcc0\ud658\uc744 \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4. Chrome \ub610\ub294 Edge \ube0c\ub77c\uc6b0\uc800\ub97c \uc774\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');
     btnPreview.disabled=true;
-    btnDownload.disabled=true;
   }
 })();
 </script>
@@ -581,7 +447,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   "@type":"FAQPage",
   "mainEntity":[
     {"@type":"Question","name":"TTS 음성이 나오지 않아요","acceptedAnswer":{"@type":"Answer","text":"기기 음량이 켜져 있는지 확인하세요. Chrome 또는 Edge 브라우저 사용을 권장합니다. 일부 모바일 기기에서는 무음 모드를 해제해야 합니다."}},
-    {"@type":"Question","name":"음성 파일 저장이 안 돼요","acceptedAnswer":{"@type":"Answer","text":"파일 저장은 PC Chrome 브라우저에서 가장 안정적으로 작동합니다. 모바일이나 Safari에서는 브라우저 보안 정책에 의해 제한될 수 있습니다."}},
+    {"@type":"Question","name":"음성을 파일로 저장할 수 없나요?","acceptedAnswer":{"@type":"Answer","text":"현재 브라우저 보안 정책으로 인해 TTS 음성을 직접 파일로 저장하는 기능은 지원되지 않습니다. OBS Studio, Windows 녹음기 등 PC 녹음 프로그램으로 시스템 오디오를 녹음해 주세요."}},
     {"@type":"Question","name":"한국어 음성이 적거나 하나뿐이에요","acceptedAnswer":{"@type":"Answer","text":"음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. Windows는 설정 → 시간 및 언어 → 음성에서, Mac은 시스템 설정 → 손쉬운 사용 → 음성 콘텐츠에서 무료로 추가 음성을 설치할 수 있습니다. 설치 후 브라우저를 새로고침하면 새 음성이 자동으로 목록에 나타납니다."}}
   ]
 }
