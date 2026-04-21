@@ -46,6 +46,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://modutools.com/calc/tax-inherit.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://modutools.com/image/compress.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -72,6 +77,11 @@
   </url>
   <url>
     <loc>https://modutools.com/image/watermark.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://modutools.com/image/exif-remove.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

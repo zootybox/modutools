@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상속세 증여세 계산기 2026 - 무료 자동 계산 | modutools</title>
+<meta name="description" content="2026년 최신 세율 기준 상속세·증여세 자동 계산기. 공제 항목별 입력으로 정확한 예상 세액을 확인하세요. 100% 무료, 회원가입 없음.">
+<meta name="keywords" content="상속세 계산기,증여세 계산기,상속세율,증여세율,상속공제,증여공제,2026 상속세">
+<link rel="canonical" href="https://modutools.com/calc/tax-inherit.html">
+<meta property="og:title" content="상속세 증여세 계산기 2026 - modutools">
+<meta property="og:description" content="2026년 최신 세율 기준 상속세·증여세 자동 계산. 공제 항목별 정확한 예상 세액 확인.">
+<meta property="og:url" content="https://modutools.com/calc/tax-inherit.html">
+<meta property="og:type" content="website">
+<meta name="google-site-verification" content="SSgzof6COd6DPSzZP8iQLjKNRy5BH7wyG2AgIrwVgc0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8031004347843172" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.6}
+.mt-tool-wrap{max-width:640px;margin:0 auto;padding:16px}
+.mt-tool-title{font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:4px}
+.mt-tool-desc{text-align:center;color:#64748b;font-size:0.9rem;margin-bottom:20px}
+
+/* 탭 */
+.mt-tabs{display:flex;gap:0;margin-bottom:20px;background:#e2e8f0;border-radius:12px;padding:4px}
+.mt-tab{flex:1;padding:10px;text-align:center;font-size:0.95rem;font-weight:600;border:none;background:none;cursor:pointer;border-radius:10px;transition:all .2s;color:#64748b}
+.mt-tab.active{background:#fff;color:#2563eb;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* 카드 */
+.mt-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.mt-card-title{font-size:0.85rem;font-weight:700;color:#2563eb;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.mt-card-title::before{content:'';width:4px;height:16px;background:#2563eb;border-radius:2px}
+
+/* 입력 */
+.mt-field{margin-bottom:14px}
+.mt-label{display:block;font-size:0.82rem;font-weight:600;color:#475569;margin-bottom:5px}
+.mt-label-sub{font-size:0.75rem;font-weight:400;color:#94a3b8}
+.mt-input{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:1rem;font-family:inherit;transition:border .2s;background:#fafbfc}
+.mt-input:focus{outline:none;border-color:#2563eb;background:#fff}
+.mt-select{width:100%;padding:11px 14px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:0.95rem;font-family:inherit;background:#fafbfc;cursor:pointer}
+.mt-row{display:flex;gap:10px}
+.mt-row .mt-field{flex:1}
+
+/* 버튼 */
+.mt-btn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:background .2s;font-family:inherit}
+.mt-btn:active{background:#1d4ed8}
+.mt-btn-reset{background:none;border:1.5px solid #cbd5e1;color:#64748b;font-size:0.9rem;padding:10px;border-radius:10px;cursor:pointer;width:100%;margin-top:8px;font-family:inherit;font-weight:600}
+
+/* 결과 */
+.mt-result{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:14px;padding:20px;margin-top:14px;display:none}
+.mt-result.show{display:block}
+.mt-result-title{font-size:0.85rem;font-weight:700;color:#2563eb;margin-bottom:14px}
+.mt-result-main{text-align:center;margin-bottom:16px}
+.mt-result-main .tax-label{font-size:0.85rem;color:#64748b}
+.mt-result-main .tax-amount{font-size:2rem;font-weight:800;color:#1e40af}
+.mt-result-main .tax-rate{font-size:0.85rem;color:#64748b;margin-top:2px}
+.mt-detail-table{width:100%;border-collapse:collapse}
+.mt-detail-table tr{border-bottom:1px solid #bfdbfe}
+.mt-detail-table tr:last-child{border-bottom:none}
+.mt-detail-table td{padding:8px 4px;font-size:0.85rem}
+.mt-detail-table td:first-child{color:#64748b}
+.mt-detail-table td:last-child{text-align:right;font-weight:600;color:#1e293b}
+
+/* 세율표 */
+.mt-rate-table{width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:8px}
+.mt-rate-table th{background:#f1f5f9;padding:8px 6px;text-align:center;font-weight:600;color:#475569;border-bottom:2px solid #e2e8f0}
+.mt-rate-table td{padding:7px 6px;text-align:center;border-bottom:1px solid #f1f5f9;color:#334155}
+.mt-rate-table tr.highlight{background:#eff6ff;font-weight:600}
+
+/* FAQ */
+.mt-faq{margin-top:14px}
+.mt-faq-item{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.mt-faq-q{padding:14px 16px;font-size:0.88rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:0.7rem;color:#94a3b8;transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:0.83rem;color:#64748b;line-height:1.7}
+.mt-faq-item.open .mt-faq-a{max-height:500px;padding:0 16px 14px}
+
+.mt-note{font-size:0.78rem;color:#94a3b8;text-align:center;margin-top:10px;line-height:1.5}
+
+@media(max-width:480px){
+  .mt-tool-title{font-size:1.3rem}
+  .mt-result-main .tax-amount{font-size:1.6rem}
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"상속세 증여세 계산기 2026",
+  "url":"https://modutools.com/calc/tax-inherit.html",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+  "description":"2026년 최신 세율 기준 상속세·증여세 자동 계산기"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"상속세와 증여세의 차이는?","acceptedAnswer":{"@type":"Answer","text":"상속세는 사망으로 재산이 이전될 때, 증여세는 살아있는 동안 무상으로 재산을 줄 때 부과됩니다. 세율은 동일하지만 공제 항목이 다릅니다."}},
+    {"@type":"Question","name":"상속세 기초공제는 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"기초공제 2억 원과 인적공제를 합산하거나, 일괄공제 5억 원 중 큰 금액을 선택할 수 있습니다. 배우자 공제는 별도로 최소 5억~최대 30억 원까지 가능합니다."}},
+    {"@type":"Question","name":"증여세 면제한도는?","acceptedAnswer":{"@type":"Answer","text":"배우자 6억 원, 직계존속→성인 자녀 5천만 원, 미성년 자녀 2천만 원, 직계비속→부모 5천만 원, 기타 친족 1천만 원(10년 합산)입니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<main class="mt-tool-wrap">
+  <h1 class="mt-tool-title">상속세·증여세 계산기</h1>
+  <p class="mt-tool-desc">2026년 세율 기준 · 예상 세액 자동 계산</p>
+
+  <!-- 탭 -->
+  <div class="mt-tabs">
+    <button class="mt-tab active" data-tab="inherit" onclick="switchTab('inherit')">상속세</button>
+    <button class="mt-tab" data-tab="gift" onclick="switchTab('gift')">증여세</button>
+  </div>
+
+  <!-- ===== 상속세 ===== -->
+  <div id="tab-inherit">
+    <div class="mt-card">
+      <div class="mt-card-title">상속 재산</div>
+      <div class="mt-field">
+        <label class="mt-label">총 상속재산 가액 <span class="mt-label-sub">(부동산+금융+기타)</span></label>
+        <input type="text" class="mt-input" id="ih-total" placeholder="예: 10억 → 1000000000" inputmode="numeric">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">채무·공과금·장례비용</label>
+        <input type="text" class="mt-input" id="ih-debt" placeholder="0" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="mt-card">
+      <div class="mt-card-title">공제 항목</div>
+      <div class="mt-field">
+        <label class="mt-label">기초공제 + 인적공제 방식</label>
+        <select class="mt-select" id="ih-deduct-type">
+          <option value="lump">일괄공제 5억 원 (대부분 유리)</option>
+          <option value="detail">기초공제 2억 + 인적공제 직접입력</option>
+        </select>
+      </div>
+      <div class="mt-field" id="ih-personal-wrap" style="display:none">
+        <label class="mt-label">인적공제 합계 <span class="mt-label-sub">(자녀·미성년·연로자·장애인)</span></label>
+        <input type="text" class="mt-input" id="ih-personal" placeholder="0" inputmode="numeric">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">배우자 공제 <span class="mt-label-sub">(최소 5억, 최대 30억, 없으면 0)</span></label>
+        <input type="text" class="mt-input" id="ih-spouse" placeholder="500000000" inputmode="numeric" value="500000000">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">금융재산 공제 <span class="mt-label-sub">(순금융재산의 20%, 최대 2억)</span></label>
+        <input type="text" class="mt-input" id="ih-finance" placeholder="0" inputmode="numeric">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">기타 공제 <span class="mt-label-sub">(동거주택, 영농 등)</span></label>
+        <input type="text" class="mt-input" id="ih-other" placeholder="0" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="mt-card">
+      <div class="mt-card-title">세액공제·가산</div>
+      <div class="mt-field">
+        <label class="mt-label">신고세액공제</label>
+        <select class="mt-select" id="ih-report">
+          <option value="yes">신고기한 내 신고 (3% 공제)</option>
+          <option value="no">미신고</option>
+        </select>
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">세대생략 여부 <span class="mt-label-sub">(손자녀에게 직접 상속)</span></label>
+        <select class="mt-select" id="ih-skip">
+          <option value="no">해당 없음</option>
+          <option value="yes">세대생략 (30% 할증)</option>
+          <option value="minor">미성년 세대생략 (40% 할증)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="mt-btn" onclick="calcInherit()">상속세 계산하기</button>
+    <button class="mt-btn-reset" onclick="resetInherit()">초기화</button>
+  </div>
+
+  <!-- ===== 증여세 ===== -->
+  <div id="tab-gift" style="display:none">
+    <div class="mt-card">
+      <div class="mt-card-title">증여 정보</div>
+      <div class="mt-field">
+        <label class="mt-label">증여 재산 가액</label>
+        <input type="text" class="mt-input" id="gf-total" placeholder="예: 1억 → 100000000" inputmode="numeric">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">증여자와의 관계</label>
+        <select class="mt-select" id="gf-relation">
+          <option value="spouse">배우자 (공제 6억)</option>
+          <option value="parent-adult">직계존속→성인 자녀 (공제 5천만)</option>
+          <option value="parent-minor">직계존속→미성년 자녀 (공제 2천만)</option>
+          <option value="child">직계비속→부모 (공제 5천만)</option>
+          <option value="relative">기타 친족 (공제 1천만)</option>
+          <option value="other">타인 (공제 없음)</option>
+        </select>
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">10년 내 동일인 기증여 재산 <span class="mt-label-sub">(이전에 받은 금액)</span></label>
+        <input type="text" class="mt-input" id="gf-prev" placeholder="0" inputmode="numeric">
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">채무 인수액 <span class="mt-label-sub">(부담부증여 시)</span></label>
+        <input type="text" class="mt-input" id="gf-debt" placeholder="0" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="mt-card">
+      <div class="mt-card-title">세액공제·가산</div>
+      <div class="mt-field">
+        <label class="mt-label">신고세액공제</label>
+        <select class="mt-select" id="gf-report">
+          <option value="yes">신고기한 내 신고 (3% 공제)</option>
+          <option value="no">미신고</option>
+        </select>
+      </div>
+      <div class="mt-field">
+        <label class="mt-label">세대생략 여부</label>
+        <select class="mt-select" id="gf-skip">
+          <option value="no">해당 없음</option>
+          <option value="yes">세대생략 (30% 할증)</option>
+          <option value="minor">미성년 세대생략 (40% 할증)</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="mt-btn" onclick="calcGift()">증여세 계산하기</button>
+    <button class="mt-btn-reset" onclick="resetGift()">초기화</button>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+  <!-- 결과 -->
+  <div class="mt-result" id="result-box">
+    <div class="mt-result-title" id="result-type">상속세 계산 결과</div>
+    <div class="mt-result-main">
+      <div class="tax-label">예상 납부세액</div>
+      <div class="tax-amount" id="result-tax">0 원</div>
+      <div class="tax-rate" id="result-effrate">실효세율 0%</div>
+    </div>
+    <table class="mt-detail-table" id="result-detail"></table>
+  </div>
+
+  <!-- 세율표 -->
+  <div class="mt-card" style="margin-top:14px">
+    <div class="mt-card-title">상속세·증여세 세율표 (동일)</div>
+    <table class="mt-rate-table">
+      <thead><tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr></thead>
+      <tbody>
+        <tr><td>1억 이하</td><td>10%</td><td>-</td></tr>
+        <tr><td>1억~5억</td><td>20%</td><td>1,000만</td></tr>
+        <tr><td>5억~10억</td><td>30%</td><td>6,000만</td></tr>
+        <tr><td>10억~30억</td><td>40%</td><td>1억 6,000만</td></tr>
+        <tr><td>30억 초과</td><td>50%</td><td>4억 6,000만</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+  <!-- FAQ -->
+  <div class="mt-faq">
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">상속세와 증여세의 차이는?</div>
+      <div class="mt-faq-a">상속세는 사망으로 재산이 이전될 때 부과되고, 증여세는 살아있는 동안 무상으로 재산을 줄 때 부과됩니다. 세율은 동일하지만, 상속세는 일괄공제 5억·배우자공제 등 큰 공제가 가능하고, 증여세는 관계별 면제한도(10년 합산)가 적용됩니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">일괄공제와 기초+인적공제 중 어느 것이 유리한가요?</div>
+      <div class="mt-faq-a">대부분의 경우 일괄공제 5억 원이 유리합니다. 기초공제(2억) + 인적공제 합계가 5억을 넘는 경우(자녀가 많거나 장애인 공제 등)에만 개별 계산이 유리할 수 있습니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">증여세 면제한도(10년 합산)는?</div>
+      <div class="mt-faq-a">배우자 6억 원, 직계존속→성인 자녀 5천만 원, 미성년 자녀 2천만 원, 직계비속→부모 5천만 원, 기타 친족 1천만 원입니다. 10년간 동일인에게 받은 총액에서 공제합니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">세대생략 할증이란?</div>
+      <div class="mt-faq-a">자녀를 건너뛰고 손자녀에게 직접 상속·증여하면 산출세액의 30%(미성년 손자녀는 40%)가 할증됩니다. 한 세대의 세금을 회피하는 것을 방지하기 위한 제도입니다.</div>
+    </div>
+  </div>
+
+  <p class="mt-note">※ 본 계산기는 참고용 예상 세액이며, 실제 세액은 세무사와 상담하시기 바랍니다.<br>국세청 기준 세율 적용 · 100% 로컬 처리</p>
+</main>
+
+<footer class="mt-footer">
+  <p>
+    <a href="/">← modutools 전체 도구 보기</a><br>
+    &copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+  </p>
+</footer>
+
+<script>
+// 숫자 포맷
+function fmt(n){return n.toLocaleString('ko-KR')}
+function parseNum(id){return parseInt((document.getElementById(id).value||'0').replace(/[^0-9]/g,''),10)||0}
+
+// 탭 전환
+function switchTab(t){
+  document.querySelectorAll('.mt-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));
+  document.getElementById('tab-inherit').style.display=t==='inherit'?'':'none';
+  document.getElementById('tab-gift').style.display=t==='gift'?'':'none';
+  document.getElementById('result-box').classList.remove('show');
+}
+
+// 일괄/개별 토글
+document.getElementById('ih-deduct-type').addEventListener('change',function(){
+  document.getElementById('ih-personal-wrap').style.display=this.value==='detail'?'':'none';
+});
+
+// 세율 계산 (공통)
+function calcTax(base){
+  if(base<=0) return 0;
+  if(base<=100000000) return base*0.1;
+  if(base<=500000000) return base*0.2-10000000;
+  if(base<=1000000000) return base*0.3-60000000;
+  if(base<=3000000000) return base*0.4-160000000;
+  return base*0.5-460000000;
+}
+
+function getBracketInfo(base){
+  if(base<=100000000) return{rate:'10%',bracket:'1억 이하'};
+  if(base<=500000000) return{rate:'20%',bracket:'1억~5억'};
+  if(base<=1000000000) return{rate:'30%',bracket:'5억~10억'};
+  if(base<=3000000000) return{rate:'40%',bracket:'10억~30억'};
+  return{rate:'50%',bracket:'30억 초과'};
+}
+
+// 결과 표시
+function showResult(type, rows, finalTax, totalAsset){
+  const box=document.getElementById('result-box');
+  document.getElementById('result-type').textContent=type+' 계산 결과';
+  document.getElementById('result-tax').textContent=fmt(Math.max(0,finalTax))+' 원';
+  const effRate=totalAsset>0?(finalTax/totalAsset*100).toFixed(1):'0';
+  document.getElementById('result-effrate').textContent='실효세율 '+effRate+'%';
+  const tb=document.getElementById('result-detail');
+  tb.innerHTML=rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('');
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// 상속세 계산
+function calcInherit(){
+  const total=parseNum('ih-total');
+  if(total<=0){alert('상속재산 가액을 입력하세요.');return}
+  const debt=parseNum('ih-debt');
+  const taxBase1=total-debt; // 상속세 과세가액
+
+  // 공제
+  const dType=document.getElementById('ih-deduct-type').value;
+  let basicDeduct=500000000; // 일괄공제
+  if(dType==='detail'){
+    const personal=parseNum('ih-personal');
+    basicDeduct=Math.max(200000000+personal, 500000000);
+  }
+  const spouse=parseNum('ih-spouse');
+  const spouseDeduct=Math.min(Math.max(spouse,0),3000000000);
+  const finance=parseNum('ih-finance');
+  const finDeduct=Math.min(finance,200000000);
+  const other=parseNum('ih-other');
+
+  const totalDeduct=basicDeduct+spouseDeduct+finDeduct+other;
+  const taxableBase=Math.max(0, taxBase1-totalDeduct);
+
+  // 산출세액
+  let computedTax=calcTax(taxableBase);
+
+  // 세대생략 할증
+  const skip=document.getElementById('ih-skip').value;
+  let surcharge=0;
+  if(skip==='yes') surcharge=Math.floor(computedTax*0.3);
+  else if(skip==='minor') surcharge=Math.floor(computedTax*0.4);
+  computedTax+=surcharge;
+
+  // 신고공제
+  const report=document.getElementById('ih-report').value;
+  let reportDeduct=0;
+  if(report==='yes') reportDeduct=Math.floor(computedTax*0.03);
+
+  const finalTax=Math.max(0, Math.floor(computedTax-reportDeduct));
+  const info=getBracketInfo(taxableBase);
+
+  const rows=[
+    ['총 상속재산',fmt(total)+' 원'],
+    ['채무·공과금·장례비','-'+fmt(debt)+' 원'],
+    ['과세가액',fmt(taxBase1)+' 원'],
+    ['공제 합계','-'+fmt(totalDeduct)+' 원'],
+    ['과세표준',fmt(taxableBase)+' 원'],
+    ['적용세율',info.rate+' ('+info.bracket+')'],
+    ['산출세액',fmt(Math.floor(calcTax(taxableBase)))+' 원'],
+  ];
+  if(surcharge>0) rows.push(['세대생략 할증','+'+fmt(surcharge)+' 원']);
+  if(reportDeduct>0) rows.push(['신고세액공제(3%)','-'+fmt(reportDeduct)+' 원']);
+  rows.push(['납부할 세액',fmt(finalTax)+' 원']);
+
+  showResult('상속세', rows, finalTax, total);
+}
+
+// 증여세 계산
+function calcGift(){
+  const total=parseNum('gf-total');
+  if(total<=0){alert('증여 재산 가액을 입력하세요.');return}
+  const prev=parseNum('gf-prev');
+  const debt=parseNum('gf-debt');
+  const rel=document.getElementById('gf-relation').value;
+
+  const exemptions={spouse:600000000,'parent-adult':50000000,'parent-minor':20000000,child:50000000,relative:10000000,other:0};
+  const exemption=exemptions[rel]||0;
+
+  const taxableVal=total+prev-debt;
+  const taxableBase=Math.max(0, taxableVal-exemption);
+
+  let computedTax=calcTax(taxableBase);
+
+  const skip=document.getElementById('gf-skip').value;
+  let surcharge=0;
+  if(skip==='yes') surcharge=Math.floor(computedTax*0.3);
+  else if(skip==='minor') surcharge=Math.floor(computedTax*0.4);
+  computedTax+=surcharge;
+
+  // 기증여세액 공제 (이전 증여분에 대한 세액)
+  let prevTaxCredit=0;
+  if(prev>0){
+    const prevBase=Math.max(0, prev-exemption);
+    prevTaxCredit=Math.floor(calcTax(prevBase));
+  }
+  computedTax=Math.max(0, computedTax-prevTaxCredit);
+
+  const report=document.getElementById('gf-report').value;
+  let reportDeduct=0;
+  if(report==='yes') reportDeduct=Math.floor(computedTax*0.03);
+
+  const finalTax=Math.max(0, Math.floor(computedTax-reportDeduct));
+  const info=getBracketInfo(taxableBase);
+
+  const relNames={spouse:'배우자','parent-adult':'직계존속→성인자녀','parent-minor':'직계존속→미성년자녀',child:'직계비속→부모',relative:'기타 친족',other:'타인'};
+
+  const rows=[
+    ['증여재산 가액',fmt(total)+' 원'],
+    ['10년 내 기증여','+'+fmt(prev)+' 원'],
+    ['채무 인수액','-'+fmt(debt)+' 원'],
+    ['증여세 과세가액',fmt(taxableVal)+' 원'],
+    ['관계',relNames[rel]],
+    ['면제한도',fmt(exemption)+' 원'],
+    ['과세표준',fmt(taxableBase)+' 원'],
+    ['적용세율',info.rate+' ('+info.bracket+')'],
+    ['산출세액',fmt(Math.floor(calcTax(taxableBase)))+' 원'],
+  ];
+  if(surcharge>0) rows.push(['세대생략 할증','+'+fmt(surcharge)+' 원']);
+  if(prevTaxCredit>0) rows.push(['기납부세액 공제','-'+fmt(prevTaxCredit)+' 원']);
+  if(reportDeduct>0) rows.push(['신고세액공제(3%)','-'+fmt(reportDeduct)+' 원']);
+  rows.push(['납부할 세액',fmt(finalTax)+' 원']);
+
+  showResult('증여세', rows, finalTax, total);
+}
+
+function resetInherit(){
+  ['ih-total','ih-debt','ih-personal','ih-finance','ih-other'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ih-spouse').value='500000000';
+  document.getElementById('ih-deduct-type').selectedIndex=0;
+  document.getElementById('ih-report').selectedIndex=0;
+  document.getElementById('ih-skip').selectedIndex=0;
+  document.getElementById('ih-personal-wrap').style.display='none';
+  document.getElementById('result-box').classList.remove('show');
+}
+function resetGift(){
+  ['gf-total','gf-prev','gf-debt'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('gf-relation').selectedIndex=0;
+  document.getElementById('gf-report').selectedIndex=0;
+  document.getElementById('gf-skip').selectedIndex=0;
+  document.getElementById('result-box').classList.remove('show');
+}
+
+// 금액 입력 포맷
+document.querySelectorAll('.mt-input[inputmode="numeric"]').forEach(el=>{
+  el.addEventListener('blur',function(){
+    const v=parseInt(this.value.replace(/[^0-9]/g,''),10);
+    if(v) this.value=v.toLocaleString('ko-KR');
+  });
+  el.addEventListener('focus',function(){
+    this.value=this.value.replace(/[^0-9]/g,'');
+  });
+});
+
+function toggleFaq(el){el.parentElement.classList.toggle('open')}
+</script>
+</body>
+</html>

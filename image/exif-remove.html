@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXIF 메타데이터 제거기 - 사진 위치정보 삭제 | modutools</title>
+<meta name="description" content="사진의 EXIF 메타데이터(GPS 위치, 촬영정보)를 완전 제거합니다. 개인정보 보호를 위한 필수 도구. 100% 로컬 처리, 서버 전송 없음.">
+<meta name="keywords" content="EXIF 제거,메타데이터 삭제,사진 위치정보 삭제,GPS 정보 제거,개인정보 보호,사진 메타데이터">
+<link rel="canonical" href="https://modutools.com/image/exif-remove.html">
+<meta property="og:title" content="EXIF 메타데이터 제거기 - 사진 위치정보 삭제 | modutools">
+<meta property="og:description" content="사진의 EXIF 메타데이터를 완전 제거합니다. GPS 위치, 촬영정보 등 개인정보를 안전하게 삭제하세요.">
+<meta property="og:url" content="https://modutools.com/image/exif-remove.html">
+<meta property="og:type" content="website">
+<meta name="google-site-verification" content="SSgzof6COd6DPSzZP8iQLjKNRy5BH7wyG2AgIrwVgc0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8031004347843172" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,sans-serif;background:#f5f7fa;color:#1a1a2e;line-height:1.6}
+.mt-tool-wrap{max-width:640px;margin:0 auto;padding:16px}
+.mt-tool-title{font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:4px}
+.mt-tool-desc{text-align:center;color:#64748b;font-size:0.9rem;margin-bottom:20px}
+
+.mt-card{background:#fff;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.mt-card-title{font-size:0.85rem;font-weight:700;color:#2563eb;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.mt-card-title::before{content:'';width:4px;height:16px;background:#2563eb;border-radius:2px}
+
+/* 업로드 영역 */
+.mt-upload{border:2px dashed #cbd5e1;border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;transition:all .2s;background:#fafbfc}
+.mt-upload:hover,.mt-upload.dragover{border-color:#2563eb;background:#eff6ff}
+.mt-upload-icon{font-size:2.5rem;margin-bottom:8px}
+.mt-upload-text{font-size:0.95rem;color:#64748b;font-weight:500}
+.mt-upload-sub{font-size:0.8rem;color:#94a3b8;margin-top:4px}
+.mt-upload input[type="file"]{display:none}
+
+/* 파일 리스트 */
+.mt-file-list{margin-top:14px}
+.mt-file-item{background:#fff;border-radius:12px;padding:14px 16px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.05);display:flex;align-items:center;gap:12px}
+.mt-file-thumb{width:48px;height:48px;border-radius:8px;object-fit:cover;background:#f1f5f9;flex-shrink:0}
+.mt-file-info{flex:1;min-width:0}
+.mt-file-name{font-size:0.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt-file-size{font-size:0.75rem;color:#94a3b8}
+.mt-file-status{font-size:0.75rem;margin-top:2px}
+.mt-file-status.has-exif{color:#f59e0b}
+.mt-file-status.no-exif{color:#22c55e}
+.mt-file-status.removed{color:#2563eb}
+.mt-file-remove{background:none;border:none;color:#94a3b8;font-size:1.2rem;cursor:pointer;padding:4px 8px;flex-shrink:0}
+
+/* EXIF 정보 표시 */
+.mt-exif-detail{margin-top:8px;padding:10px 12px;background:#fffbeb;border-radius:8px;font-size:0.78rem;color:#92400e;line-height:1.6;display:none}
+.mt-exif-detail.show{display:block}
+.mt-exif-toggle{font-size:0.75rem;color:#2563eb;cursor:pointer;text-decoration:underline;margin-left:8px}
+
+/* 버튼 */
+.mt-btn{width:100%;padding:14px;background:#2563eb;color:#fff;border:none;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;transition:background .2s;font-family:inherit}
+.mt-btn:active{background:#1d4ed8}
+.mt-btn:disabled{background:#94a3b8;cursor:not-allowed}
+.mt-btn-outline{background:none;border:1.5px solid #cbd5e1;color:#64748b;font-size:0.9rem;padding:10px;border-radius:10px;cursor:pointer;width:100%;margin-top:8px;font-family:inherit;font-weight:600}
+.mt-btn-row{display:flex;gap:8px;margin-top:10px}
+.mt-btn-row .mt-btn{flex:1}
+
+/* 진행 상태 */
+.mt-progress{background:#e2e8f0;border-radius:6px;height:6px;margin-top:10px;overflow:hidden;display:none}
+.mt-progress.show{display:block}
+.mt-progress-bar{height:100%;background:#2563eb;border-radius:6px;transition:width .3s;width:0%}
+
+/* 경고 박스 */
+.mt-warn{background:#fef3c7;border-radius:10px;padding:12px 14px;font-size:0.82rem;color:#92400e;line-height:1.6;margin-bottom:14px;display:flex;gap:8px;align-items:flex-start}
+.mt-warn-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
+
+/* 결과 */
+.mt-result-summary{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:14px;padding:18px;margin-top:14px;text-align:center;display:none}
+.mt-result-summary.show{display:block}
+.mt-result-summary .done-icon{font-size:2rem;margin-bottom:6px}
+.mt-result-summary .done-text{font-size:1rem;font-weight:700;color:#1e40af}
+.mt-result-summary .done-sub{font-size:0.82rem;color:#64748b;margin-top:4px}
+
+/* FAQ */
+.mt-faq{margin-top:14px}
+.mt-faq-item{background:#fff;border-radius:12px;margin-bottom:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.mt-faq-q{padding:14px 16px;font-size:0.88rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:0.7rem;color:#94a3b8;transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:0.83rem;color:#64748b;line-height:1.7}
+.mt-faq-item.open .mt-faq-a{max-height:500px;padding:0 16px 14px}
+
+.mt-note{font-size:0.78rem;color:#94a3b8;text-align:center;margin-top:10px;line-height:1.5}
+
+@media(max-width:480px){
+  .mt-tool-title{font-size:1.3rem}
+  .mt-upload{padding:30px 16px}
+}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"EXIF 메타데이터 제거기",
+  "url":"https://modutools.com/image/exif-remove.html",
+  "applicationCategory":"UtilitiesApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+  "description":"사진의 EXIF 메타데이터(GPS 위치, 촬영정보)를 완전 제거하는 무료 온라인 도구"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"EXIF 메타데이터란?","acceptedAnswer":{"@type":"Answer","text":"EXIF(Exchangeable Image File Format)는 사진 파일에 포함된 부가 정보입니다. 촬영 날짜, 카메라 모델, GPS 위치 좌표, 조리개·셔터속도 등이 기록됩니다."}},
+    {"@type":"Question","name":"왜 EXIF를 제거해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"사진에 GPS 좌표가 포함되면 촬영 장소(집, 직장 등)가 노출될 수 있습니다. SNS나 중고거래 사이트에 사진을 올리기 전에 EXIF를 제거하면 개인정보를 보호할 수 있습니다."}},
+    {"@type":"Question","name":"사진 품질이 변하나요?","acceptedAnswer":{"@type":"Answer","text":"JPEG의 경우 Canvas API로 다시 그려 EXIF를 제거하므로 미세한 품질 차이가 있을 수 있으나, 95% 품질로 처리하여 육안으로 차이를 느끼기 어렵습니다. PNG는 무손실로 처리됩니다."}}
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<main class="mt-tool-wrap">
+  <h1 class="mt-tool-title">EXIF 메타데이터 제거기</h1>
+  <p class="mt-tool-desc">사진의 위치정보·촬영정보를 안전하게 삭제</p>
+
+  <div class="mt-warn">
+    <span class="mt-warn-icon">🔒</span>
+    <span>모든 처리는 브라우저에서 로컬로 수행됩니다. 사진이 서버로 전송되지 않으므로 안심하고 사용하세요.</span>
+  </div>
+
+  <!-- 업로드 -->
+  <div class="mt-upload" id="dropZone" onclick="document.getElementById('fileInput').click()">
+    <div class="mt-upload-icon">📷</div>
+    <div class="mt-upload-text">사진을 선택하거나 여기에 드래그하세요</div>
+    <div class="mt-upload-sub">JPG, PNG, WebP · 최대 20장</div>
+    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple>
+  </div>
+
+  <div class="mt-file-list" id="fileList"></div>
+
+  <div class="mt-progress" id="progressWrap">
+    <div class="mt-progress-bar" id="progressBar"></div>
+  </div>
+
+  <div id="actionBtns" style="display:none">
+    <button class="mt-btn" id="removeBtn" onclick="removeAllExif()">🗑️ 메타데이터 전체 제거</button>
+    <div class="mt-btn-row">
+      <button class="mt-btn-outline" onclick="downloadAll()">📦 전체 다운로드</button>
+      <button class="mt-btn-outline" onclick="clearAll()">초기화</button>
+    </div>
+  </div>
+
+  <div class="mt-result-summary" id="resultSummary">
+    <div class="done-icon">✅</div>
+    <div class="done-text" id="doneText">0장 처리 완료</div>
+    <div class="done-sub">EXIF 메타데이터가 완전히 제거되었습니다</div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+  <!-- FAQ -->
+  <div class="mt-faq">
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">EXIF 메타데이터란?</div>
+      <div class="mt-faq-a">EXIF(Exchangeable Image File Format)는 사진 파일에 포함된 부가 정보입니다. 촬영 날짜, 카메라 모델, GPS 위치 좌표, 조리개·셔터속도, 소프트웨어 정보 등이 기록됩니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">왜 EXIF를 제거해야 하나요?</div>
+      <div class="mt-faq-a">사진에 GPS 좌표가 포함되면 촬영 장소(집, 직장 등)가 노출될 수 있습니다. SNS, 중고거래 사이트, 블로그 등에 사진을 올리기 전에 EXIF를 제거하면 개인정보를 보호할 수 있습니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">사진 품질이 변하나요?</div>
+      <div class="mt-faq-a">JPEG는 Canvas API로 다시 렌더링하여 EXIF를 제거합니다. 95% 품질로 처리하여 육안으로 차이를 느끼기 매우 어렵습니다. PNG는 EXIF 영역만 제거하므로 무손실입니다.</div>
+    </div>
+    <div class="mt-faq-item">
+      <div class="mt-faq-q" onclick="toggleFaq(this)">어떤 정보가 제거되나요?</div>
+      <div class="mt-faq-a">GPS 위치 좌표, 촬영 날짜/시간, 카메라 제조사 및 모델, 렌즈 정보, 조리개·셔터속도·ISO, 소프트웨어 정보, 썸네일 이미지 등 모든 EXIF/IPTC/XMP 메타데이터가 제거됩니다.</div>
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+  <p class="mt-note">※ 100% 브라우저 로컬 처리 · 사진은 서버로 전송되지 않습니다</p>
+</main>
+
+<footer class="mt-footer">
+  <p>
+    <a href="/">← modutools 전체 도구 보기</a><br>
+    &copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+  </p>
+</footer>
+
+<script>
+const MAX_FILES = 20;
+let files = []; // {file, thumb, exifInfo, cleaned, cleanedBlob}
+
+// 드래그앤드롭
+const dropZone = document.getElementById('dropZone');
+const fileInput = document.getElementById('fileInput');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(fileList) {
+  const arr = Array.from(fileList).filter(f => f.type.match(/^image\/(jpeg|png|webp)$/));
+  if (files.length + arr.length > MAX_FILES) {
+    alert('최대 ' + MAX_FILES + '장까지 가능합니다.');
+    return;
+  }
+  arr.forEach(f => {
+    const entry = { file: f, thumb: '', exifInfo: null, cleaned: false, cleanedBlob: null };
+    files.push(entry);
+    createThumb(entry);
+    readExif(entry);
+  });
+  renderList();
+  document.getElementById('actionBtns').style.display = '';
+  document.getElementById('resultSummary').classList.remove('show');
+}
+
+function createThumb(entry) {
+  const reader = new FileReader();
+  reader.onload = e => { entry.thumb = e.target.result; renderList(); };
+  reader.readAsDataURL(entry.file);
+}
+
+// EXIF 파싱 (JPEG만, 간이 파서)
+function readExif(entry) {
+  if (entry.file.type !== 'image/jpeg') {
+    entry.exifInfo = null;
+    renderList();
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const buf = new Uint8Array(e.target.result);
+    entry.exifInfo = parseExifBasic(buf);
+    renderList();
+  };
+  reader.readAsArrayBuffer(entry.file);
+}
+
+function parseExifBasic(buf) {
+  if (buf[0] !== 0xFF || buf[1] !== 0xD8) return null;
+  let offset = 2;
+  const info = {};
+  let hasExif = false;
+
+  while (offset < buf.length - 1) {
+    if (buf[offset] !== 0xFF) break;
+    const marker = buf[offset + 1];
+    if (marker === 0xD9) break; // EOI
+    if (marker === 0xDA) break; // SOS
+
+    const segLen = (buf[offset + 2] << 8) | buf[offset + 3];
+
+    // APP1 (EXIF)
+    if (marker === 0xE1) {
+      hasExif = true;
+      // Try to extract basic tags
+      const segData = buf.slice(offset + 4, offset + 2 + segLen);
+      const exifStr = String.fromCharCode(...segData.slice(0, 4));
+      if (exifStr === 'Exif') {
+        try {
+          const tiffStart = 6;
+          const le = segData[tiffStart] === 0x49; // little endian
+          const r16 = (o) => le ? (segData[tiffStart+o] | segData[tiffStart+o+1]<<8) : (segData[tiffStart+o]<<8 | segData[tiffStart+o+1]);
+          const r32 = (o) => le ? (segData[tiffStart+o] | segData[tiffStart+o+1]<<8 | segData[tiffStart+o+2]<<16 | segData[tiffStart+o+3]<<24) : (segData[tiffStart+o]<<24 | segData[tiffStart+o+1]<<16 | segData[tiffStart+o+2]<<8 | segData[tiffStart+o+3]);
+
+          const ifdOffset = r32(4);
+          const numEntries = r16(ifdOffset);
+          const tagNames = {0x010F:'카메라 제조사',0x0110:'카메라 모델',0x0132:'촬영 날짜',0x8769:'EXIF IFD',0x8825:'GPS IFD'};
+
+          for (let i = 0; i < Math.min(numEntries, 30); i++) {
+            const entryOff = ifdOffset + 2 + i * 12;
+            const tag = r16(entryOff);
+            if (tag === 0x8825) info['GPS 위치정보'] = '포함됨 ⚠️';
+            if (tag === 0x010F || tag === 0x0110 || tag === 0x0132) {
+              const type = r16(entryOff + 2);
+              const count = r32(entryOff + 4);
+              if (type === 2 && count < 200) { // ASCII
+                const valOff = count <= 4 ? entryOff + 8 : r32(entryOff + 8);
+                let s = '';
+                for (let j = 0; j < count - 1 && (tiffStart + valOff + j) < segData.length; j++) {
+                  s += String.fromCharCode(segData[tiffStart + valOff + j]);
+                }
+                if (s) info[tagNames[tag]] = s;
+              }
+            }
+          }
+        } catch (e) { /* parse error, still has EXIF */ }
+      }
+    }
+    offset += 2 + segLen;
+  }
+  if (!hasExif) return null;
+  if (Object.keys(info).length === 0) info['EXIF 데이터'] = '감지됨';
+  return info;
+}
+
+function renderList() {
+  const list = document.getElementById('fileList');
+  list.innerHTML = files.map((entry, i) => {
+    const hasExif = entry.exifInfo !== null;
+    const statusClass = entry.cleaned ? 'removed' : (hasExif ? 'has-exif' : 'no-exif');
+    const statusText = entry.cleaned ? '✅ 제거 완료' : (hasExif ? '⚠️ EXIF 감지됨' : '✅ EXIF 없음');
+    const sizeKB = (entry.file.size / 1024).toFixed(1);
+
+    let exifHtml = '';
+    if (hasExif && entry.exifInfo && !entry.cleaned) {
+      const lines = Object.entries(entry.exifInfo).map(([k, v]) => k + ': ' + v).join('<br>');
+      exifHtml = '<span class="mt-exif-toggle" onclick="toggleExifDetail(event,' + i + ')">상세보기</span>' +
+        '<div class="mt-exif-detail" id="exif-detail-' + i + '">' + lines + '</div>';
+    }
+
+    let dlBtn = '';
+    if (entry.cleaned) {
+      dlBtn = '<button class="mt-file-remove" onclick="downloadOne(' + i + ')" title="다운로드" style="color:#2563eb">⬇</button>';
+    }
+
+    return '<div class="mt-file-item">' +
+      '<img class="mt-file-thumb" src="' + (entry.thumb || '') + '" alt="">' +
+      '<div class="mt-file-info">' +
+        '<div class="mt-file-name">' + entry.file.name + '</div>' +
+        '<div class="mt-file-size">' + sizeKB + ' KB · ' + entry.file.type.split('/')[1].toUpperCase() + '</div>' +
+        '<div class="mt-file-status ' + statusClass + '">' + statusText + exifHtml + '</div>' +
+      '</div>' +
+      dlBtn +
+      '<button class="mt-file-remove" onclick="removeFile(' + i + ')" title="제거">✕</button>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleExifDetail(e, idx) {
+  e.stopPropagation();
+  const el = document.getElementById('exif-detail-' + idx);
+  if (el) el.classList.toggle('show');
+}
+
+function removeFile(idx) {
+  files.splice(idx, 1);
+  renderList();
+  if (files.length === 0) {
+    document.getElementById('actionBtns').style.display = 'none';
+    document.getElementById('resultSummary').classList.remove('show');
+  }
+}
+
+// EXIF 제거: Canvas로 다시 그리기 (모든 메타데이터 제거)
+async function removeExifFromFile(entry) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      let mimeType = entry.file.type;
+      let quality = 0.95;
+      if (mimeType === 'image/png') {
+        quality = undefined; // PNG는 무손실
+      }
+
+      canvas.toBlob(blob => {
+        entry.cleanedBlob = blob;
+        entry.cleaned = true;
+        resolve();
+      }, mimeType, quality);
+    };
+    img.src = URL.createObjectURL(entry.file);
+  });
+}
+
+async function removeAllExif() {
+  const btn = document.getElementById('removeBtn');
+  btn.disabled = true;
+  btn.textContent = '처리 중...';
+
+  const prog = document.getElementById('progressWrap');
+  const bar = document.getElementById('progressBar');
+  prog.classList.add('show');
+
+  let processed = 0;
+  for (const entry of files) {
+    if (!entry.cleaned) {
+      await removeExifFromFile(entry);
+    }
+    processed++;
+    bar.style.width = (processed / files.length * 100) + '%';
+    renderList();
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🗑️ 메타데이터 전체 제거';
+  setTimeout(() => { prog.classList.remove('show'); bar.style.width = '0%'; }, 500);
+
+  const summary = document.getElementById('resultSummary');
+  document.getElementById('doneText').textContent = processed + '장 처리 완료';
+  summary.classList.add('show');
+  summary.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function downloadOne(idx) {
+  const entry = files[idx];
+  if (!entry.cleanedBlob) return;
+  const a = document.createElement('a');
+  const ext = entry.file.name.split('.').pop();
+  const name = entry.file.name.replace('.' + ext, '') + '_clean.' + ext;
+  a.href = URL.createObjectURL(entry.cleanedBlob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function downloadAll() {
+  files.forEach((entry, i) => {
+    if (entry.cleanedBlob) {
+      setTimeout(() => downloadOne(i), i * 200);
+    }
+  });
+}
+
+function clearAll() {
+  files = [];
+  renderList();
+  document.getElementById('actionBtns').style.display = 'none';
+  document.getElementById('resultSummary').classList.remove('show');
+  fileInput.value = '';
+}
+
+function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+</script>
+</body>
+</html>
