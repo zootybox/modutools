@@ -35,9 +35,29 @@
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.btn-grid{grid-template-columns:1fr 1fr;gap:6px}.convert-btn{padding:10px;font-size:12px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"공백 정리기","url":"https://modutools.com/text/space.html","description":"텍스트의 불필요한 공백, 줄바꿈, 탭을 정리하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"공백 정리기는 어떤 공백을 제거하나요?","acceptedAnswer":{"@type":"Answer","text":"연속된 공백(스페이스 여러 개)을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백(트리밍)도 제거할 수 있습니다."}},
+{"@type":"Question","name":"줄바꿈도 제거되나요?","acceptedAnswer":{"@type":"Answer","text":"기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 제거하는 옵션도 제공하여, 텍스트를 한 줄로 만들 수도 있습니다."}},
+{"@type":"Question","name":"어떤 상황에서 공백 정리가 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"웹페이지에서 복사한 텍스트 정리, PDF에서 추출한 텍스트의 불규칙한 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기 등 다양한 상황에서 활용됩니다."}},
+{"@type":"Question","name":"원본 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다."}}
+]}
 </script>
 </head>
 <body>
@@ -71,6 +91,44 @@
 <div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
 </div>
 </div>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<div class="mt-guide">
+<h2>공백 정리기 사용 가이드</h2>
+<p>웹페이지, PDF, 메신저 등에서 복사한 텍스트에는 불필요한 공백, 탭, 연속 줄바꿈이 포함되는 경우가 많습니다. 이 도구를 사용하면 한 번에 깔끔하게 정리할 수 있습니다.</p>
+
+<h3>주요 정리 기능</h3>
+<p><strong>연속 공백 합치기</strong> — 스페이스가 여러 개 연속으로 입력된 경우 하나의 공백으로 합칩니다. 웹에서 복사·붙여넣기 할 때 자주 발생하는 문제를 해결합니다.</p>
+<p><strong>줄 앞뒤 공백 제거 (Trim)</strong> — 각 줄의 시작과 끝에 있는 불필요한 공백을 제거합니다. 코드 정리, 데이터 전처리에 필수적인 기능입니다.</p>
+<p><strong>연속 줄바꿈 정리</strong> — 빈 줄이 여러 번 반복되는 경우 하나로 줄여 가독성을 높입니다. PDF에서 추출한 텍스트를 정리할 때 특히 유용합니다.</p>
+<p><strong>탭→공백 변환</strong> — 탭 문자를 공백으로 변환하여 텍스트 정렬을 통일합니다.</p>
+
+<h3>활용 예시</h3>
+<p>블로그·SNS에 글을 올리기 전 텍스트 다듬기, 이메일 본문 정리, 프로그래밍 코드 들여쓰기 통일, 번역 텍스트 후처리, 한글 맞춤법 검사 전 텍스트 전처리 등 다양한 상황에서 활용할 수 있습니다.</p>
+</div>
+
+<div class="mt-faq">
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">공백 정리기는 어떤 공백을 제거하나요?</div>
+<div class="mt-faq-a">연속된 공백(스페이스 여러 개)을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백(트리밍)도 제거할 수 있습니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">줄바꿈도 제거되나요?</div>
+<div class="mt-faq-a">기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하여 텍스트를 한 줄로 만드는 옵션도 제공합니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">어떤 상황에서 공백 정리가 필요한가요?</div>
+<div class="mt-faq-a">웹페이지에서 복사한 텍스트 정리, PDF에서 추출한 텍스트의 불규칙한 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 번역 결과물 후처리 등 다양한 텍스트 작업에 활용됩니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">원본 텍스트가 서버에 저장되나요?</div>
+<div class="mt-faq-a">아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다.</div>
+</div>
+</div>
+
+<p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
+
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

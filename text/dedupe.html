@@ -34,9 +34,29 @@
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.text-area{min-height:140px;font-size:13px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"중복 줄 제거","url":"https://modutools.com/text/dedupe.html","description":"텍스트에서 중복된 줄을 자동으로 제거하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"중복 줄 제거는 어떤 상황에서 유용한가요?","acceptedAnswer":{"@type":"Answer","text":"엑셀에서 복사한 데이터 정리, 이메일·전화번호 목록에서 중복 제거, 로그 파일 분석, 프로그래밍 코드의 중복 라인 제거, 키워드 목록 정리 등 다양한 텍스트 작업에 활용됩니다."}},
+{"@type":"Question","name":"원래 순서가 유지되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다."}},
+{"@type":"Question","name":"대소문자를 구분하나요?","acceptedAnswer":{"@type":"Answer","text":"기본 설정에서는 대소문자를 구분합니다. 즉 Hello와 hello는 다른 줄로 인식됩니다. 대소문자 무시 옵션을 사용하면 동일한 줄로 처리할 수 있습니다."}},
+{"@type":"Question","name":"처리할 수 있는 텍스트 양에 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리할 수 있습니다. 일반적인 사용에서는 제한을 느끼기 어렵습니다."}}
+]}
 </script>
 </head>
 <body>
@@ -67,6 +87,44 @@
 <div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
 </div>
 </div>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<div class="mt-guide">
+<h2>중복 줄 제거 사용 가이드</h2>
+<p>텍스트 데이터를 다루다 보면 같은 내용이 반복되는 줄이 생기기 마련입니다. 이 도구는 텍스트를 붙여넣으면 중복된 줄을 자동으로 찾아 제거하고, 고유한 줄만 남겨줍니다.</p>
+
+<h3>이런 경우에 사용하세요</h3>
+<p><strong>엑셀·스프레드시트 데이터 정리</strong> — 엑셀에서 복사한 열 데이터에 중복된 항목이 있을 때, 이 도구에 붙여넣으면 고유한 값만 추출할 수 있습니다.</p>
+<p><strong>이메일·연락처 목록 정리</strong> — 여러 출처에서 모은 이메일 주소나 전화번호 목록에서 중복을 제거하여 깔끔한 목록을 만들 수 있습니다.</p>
+<p><strong>키워드·태그 정리</strong> — SEO 키워드, 해시태그, 검색어 목록 등에서 중복 키워드를 제거할 때 편리합니다.</p>
+<p><strong>로그 파일 분석</strong> — 서버 로그나 에러 로그에서 반복되는 동일한 메시지를 제거하여 핵심 내용만 파악할 수 있습니다.</p>
+
+<h3>사용 방법</h3>
+<p>왼쪽(또는 상단) 입력창에 텍스트를 붙여넣고 "중복 제거" 버튼을 누르면, 원본 줄 수·결과 줄 수·제거된 줄 수가 표시되며 결과를 바로 복사할 수 있습니다. 빈 줄 제거 옵션을 함께 사용하면 더 깔끔한 결과를 얻을 수 있습니다.</p>
+</div>
+
+<div class="mt-faq">
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">중복 줄 제거는 어떤 상황에서 유용한가요?</div>
+<div class="mt-faq-a">엑셀에서 복사한 데이터 정리, 이메일·전화번호 목록에서 중복 제거, 로그 파일 분석, 프로그래밍 코드의 중복 라인 제거, 키워드 목록 정리 등 텍스트 기반 작업 전반에 활용됩니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">원래 순서가 유지되나요?</div>
+<div class="mt-faq-a">네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 그대로 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">대소문자를 구분하나요?</div>
+<div class="mt-faq-a">기본 설정에서는 대소문자를 구분합니다. Hello와 hello는 서로 다른 줄로 인식됩니다. 대소문자 무시 옵션을 활용하면 동일한 줄로 처리할 수 있습니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">처리할 수 있는 텍스트 양에 제한이 있나요?</div>
+<div class="mt-faq-a">서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리 가능합니다. 일반적인 사용에서는 제한을 느끼기 어렵습니다.</div>
+</div>
+</div>
+
+<p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
+
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
