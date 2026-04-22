@@ -36,9 +36,29 @@
 .common-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700)}
 .common-item:last-child{border-bottom:none}
 @media(max-width:480px){.convert-input{font-size:16px;padding:12px}.convert-select{width:100px;font-size:12px;padding:12px 6px}.cat-tab{font-size:11px;padding:6px 10px}.result-value{font-size:20px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"단위 변환기","url":"https://modutools.com/convert/unit.html","description":"길이, 무게, 면적, 부피, 온도 등 다양한 단위를 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"단위 변환기는 어떤 단위를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"길이(mm~km, 인치, 피트, 마일), 무게(mg~톤, 온스, 파운드), 면적(평, 제곱미터, 에이커), 부피(mL~L, 갤런) 등 일상에서 자주 사용하는 단위를 지원합니다."}},
+{"@type":"Question","name":"평을 제곱미터로 어떻게 변환하나요?","acceptedAnswer":{"@type":"Answer","text":"1평은 약 3.305785 제곱미터입니다. 면적 카테고리를 선택하고 평 단위에 값을 입력하면 자동으로 변환됩니다."}},
+{"@type":"Question","name":"변환 정확도는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"국제 표준 변환 계수를 사용하며, 소수점 이하까지 정확하게 계산합니다. 다만 참고용이므로 정밀한 과학·공학 계산에는 전문 도구를 사용하세요."}},
+{"@type":"Question","name":"온도 변환도 되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 섭씨(°C), 화씨(°F), 켈빈(K) 간 온도 변환을 지원합니다."}}
+]}
 </script>
 </head>
 <body>

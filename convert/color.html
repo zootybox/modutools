@@ -39,9 +39,29 @@
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.color-preview{height:80px}.palette-grid{grid-template-columns:repeat(6,1fr);gap:4px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"색상 코드 변환","url":"https://modutools.com/convert/color.html","description":"HEX, RGB, HSL 색상 코드를 상호 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"색상 코드 변환기는 어떤 형식을 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"HEX(#FF5733), RGB(rgb(255,87,51)), HSL(hsl(11,100%,60%)) 형식 간 상호 변환을 지원합니다."}},
+{"@type":"Question","name":"HEX 코드란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"HEX는 16진수로 색상을 표현하는 방식으로, 웹 디자인에서 가장 많이 사용됩니다. #기호 뒤에 6자리 숫자·영문으로 구성됩니다."}},
+{"@type":"Question","name":"디자인 작업에 어떻게 활용하나요?","acceptedAnswer":{"@type":"Answer","text":"Figma·Photoshop에서 사용하는 HEX 코드를 CSS의 RGB로 변환하거나, 색상 팔레트를 다른 형식으로 통일할 때 유용합니다."}},
+{"@type":"Question","name":"투명도(Alpha) 값도 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"RGBA, HSLA 형식의 투명도 값도 지원합니다. 투명도를 포함한 색상 코드를 상호 변환할 수 있습니다."}}
+]}
 </script>
 </head>
 <body>

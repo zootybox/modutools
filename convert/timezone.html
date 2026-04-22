@@ -39,9 +39,29 @@
 .now-btn{padding:8px 16px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s;margin-left:8px}
 .now-btn:hover{border-color:var(--primary);color:var(--primary)}
 @media(max-width:480px){.result-time{font-size:28px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"시간대 변환기","url":"https://modutools.com/convert/timezone.html","description":"전 세계 주요 도시의 시간대를 실시간으로 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"시간대 변환기는 어떤 시간대를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"전 세계 주요 시간대를 지원합니다. 한국(KST), 미국(EST/PST), 유럽(CET/GMT), 일본(JST), 중국(CST) 등을 포함합니다."}},
+{"@type":"Question","name":"서머타임(DST)이 반영되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 브라우저의 Intl API를 사용하여 해당 지역의 서머타임이 자동으로 반영됩니다."}},
+{"@type":"Question","name":"실시간으로 시간이 업데이트되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 현재 시간 기준으로 각 시간대의 시간이 실시간으로 표시됩니다."}},
+{"@type":"Question","name":"특정 날짜와 시간을 기준으로 변환할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 원하는 날짜와 시간을 직접 입력하여 해당 시점의 각 시간대별 시간을 확인할 수 있습니다."}}
+]}
 </script>
 </head>
 <body>

@@ -40,7 +40,27 @@ input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer
     background: #eff6ff; color: var(--primary); font-size: 13px; 
     text-align: center; font-weight: 600; display: none; 
 }
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"TTS 음성 변환은 어떤 언어를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저에 내장된 음성 엔진을 사용하며, 한국어와 영어를 포함해 브라우저가 지원하는 다양한 언어로 텍스트를 읽어줍니다."}},
+{"@type":"Question","name":"생성된 음성을 파일로 저장할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저 Web Speech API를 사용하므로 직접 파일 저장은 지원하지 않습니다. 녹음 앱을 함께 사용하면 저장이 가능합니다."}},
+{"@type":"Question","name":"음성 속도를 조절할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 속도와 높낮이를 슬라이더로 조절할 수 있습니다. 느리게 들으면서 발음을 확인하거나 빠르게 들을 수 있습니다."}},
+{"@type":"Question","name":"입력한 텍스트가 서버에 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 브라우저 내장 음성 합성 기능을 사용하므로 텍스트가 외부 서버로 전송되지 않습니다."}}
+]}
+</script>
 </head>
 <body>
 
