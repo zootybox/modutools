@@ -6,6 +6,10 @@
 <title>이미지 압축기 - 무료 온라인 이미지 용량 줄이기 | modutools</title>
 <meta name="description" content="JPG, PNG, WEBP 이미지를 화질 유지하며 용량을 줄여보세요. 서버 전송 없이 브라우저에서 100% 로컬 처리됩니다.">
 <link rel="canonical" href="https://modutools.com/image/compress.html">
+<meta property="og:title" content="이미지 압축기 - 무료 온라인 이미지 용량 줄이기 | modutools">
+<meta property="og:description" content="JPG, PNG, WEBP 이미지를 화질 유지하며 용량을 줄여보세요. 서버 전송 없이 브라우저에서 100% 로컬 처리됩니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/image/compress.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
 .page{max-width:720px;margin:0 auto;padding:24px 20px 60px}
@@ -332,7 +336,9 @@ async function compressAll(){
 function compressImage(file, quality){
   return new Promise((resolve, reject) => {
     const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
     img.onload = function(){
+      URL.revokeObjectURL(objectUrl);
       const canvas = document.createElement('canvas');
       canvas.width = img.naturalWidth;
       canvas.height = img.naturalHeight;
@@ -356,8 +362,11 @@ function compressImage(file, quality){
         else reject(new Error('압축 실패'));
       }, mime, mime === 'image/png' ? undefined : quality);
     };
-    img.onerror = () => reject(new Error('이미지 로드 실패'));
-    img.src = URL.createObjectURL(file);
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      reject(new Error('이미지 로드 실패'));
+    };
+    img.src = objectUrl;
   });
 }
 

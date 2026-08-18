@@ -6,6 +6,10 @@
 <title>이미지 PDF 변환 - 여러 장 이미지를 하나의 PDF로 | modutools</title>
 <meta name="description" content="여러 장의 이미지(JPG, PNG, WEBP)를 하나의 PDF 파일로 변환합니다. 순서 변경, 용지 설정 지원. 무제한 무료, 서버 전송 없음.">
 <link rel="canonical" href="https://modutools.com/convert/image-to-pdf.html">
+<meta property="og:title" content="이미지 PDF 변환 - 여러 장 이미지를 하나의 PDF로 | modutools">
+<meta property="og:description" content="여러 장의 이미지(JPG, PNG, WEBP)를 하나의 PDF 파일로 변환합니다. 순서 변경, 용지 설정 지원. 무제한 무료, 서버 전송 없음.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/convert/image-to-pdf.html">
 <link rel="stylesheet" href="/css/common.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -171,7 +175,10 @@ function renderThumbs(){
   list.querySelectorAll(".thumb-remove").forEach(function(btn){
     btn.addEventListener("click",function(e){
       e.stopPropagation();
-      images.splice(parseInt(this.dataset.idx),1);
+      var idx=parseInt(this.dataset.idx);
+      // Revoke the object URL to free memory
+      if(images[idx] && images[idx].url) URL.revokeObjectURL(images[idx].url);
+      images.splice(idx,1);
       renderThumbs();
       if(!images.length)document.getElementById("settingsArea").style.display="none";
     });
@@ -224,6 +231,8 @@ window.convertPDF=function(){
 
   function addNext(){
     if(idx>=images.length){
+      // Revoke all image URLs after conversion (memory cleanup)
+      images.forEach(function(item){if(item.url)URL.revokeObjectURL(item.url);});
       pdfBlob=doc.output("blob");
       var sizeKB=(pdfBlob.size/1024).toFixed(0);
       var sizeMB=(pdfBlob.size/1048576).toFixed(1);

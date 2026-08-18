@@ -11,6 +11,7 @@
 <meta property="og:url" content="https://modutools.com/generate/qr.html">
 <link rel="canonical" href="https://modutools.com/generate/qr.html">
 <link rel="stylesheet" href="/css/common.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
 .page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
 .page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
@@ -284,67 +285,22 @@ function downloadQR(){
   link.click();
 }
 
-// ===== QR Code Generator (Minimal implementation) =====
-// Supports Byte mode, Error Correction Level M
+// ===== QR Code Generator (using qrcode-generator library) =====
 function generateQRMatrix(text){
-  const data=encodeURIComponent(text).replace(/%([0-9A-F]{2})/gi,(_,hex)=>String.fromCharCode(parseInt(hex,16)));
-  const bytes=[];
-  for(let i=0;i<text.length;i++){
-    const code=text.charCodeAt(i);
-    if(code<0x80)bytes.push(code);
-    else if(code<0x800){bytes.push(0xC0|(code>>6));bytes.push(0x80|(code&0x3F));}
-    else if(code<0x10000){bytes.push(0xE0|(code>>12));bytes.push(0x80|((code>>6)&0x3F));bytes.push(0x80|(code&0x3F));}
-    else{bytes.push(0xF0|(code>>18));bytes.push(0x80|((code>>12)&0x3F));bytes.push(0x80|((code>>6)&0x3F));bytes.push(0x80|(code&0x3F));}
+  const qr = qrcode(0, 'M');
+  qr.addData(text);
+  qr.make();
+
+  const moduleCount = qr.getModuleCount();
+  const matrix = [];
+  for(let r = 0; r < moduleCount; r++){
+    const row = [];
+    for(let c = 0; c < moduleCount; c++){
+      row.push(qr.isDark(r, c));
+    }
+    matrix.push(row);
   }
-
-  // Determine version
-  const capacities=[17,32,53,78,106,134,154,192,230,271,321,367,425,458,520,586,644,718,792,858];
-  let version=1;
-  for(let i=0;i<capacities.length;i++){
-    if(bytes.length<=capacities[i]){version=i+1;break;}
-    if(i===capacities.length-1)version=capacities.length;
-  }
-
-  // Use external canvas-based approach with image
-  // Fallback: use Google Charts API for reliability
-  const img=new Image();
-  const size=document.getElementById('qrSize').value;
-  img.crossOrigin='anonymous';
-
-  // Create using a minimal QR encoding
-  // For reliability, use a well-tested approach
-  const canvas=document.getElementById('qrCanvas');
-  const ctx=canvas.getContext('2d');
-  const s=parseInt(size);
-  canvas.width=s;
-  canvas.height=s;
-
-  // Use QRious-style encoding via data URL
-  const apiUrl='https://api.qrserver.com/v1/create-qr-code/?size='+s+'x'+s+'&data='+encodeURIComponent(text)+'&color='+document.getElementById('qrColor').value.slice(1)+'&bgcolor='+document.getElementById('bgColor').value.slice(1);
-
-  img.onload=function(){
-    ctx.drawImage(img,0,0,s,s);
-    document.getElementById('qrResult').style.display='block';
-    document.getElementById('qrResult').scrollIntoView({behavior:'smooth'});
-  };
-  img.onerror=function(){
-    // Fallback: simple text display
-    ctx.fillStyle=document.getElementById('bgColor').value;
-    ctx.fillRect(0,0,s,s);
-    ctx.fillStyle=document.getElementById('qrColor').value;
-    ctx.font='14px sans-serif';
-    ctx.textAlign='center';
-    ctx.fillText('QR 생성 실패 - 다시 시도해주세요',s/2,s/2);
-  };
-  img.src=apiUrl;
-
-  // Return empty matrix (actual drawing handled by img)
-  return[];
-}
-
-// Override drawQR to just call generateQRMatrix
-function drawQR(data,size,fg,bg){
-  generateQRMatrix(data);
+  return matrix;
 }
 </script>
 </body>
