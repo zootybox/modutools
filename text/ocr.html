@@ -11,271 +11,244 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/text/ocr.html">
 <link rel="stylesheet" href="/css/common.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+/* ── Layout ── */
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
-.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
-.upload-icon{font-size:36px;margin-bottom:8px}
-.upload-text{font-size:14px;color:var(--g500)}
+
+/* ── Security Badge ── */
+.security-badge{display:flex;align-items:flex-start;gap:8px;background:#ECFDF5;color:#065F46;border:1px solid #A7F3D0;border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:12px;line-height:1.6}
+.security-badge .badge-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.security-badge .badge-text{flex:1}
+.security-badge .badge-text strong{display:block;font-size:13px;margin-bottom:2px}
+
+/* ── Upload Zone ── */
+.upload-zone{border:2px dashed var(--g300);border-radius:14px;padding:44px 24px;text-align:center;cursor:pointer;transition:.25s;background:var(--g50)}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--primary);background:var(--primary-light)}
+.upload-zone.dragover{transform:scale(1.01)}
+.upload-zone.has-image{padding:20px;border-style:solid;border-color:var(--g200);cursor:default}
+.upload-zone.has-image:hover{background:var(--g50);border-color:var(--g200)}
+.upload-icon{font-size:42px;margin-bottom:10px}
 .upload-text strong{color:var(--primary)}
+.upload-sub{font-size:12px;color:var(--g400);margin-top:4px}
 .file-input{display:none}
-.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200);margin-top:12px;display:none}
-.toggle-row{display:flex;gap:8px;margin-bottom:12px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.action-btn{width:100%;padding:16px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
-.action-btn:hover{background:var(--primary-dark)}
+.preview-wrap{position:relative;display:inline-block;max-width:100%;margin-top:12px}
+.preview-img{max-width:100%;max-height:320px;border-radius:10px;border:1px solid var(--g200);display:block}
+.preview-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.6));border-radius:0 0 10px 10px;padding:10px 14px;color:#fff;font-size:12px;display:flex;justify-content:space-between;align-items:center}
+.preview-overlay .file-name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:65%}
+.preview-overlay .file-size{opacity:.8;flex-shrink:0}
+.preview-change-btn{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:11px;cursor:pointer;font-family:inherit;transition:.15s}
+.preview-change-btn:hover{background:rgba(0,0,0,.7)}
+.lang-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.lang-btn{flex:1;padding:10px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700);min-width:80px}
+.lang-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.lang-btn:hover:not(.active){border-color:var(--g300)}
+.lang-btn .lang-sub{display:block;font-size:10px;font-weight:400;color:var(--g400);margin-top:2px}
+.lang-btn.active .lang-sub{color:var(--primary)}
+.action-btn{width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.action-btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(37,99,235,.3)}
 .action-btn:active{transform:scale(.98)}
-.action-btn:disabled{background:var(--g300);cursor:not-allowed}
-.ad-slot{margin:16px 0;min-height:0;transition:opacity .3s}
-.ad-slot-inner{display:none}
-.ad-slot.has-ad .ad-slot-inner{display:block}
-.ad-slot.has-ad{margin:20px 0}
-.ad-label{font-size:10px;color:var(--g400);text-align:center;margin-bottom:4px;letter-spacing:.5px}
-.loading-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);z-index:9999;flex-direction:column;align-items:center;justify-content:center}
-.loading-overlay.active{display:flex}
-.loading-spinner{width:48px;height:48px;border:4px solid var(--g200);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+.action-btn:disabled{background:var(--g300);cursor:not-allowed;transform:none;box-shadow:none}
+.action-btn .spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+.action-btn.loading .spinner{display:inline-block}
+.action-btn.loading .btn-text{opacity:.7}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:16px;font-weight:700;color:var(--g900);margin-top:16px}
-.loading-sub{font-size:13px;color:var(--g500);margin-top:4px}
-.loading-progress{width:260px;height:6px;background:var(--g200);border-radius:3px;margin-top:12px;overflow:hidden}
-.loading-progress-bar{height:100%;background:var(--primary);transition:width .3s;width:0%}
-.loading-ad{margin-top:24px;width:300px;max-width:90%}
-.loading-ad .ad-slot-inner{display:block}
-.result-area{display:none}
-.result-box{background:linear-gradient(135deg,#10B981,#059669);border-radius:var(--radius);padding:20px;color:#fff;text-align:center;margin-bottom:16px}
-.result-icon{font-size:36px;margin-bottom:6px}
-.result-title{font-size:16px;font-weight:800}
-.result-sub{font-size:12px;opacity:.9;margin-top:4px}
-.text-output{width:100%;min-height:200px;border:1.5px solid var(--g200);border-radius:10px;padding:16px;font-size:14px;font-family:inherit;line-height:1.8;resize:vertical;outline:none;color:var(--g900)}
-.text-output:focus{border-color:var(--primary)}
-.btn-row{display:flex;gap:8px;margin-top:12px}
-.btn-secondary{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
-.btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
-.btn-primary{flex:1;padding:12px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:var(--primary);font-family:inherit;color:#fff;transition:.2s}
-.btn-primary:hover{background:var(--primary-dark)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.progress-wrap{display:none;margin:16px 0;padding:16px 20px;background:var(--g50);border:1px solid var(--g200);border-radius:12px}
+.progress-wrap.active{display:block}
+.progress-status{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:flex;justify-content:space-between}
+.progress-status .status-pct{color:var(--primary);font-weight:800}
+.progress-bar{width:100%;height:8px;background:var(--g200);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,#2563EB,#3B82F6);border-radius:4px;transition:width .3s ease;width:0%}
+.progress-sub{font-size:11px;color:var(--g400);margin-top:6px;text-align:right}
 </style>
+/* ── Ad Slot ── */
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-label{font-size:10px;color:var(--g400);margin-bottom:4px;letter-spacing:.5px}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+
+/* ── Result Area ── */
+.result-area{display:none}
+.result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.result-header .result-meta{font-size:13px;color:var(--g500);font-weight:600}
+.result-header .result-meta strong{color:var(--g900)}
+.result-textarea{width:100%;min-height:200px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.result-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.result-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.result-btn{flex:1;padding:12px 16px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700);display:flex;align-items:center;justify-content:center;gap:6px;min-width:120px}
+.result-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.result-btn:active{transform:scale(.97)}
+.result-btn.primary-btn{background:var(--g900);color:#fff;border-color:var(--g900)}
+.result-btn.primary-btn:hover{background:#000;color:#fff}
+
+/* ── Reset Button ── */
+.reset-btn{width:100%;padding:14px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g500);margin-top:12px}
+.reset-btn:hover{border-color:var(--g400);color:var(--g700);background:var(--g50)}
+
+/* ── SEO / FAQ ── */
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p,.guide-card li{font-size:13px;line-height:1.8;color:var(--g600)}
+.guide-card ul{padding-left:18px;margin:6px 0}
+.guide-card li{margin-bottom:4px}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'▼';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+
+/* ── Toast ── */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;white-space:nowrap;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── Responsive ── */
+@media(max-width:480px){
+  .page-title{font-size:22px}
+  .upload-zone{padding:32px 16px}
+  .upload-icon{font-size:34px}
+  .lang-btn{font-size:12px;padding:8px 10px;min-width:70px}
+  .result-actions{flex-direction:column}
+  .result-btn{min-width:auto}
+  .security-badge{font-size:11px}
+}
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 텍스트 추출 (OCR)","url":"https://modutools.com/text/ocr.html","description":"이미지 속 글자를 텍스트로 추출하는 무료 온라인 OCR 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 </script>
 </head>
 <body>
+
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 
-<div class="ad-slot" id="ad-slot-top"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
 <main class="page">
+
 <h1 class="page-title">🔍 이미지 텍스트 추출 (OCR)</h1>
-<p class="page-sub">이미지 속 글자를 인식하여 복사 가능한 텍스트로 변환합니다</p>
+<p class="page-sub">사진 속 글자를 인식하여 복사 가능한 텍스트로 변환 · 브라우저 100% 로컬 처리</p>
 
-<div class="card">
-<div class="card-title">🖼️ 이미지 업로드</div>
-<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-<div class="upload-icon">📷</div>
-<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WEBP 지원</div>
-</div>
-<input type="file" class="file-input" id="fileInput" accept="image/*">
-<img class="preview-img" id="previewImg">
-</div>
-
-<div id="settingsArea" style="display:none">
-<div class="card">
-<div class="card-title">⚙️ 인식 언어</div>
-<div class="toggle-row">
-<div class="toggle-btn active" data-lang="kor" onclick="setLang(this)">🇰🇷 한국어</div>
-<div class="toggle-btn" data-lang="eng" onclick="setLang(this)">🇺🇸 영어</div>
-<div class="toggle-btn" data-lang="kor+eng" onclick="setLang(this)">🌐 한+영</div>
-</div>
-</div>
-
-<div class="ad-slot" id="ad-slot-mid"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
-
-<button class="action-btn" id="ocrBtn" onclick="doOCR()">🔍 텍스트 추출하기</button>
-</div>
-
-<div class="result-area" id="resultArea">
-<div class="ad-slot" id="ad-slot-complete1"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
-
-<div class="result-box">
-<div class="result-icon">✅</div>
-<div class="result-title">텍스트 추출 완료!</div>
-<div class="result-sub" id="resultSub">-</div>
+<div class="security-badge">
+  <span class="badge-icon">🔒</span>
+  <div class="badge-text">
+    <strong>100% 브라우저 로컬 처리 — 개인정보 보호</strong>
+    신분증, 영수증, 계약서 사진이 외부 서버로 절대 전송되지 않습니다. 모든 처리는 사용자의 기기에서만 이루어집니다.
+  </div>
 </div>
 
 <div class="card">
-<div class="card-title">📝 추출된 텍스트</div>
-<textarea class="text-output" id="textOutput" readonly></textarea>
-<div class="btn-row">
-<button class="btn-secondary" onclick="copyText()">📋 복사하기</button>
-<button class="btn-primary" onclick="downloadText()">📥 TXT 다운로드</button>
-</div>
+  <div class="card-title">🖼️ 이미지 업로드</div>
+  <div class="upload-zone" id="uploadZone">
+    <div class="upload-icon" id="uploadIcon">📷</div>
+    <div class="upload-text" id="uploadText"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WebP 지원 · Ctrl+V 붙여넣기 가능</div>
+    <div class="upload-sub" id="uploadSub">최대 20MB · 여러 장 가능</div>
+    <div class="preview-wrap" id="previewWrap" style="display:none">
+      <img class="preview-img" id="previewImg">
+      <div class="preview-overlay">
+        <span class="file-name" id="fileName"></span>
+        <span class="file-size" id="fileSize"></span>
+      </div>
+      <button class="preview-change-btn" id="changeBtn">🔄 변경</button>
+    </div>
+  </div>
+  <input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
 </div>
 
-<div class="ad-slot" id="ad-slot-complete2"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
-
-<button class="action-btn" style="background:var(--g100);color:var(--g700)" onclick="resetAll()">🔄 새 이미지 추출</button>
+<div class="card" id="settingsCard">
+  <div class="card-title">🌐 인식 언어 선택</div>
+  <div class="lang-row">
+    <div class="lang-btn active" data-lang="kor+eng" onclick="setLang(this)">🇰🇷+🇺🇸 한국어+영어 <span class="lang-sub">추천</span></div>
+    <div class="lang-btn" data-lang="kor" onclick="setLang(this)">🇰🇷 한국어 전용 <span class="lang-sub">한글 문서</span></div>
+    <div class="lang-btn" data-lang="eng" onclick="setLang(this)">🇺🇸 영어 전용 <span class="lang-sub">영문 문서</span></div>
+  </div>
+  <button class="action-btn" id="ocrBtn" disabled>
+    <span class="spinner"></span>
+    <span class="btn-text">🔍 텍스트 추출하기</span>
+  </button>
 </div>
 
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.<br>※ 손글씨, 흐린 이미지, 복잡한 배경은 인식률이 낮을 수 있습니다.</p>
-
-<div class="card">
-<div class="card-title">📖 이미지 텍스트 추출 (OCR) 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">OCR이란?</strong><br>OCR(Optical Character Recognition, 광학 문자 인식)은 이미지 속 글자를 컴퓨터가 인식하여 편집 가능한 텍스트로 변환하는 기술입니다. 스캔한 문서, 캡처 이미지, 사진 속 간판이나 명함 등에서 글자를 추출할 수 있습니다. 수작업으로 타이핑할 필요 없이 빠르게 텍스트를 얻을 수 있어 업무 효율이 크게 향상됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">인식률을 높이는 방법</strong><br>이미지가 선명하고 글자와 배경의 대비가 뚜렷할수록 인식률이 높아집니다. 기울어진 문서는 미리 회전 보정하고, 어두운 이미지는 밝기를 조정한 후 업로드하세요. 인쇄된 활자체는 90% 이상의 높은 인식률을 보이지만, 손글씨나 특수 폰트는 인식률이 낮을 수 있습니다. 해상도는 300DPI 이상이 권장됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">활용 사례</strong><br>스캔한 계약서나 영수증에서 텍스트를 추출하여 엑셀에 정리하거나, 외국어 간판 사진에서 글자를 추출해 번역기에 붙여넣을 수 있습니다. 오래된 종이 문서를 디지털화할 때, PDF 내 이미지에서 텍스트를 뽑아 검색 가능한 문서로 만들 때에도 유용합니다. 명함 사진에서 연락처를 빠르게 추출하는 것도 대표적인 활용법입니다.</p>
-<p><strong style="font-size:15px;color:#0F172A">개인정보 보호</strong><br>본 도구는 Tesseract.js 엔진을 사용하여 100% 브라우저에서 처리됩니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 신분증, 의료기록, 금융서류 등 민감한 문서도 안전하게 처리할 수 있습니다. 처리 완료 후 이미지 데이터는 브라우저 메모리에서 자동 삭제됩니다.</p>
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-status">
+    <span id="progressLabel">OCR 엔진 로딩 중...</span>
+    <span class="status-pct" id="progressPct">0%</span>
+  </div>
+  <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <div class="progress-sub" id="progressSub">Tesseract.js 엔진을 초기화하고 있습니다</div>
 </div>
+
+<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+
+<div class="result-area card" id="resultArea">
+  <div class="result-header">
+    <span class="result-meta">📄 추출 결과 · <strong id="resultStats">-</strong></span>
+  </div>
+  <textarea class="result-textarea" id="textOutput" readonly placeholder="인식된 텍스트가 여기에 표시됩니다"></textarea>
+  <div class="result-actions">
+    <button class="result-btn" id="copyBtn">📋 텍스트 전체 복사</button>
+    <button class="result-btn primary-btn" id="downloadBtn">💾 .txt 파일로 다운로드</button>
+  </div>
+  <button class="reset-btn" id="resetBtn">🔄 새로 하기</button>
 </div>
 
 </main>
 
-<div class="ad-slot" id="ad-slot-bottom"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 
-<div class="loading-overlay" id="loadingOverlay">
-<div class="loading-spinner"></div>
-<div class="loading-text" id="loadingText">텍스트 인식 중...</div>
-<div class="loading-sub" id="loadingSub">이미지를 분석하고 있습니다</div>
-<div class="loading-progress"><div class="loading-progress-bar" id="loadingBar"></div></div>
-<div class="loading-ad">
-<div class="ad-slot" id="ad-slot-loading"><div class="ad-label">광고</div><div class="ad-slot-inner"></div></div>
-</div>
-</div>
-
 <div class="toast" id="toast"></div>
 
+<div class="guide-section">
+  <div class="guide-card">
+    <h2>📖 서버 전송 없는 무료 OCR 텍스트 추출 방법</h2>
+    <p>modutools의 OCR 도구는 구글의 Tesseract.js 엔진을 사용하여 100% 브라우저에서 동작합니다. 업로드한 이미지가 외부 서버로 전송되지 않으므로, 신분증, 계약서, 영수증 등 민감한 문서도 안전하게 처리할 수 있습니다. 인식된 텍스트는 브라우저 메모리에서만 처리되며, 작업 완료 후 자동 삭제됩니다.</p>
+    <ul>
+      <li><strong>지원 형식:</strong> JPG, PNG, WebP (최대 20MB)</li>
+      <li><strong>지원 언어:</strong> 한국어, 영어 (동시 인식 가능)</li>
+      <li><strong>활용 예:</strong> 스캔 문서 디지털화, 명함 인식, 영수증 데이터 추출, 외국어 간판 번역, PDF 내 이미지 텍스트 추출</li>
+      <li><strong>처리 속도:</strong> 이미지 크기와 언어 데이터 로딩 시간에 따라 3~15초 소요됩니다. 첫 실행 시 언어 데이터를 다운로드하므로 추가 시간이 필요할 수 있습니다.</li>
+    </ul>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">🔍 인식률을 높이려면 어떻게 해야 하나요?</div>
+    <div class="faq-a">이미지가 선명하고 글자와 배경의 대비가 뚜렷할수록 인식률이 높아집니다. 기울어진 문서는 미리 회전 보정하고, 어두운 이미지는 밝기를 조정한 후 업로드하세요. 인쇄된 활자체는 90% 이상의 높은 인식률을 보이지만, 손글씨나 특수 폰트는 인식률이 낮을 수 있습니다. 해상도는 300DPI 이상이 권장됩니다.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">🌐 인터넷 연결이 필요한가요?</div>
+    <div class="faq-a">네, 첫 번째 OCR 실행 시 Tesseract.js 언어 데이터(약 2~5MB)를 다운로드하기 위해 인터넷 연결이 필요합니다. 이후 동일 언어로 다시 사용할 때는 브라우저 캐시를 활용하여 추가 다운로드 없이 오프라인으로도 사용 가능합니다.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">📄 PDF 파일에서 OCR을 할 수 있나요?</div>
+    <div class="faq-a">현재는 이미지 파일(JPG, PNG, WebP)만 지원합니다. PDF 파일의 경우 먼저 이미지로 변환한 후 OCR 도구를 사용해주세요. (PDF 페이지를 캡처하거나, modutools의 이미지 변환 도구를 활용할 수 있습니다.)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">🔒 개인정보 보호는 어떻게 이루어지나요?</div>
+    <div class="faq-a">모든 OCR 처리는 사용자의 브라우저 내에서만 이루어집니다. Tesseract.js 엔진이 로컬에서 이미지를 분석하며, 어떤 데이터도 외부 서버로 전송되지 않습니다. 업로드한 이미지와 추출된 텍스트는 서버에 저장되지 않으며, 브라우저 탭을 닫으면 자동으로 삭제됩니다. 작업 완료 후 페이지를 새로고침하거나 '새로 하기' 버튼을 클릭하면 메모리에서도 안전하게 제거됩니다.</div>
+  </div>
+</div>
+<body>
 <script>
-(function(){
-var currentLang="kor";
-var imgFile=null;
-
-function checkAdSlots(){
-  document.querySelectorAll('.ad-slot').forEach(function(slot){
-    var inner=slot.querySelector('.ad-slot-inner');
-    if(!inner)return;
-    var hasContent=inner.querySelector('iframe')||inner.querySelector('ins[data-ad-status="filled"]')||(inner.children.length>0&&inner.offsetHeight>10);
-    slot.classList.toggle('has-ad',!!hasContent);
-  });
-}
-setTimeout(checkAdSlots,1500);
-setTimeout(checkAdSlots,3500);
-
-var fileInput=document.getElementById('fileInput');
-var uploadZone=document.getElementById('uploadZone');
-uploadZone.addEventListener('dragover',function(e){e.preventDefault();});
-uploadZone.addEventListener('drop',function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
-fileInput.addEventListener('change',function(){if(this.files.length)loadFile(this.files[0]);});
-
-function loadFile(file){
-  if(!file.type.startsWith('image/')){alert('이미지 파일만 업로드 가능합니다.');return;}
-  imgFile=file;
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var img=document.getElementById('previewImg');
-    img.src=e.target.result;
-    img.style.display='block';
-    document.getElementById('settingsArea').style.display='block';
-    document.getElementById('resultArea').style.display='none';
-  };
-  reader.readAsDataURL(file);
-}
-
-window.setLang=function(el){
-  document.querySelectorAll('.toggle-btn[data-lang]').forEach(function(b){b.classList.remove('active');});
-  el.classList.add('active');
-  currentLang=el.dataset.lang;
-};
-
-window.doOCR=function(){
-  if(!imgFile)return;
-  var btn=document.getElementById('ocrBtn');
-  btn.disabled=true;btn.textContent='처리 중...';
-  document.getElementById('loadingOverlay').classList.add('active');
-  document.getElementById('loadingBar').style.width='0%';
-  document.getElementById('loadingSub').textContent='OCR 엔진 로딩 중...';
-  checkAdSlots();
-
-  var langMap={'kor':'kor','eng':'eng','kor+eng':'kor+eng'};
-  var lang=langMap[currentLang]||'kor';
-
-  Tesseract.recognize(imgFile,lang,{
-    logger:function(m){
-      if(m.status==='recognizing text'){
-        var pct=Math.round(m.progress*100);
-        document.getElementById('loadingBar').style.width=pct+'%';
-        document.getElementById('loadingSub').textContent='텍스트 인식 중... '+pct+'%';
-      }else if(m.status==='loading language traineddata'){
-        document.getElementById('loadingSub').textContent='언어 데이터 로딩 중...';
-        document.getElementById('loadingBar').style.width='10%';
-      }else if(m.status==='initializing api'){
-        document.getElementById('loadingSub').textContent='OCR 엔진 초기화 중...';
-        document.getElementById('loadingBar').style.width='5%';
-      }
-    }
-  }).then(function(result){
-    var text=result.data.text.trim();
-    var charCount=text.length;
-    var lineCount=text.split('\n').filter(function(l){return l.trim();}).length;
-
-    setTimeout(function(){
-      document.getElementById('loadingOverlay').classList.remove('active');
-      document.getElementById('textOutput').value=text||'(인식된 텍스트가 없습니다)';
-      document.getElementById('resultSub').textContent=charCount+'자 · '+lineCount+'줄 추출됨';
-      document.getElementById('resultArea').style.display='block';
-      document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
-      btn.disabled=false;btn.textContent='🔍 텍스트 추출하기';
-      checkAdSlots();
-      setTimeout(checkAdSlots,1000);
-    },2000);
-  }).catch(function(err){
-    document.getElementById('loadingOverlay').classList.remove('active');
-    alert('텍스트 인식에 실패했습니다. 다른 이미지를 시도해주세요.');
-    btn.disabled=false;btn.textContent='🔍 텍스트 추출하기';
-  });
-};
-
-window.copyText=function(){
-  var text=document.getElementById('textOutput').value;
-  navigator.clipboard.writeText(text).then(function(){
-    showToast('텍스트가 복사되었습니다!');
-  });
-};
-
-window.downloadText=function(){
-  var text=document.getElementById('textOutput').value;
-  var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
-  var a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='modutools_ocr.txt';
-  a.click();
-  showToast('텍스트 파일 다운로드 완료!');
-};
-
-window.resetAll=function(){
-  imgFile=null;
-  document.getElementById('previewImg').style.display='none';
-  document.getElementById('settingsArea').style.display='none';
-  document.getElementById('resultArea').style.display='none';
-  document.getElementById('fileInput').value='';
-  window.scrollTo({top:0,behavior:'smooth'});
-};
-
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},2000);
-}
+(function(){var r=null,cl="kor+eng",ip=false,uz=document.getElementById("uploadZone"),fi=document.getElementById("fileInput"),pr=document.getElementById("previewImg"),pw=document.getElementById("previewWrap"),fn=document.getElementById("fileName"),fs=document.getElementById("fileSize"),ui=document.getElementById("uploadIcon"),ut=document.getElementById("uploadText"),us=document.getElementById("uploadSub"),ob=document.getElementById("ocrBtn"),pgw=document.getElementById("progressWrap"),pgf=document.getElementById("progressFill"),pgl=document.getElementById("progressLabel"),pgp=document.getElementById("progressPct"),pgs=document.getElementById("progressSub"),to=document.getElementById("textOutput"),ra=document.getElementById("resultArea"),rs=document.getElementById("resultStats"),tt=document.getElementById("toast"),tmr=null;
+uz.addEventListener("click",function(e){if(e.target.closest(".preview-change-btn")||e.target.closest(".preview-wrap"))return;fi.click();});
+fi.addEventListener("change",function(){if(this.files&&this.files.length>0)ld(this.files[0]);this.value="";});
+uz.addEventListener("dragover",function(e){e.preventDefault();uz.classList.add("dragover");});
+uz.addEventListener("dragleave",function(){uz.classList.remove("dragover");});
+uz.addEventListener("drop",function(e){e.preventDefault();uz.classList.remove("dragover");if(e.dataTransfer.files&&e.dataTransfer.files.length>0)ld(e.dataTransfer.files[0]);});
+document.addEventListener("paste",function(e){var it=e.clipboardData&&e.clipboardData.items;if(!it)return;for(var i=0;i<it.length;i++){if(it[i].type.indexOf("image")!==-1){ld(it[i].getAsFile());st("클립보드에서 이미지를 붙여넣었습니다.");break;}}});
+document.getElementById("changeBtn").addEventListener("click",function(){fi.click();});
+function ld(f){if(ip)return;if(!f.type||f.type.indexOf("image/")!==0){st("이미지 파일만 업로드 가능합니다.");return;}if(f.size>20971520){st("파일 크기는 최대 20MB까지 지원합니다.");return;}r=f;var rd=new FileReader();rd.onload=function(e){pr.src=e.target.result;pw.style.display="";fn.textContent=f.name;fs.textContent=(f.size/1024).toFixed(1)+" KB";uz.classList.add("has-image");ui.style.display="none";var nm=f.name;ut.innerHTML="✅ <strong>"+nm+"</strong> 업로드 완료";us.textContent="클릭하여 다른 이미지로 변경 - Ctrl+V로 붙여넣기 가능";ob.disabled=false;ra.style.display="none";pgw.classList.remove("active");window.scrollTo({top:0,behavior:"smooth"});};rd.readAsDataURL(f);}
+window.setLang=function(el){document.querySelectorAll(".lang-btn").forEach(function(b){b.classList.remove("active");});el.classList.add("active");cl=el.dataset.lang;};ob.addEventListener("click",function(){if(!r||ip)return;ocr();});
+function ocr(){ip=true;ob.classList.add("loading");ob.disabled=true;ra.style.display="none";pgw.classList.add("active");pgf.style.width="0%";pgp.textContent="0%";up("OCR 엔진 로딩 중...","Tesseract.js를 초기화합니다",2);var lm={kor:"kor",eng:"eng","kor+eng":"kor+eng"};var lang=lm[cl]||"kor+eng";Tesseract.recognize(r,lang,{logger:function(m){if(m.status==="loading language traineddata"){up("언어 데이터 로딩 중...",m.status,10)}else if(m.status==="initializing api"){up("OCR 엔진 초기화 중...",m.status,5)}else if(m.status==="recognizing text"){var p=Math.round(m.progress*100);up("텍스트 인식 중...","진행률 "+p+"%",p)}}}).then(function(res){var t=res.data.text.trim()||"(인식된 텍스트가 없습니다)";var cc=t.length;var lc=t.split("\n").filter(function(l){return l.trim();}).length;to.value=t;rs.textContent=cc.toLocaleString()+"자 - "+lc+"줄 추출됨";ra.style.display="";ra.scrollIntoView({behavior:"smooth",block:"center"});up("인식 완료!","100% 완료",100);setTimeout(function(){pgw.classList.remove("active");},1500);ob.classList.remove("loading");ob.disabled=false;ip=false;}).catch(function(e){console.error(e);st("텍스트 인식에 실패했습니다.");pgw.classList.remove("active");ob.classList.remove("loading");ob.disabled=false;ip=false;});}
+function up(l,s,p){pgl.textContent=l;pgs.textContent=s;pgf.style.width=p+"%";pgp.textContent=p+"%";}
+document.getElementById("copyBtn").addEventListener("click",function(){if(!to.value)return;navigator.clipboard.writeText(to.value).then(function(){st("텍스트가 클립보드에 복사되었습니다!");}).catch(function(){to.select();document.execCommand("copy");st("텍스트가 복사되었습니다!");});});
+document.getElementById("downloadBtn").addEventListener("click",function(){if(!to.value)return;var b=new Blob([to.value],{type:"text/plain;charset=utf-8"});var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="modutools_ocr_result.txt";a.click();URL.revokeObjectURL(a.href);st("텍스트 파일이 다운로드되었습니다!");});
+document.getElementById("resetBtn").addEventListener("click",function(){r=null;ip=false;pr.src="";pw.style.display="none";uz.classList.remove("has-image");ui.style.display="";ut.innerHTML="<strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WebP 지원 - Ctrl+V 붙여넣기 가능";us.textContent="최대 20MB - 여러 장 가능";ob.disabled=true;ob.classList.remove("loading");ra.style.display="none";pgw.classList.remove("active");to.value="";fi.value="";window.scrollTo({top:0,behavior:"smooth"});});
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 })();
 </script>
 </body>
