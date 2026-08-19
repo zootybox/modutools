@@ -3,77 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>랜덤 숫자 생성기 - 무작위 숫자·추첨번호 | modutools</title>
-<meta name="description" content="범위를 지정해 랜덤 숫자를 생성합니다. 로또 번호, 추첨, 제비뽑기, 순서 정하기에 유용합니다. 중복 제외 옵션 지원.">
-<meta property="og:title" content="랜덤 숫자 생성기 - 무작위 숫자·추첨번호 | modutools">
-<meta property="og:description" content="범위 지정 랜덤 숫자 생성. 로또 번호, 추첨, 제비뽑기에 유용.">
+<title>랜덤 숫자 생성기 - 무작위 숫자 추첨번호 | modutools</title>
+<meta name="description" content="범위를 지정해 랜덤 숫자 생성. 로또 번호, 추첨, 제비뽑기, 순서 정하기에 유용.">
+<meta property="og:title" content="랜덤 숫자 생성기 - 무작위 숫자 추첨번호 | modutools">
+<meta property="og:description" content="범위를 지정해 랜덤 숫자 생성. 로또 번호, 추첨, 제비뽑기, 순서 정하기에 유용.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/generate/random.html">
 <link rel="canonical" href="https://modutools.com/generate/random.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-sep{font-size:16px;color:var(--g400);font-weight:600}
-.option-row{display:flex;gap:16px;margin:12px 0;flex-wrap:wrap}
-.option-label{font-size:13px;color:var(--g700);display:flex;align-items:center;gap:6px;cursor:pointer}
-.option-label input{width:16px;height:16px;cursor:pointer;accent-color:var(--primary)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.quick-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.quick-btn{padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
-.quick-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-
-/* Result */
-.result-area{display:none}
-.number-display{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:20px 0}
-.number-ball{width:52px;height:52px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;animation:popIn .3s ease}
-@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.number-ball:nth-child(2){animation-delay:.05s}
-.number-ball:nth-child(3){animation-delay:.1s}
-.number-ball:nth-child(4){animation-delay:.15s}
-.number-ball:nth-child(5){animation-delay:.2s}
-.number-ball:nth-child(6){animation-delay:.25s}
-.number-text{text-align:center;font-size:14px;color:var(--g500);margin-top:8px;word-break:break-all}
-.copy-btn{display:block;margin:12px auto 0;padding:10px 24px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
-.copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.history{margin-top:16px}
-.history-item{font-size:13px;color:var(--g500);padding:8px 0;border-bottom:1px solid var(--g100)}
-.history-item:last-child{border-bottom:none}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.number-ball{width:44px;height:44px;font-size:15px}}
-.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
-.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
-.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
-.mt-faq{margin-top:16px}
-.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
-.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
-.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
-.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
-.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
-.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"랜덤 숫자 생성기","url":"https://modutools.com/generate/random.html","description":"범위를 지정해 랜덤 숫자를 생성하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"랜덤 숫자 생성기","url":"https://modutools.com/","description":"랜덤 숫자 생성 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"랜덤 숫자 생성기는 어디에 사용하나요?","acceptedAnswer":{"@type":"Answer","text":"추첨, 제비뽑기, 로또 번호 생성, 게임 주사위 대용, 통계 샘플링, 무작위 순서 결정 등 다양한 용도로 활용됩니다."}},
-{"@type":"Question","name":"정말 랜덤인가요?","acceptedAnswer":{"@type":"Answer","text":"브라우저의 암호학적 난수 생성기(crypto.getRandomValues)를 사용하여 편향 없는 균등한 확률로 숫자를 생성합니다."}},
-{"@type":"Question","name":"범위를 지정할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 최솟값과 최댓값을 직접 설정할 수 있으며, 생성할 숫자 개수도 지정할 수 있습니다. 중복 허용 여부도 선택 가능합니다."}},
-{"@type":"Question","name":"결과가 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"서버에는 저장되지 않으며, 페이지 내 히스토리 기능으로 이전 생성 결과를 확인할 수 있습니다. 페이지를 닫으면 초기화됩니다."}}
+{"@type":"Question","name":"로또 번호 생성 시 중복 제외는 어떻게 동작하나요?","acceptedAnswer":{"@type":"Answer","text":"1~45 범위에서 중복 없이 6개의 숫자를 무작위로 추출합니다. 각 숫자는 동일한 확률로 선택됩니다."}}
 ]}
 </script>
 </head>
@@ -82,107 +53,25 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">랜덤 숫자 생성기</h1>
-<p class="page-sub">범위를 지정해 무작위 숫자를 생성합니다</p>
-
-<div class="card">
-<div class="card-title">🎲 빠른 설정</div>
-<div class="quick-btns">
-<button class="quick-btn" onclick="quickSet(1,45,6,true)">🍀 로또 (1~45, 6개)</button>
-<button class="quick-btn" onclick="quickSet(1,10,1,false)">🎯 1~10 뽑기</button>
-<button class="quick-btn" onclick="quickSet(1,100,1,false)">🔢 1~100 뽑기</button>
-<button class="quick-btn" onclick="quickSet(1,6,1,false)">🎲 주사위</button>
+<p class="page-sub">범위를 지정해 랜덤 숫자 생성. 로또 번호, 추첨, 제비뽑기, 순서 정하기에 유용. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 랜덤 숫자 생성 가이드</h2>
+<p>랜덤 숫자 생성기는 사용자가 지정한 범위 내에서 무작위 숫자를 생성합니다. 중복 허용/제외 옵션을 선택할 수 있으며, 여러 개의 숫자를 한 번에 생성할 수 있습니다.</p>
+<p>로또 번호 생성(1~45, 6개, 중복 제외), 제비뽑기, 순서 정하기, 난수표 생성 등 다양한 용도로 활용 가능합니다. Math.random() 기반의 균등 분포 난수를 사용합니다.</p>
+<table><tr><th>용도</th><th>범위 설정</th><th>개수</th></tr><tr><td>로또 번호</td><td>1~45</td><td>6개</td></tr><tr><td>제비뽑기</td><td>1~인원수</td><td>1개</td></tr><tr><td>난수표</td><td>0~9999</td><td>여러 개</td></tr></table>
 </div>
-</div>
-
-<div class="card">
-<div class="card-title">⚙️ 설정</div>
-<div class="input-group">
-<label class="input-label">숫자 범위</label>
-<div class="input-row">
-<input type="number" class="input-field" id="minVal" value="1" inputmode="numeric">
-<span class="input-sep">~</span>
-<input type="number" class="input-field" id="maxVal" value="45" inputmode="numeric">
-</div>
-</div>
-<div class="input-group">
-<label class="input-label">생성 개수</label>
-<input type="number" class="input-field" id="genCount" value="6" min="1" max="100" inputmode="numeric" style="text-align:center">
-</div>
-<div class="option-row">
-<label class="option-label"><input type="checkbox" id="optNoDup" checked> 중복 제외</label>
-<label class="option-label"><input type="checkbox" id="optSort" checked> 오름차순 정렬</label>
-</div>
-<button class="calc-btn" onclick="generate()">🎲 숫자 생성</button>
-</div>
-
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✨ 결과</div>
-<div class="number-display" id="numberDisplay"></div>
-<div class="number-text" id="numberText"></div>
-<button class="copy-btn" onclick="copyResult()">📋 결과 복사</button>
-<div class="history" id="history"></div>
-</div>
-</div>
-</main>
+<div class="faq-item"><div class="faq-q">로또 번호 생성 시 중복 제외는 어떻게 동작하나요?</div><div class="faq-a">1~45 범위에서 중복 없이 6개 숫자를 무작위 추출합니다. 각 숫자는 동일 확률로 선택됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">진정한 난수와 의사 난수의 차이는 무엇인가요?</div><div class="faq-a">Math.random()은 의사 난수로, 알고리즘 기반이지만 실용적인 목적에는 충분한 무작위성을 제공합니다.</div></div>
+<div class="faq-item"><div class="faq-q">생성 결과가 편향될 수 있나요?</div><div class="faq-a">Math.random()은 균등 분포를 보장하므로, 충분한 샘플에서는 각 숫자가 비슷한 빈도로 나타납니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
-let lastResult=[];
-const historyArr=[];
-
-function quickSet(min,max,count,noDup){
-  document.getElementById('minVal').value=min;
-  document.getElementById('maxVal').value=max;
-  document.getElementById('genCount').value=count;
-  document.getElementById('optNoDup').checked=noDup;
-  generate();
-}
-
-function generate(){
-  const min=parseInt(document.getElementById('minVal').value);
-  const max=parseInt(document.getElementById('maxVal').value);
-  const count=parseInt(document.getElementById('genCount').value);
-  const noDup=document.getElementById('optNoDup').checked;
-  const doSort=document.getElementById('optSort').checked;
-
-  if(isNaN(min)||isNaN(max)||isNaN(count)){alert('숫자를 올바르게 입력해주세요.');return;}
-  if(min>max){alert('최소값이 최대값보다 큽니다.');return;}
-  if(count<1){alert('1개 이상 생성해야 합니다.');return;}
-  if(noDup&&count>(max-min+1)){alert('중복 제외 시 범위('+(max-min+1)+'개)보다 많이 생성할 수 없습니다.');return;}
-
-  let result=[];
-  if(noDup){
-    const pool=[];
-    for(let i=min;i<=max;i++)pool.push(i);
-    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-    result=pool.slice(0,count);
-  }else{
-    for(let i=0;i<count;i++)result.push(Math.floor(Math.random()*(max-min+1))+min);
-  }
-  if(doSort)result.sort((a,b)=>a-b);
-  lastResult=result;
-
-  // Display balls
-  const display=document.getElementById('numberDisplay');
-  display.innerHTML=result.map((n,i)=>`<div class="number-ball" style="animation-delay:${i*0.05}s">${n}</div>`).join('');
-  document.getElementById('numberText').textContent=result.join(', ');
-
-  // History
-  historyArr.unshift(result.join(', '));
-  if(historyArr.length>5)historyArr.pop();
-  document.getElementById('history').innerHTML=historyArr.length>1?'<div style="font-size:12px;font-weight:600;color:var(--g400);margin-bottom:8px">이전 기록</div>'+historyArr.slice(1).map(h=>`<div class="history-item">${h}</div>`).join(''):'';
-
-  document.getElementById('resultArea').style.display='block';
-  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
-}
-
-function copyResult(){
-  if(!lastResult.length)return;
-  navigator.clipboard.writeText(lastResult.join(', ')).then(()=>showToast('결과를 복사했습니다'));
-}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Processing */})();
+})();
 </script>
 </body>
 </html>

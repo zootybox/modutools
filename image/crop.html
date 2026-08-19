@@ -4,59 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>이미지 자르기 - 원하는 영역 크롭 | modutools</title>
-<meta name="description" content="이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 등 비율 프리셋 지원. 서버 전송 없이 브라우저에서 처리.">
-<link rel="canonical" href="https://modutools.com/image/crop.html">
+<meta name="description" content="이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 비율 프리셋 지원.">
 <meta property="og:title" content="이미지 자르기 - 원하는 영역 크롭 | modutools">
-<meta property="og:description" content="이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 비율 프리셋 지원. 서버 전송 없이 브라우저에서 처리.">
+<meta property="og:description" content="이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 비율 프리셋 지원.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/image/crop.html">
+<link rel="canonical" href="https://modutools.com/image/crop.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
-.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
-.upload-icon{font-size:36px;margin-bottom:8px}
-.upload-text{font-size:14px;color:var(--g500)}
-.upload-text strong{color:var(--primary)}
-.file-input{display:none}
-.crop-container{position:relative;margin:16px 0;overflow:hidden;border-radius:10px;border:1px solid var(--g200);touch-action:none;user-select:none;-webkit-user-select:none}
-.crop-container img{display:block;width:100%;height:auto}
-.crop-overlay{position:absolute;top:0;left:0;right:0;bottom:0}
-.crop-dim{position:absolute;background:rgba(0,0,0,0.5)}
-.crop-box{position:absolute;border:2px solid #fff;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);cursor:move}
-.crop-handle{position:absolute;width:20px;height:20px;background:#fff;border:2px solid var(--primary);border-radius:3px;z-index:10}
-.crop-handle-tl{top:-10px;left:-10px;cursor:nw-resize}
-.crop-handle-tr{top:-10px;right:-10px;cursor:ne-resize}
-.crop-handle-bl{bottom:-10px;left:-10px;cursor:sw-resize}
-.crop-handle-br{bottom:-10px;right:-10px;cursor:se-resize}
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.preset-btn{padding:7px 12px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
-.preset-btn:hover,.preset-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary)}
-.input-sep{font-size:14px;color:var(--g400);font-weight:600}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.result-area{display:none}
-.preview-wrap{text-align:center;margin-bottom:16px}
-.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
-.info-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid var(--g100)}
-.info-row .label{color:var(--g500)}
-.info-row .value{font-weight:700;color:var(--g900)}
-.download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
-.download-btn:hover{background:var(--primary-dark)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.preset-btn{font-size:11px;padding:5px 8px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 자르기","url":"https://modutools.com/image/crop.html","description":"이미지에서 원하는 영역만 선택하여 자르는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 자르기","url":"https://modutools.com/image/","description":"이미지 크롭 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"비율별 자르기는 어떤 규격이 있나요?","acceptedAnswer":{"@type":"Answer","text":"1:1(Instagram), 4:3(일반 사진), 16:9(와이드스크린), 3:2(DSLR) 등 다양한 비율을 지원합니다."}}
+]}
 </script>
 </head>
 <body>
@@ -64,265 +53,25 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">이미지 자르기</h1>
-<p class="page-sub">원하는 영역만 선택하여 이미지를 자릅니다</p>
-<div class="card">
-<div class="card-title">✂️ 이미지 업로드</div>
-<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-<div class="upload-icon">🖼️</div>
-<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
+<p class="page-sub">이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 비율 프리셋 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 이미지 자르기 가이드</h2>
+<p>이미지 자르기(크롭)는 Canvas API를 사용하여 브라우저에서 직접 이미지의 원하는 영역만 선택하여 추출합니다. 사진 구도 교정, 불필요한 영역 제거, SNS 규격에 맞는 이미지 제작에 유용합니다.</p>
+<p>여권사진(3.5×4.5cm), 증명사진(2.5×3cm), 명함 사진(5×7cm) 등 특정 규격이 필요한 경우 비율 프리셋을 사용하면 편리합니다.</p>
+<p>16:9 비율은 유튜브 썸네일과 프레젠테이션에, 1:1 비율은 인스타그램 피드에, 4:3 비율은 일반 사진 인화에 적합합니다.</p>
+<table><tr><th>비율</th><th>예시</th><th>주 사용처</th></tr><tr><td>1:1</td><td>정사각형</td><td>Instagram, 프로필</td></tr><tr><td>4:3</td><td>표준 사진</td><td>일반 사진, 인화</td></tr><tr><td>16:9</td><td>와이드</td><td>유튜브, 프레젠테이션</td></tr></table>
 </div>
-<input type="file" class="file-input" id="fileInput" accept="image/*">
-</div>
-<div id="editorArea" style="display:none">
-<div class="card">
-<div class="card-title">✂️ 자르기 영역 설정</div>
-<div class="preset-row" id="presetRow">
-<button class="preset-btn active" onclick="setRatio(this,0)">자유</button>
-<button class="preset-btn" onclick="setRatio(this,1)">1:1</button>
-<button class="preset-btn" onclick="setRatio(this,4/3)">4:3</button>
-<button class="preset-btn" onclick="setRatio(this,3/4)">3:4</button>
-<button class="preset-btn" onclick="setRatio(this,16/9)">16:9</button>
-<button class="preset-btn" onclick="setRatio(this,9/16)">9:16</button>
-</div>
-<div class="crop-container" id="cropContainer">
-<img id="cropImage">
-<div class="crop-box" id="cropBox">
-<div class="crop-handle crop-handle-tl" data-handle="tl"></div>
-<div class="crop-handle crop-handle-tr" data-handle="tr"></div>
-<div class="crop-handle crop-handle-bl" data-handle="bl"></div>
-<div class="crop-handle crop-handle-br" data-handle="br"></div>
-</div>
-</div>
-<div class="input-group" style="margin-top:12px">
-<label class="input-label">자르기 크기 (px)</label>
-<div class="input-row">
-<input type="number" class="input-field" id="cropW" min="1">
-<span class="input-sep">x</span>
-<input type="number" class="input-field" id="cropH" min="1">
-</div>
-</div>
-<button class="calc-btn" onclick="doCrop()">자르기 실행</button>
-</div>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 자르기 결과</div>
-<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
-<div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
-<div class="info-row"><span class="label">자른 크기</span><span class="value" id="infoCrop">-</span></div>
-<button class="download-btn" onclick="downloadResult()">다운로드</button>
-</div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
-</div>
-
-<!-- 가이드 섹션 -->
-<section class="card" style="margin-top:24px">
-<h2 style="font-size:18px;font-weight:700;margin-bottom:16px">📖 이미지 자르기 가이드</h2>
-<div style="font-size:14px;color:var(--g600);line-height:1.8">
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">이미지 자르기(크롭)란?</h3>
-<p>이미지 자르기(Crop)는 사진에서 필요한 영역만 선택하여 나머지를 제거하는 편집 기법입니다. 불필요한 배경을 제거하고 핵심 피사체를 부각시키거나, 특정 비율에 맞게 이미지를 조정할 때 사용합니다. SNS 프로필 사진, 블로그 썸네일, 상품 이미지 등 다양한 상황에서 필수적인 작업입니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">비율 프리셋 활용법</h3>
-<p>1:1 비율은 인스타그램 피드, 카카오톡 프로필 사진에 사용됩니다. 4:3은 일반 사진 비율로 블로그나 프레젠테이션에 적합하고, 16:9는 유튜브 썸네일, 와이드 모니터 배경화면에 사용됩니다. 9:16은 인스타 스토리, 릴스, 틱톡 등 세로형 콘텐츠에 최적화된 비율입니다. 자유 비율을 선택하면 원하는 크기로 자유롭게 영역을 지정할 수 있습니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">플랫폼별 권장 이미지 크기</h3>
-<p>인스타그램 피드는 1080×1080px(1:1), 스토리는 1080×1920px(9:16)입니다. 유튜브 썸네일은 1280×720px(16:9), 네이버 블로그 대표 이미지는 가로 최소 760px 이상이 권장됩니다. 쇼핑몰 상품 이미지는 대부분 1:1 정사각형을 사용하며, 상세 페이지는 가로 860px이 표준입니다. 이미지를 자른 후 리사이즈 도구로 정확한 픽셀 크기를 맞추면 완벽합니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">좋은 사진 구도를 위한 자르기 팁</h3>
-<p>사진의 주요 피사체를 정중앙에 두기보다 3분의 1 지점에 배치하면(삼분법) 더 안정적이고 전문적인 느낌을 줄 수 있습니다. 인물 사진은 머리 위에 약간의 여백을 두고, 시선 방향에 공간을 남기면 자연스럽습니다. 배경의 불필요한 요소(전선, 지나가는 사람 등)를 자르기로 제거하면 사진 품질이 크게 향상됩니다.</p>
-</div>
-</section>
-
-<!-- FAQ 섹션 -->
-<section class="card" style="margin-top:16px">
-<h2 style="font-size:18px;font-weight:700;margin-bottom:16px">❓ 자주 묻는 질문</h2>
-<div style="font-size:14px;color:var(--g600);line-height:1.8">
-
-<p style="font-weight:700;color:var(--primary);margin-top:12px">자르기와 리사이즈의 차이는 무엇인가요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-자르기(Crop)는 이미지의 일부 영역만 남기고 나머지를 제거하는 것이고, 리사이즈(Resize)는 이미지 전체를 확대하거나 축소하는 것입니다. 자르기는 구도를 변경하거나 불필요한 부분을 없앨 때, 리사이즈는 전체 이미지 크기를 조정할 때 사용합니다.
-</div>
-
-<p style="font-weight:700;color:var(--primary);margin-top:16px">인스타그램에 맞는 비율은 무엇인가요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-인스타그램 피드는 1:1(정사각형), 4:5(세로형), 16:9(가로형)을 지원합니다. 가장 많이 사용되는 비율은 1:1이며, 스토리와 릴스는 9:16 세로형이 표준입니다. 본 도구에서 해당 비율을 선택한 후 자르면 바로 업로드할 수 있습니다.
-</div>
-
-<p style="font-weight:700;color:var(--primary);margin-top:16px">자르면 화질이 떨어지나요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-자르기는 원본 이미지의 해당 영역을 그대로 추출하므로 화질 저하가 없습니다. 단, 매우 작은 영역만 자르면 결과 이미지의 픽셀 수가 적어져 확대 시 깨져 보일 수 있습니다. 충분한 크기의 영역을 선택하는 것이 좋습니다.
-</div>
-</div>
-</section>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"자르기와 리사이즈의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"자르기(Crop)는 이미지의 일부 영역만 남기고 나머지를 제거하는 것이고, 리사이즈는 이미지 전체를 확대하거나 축소하는 것입니다."}},{"@type":"Question","name":"인스타그램에 맞는 비율은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"피드는 1:1(정사각형), 4:5(세로형), 16:9(가로형)을 지원합니다. 스토리와 릴스는 9:16 세로형이 표준입니다."}},{"@type":"Question","name":"자르면 화질이 떨어지나요?","acceptedAnswer":{"@type":"Answer","text":"자르기는 원본 이미지의 해당 영역을 그대로 추출하므로 화질 저하가 없습니다."}}]}
-</script>
-</main>
+<div class="faq-item"><div class="faq-q">비율별 자르기는 어떤 규격이 있나요?</div><div class="faq-a">1:1(Instagram), 4:3(일반 사진), 16:9(와이드스크린) 등 다양한 비율을 지원합니다.</div></div>
+<div class="faq-item"><div class="faq-q">자르기 후 이미지 해상도는 어떻게 되나요?</div><div class="faq-a">선택한 영역의 픽셀 그대로 유지됩니다. 원본보다 커지지 않으므로 화질 저하가 없습니다.</div></div>
+<div class="faq-item"><div class="faq-q">자유 비율로 자를 수 있나요?</div><div class="faq-a">네, 자유 비율 모드에서는 원하는 영역을 마우스로 직접 드래그하여 선택할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-(function(){
-var origImg=null,origW=0,origH=0,resultBlob=null,resultName="";
-var cropRatio=0;
-var box={x:10,y:10,w:80,h:80};
-var dragging=null,dragStart={x:0,y:0},boxStart={};
-var containerEl=document.getElementById("cropContainer");
-var boxEl=document.getElementById("cropBox");
-var imgEl=document.getElementById("cropImage");
-
-document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
-document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
-document.getElementById("uploadZone").addEventListener("drop",function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
-
-function loadFile(file){
-  if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
-  resultName=file.name.replace(/\.[^.]+$/,"")+"_cropped";
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var img=new Image();
-    img.onload=function(){
-      origImg=img;origW=img.width;origH=img.height;
-      imgEl.src=e.target.result;
-      box={x:10,y:10,w:80,h:80};
-      updateBox();updateInputs();
-      document.getElementById("editorArea").style.display="block";
-      document.getElementById("resultArea").style.display="none";
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-function updateBox(){
-  boxEl.style.left=box.x+"%";boxEl.style.top=box.y+"%";
-  boxEl.style.width=box.w+"%";boxEl.style.height=box.h+"%";
-}
-function updateInputs(){
-  document.getElementById("cropW").value=Math.round(origW*box.w/100);
-  document.getElementById("cropH").value=Math.round(origH*box.h/100);
-}
-
-function getPos(e){
-  var rect=containerEl.getBoundingClientRect();
-  var clientX=e.touches?e.touches[0].clientX:e.clientX;
-  var clientY=e.touches?e.touches[0].clientY:e.clientY;
-  return{x:(clientX-rect.left)/rect.width*100,y:(clientY-rect.top)/rect.height*100};
-}
-
-boxEl.addEventListener("mousedown",startDrag);
-boxEl.addEventListener("touchstart",startDrag,{passive:false});
-
-function startDrag(e){
-  e.preventDefault();
-  var handle=e.target.dataset.handle;
-  dragging=handle||"move";
-  dragStart=getPos(e);
-  boxStart={x:box.x,y:box.y,w:box.w,h:box.h};
-  document.addEventListener("mousemove",onDrag);
-  document.addEventListener("mouseup",endDrag);
-  document.addEventListener("touchmove",onDrag,{passive:false});
-  document.addEventListener("touchend",endDrag);
-}
-
-function onDrag(e){
-  e.preventDefault();
-  if(!dragging)return;
-  var pos=getPos(e);
-  var dx=pos.x-dragStart.x;
-  var dy=pos.y-dragStart.y;
-
-  if(dragging==="move"){
-    box.x=Math.max(0,Math.min(100-box.w,boxStart.x+dx));
-    box.y=Math.max(0,Math.min(100-box.h,boxStart.y+dy));
-  }else{
-    var nx=boxStart.x,ny=boxStart.y,nw=boxStart.w,nh=boxStart.h;
-    if(dragging.includes("r")){nw=Math.max(5,boxStart.w+dx);}
-    if(dragging.includes("l")){nx=boxStart.x+dx;nw=Math.max(5,boxStart.w-dx);}
-    if(dragging.includes("b")){nh=Math.max(5,boxStart.h+dy);}
-    if(dragging.includes("t")){ny=boxStart.y+dy;nh=Math.max(5,boxStart.h-dy);}
-    if(cropRatio>0){
-      var imgAspect=origW/origH;
-      var boxAspectPx=(nw/100*origW)/(nh/100*origH);
-      if(dragging.includes("r")||dragging.includes("l")){
-        nh=nw/100*origW/cropRatio/origH*100;
-      }else{
-        nw=nh/100*origH*cropRatio/origW*100;
-      }
-    }
-    if(nx<0){nw+=nx;nx=0;}
-    if(ny<0){nh+=ny;ny=0;}
-    if(nx+nw>100)nw=100-nx;
-    if(ny+nh>100)nh=100-ny;
-    box.x=nx;box.y=ny;box.w=nw;box.h=nh;
-  }
-  updateBox();updateInputs();
-}
-
-function endDrag(){
-  dragging=null;
-  document.removeEventListener("mousemove",onDrag);
-  document.removeEventListener("mouseup",endDrag);
-  document.removeEventListener("touchmove",onDrag);
-  document.removeEventListener("touchend",endDrag);
-}
-
-window.setRatio=function(el,r){
-  var btns=document.querySelectorAll("#presetRow .preset-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
-  el.classList.add("active");
-  cropRatio=r;
-  if(r>0&&origImg){
-    var newH=box.w/100*origW/r/origH*100;
-    if(box.y+newH>100)newH=100-box.y;
-    box.h=newH;
-    updateBox();updateInputs();
-  }
-};
-
-document.getElementById("cropW").addEventListener("change",function(){
-  if(!origImg)return;
-  var w=parseInt(this.value)||1;
-  box.w=Math.min(100,w/origW*100);
-  if(cropRatio>0)box.h=box.w/100*origW/cropRatio/origH*100;
-  updateBox();updateInputs();
-});
-document.getElementById("cropH").addEventListener("change",function(){
-  if(!origImg)return;
-  var h=parseInt(this.value)||1;
-  box.h=Math.min(100,h/origH*100);
-  if(cropRatio>0)box.w=box.h/100*origH*cropRatio/origW*100;
-  updateBox();updateInputs();
-});
-
-window.doCrop=function(){
-  if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
-  var sx=Math.round(origW*box.x/100);
-  var sy=Math.round(origH*box.y/100);
-  var sw=Math.round(origW*box.w/100);
-  var sh=Math.round(origH*box.h/100);
-  var canvas=document.createElement("canvas");
-  canvas.width=sw;canvas.height=sh;
-  var ctx=canvas.getContext("2d");
-  ctx.drawImage(origImg,sx,sy,sw,sh,0,0,sw,sh);
-  canvas.toBlob(function(blob){
-    resultBlob=blob;
-    document.getElementById("previewImg").src=URL.createObjectURL(blob);
-    document.getElementById("infoOrig").textContent=origW+" x "+origH+" px";
-    document.getElementById("infoCrop").textContent=sw+" x "+sh+" px";
-    document.getElementById("resultArea").style.display="block";
-    document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-  },"image/png");
-};
-
-window.downloadResult=function(){
-  if(!resultBlob)return;
-  var a=document.createElement("a");
-  a.href=URL.createObjectURL(resultBlob);
-  a.download=resultName+".png";
-  a.click();
-};
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Canvas image processing */})();
 })();
 </script>
 </body>

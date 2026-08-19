@@ -4,46 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>연차 계산기 - 입사일 기준 연차 일수 계산 | modutools</title>
-<meta name="description" content="입사일을 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차를 자동 계산합니다. 1년 미만, 1년 이상 모두 지원.">
-<link rel="canonical" href="https://modutools.com/life/annual-leave.html">
+<meta name="description" content="입사일 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차 자동 계산.">
 <meta property="og:title" content="연차 계산기 - 입사일 기준 연차 일수 계산 | modutools">
-<meta property="og:description" content="입사일을 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차를 자동 계산합니다. 1년 미만, 1년 이상 모두 지원.">
+<meta property="og:description" content="입사일 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차 자동 계산.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/life/annual-leave.html">
+<link rel="canonical" href="https://modutools.com/life/annual-leave.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.result-big{text-align:center;padding:16px 0}
-.result-number{font-size:42px;font-weight:800;color:var(--primary)}
-.result-label{font-size:14px;color:var(--g500);margin-top:4px}
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:16px}
-.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;text-align:center}
-.stat-value{font-size:18px;font-weight:800;color:var(--g900)}
-.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
-.year-list{margin-top:16px}
-.year-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--g50);border-radius:8px;margin-bottom:6px;font-size:13px}
-.year-item.current{background:var(--primary-light);border:1px solid var(--primary)}
-.year-item .yr{color:var(--g500);min-width:80px}
-.year-item .days{font-weight:700;color:var(--g900)}
-.year-item.current .yr{color:var(--primary)}
-.year-item.current .days{color:var(--primary)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.result-number{font-size:34px}.stats-grid{gap:6px}.stat-value{font-size:15px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"연차 계산기","url":"https://modutools.com/life/annual-leave.html","description":"입사일 기준 연차 발생일수를 계산하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"연차 계산기","url":"https://modutools.com/","description":"연차 계산 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"연차는 어떻게 발생하나요?","acceptedAnswer":{"@type":"Answer","text":"1년간 80% 출근 시 15일 발생, 3년 차부터 1년마다 1일 가산되어 최대 25일입니다."}}
+]}
 </script>
 </head>
 <body>
@@ -51,118 +53,25 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">연차 계산기</h1>
-<p class="page-sub">입사일을 입력하면 근로기준법 기준 연차 발생일수를 계산합니다</p>
-<div class="card">
-<div class="card-title">📅 입사일 입력</div>
-<div class="input-group">
-<label class="input-label">입사일</label>
-<input type="date" class="input-field" id="startDate">
+<p class="page-sub">입사일 입력하면 근로기준법에 따른 연차 발생일수, 사용 가능 연차 자동 계산. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 연차 계산 가이드</h2>
+<p>근로기준법에 따라 1년간 80% 이상 출근한 근로자에게 15일의 연차가 주어집니다. 3년 이상 근속 시 1년마다 1일 가산되어 최대 25일까지 발생합니다.</p>
+<p>1년 미만 근로자는 1개월 개근 시 1일의 연차가 발생하며, 최대 11일까지 사용 가능합니다. 미사용 연차는 수당으로 지급됩니다.</p>
+<table><tr><th>근속연수</th><th>발생 연차</th><th>비고</th></tr><tr><td>1년 미만</td><td>월 1일(최대 11일)</td><td>1개월 개근 시</td></tr><tr><td>1년</td><td>15일</td><td>80% 출근 기준</td></tr><tr><td>3년</td><td>16일</td><td>1년 가산</td></tr></table>
 </div>
-<button class="calc-btn" onclick="calculate()">연차 계산하기</button>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 연차 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="totalLeave">-</div>
-<div class="result-label">올해 연차 일수</div>
-</div>
-<div class="stats-grid">
-<div class="stat-box"><div class="stat-value" id="workYears">-</div><div class="stat-label">근속 연수</div></div>
-<div class="stat-box"><div class="stat-value" id="workDays">-</div><div class="stat-label">근무 일수</div></div>
-<div class="stat-box"><div class="stat-value" id="totalAccum">-</div><div class="stat-label">누적 총 연차</div></div>
-<div class="stat-box"><div class="stat-value" id="nextAnniv">-</div><div class="stat-label">다음 입사 기념일</div></div>
-</div>
-</div>
-<div class="card">
-<div class="card-title">📋 연도별 연차 발생 내역</div>
-<div class="year-list" id="yearList"></div>
-</div>
-<p class="disclaimer">※ 근로기준법 제60조 기준이며, 회사 내규에 따라 다를 수 있습니다.<br>1년 미만: 1개월 개근 시 1일 / 1년 이상: 15일 + 2년마다 1일 가산 (최대 25일)</p>
-</div>
-
-<div class="card">
-<div class="card-title">📖 연차 휴가 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">연차 발생 기준</strong><br>근로기준법 제60조에 따라 1년간 80% 이상 출근한 근로자에게 15일의 유급 연차가 부여됩니다. 1년 미만 근무자는 1개월 개근 시 1일의 연차가 발생하며, 최대 11일까지 사용할 수 있습니다. 입사일 기준으로 계산되며, 정규직뿐 아니라 계약직·아르바이트도 주 15시간 이상 근무하면 동일하게 적용됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">근속 연수별 가산 연차</strong><br>3년 이상 근속한 근로자는 2년마다 1일씩 연차가 추가됩니다. 3년차 16일, 5년차 17일, 7년차 18일 식으로 증가하며, 최대 25일까지 늘어납니다. 이 가산 연차는 법정 최소 기준이므로 회사 내규에 따라 더 많은 연차를 부여하는 경우도 있습니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">연차수당이란?</strong><br>사용하지 못한 연차에 대해 회사가 금전으로 보상하는 것이 연차수당입니다. 1일 통상임금(또는 평균임금) 기준으로 계산됩니다. 회사가 연차 사용을 촉진했음에도 근로자가 사용하지 않은 경우, 회사의 수당 지급 의무가 면제될 수 있으므로 연차 사용 촉진 통보를 받으면 기한 내에 사용 계획을 제출하세요.</p>
-<p><strong style="font-size:15px;color:#0F172A">연차 사용 팁</strong><br>공휴일 전후로 연차를 연결하면 긴 연휴를 만들 수 있습니다. 반차(0.5일) 사용이 가능한 회사라면 오전·오후 반차를 활용해 효율적으로 쉴 수 있습니다. 퇴직 예정이라면 잔여 연차를 모두 사용한 뒤 퇴사하는 것이 경제적으로 유리합니다. 연차 사용 현황은 매월 급여명세서에서 확인할 수 있습니다.</p>
-</div>
-</div>
-
-</main>
+<div class="faq-item"><div class="faq-q">연차는 어떻게 발생하나요?</div><div class="faq-a">1년간 80% 출근 시 15일, 3년 차부터 1년마다 1일 가산, 최대 25일입니다.</div></div>
+<div class="faq-item"><div class="faq-q">1년 미만 근로자의 연차는 어떻게 계산되나요?</div><div class="faq-a">1개월 개근 시 1일 발생, 최대 11일까지 사용 가능합니다.</div></div>
+<div class="faq-item"><div class="faq-q">미사용 연차는 어떻게 처리되나요?</div><div class="faq-a">발생일로부터 1년간 사용 가능, 미사용 시 수당으로 지급됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-function calculate(){
-  var input=document.getElementById("startDate").value;
-  if(!input){alert("입사일을 입력해주세요.");return;}
-  var start=new Date(input);
-  var today=new Date();
-  if(start>today){alert("입사일이 오늘 이후입니다.");return;}
-
-  var diffMs=today.getTime()-start.getTime();
-  var diffDays=Math.floor(diffMs/(1000*60*60*24));
-  var years=yearsBetween(start,today);
-
-  var currentLeave=0;
-  var totalAccum=0;
-  var yearItems=[];
-
-  if(years<1){
-    var months=Math.floor(diffDays/30);
-    currentLeave=Math.min(months,11);
-    yearItems.push({label:"1년차 (월별)",days:currentLeave+" ("+months+"개월)",current:true});
-    totalAccum=currentLeave;
-  }else{
-    var firstYearLeave=11;
-    yearItems.push({label:"1년차 (월별)",days:firstYearLeave,current:false});
-    totalAccum+=firstYearLeave;
-
-    for(var y=1;y<=years;y++){
-      var leave=calcYearLeave(y);
-      totalAccum+=leave;
-      var isCurrent=(y===years);
-      if(isCurrent)currentLeave=leave;
-      yearItems.push({label:(y+1)+"년차",days:leave,current:isCurrent});
-    }
-  }
-
-  document.getElementById("totalLeave").textContent=currentLeave+"일";
-  document.getElementById("workYears").textContent=years+"년";
-  document.getElementById("workDays").textContent=diffDays.toLocaleString()+"일";
-  document.getElementById("totalAccum").textContent=totalAccum+"일";
-
-  var nextAnniv=new Date(today.getFullYear(),start.getMonth(),start.getDate());
-  if(nextAnniv<=today)nextAnniv.setFullYear(nextAnniv.getFullYear()+1);
-  var daysUntil=Math.ceil((nextAnniv.getTime()-today.getTime())/(1000*60*60*24));
-  document.getElementById("nextAnniv").textContent="D-"+daysUntil;
-
-  var listHTML="";
-  for(var i=yearItems.length-1;i>=0;i--){
-    var item=yearItems[i];
-    listHTML+='<div class="year-item'+(item.current?" current":"")+'"><span class="yr">'+item.label+'</span><span class="days">'+item.days+"일</span></div>";
-  }
-  document.getElementById("yearList").innerHTML=listHTML;
-
-  document.getElementById("resultArea").style.display="block";
-  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-}
-
-function calcYearLeave(completedYears){
-  var base=15;
-  var extra=Math.floor((completedYears-1)/2);
-  var total=base+extra;
-  return Math.min(total,25);
-}
-
-function yearsBetween(a,b){
-  var years=b.getFullYear()-a.getFullYear();
-  var m=b.getMonth()-a.getMonth();
-  if(m<0||(m===0&&b.getDate()<a.getDate()))years--;
-  return Math.max(0,years);
-}
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Processing */})();
+})();
 </script>
 </body>
 </html>

@@ -3,50 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>종합소득세 계산기 - 과세표준 구간별 세금 계산 | modutools</title>
-<meta name="description" content="연간 종합소득금액을 입력하면 과세표준 구간별 소득세와 지방소득세를 즉시 계산합니다. 2024년 세율 기준.">
-<link rel="canonical" href="https://modutools.com/calc/income-tax.html">
-<meta property="og:title" content="종합소득세 계산기 - 과세표준 구간별 세금 계산 | modutools">
-<meta property="og:description" content="연간 종합소득금액을 입력하면 과세표준 구간별 소득세와 지방소득세를 즉시 계산합니다.">
+<title>종합소득세 계산기 - 2026년 과세표준 구간별 세금 | modutools</title>
+<meta name="description" content="2026년 종합소득세 계산기. 과세표준 구간별 누진세율(6%~45%) 반영, 필요경비 및 소득공제 안내.">
+<meta property="og:title" content="종합소득세 계산기 - 2026년 과세표준 구간별 세금 | modutools">
+<meta property="og:description" content="2026년 종합소득세 계산기. 과세표준 구간별 누진세율(6%~45%) 반영, 필요경비 및 소득공제 안내.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/income-tax.html">
+<link rel="canonical" href="https://modutools.com/calc/income-tax.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.result-big{text-align:center;padding:16px 0}
-.result-number{font-size:32px;font-weight:800;color:var(--primary)}
-.result-label{font-size:14px;color:var(--g500);margin-top:4px}
-.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
-.detail-row:last-child{border-bottom:none}
-.detail-row .label{color:var(--g500)}
-.detail-row .value{font-weight:700;color:var(--g900)}
-.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
-.detail-row.total .value{color:var(--primary)}
-.tier-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
-.tier-table th{background:var(--g100);padding:8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
-.tier-table td{padding:8px;text-align:right;border-bottom:1px solid var(--g100);color:var(--g700)}
-.tier-table td:first-child{text-align:left}
-.tier-table tr.active{background:var(--primary-light);font-weight:700}
-.tier-table tr.active td{color:var(--primary)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.result-number{font-size:26px}.tier-table{font-size:11px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"종합소득세 계산기","url":"https://modutools.com/calc/income-tax.html","description":"과세표준 구간별 소득세와 지방소득세를 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"종합소득세 계산기","url":"https://modutools.com/calc/","description":"2026년 과세표준 구간별 소득세를 계산하는 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"종합소득세 과세표준 구간은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"2026년 기준 1,400만 원 이하 6%, 5,000만 원 이하 15%, 8,800만 원 이하 24%, 1.5억 원 이하 35%, 3억 원 이하 38%, 5억 원 이하 40%, 10억 원 이하 42%, 10억 원 초과 45%입니다."}},
+{"@type":"Question","name":"필요경비는 어떻게 인정되나요?","acceptedAnswer":{"@type":"Answer","text":"프리랜서나 사업자의 경우 매출에서 필요경비를 차감한 금액이 과세 대상입니다. 단순경비율(업종별로 60~90%) 또는 기준경비율을 선택하여 적용할 수 있습니다."}},
+{"@type":"Question","name":"근로소득세액공제는 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"근로소득이 있는 경우 산출세액에서 근로소득세액공제가 적용됩니다. 130만 원 이하 세액은 55%, 초과분은 30% 공제되며, 최대 74만 원까지 공제 가능합니다."}},
+{"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다."}}
+]}
 </script>
 </head>
 <body>
@@ -54,52 +56,26 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">종합소득세 계산기</h1>
-<p class="page-sub">과세표준을 입력하면 소득세와 지방소득세를 계산합니다</p>
-<div class="card">
-<div class="card-title">🧾 소득 정보 입력</div>
-<div class="input-group">
-<label class="input-label">연간 과세표준 (종합소득금액 - 소득공제)</label>
-<div class="input-row">
-<input type="text" class="input-field comma-input" id="taxBase" placeholder="50,000,000" inputmode="numeric">
-<span class="input-unit">원</span>
+<p class="page-sub">2026년 종합소득세 계산기. 과세표준 구간별 누진세율(6%~45%) 반영, 필요경비 및 소득공제 안내.</p>
+<div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 종합소득세 계산 가이드</h2>
+<p>종합소득세는 근로소득, 사업소득, 이자소득, 배당소득, 연금소득 등 모든 소득을 합산하여 과세하는 세금입니다. 2026년 기준 과세표준(총소득에서 각종 공제를 차감한 금액)에 따라 6%에서 45%까지의 누진세율이 적용됩니다.</p>
+<p>과세표준이 1,400만 원 이하이면 6%, 1,400만 원 초과~5,000만 원 이하이면 84만 원 + 초과분의 15%, 5,000만 원 초과~8,800만 원 이하이면 624만 원 + 초과분의 24%가 적용됩니다. 고소득 구간일수록 높은 세율이 적용됩니다.</p>
+<p>프리랜서나 사업자의 경우 필요경비를 인정받아 과세표준을 낮출 수 있습니다. 단순경비율은 업종별로 매출의 일정 비율을 경비로 인정해주는 제도이며, 기준경비율은 실제 지출한 경비를 증빙하여 공제받는 방식입니다.</p>
+<table><tr><th>과세표준</th><th>세율</th><th>누진공제</th></tr><tr><td>1,400만 원 이하</td><td>6%</td><td>0원</td></tr><tr><td>1,400만~5,000만 원</td><td>15%</td><td>126만 원</td></tr><tr><td>5,000만~8,800만 원</td><td>24%</td><td>576만 원</td></tr><tr><td>8,800만~1.5억 원</td><td>35%</td><td>1,544만 원</td></tr><tr><td>1.5억~3억 원</td><td>38%</td><td>1,994만 원</td></tr><tr><td>3억~5억 원</td><td>40%</td><td>2,594만 원</td></tr><tr><td>5억~10억 원</td><td>42%</td><td>3,594만 원</td></tr><tr><td>10억 원 초과</td><td>45%</td><td>6,594만 원</td></tr></table>
 </div>
-</div>
-<button class="calc-btn" onclick="calculate()">소득세 계산하기</button>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="mainResult">-</div>
-<div class="result-label">총 납부세액 (소득세 + 지방소득세)</div>
-</div>
-<div id="detailList"></div>
-</div>
-<div class="card">
-<div class="card-title">📋 과세표준 구간별 세율</div>
-<table class="tier-table">
-<thead><tr><th>과세표준</th><th>세율</th><th>누진공제</th><th>해당 세금</th></tr></thead>
-<tbody id="tierBody"></tbody>
-</table>
-</div>
-<p class="disclaimer">※ 2024년 소득세법 기준이며, 각종 세액공제(근로소득세액공제, 자녀세액공제 등)는 반영되지 않았습니다.<br>정확한 세액은 국세청 홈택스에서 확인하세요.</p>
-</div>
-
-<div class="card">
-<div class="card-title">📖 종합소득세 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">종합소득세란?</strong><br>종합소득세는 1년간 발생한 모든 소득(사업소득, 근로소득, 이자소득, 배당소득, 연금소득, 기타소득)을 합산하여 과세하는 세금입니다. 매년 5월 1일~31일에 전년도 소득을 신고·납부해야 하며, 프리랜서, 자영업자, 부업 소득이 있는 직장인 등이 대상입니다. 근로소득만 있는 직장인은 연말정산으로 대체됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">과세표준과 세율</strong><br>과세표준은 총 소득에서 소득공제를 뺀 금액입니다. 2024년 기준 8단계 누진세율이 적용되며, 1,400만 원 이하 6%, 1,400만~5,000만 원 15%, 5,000만~8,800만 원 24%, 8,800만~1.5억 원 35%, 1.5억~3억 원 38%, 3억~5억 원 40%, 5억~10억 원 42%, 10억 원 초과 45%입니다. 지방소득세는 소득세의 10%가 추가됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">소득공제 vs 세액공제</strong><br>소득공제는 과세표준을 줄여주는 것이고, 세액공제는 계산된 세금에서 직접 빼주는 것입니다. 인적공제(본인·배우자·부양가족 1인당 150만 원), 국민연금 공제, 건강보험료 공제 등이 소득공제에 해당합니다. 자녀 세액공제, 연금계좌 세액공제, 기부금 세액공제 등은 세액공제입니다. 두 가지를 잘 활용하면 납부 세금을 크게 줄일 수 있습니다.</p>
-<p><strong style="font-size:15px;color:#0F172A">절세 팁</strong><br>노란우산공제 가입 시 연 최대 500만 원까지 소득공제를 받을 수 있습니다. IRP(개인형퇴직연금)는 연 700만 원까지 세액공제 대상입니다. 사업자의 경우 경비 처리를 꼼꼼히 하면 과세표준이 낮아집니다. 종합소득세 신고는 국세청 홈택스에서 직접 할 수 있으며, 복잡한 경우 세무사 상담을 권장합니다.</p>
-</div>
-</div>
-
-</main>
+<div class="faq-item"><div class="faq-q">종합소득세 과세표준 구간은 어떻게 되나요?</div><div class="faq-a">2026년 기준 1,400만 원 이하 6%, 5,000만 원 이하 15%, 8,800만 원 이하 24%, 1.5억 원 이하 35%, 3억 원 이하 38%, 5억 원 이하 40%, 10억 원 이하 42%, 10억 원 초과 45%입니다.</div></div>
+<div class="faq-item"><div class="faq-q">필요경비는 어떻게 인정되나요?</div><div class="faq-a">프리랜서나 사업자의 경우 매출에서 필요경비를 차감한 금액이 과세 대상입니다. 단순경비율 또는 기준경비율을 선택하여 적용할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">근로소득세액공제는 어떻게 계산하나요?</div><div class="faq-a">근로소득이 있는 경우 산출세액에서 근로소득세액공제가 적용됩니다. 130만 원 이하 세액은 55%, 초과분은 30% 공제되며, 최대 74만 원까지 공제 가능합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-var BRACKETS=[
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){var BRACKETS=[
   {limit:14000000,rate:0.06,deduction:0,label:"1,400만원 이하"},
   {limit:50000000,rate:0.15,deduction:1260000,label:"1,400만~5,000만원"},
   {limit:88000000,rate:0.24,deduction:5760000,label:"5,000만~8,800만원"},
@@ -172,7 +148,9 @@ function calculate(){
 
   document.getElementById("resultArea").style.display="block";
   document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-}
+}})();
+})();})();
+})();
 </script>
 </body>
 </html>

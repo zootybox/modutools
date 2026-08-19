@@ -4,44 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>전월세 전환율 계산기 - 전세 월세 변환 | modutools</title>
-<meta name="description" content="전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산합니다. 전환율 기준 자동 계산.">
-<link rel="canonical" href="https://modutools.com/calc/rent.html">
+<meta name="description" content="전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산. 법정 전환율 기준.">
 <meta property="og:title" content="전월세 전환율 계산기 - 전세 월세 변환 | modutools">
-<meta property="og:description" content="전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산합니다. 전환율 기준 자동 계산.">
+<meta property="og:description" content="전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산. 법정 전환율 기준.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/rent.html">
+<link rel="canonical" href="https://modutools.com/calc/rent.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.result-big{text-align:center;padding:16px 0}
-.result-number{font-size:32px;font-weight:800;color:var(--primary)}
-.result-label{font-size:14px;color:var(--g500);margin-top:4px}
-.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
-.detail-row:last-child{border-bottom:none}
-.detail-row .label{color:var(--g500)}
-.detail-row .value{font-weight:700;color:var(--g900)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.result-number{font-size:26px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"전월세 전환율 계산기","url":"https://modutools.com/calc/rent.html","description":"전세를 월세로, 월세를 전세로 전환할 때 적정 금액을 계산하는 무료 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"전월세 전환율 계산기","url":"https://modutools.com/calc/","description":"전월세 전환율 계산 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"전월세 전환율 법정 상한은 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"법정 전환율은 연 4%이나, 2026년 기준 시장 전환율은 5~7% 수준입니다. 계약 체결 시 법정 전환율을 초과하지 않도록 주의해야 합니다."}},
+{"@type":"Question","name":"전세보증금 반환보증보험은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"전세보증금 반환보증보험은 집주인이 보증금을 돌려주지 못할 때 보험사가 대신 지급하는 상품입니다. 보증료는 보증금의 0.1~0.2% 수준입니다."}},
+{"@type":"Question","name":"묵시적 갱신 시 주의사항은?","acceptedAnswer":{"@type":"Answer","text":"계약 만료 전 1~2개월 내에 이의를 제기하지 않으면 동일 조건으로 자동 갱신됩니다. 이때 전환율이 변경될 수 있으므로 갱신 전 확인이 필요합니다."}},
+{"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다."}}
+]}
 </script>
 </head>
 <body>
@@ -49,53 +56,26 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">전월세 전환율 계산기</h1>
-<p class="page-sub">전세와 월세를 전환할 때 적정 금액을 계산합니다</p>
-<div class="card">
-<div class="card-title">🏠 변환 방식</div>
-<div class="toggle-row" id="modeRow">
-<div class="toggle-btn active" data-mode="toMonthly" onclick="setMode(this)">전세 → 월세</div>
-<div class="toggle-btn" data-mode="toDeposit" onclick="setMode(this)">월세 → 전세</div>
+<p class="page-sub">전세를 월세로, 월세를 전세로 전환할 때 적정 보증금과 월세를 계산. 법정 전환율 기준.</p>
+<div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 전월세 전환율 계산 가이드</h2>
+<p>전월세 전환율 계산기는 전세 보증금을 월세로 전환하거나, 반대로 월세를 전세로 전환할 때 적정 금액을 계산합니다. 법정 전환율(연 4%)과 시장 전환율을 기준으로 선택할 수 있습니다.</p>
+<p>전세에서 월세로 전환할 때는 보증금과 월세의 적정 비율이 중요합니다. 보증금을 많이 낼수록 월세가 낮아지며, 반대로 보증금을 적게 내면 월세가 높아집니다.</p>
+<p>묵시적 갱신 시 계약 조건이 변경될 수 있으므로, 갱신 전에 반드시 새로운 조건을 확인하는 것이 좋습니다. 특히 전환율이 법정 상한을 초과하지 않는지 확인해야 합니다.</p>
+<table><tr><th>구분</th><th>법정 전환율</th><th>시장 전환율</th></tr><tr><td>주택</td><td>연 4%</td><td>연 5~7%</td></tr><tr><td>상가</td><td>연 4%</td><td>연 6~9%</td></tr></table>
 </div>
-</div>
-<div class="card" id="inputCard">
-<div class="card-title">💰 금액 입력</div>
-<div id="inputFields"></div>
-<div class="input-group">
-<label class="input-label">전월세 전환율 (연 %)</label>
-<div class="input-row">
-<input type="number" class="input-field" id="convRate" value="4.5" step="0.1" inputmode="decimal">
-<span class="input-unit">%</span>
-</div>
-</div>
-<button class="calc-btn" onclick="calculate()">계산하기</button>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="mainResult">-</div>
-<div class="result-label" id="mainLabel">-</div>
-</div>
-<div id="detailList"></div>
-</div>
-<p class="disclaimer">※ 주택임대차보호법상 전월세 전환율 상한은 기준금리+2%입니다.<br>본 결과는 참고용이며, 실제 계약은 전문가와 상의하세요.</p>
-</div>
-
-<div class="card">
-<div class="card-title">📖 전월세 전환율 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">전월세 전환율이란?</strong><br>전월세 전환율은 전세 보증금을 월세로, 또는 월세를 전세로 전환할 때 적용하는 연간 이자율입니다. 예를 들어 전환율 4.5%에서 전세 보증금 3억 원을 보증금 1억 원 + 월세로 전환하면, 차액 2억 원에 4.5%를 적용하여 월세 약 75만 원이 산출됩니다. 임대인과 임차인 모두 적정 금액을 산정하는 기준이 됩니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">법정 전환율 상한</strong><br>주택임대차보호법에 따라 전월세 전환율은 한국은행 기준금리 + 2%를 초과할 수 없습니다. 기준금리가 3.0%인 경우 전환율 상한은 5.0%입니다. 임대인이 이를 초과하는 전환율을 적용하면 위법이며, 초과 징수분은 반환 청구가 가능합니다. 계약 시 반드시 현재 기준금리를 확인하세요.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">전세와 월세 어떤 게 유리할까?</strong><br>전세는 목돈이 필요하지만 월 고정 지출이 없고, 보증금 전액을 돌려받을 수 있습니다. 월세는 초기 비용이 적지만 매월 지출이 발생하며 돌려받을 수 없는 비용입니다. 보증금을 은행에 예치했을 때 이자와 월세를 비교하면 어느 쪽이 유리한지 판단할 수 있습니다. 현재 금리가 높을수록 전세가 상대적으로 유리합니다.</p>
-<p><strong style="font-size:15px;color:#0F172A">계약 시 확인사항</strong><br>전월세 전환 계약 시 확정일자를 반드시 받고, 전입신고를 완료해야 대항력이 생깁니다. 보증금이 일정 금액 이하인 경우 주택도시보증공사(HUG) 전세보증보험에 가입하면 보증금 미반환 위험을 방지할 수 있습니다. 임대차 계약서에 전환율이 명시되어 있는지도 꼭 확인하세요.</p>
-</div>
-</div>
-
-</main>
+<div class="faq-item"><div class="faq-q">전월세 전환율 법정 상한은 얼마인가요?</div><div class="faq-a">법정 전환율은 연 4%이나, 2026년 기준 시장 전환율은 5~7% 수준입니다.</div></div>
+<div class="faq-item"><div class="faq-q">전세보증금 반환보증보험은 무엇인가요?</div><div class="faq-a">전세보증금 반환보증보험은 집주인이 보증금을 돌려주지 못할 때 보험사가 대신 지급하는 상품입니다.</div></div>
+<div class="faq-item"><div class="faq-q">묵시적 갱신 시 주의사항은?</div><div class="faq-a">계약 만료 전 1~2개월 내에 이의를 제기하지 않으면 동일 조건으로 자동 갱신됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-var currentMode="toMonthly";
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){var currentMode="toMonthly";
 function setMode(el){
   var btns=document.querySelectorAll("#modeRow .toggle-btn");
   for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
@@ -162,7 +142,9 @@ function calculate(){
   document.getElementById("resultArea").style.display="block";
   document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
 }
-buildInputs();
+buildInputs();})();
+})();})();
+})();
 </script>
 </body>
 </html>

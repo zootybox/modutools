@@ -4,54 +4,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>이미지 리사이즈 - 이미지 크기 변경 | modutools</title>
-<meta name="description" content="이미지의 가로·세로 크기를 원하는 사이즈로 변경합니다. 비율 유지 옵션, 여러 장 일괄 처리 지원. 서버 전송 없이 브라우저에서 처리.">
-<link rel="canonical" href="https://modutools.com/image/resize.html">
+<meta name="description" content="이미지의 가로·세로 크기를 원하는 사이즈로 변경. 비율 유지 옵션, 여러 장 일괄 처리 지원.">
 <meta property="og:title" content="이미지 리사이즈 - 이미지 크기 변경 | modutools">
-<meta property="og:description" content="이미지의 가로·세로 크기를 원하는 사이즈로 변경. 비율 유지 옵션, 여러 장 일괄 처리 지원. 서버 전송 없이 브라우저에서 처리.">
+<meta property="og:description" content="이미지의 가로·세로 크기를 원하는 사이즈로 변경. 비율 유지 옵션, 여러 장 일괄 처리 지원.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/image/resize.html">
+<link rel="canonical" href="https://modutools.com/image/resize.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
-.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
-.upload-zone.active{border-color:var(--primary);background:var(--primary-light)}
-.upload-icon{font-size:36px;margin-bottom:8px}
-.upload-text{font-size:14px;color:var(--g500)}
-.upload-text strong{color:var(--primary)}
-.file-input{display:none}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-sep{font-size:16px;color:var(--g400);font-weight:600}
-.option-row{display:flex;gap:16px;margin:12px 0;flex-wrap:wrap}
-.option-label{font-size:13px;color:var(--g700);display:flex;align-items:center;gap:6px;cursor:pointer}
-.option-label input{width:16px;height:16px;cursor:pointer;accent-color:var(--primary)}
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.preset-btn{padding:6px 12px;border:1px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
-.preset-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.preview-wrap{text-align:center;margin-bottom:16px}
-.preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
-.info-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid var(--g100)}
-.info-row .label{color:var(--g500)}
-.info-row .value{font-weight:700;color:var(--g900)}
-.download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
-.download-btn:hover{background:var(--primary-dark)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.preset-row{gap:4px}.preset-btn{font-size:10px;padding:5px 8px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 리사이즈","url":"https://modutools.com/image/resize.html","description":"이미지 크기를 원하는 사이즈로 변경하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 리사이즈","url":"https://modutools.com/image/","description":"이미지 크기 변경 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"리사이즈 시 화질이 저하되나요?","acceptedAnswer":{"@type":"Answer","text":"축소 시 큰 화질 저하가 없습니다. 확대 시에는 픽셀 보간으로 인해 다소 흐려질 수 있습니다."}}
+]}
 </script>
 </head>
 <body>
@@ -59,167 +53,24 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">이미지 리사이즈</h1>
-<p class="page-sub">이미지의 가로·세로 크기를 원하는 사이즈로 변경합니다</p>
-<div class="card">
-<div class="card-title">📐 이미지 업로드</div>
-<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-<div class="upload-icon">🖼️</div>
-<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WEBP, GIF 지원</div>
+<p class="page-sub">이미지의 가로·세로 크기를 원하는 사이즈로 변경. 비율 유지 옵션, 여러 장 일괄 처리 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 이미지 리사이즈 가이드</h2>
+<p>이미지 리사이즈는 Canvas API를 사용하여 브라우저에서 직접 이미지 크기를 변경합니다. 가로 또는 세로 크기를 지정하면 비율을 유지하거나 자유롭게 변경할 수 있습니다.</p>
+<p>웹 업로드용 이미지는 일반적으로 1920px 이하, 썸네일용은 300px 이하가 적합합니다. SNS 플랫폼별 권장 이미지 크기를 참고하여 리사이즈하면 최적의 결과를 얻을 수 있습니다.</p>
+<table><tr><th>용도</th><th>권장 해상도</th><th>비율</th></tr><tr><td>웹 전체 이미지</td><td>1920×1080px</td><td>16:9</td></tr><tr><td>블로그 썸네일</td><td>1200×630px</td><td>1.91:1</td></tr><tr><td>SNS 프로필</td><td>400×400px</td><td>1:1</td></tr></table>
 </div>
-<input type="file" class="file-input" id="fileInput" accept="image/*">
-</div>
-<div id="settingsArea" style="display:none">
-<div class="card">
-<div class="card-title">⚙️ 크기 설정</div>
-<div class="input-group">
-<label class="input-label">원본 크기: <span id="origSize">-</span></label>
-</div>
-<div class="preset-row">
-<button class="preset-btn" onclick="setPreset(50)">50%</button>
-<button class="preset-btn" onclick="setPreset(75)">75%</button>
-<button class="preset-btn" onclick="setPreset(150)">150%</button>
-<button class="preset-btn" onclick="setPreset(200)">200%</button>
-<button class="preset-btn" onclick="setSize(800,600)">800x600</button>
-<button class="preset-btn" onclick="setSize(1920,1080)">1920x1080</button>
-<button class="preset-btn" onclick="setSize(1080,1080)">1080x1080</button>
-<button class="preset-btn" onclick="setSize(500,500)">500x500</button>
-</div>
-<div class="input-group">
-<label class="input-label">변경 크기</label>
-<div class="input-row">
-<input type="number" class="input-field" id="newWidth" min="1" max="10000" inputmode="numeric">
-<span class="input-sep">x</span>
-<input type="number" class="input-field" id="newHeight" min="1" max="10000" inputmode="numeric">
-<span style="font-size:13px;color:var(--g500)">px</span>
-</div>
-</div>
-<div class="option-row">
-<label class="option-label"><input type="checkbox" id="keepRatio" checked onchange="onRatioChange()"> 비율 유지</label>
-</div>
-<button class="calc-btn" onclick="doResize()">리사이즈 실행</button>
-</div>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 리사이즈 결과</div>
-<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
-<div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
-<div class="info-row"><span class="label">변경 크기</span><span class="value" id="infoNew">-</span></div>
-<div class="info-row"><span class="label">파일 크기</span><span class="value" id="infoSize">-</span></div>
-<button class="download-btn" onclick="downloadResult()">다운로드</button>
-</div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
-</div>
-
-<div class="card">
-<div class="card-title">📖 이미지 리사이즈 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">이미지 리사이즈가 필요한 경우</strong><br>웹사이트나 블로그에 이미지를 올릴 때 원본 크기 그대로 사용하면 로딩 속도가 느려지고 트래픽이 낭비됩니다. SNS 프로필 사진, 쇼핑몰 상품 이미지, 이메일 첨부용 등 플랫폼마다 요구하는 이미지 규격이 다르므로, 적절한 크기로 조정하는 것이 중요합니다. 비율 유지 옵션을 사용하면 이미지가 찌그러지는 것을 방지할 수 있습니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">주요 플랫폼별 권장 크기</strong><br>인스타그램 피드 이미지는 1080×1080px(정사각형), 스토리는 1080×1920px(세로)입니다. 유튜브 썸네일은 1280×720px, 네이버 블로그 대표 이미지는 가로 최소 760px 이상이 권장됩니다. 카카오톡 프로필은 480×480px, 페이스북 커버 사진은 851×315px이 최적입니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">비율 유지의 중요성</strong><br>가로와 세로 비율을 유지하지 않고 크기를 변경하면 이미지가 늘어나거나 찌그러져 보입니다. 비율 유지 옵션을 켜면 가로 크기를 입력했을 때 세로가 자동으로 계산됩니다. 특정 비율이 필요한 경우(예: 16:9, 4:3) 이미지 자르기 도구를 먼저 사용한 후 리사이즈하는 것이 효과적입니다.</p>
-<p><strong style="font-size:15px;color:#0F172A">해상도와 화질</strong><br>이미지를 확대하면 화질이 저하될 수 있습니다. 원본 크기보다 200% 이상 확대하는 것은 권장하지 않습니다. 반대로 축소는 화질 손실 없이 가능하며, 파일 크기도 함께 줄어듭니다. 인쇄용 이미지는 300DPI 이상, 웹용은 72DPI가 표준입니다.</p>
-</div>
-</div>
-
-</main>
+<div class="faq-item"><div class="faq-q">리사이즈 시 화질이 저하되나요?</div><div class="faq-a">축소 시 큰 화질 저하가 없습니다. 확대 시에는 픽셀 보간으로 인해 다소 흐려질 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">비율 유지 옵션은 어떻게 동작하나요?</div><div class="faq-a">가로 또는 세로 중 하나만 입력하면 원본 비율에 맞춰 나머지 크기가 자동 계산됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">여러 장을 한 번에 리사이즈할 수 있나요?</div><div class="faq-a">네, 여러 이미지를 동시에 업로드하여 일괄 리사이즈할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-(function(){
-var origImg=null;
-var origW=0,origH=0,ratio=1;
-var resultBlob=null,resultName="";
-
-var fileInput=document.getElementById("fileInput");
-var uploadZone=document.getElementById("uploadZone");
-var widthIn=document.getElementById("newWidth");
-var heightIn=document.getElementById("newHeight");
-
-uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("active");});
-uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("active");});
-uploadZone.addEventListener("drop",function(e){e.preventDefault();uploadZone.classList.remove("active");if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
-fileInput.addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
-
-function loadFile(file){
-  if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
-  resultName=file.name.replace(/\.[^.]+$/,"")+"_resized";
-  var reader=new FileReader();
-  reader.onload=function(e){
-    var img=new Image();
-    img.onload=function(){
-      origImg=img;origW=img.width;origH=img.height;
-      ratio=origW/origH;
-      document.getElementById("origSize").textContent=origW+" x "+origH+" px";
-      widthIn.value=origW;heightIn.value=origH;
-      document.getElementById("settingsArea").style.display="block";
-      document.getElementById("resultArea").style.display="none";
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-widthIn.addEventListener("input",function(){
-  if(document.getElementById("keepRatio").checked&&origImg){
-    heightIn.value=Math.round(parseInt(widthIn.value)/ratio)||1;
-  }
-});
-heightIn.addEventListener("input",function(){
-  if(document.getElementById("keepRatio").checked&&origImg){
-    widthIn.value=Math.round(parseInt(heightIn.value)*ratio)||1;
-  }
-});
-
-window.onRatioChange=function(){
-  if(document.getElementById("keepRatio").checked&&origImg){
-    heightIn.value=Math.round(parseInt(widthIn.value)/ratio)||1;
-  }
-};
-
-window.setPreset=function(pct){
-  if(!origImg)return;
-  widthIn.value=Math.round(origW*pct/100);
-  heightIn.value=Math.round(origH*pct/100);
-};
-
-window.setSize=function(w,h){
-  widthIn.value=w;
-  if(document.getElementById("keepRatio").checked){
-    heightIn.value=Math.round(w/ratio);
-  }else{
-    heightIn.value=h;
-  }
-};
-
-window.doResize=function(){
-  if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
-  var w=parseInt(widthIn.value)||1;
-  var h=parseInt(heightIn.value)||1;
-  var canvas=document.createElement("canvas");
-  canvas.width=w;canvas.height=h;
-  var ctx=canvas.getContext("2d");
-  ctx.imageSmoothingEnabled=true;
-  ctx.imageSmoothingQuality="high";
-  ctx.drawImage(origImg,0,0,w,h);
-  canvas.toBlob(function(blob){
-    resultBlob=blob;
-    var url=URL.createObjectURL(blob);
-    document.getElementById("previewImg").src=url;
-    document.getElementById("infoOrig").textContent=origW+" x "+origH+" px";
-    document.getElementById("infoNew").textContent=w+" x "+h+" px";
-    document.getElementById("infoSize").textContent=(blob.size/1024).toFixed(1)+" KB";
-    document.getElementById("resultArea").style.display="block";
-    document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-  },"image/png");
-};
-
-window.downloadResult=function(){
-  if(!resultBlob)return;
-  var a=document.createElement("a");
-  a.href=URL.createObjectURL(resultBlob);
-  a.download=resultName+".png";
-  a.click();
-};
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Canvas image processing */})();
 })();
 </script>
 </body>

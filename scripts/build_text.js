@@ -1,15 +1,25 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+const DIR = 'c:/Users/user/Documents/GitHub/modutools';
+
+function w(rel, content) {
+    const p = path.join(DIR, rel);
+    fs.writeFileSync(p, content, 'utf8');
+    console.log(`  [OK] ${rel} (${content.length} bytes)`);
+}
+
+const H = `<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>BMI 계산기 - 체질량지수 측정 | modutools</title>
-<meta name="description" content="키와 체중을 입력하면 BMI를 즉시 계산. 저체중·정상·과체중·비만 단계 확인.">
-<meta property="og:title" content="BMI 계산기 - 체질량지수 측정 | modutools">
-<meta property="og:description" content="키와 체중을 입력하면 BMI를 즉시 계산. 저체중·정상·과체중·비만 단계 확인.">
+<title>%T%</title>
+<meta name="description" content="%D%">
+<meta property="og:title" content="%T%">
+<meta property="og:description" content="%D%">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://modutools.com/life/bmi.html">
-<link rel="canonical" href="https://modutools.com/life/bmi.html">
+<meta property="og:url" content="%U%">
+<link rel="canonical" href="%U%">
 <link rel="stylesheet" href="/css/common.css">
 <style>
 .page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
@@ -19,6 +29,8 @@
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
+.text-area{width:100%;min-height:180px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
 .ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
 .mt-ad,.ad-slot,.ad-slot-middle{display:none}
@@ -31,47 +43,35 @@
 .guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:'\\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
 .faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
+@media(max-width:480px){.page-title{font-size:22px}.text-area{min-height:140px;font-size:13px}}
 </style>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"BMI 계산기","url":"https://modutools.com/","description":"BMI 측정 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"한국 BMI 기준과 WHO 기준의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"WHO는 25 이상 과체중이나, 한국은 23 이상 과체중으로 더 엄격한 기준을 적용합니다."}}
-]}
-</script>
+%J%
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
-<h1 class="page-title">BMI 계산기</h1>
-<p class="page-sub">키와 체중을 입력하면 BMI를 즉시 계산. 저체중·정상·과체중·비만 단계 확인. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="guide-section"><div class="guide-card"><h2>📖 BMI 계산 가이드</h2>
-<p>BMI는 체중(kg)을 키(m)의 제곱으로 나눈 비만도 평가 지표입니다. 대한비만학회 기준: 18.5 미만 저체중, 18.5~23 정상, 23~25 과체중, 25~30 1단계 비만, 30~35 2단계 비만, 35 이상 3단계 비만입니다.</p>
-<p>BMI는 간편하지만 근육량이 많은 운동선수는 높게, 노인은 낮게 나올 수 있습니다. 정확한 평가는 체지방률 측정과 전문의 상담을 권장합니다.</p>
-<table><tr><th>구분</th><th>BMI 범위</th><th>한국 기준</th></tr><tr><td>저체중</td><td>18.5 미만</td><td>증량 필요</td></tr><tr><td>정상</td><td>18.5~23</td><td>정상 범위</td></tr><tr><td>과체중</td><td>23~25</td><td>주의</td></tr><tr><td>비만</td><td>25 이상</td><td>관리 필요</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">한국 BMI 기준과 WHO 기준의 차이는 무엇인가요?</div><div class="faq-a">WHO는 25 이상 과체중이나, 한국은 23 이상으로 더 엄격합니다.</div></div>
-<div class="faq-item"><div class="faq-q">BMI가 높으면 항상 건강에 문제가 있나요?</div><div class="faq-a">운동선수는 근육량이 많아 BMI가 높아도 건강할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">정상 체중 범위는 어떻게 계산되나요?</div><div class="faq-a">정상 BMI(18.5~23)에 해당하는 체중 범위를 계산하여 표시합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+`;
+const F = `</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
 (function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Processing */})();
+%S%
 })();
 </script>
 </body>
-</html>
+</html>`;
+
+function make(T, D, U, J, B, S) {
+    return H.replace(/%T%/g,T).replace(/%D%/g,D).replace(/%U%/g,U).replace(/%J%/g,J) + B + F.replace(/%S%/g,S);
+}
+
+console.log('Templates loaded');

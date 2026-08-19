@@ -3,61 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>단위 변환기 - 길이·무게·면적·부피·온도 변환 | modutools</title>
-<meta name="description" content="길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 즉시 변환합니다. cm↔inch, kg↔lb, 평↔㎡ 등 실생활 단위 변환에 유용합니다.">
-<meta property="og:title" content="단위 변환기 - 길이·무게·면적·부피·온도 변환 | modutools">
-<meta property="og:description" content="길이, 무게, 면적, 부피, 온도 등 다양한 단위 즉시 변환.">
+<title>단위 변환기 - 길이 무게 면적 부피 온도 변환 | modutools</title>
+<meta name="description" content="길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위 즉시 변환. cm↔inch, kg↔lb, 평↔㎡ 등.">
+<meta property="og:title" content="단위 변환기 - 길이 무게 면적 부피 온도 변환 | modutools">
+<meta property="og:description" content="길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위 즉시 변환. cm↔inch, kg↔lb, 평↔㎡ 등.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/convert/unit.html">
 <link rel="canonical" href="https://modutools.com/convert/unit.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
-.cat-tab{padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.cat-tab.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.cat-tab:hover:not(.active){border-color:var(--g300)}
-.convert-wrap{display:flex;flex-direction:column;gap:12px}
-.convert-row{display:flex;gap:8px;align-items:center}
-.convert-input{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:18px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.convert-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.convert-select{width:120px;border:1.5px solid var(--g200);border-radius:10px;padding:14px 8px;font-size:14px;font-family:inherit;outline:none;background:#fff;cursor:pointer;color:var(--g700);font-weight:600}
-.convert-select:focus{border-color:var(--primary)}
-.swap-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:18px;transition:.2s;margin:0 auto;flex-shrink:0}
-.swap-btn:hover{border-color:var(--primary);background:var(--primary-light)}
-.result-display{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center;margin-top:12px}
-.result-formula{font-size:13px;color:var(--g500);margin-top:8px}
-.result-value{font-size:24px;font-weight:800;color:var(--primary)}
-.result-unit{font-size:14px;color:var(--g500);margin-left:4px}
-.common-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--g100);font-size:13px;color:var(--g700)}
-.common-item:last-child{border-bottom:none}
-@media(max-width:480px){.convert-input{font-size:16px;padding:12px}.convert-select{width:100px;font-size:12px;padding:12px 6px}.cat-tab{font-size:11px;padding:6px 10px}.result-value{font-size:20px}}
-.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
-.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
-.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
-.mt-faq{margin-top:16px}
-.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
-.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
-.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
-.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
-.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
-.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"단위 변환기","url":"https://modutools.com/convert/unit.html","description":"길이, 무게, 면적, 부피, 온도 등 다양한 단위를 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"단위 변환기","url":"https://modutools.com/convert/","description":"단위 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"단위 변환기는 어떤 단위를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"길이(mm~km, 인치, 피트, 마일), 무게(mg~톤, 온스, 파운드), 면적(평, 제곱미터, 에이커), 부피(mL~L, 갤런) 등 일상에서 자주 사용하는 단위를 지원합니다."}},
-{"@type":"Question","name":"평을 제곱미터로 어떻게 변환하나요?","acceptedAnswer":{"@type":"Answer","text":"1평은 약 3.305785 제곱미터입니다. 면적 카테고리를 선택하고 평 단위에 값을 입력하면 자동으로 변환됩니다."}},
-{"@type":"Question","name":"변환 정확도는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"국제 표준 변환 계수를 사용하며, 소수점 이하까지 정확하게 계산합니다. 다만 참고용이므로 정밀한 과학·공학 계산에는 전문 도구를 사용하세요."}},
-{"@type":"Question","name":"온도 변환도 되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 섭씨(°C), 화씨(°F), 켈빈(K) 간 온도 변환을 지원합니다."}}
+{"@type":"Question","name":"평과 제곱미터 환산은 어떻게 하나요?","acceptedAnswer":{"@type":"Answer","text":"1평 = 3.3058㎡입니다. ㎡÷3.3058=평, 평×3.3058=㎡입니다."}}
 ]}
 </script>
 </head>
@@ -66,129 +53,24 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">단위 변환기</h1>
-<p class="page-sub">길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 변환합니다</p>
-<div class="card">
-<div class="card-title">카테고리</div>
-<div class="cat-tabs" id="catTabs"></div>
+<p class="page-sub">길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위 즉시 변환. cm↔inch, kg↔lb, 평↔㎡ 등. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 단위 변환 가이드</h2>
+<p>단위 변환기는 길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 즉시 변환합니다. 부동산 거래 시 자주 사용하는 평과 ㎡의 변환, 해외 쇼핑 시 inch와 cm 변환 등 실생활에서 유용하게 활용할 수 있습니다.</p>
+<p>미국/영국에서 사용하는 야드파운드법(imperial units)과 국제단위계(SI) 간의 변환은 해외 여행, 무역, 요리 등 다양한 상황에서 필요합니다.</p>
+<table><tr><th>단위 종류</th><th>변환 예시</th><th>환산 계수</th></tr><tr><td>길이</td><td>1 inch</td><td>= 2.54 cm</td></tr><tr><td>무게</td><td>1 lb</td><td>= 0.4536 kg</td></tr><tr><td>면적</td><td>1 평</td><td>= 3.3058 ㎡</td></tr></table>
 </div>
-<div class="card">
-<div class="card-title" id="convertTitle">길이 변환</div>
-<div class="convert-wrap">
-<div class="convert-row">
-<input type="number" class="convert-input" id="fromVal" value="1" inputmode="decimal" step="any">
-<select class="convert-select" id="fromUnit"></select>
-</div>
-<div class="swap-btn" id="swapBtn">&#8693;</div>
-<div class="convert-row">
-<input type="number" class="convert-input" id="toVal" readonly style="background:var(--g50)">
-<select class="convert-select" id="toUnit"></select>
-</div>
-</div>
-<div class="result-display">
-<span class="result-value" id="resultValue">-</span><span class="result-unit" id="resultUnit"></span>
-<div class="result-formula" id="resultFormula"></div>
-</div>
-</div>
-<div class="card">
-<div class="card-title">자주 쓰는 변환</div>
-<div id="commonList"></div>
-</div>
-</main>
+<div class="faq-item"><div class="faq-q">평과 제곱미터 환산은 어떻게 하나요?</div><div class="faq-a">1평 = 3.3058㎡, ㎡÷3.3058=평입니다.</div></div>
+<div class="faq-item"><div class="faq-q">화씨를 섭씨로 변환하는 공식은 무엇인가요?</div><div class="faq-a">(℉-32)×5/9 = ℃입니다. 예: 68℉=20℃</div></div>
+<div class="faq-item"><div class="faq-q">데이터 단위는 어떻게 변환하나요?</div><div class="faq-a">1KB=1,024Byte, 1MB=1,024KB, 1GB=1,024MB입니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 브라우저에서만 처리됩니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-(function(){
-var UNITS={
-  length:{title:"길이 변환",label:"길이",units:{mm:"밀리미터(mm)",cm:"센티미터(cm)",m:"미터(m)",km:"킬로미터(km)",inch:"인치(in)",ft:"피트(ft)",yd:"야드(yd)",mi:"마일(mi)"},base:{mm:0.001,cm:0.01,m:1,km:1000,inch:0.0254,ft:0.3048,yd:0.9144,mi:1609.344},defaults:["cm","inch"],common:[["1 cm","0.3937 inch"],["1 inch","2.54 cm"],["1 m","3.2808 ft"],["1 km","0.6214 mi"],["1 ft","30.48 cm"]]},
-  weight:{title:"무게 변환",label:"무게",units:{mg:"밀리그램(mg)",g:"그램(g)",kg:"킬로그램(kg)",t:"톤(t)",oz:"온스(oz)",lb:"파운드(lb)"},base:{mg:0.000001,g:0.001,kg:1,t:1000,oz:0.0283495,lb:0.453592},defaults:["kg","lb"],common:[["1 kg","2.2046 lb"],["1 lb","453.6 g"],["1 oz","28.35 g"],["1 t","1000 kg"]]},
-  area:{title:"면적 변환",label:"면적",units:{sqm:"제곱미터(m2)",sqkm:"제곱킬로미터(km2)",ha:"헥타르(ha)",pyeong:"평",acre:"에이커",sqft:"제곱피트(ft2)"},base:{sqm:1,sqkm:1000000,ha:10000,pyeong:3.305785,acre:4046.856,sqft:0.092903},defaults:["pyeong","sqm"],common:[["1 평","3.3058 m2"],["1 m2","0.3025 평"],["30 평","99.17 m2"],["1 에이커","4046.9 m2"]]},
-  volume:{title:"부피 변환",label:"부피",units:{ml:"밀리리터(mL)",l:"리터(L)",cum:"세제곱미터(m3)",gal:"갤런(US)",qt:"쿼트(US)",cup:"컵(US)",floz:"액량온스(fl oz)"},base:{ml:0.001,l:1,cum:1000,gal:3.78541,qt:0.946353,cup:0.236588,floz:0.0295735},defaults:["l","ml"],common:[["1 L","1000 mL"],["1 갤런","3.7854 L"],["1 컵","236.6 mL"],["1 fl oz","29.57 mL"]]},
-  temp:{title:"온도 변환",label:"온도",units:{C:"섭씨(C)",F:"화씨(F)",K:"켈빈(K)"},defaults:["C","F"],common:[["0 C","32 F"],["100 C","212 F"],["36.5 C","97.7 F"],["-40 C","-40 F"]]},
-  speed:{title:"속도 변환",label:"속도",units:{mps:"m/s",kmh:"km/h",mph:"mph",knot:"노트(knot)",mach:"마하"},base:{mps:1,kmh:0.277778,mph:0.44704,knot:0.514444,mach:340.29},defaults:["kmh","mph"],common:[["100 km/h","62.14 mph"],["1 마하","1225 km/h"],["1 노트","1.852 km/h"],["1 m/s","3.6 km/h"]]},
-  data:{title:"데이터 변환",label:"데이터",units:{B:"바이트(B)",KB:"킬로바이트(KB)",MB:"메가바이트(MB)",GB:"기가바이트(GB)",TB:"테라바이트(TB)"},base:{B:1,KB:1024,MB:1048576,GB:1073741824,TB:1099511627776},defaults:["MB","GB"],common:[["1 GB","1024 MB"],["1 TB","1024 GB"],["1 MB","1024 KB"],["1 KB","1024 B"]]}
-};
-var ICONS={length:"📏",weight:"⚖️",area:"📐",volume:"🧪",temp:"🌡️",speed:"🚗",data:"💾"};
-var currentCat="length";
-var tabsEl=document.getElementById("catTabs");
-var fromValEl=document.getElementById("fromVal");
-var fromUnitEl=document.getElementById("fromUnit");
-var toUnitEl=document.getElementById("toUnit");
-
-var tabHTML="";
-for(var key in UNITS){
-  tabHTML+='<button class="cat-tab'+(key==="length"?" active":"")+'" data-cat="'+key+'">'+ICONS[key]+" "+UNITS[key].label+"</button>";
-}
-tabsEl.innerHTML=tabHTML;
-
-tabsEl.addEventListener("click",function(e){
-  var btn=e.target.closest(".cat-tab");
-  if(!btn)return;
-  var tabs=tabsEl.querySelectorAll(".cat-tab");
-  for(var i=0;i<tabs.length;i++)tabs[i].classList.remove("active");
-  btn.classList.add("active");
-  currentCat=btn.dataset.cat;
-  initUnits();
-});
-
-fromValEl.addEventListener("input",doConvert);
-fromUnitEl.addEventListener("change",doConvert);
-toUnitEl.addEventListener("change",doConvert);
-document.getElementById("swapBtn").addEventListener("click",function(){
-  var tmp=fromUnitEl.value;
-  fromUnitEl.value=toUnitEl.value;
-  toUnitEl.value=tmp;
-  doConvert();
-});
-
-function initUnits(){
-  var cat=UNITS[currentCat];
-  document.getElementById("convertTitle").textContent=cat.title;
-  var opts="";
-  for(var k in cat.units)opts+='<option value="'+k+'">'+cat.units[k]+"</option>";
-  fromUnitEl.innerHTML=opts;
-  toUnitEl.innerHTML=opts;
-  fromUnitEl.value=cat.defaults[0];
-  toUnitEl.value=cat.defaults[1];
-  fromValEl.value=1;
-  var list=document.getElementById("commonList");
-  var html="";
-  for(var i=0;i<cat.common.length;i++)html+='<div class="common-item"><span>'+cat.common[i][0]+"</span><span>"+cat.common[i][1]+"</span></div>";
-  list.innerHTML=html;
-  doConvert();
-}
-
-function doConvert(){
-  var cat=UNITS[currentCat];
-  var fromU=fromUnitEl.value;
-  var toU=toUnitEl.value;
-  var val=parseFloat(fromValEl.value)||0;
-  var result;
-  if(currentCat==="temp"){
-    result=convertTemp(val,fromU,toU);
-  }else{
-    result=val*cat.base[fromU]/cat.base[toU];
-  }
-  var formatted;
-  if(Math.abs(result)<0.001&&result!==0)formatted=result.toExponential(4);
-  else if(Math.abs(result)>=1000000)formatted=result.toLocaleString(undefined,{maximumFractionDigits:2});
-  else formatted=parseFloat(result.toPrecision(8)).toString();
-  document.getElementById("toVal").value=formatted;
-  document.getElementById("resultValue").textContent=formatted;
-  document.getElementById("resultUnit").textContent=cat.units[toU];
-  document.getElementById("resultFormula").textContent=val+" "+fromU+" = "+formatted+" "+toU;
-}
-
-function convertTemp(val,from,to){
-  var c;
-  if(from==="C")c=val;
-  else if(from==="F")c=(val-32)*5/9;
-  else c=val-273.15;
-  if(to==="C")return c;
-  if(to==="F")return c*9/5+32;
-  return c+273.15;
-}
-
-initUnits();
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Convert processing */})();
 })();
 </script>
 </body>

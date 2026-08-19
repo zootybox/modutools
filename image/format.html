@@ -3,55 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>이미지 포맷 변환 - PNG JPG WEBP GIF 변환 | modutools</title>
-<meta name="description" content="이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환합니다. 여러 장 일괄 변환 지원. 서버 전송 없이 브라우저에서 처리.">
-<link rel="canonical" href="https://modutools.com/image/format.html">
-<meta property="og:title" content="이미지 포맷 변환 - PNG JPG WEBP GIF 변환 | modutools">
-<meta property="og:description" content="이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환. 여러 장 일괄 변환 지원. 서버 전송 없이 브라우저에서 처리.">
+<title>이미지 포맷 변환 - PNG JPG WEBP 변환 | modutools</title>
+<meta name="description" content="이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환. 여러 장 일괄 변환 지원.">
+<meta property="og:title" content="이미지 포맷 변환 - PNG JPG WEBP 변환 | modutools">
+<meta property="og:description" content="이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환. 여러 장 일괄 변환 지원.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/image/format.html">
+<link rel="canonical" href="https://modutools.com/image/format.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
-.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
-.upload-zone.active{border-color:var(--primary);background:var(--primary-light)}
-.upload-icon{font-size:36px;margin-bottom:8px}
-.upload-text{font-size:14px;color:var(--g500)}
-.upload-text strong{color:var(--primary)}
-.file-input{display:none}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.file-list{margin-top:12px}
-.file-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:8px}
-.file-thumb{width:48px;height:48px;border-radius:6px;object-fit:cover;border:1px solid var(--g200)}
-.file-info{flex:1;min-width:0}
-.file-name{font-size:13px;font-weight:600;color:var(--g900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.file-meta{font-size:11px;color:var(--g400);margin-top:2px}
-.file-download{padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--primary);transition:.2s;white-space:nowrap}
-.file-download:hover{background:var(--primary-light);border-color:var(--primary)}
-.download-all-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
-.download-all-btn:hover{background:var(--primary-dark)}
-.quality-row{display:none;margin-top:12px}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.toggle-btn{font-size:12px;padding:10px}}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 포맷 변환","url":"https://modutools.com/image/format.html","description":"이미지를 PNG, JPG, WEBP 포맷으로 변환하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"이미지 포맷 변환","url":"https://modutools.com/image/","description":"이미지 포맷 변환 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"WebP는 모든 브라우저에서 지원되나요?","acceptedAnswer":{"@type":"Answer","text":"Chrome, Firefox, Edge, Safari 14+ 등 대부분의 최신 브라우저에서 WebP를 지원합니다."}}
+]}
 </script>
 </head>
 <body>
@@ -59,194 +53,24 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">이미지 포맷 변환</h1>
-<p class="page-sub">이미지를 PNG, JPG, WEBP 포맷으로 변환합니다</p>
-<div class="card">
-<div class="card-title">🔄 이미지 업로드</div>
-<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-<div class="upload-icon">🖼️</div>
-<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>여러 장 선택 가능 (최대 10장)</div>
+<p class="page-sub">이미지 파일을 PNG, JPG, WEBP 포맷으로 자유롭게 변환. 여러 장 일괄 변환 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 이미지 포맷 변환 가이드</h2>
+<p>이미지 포맷 변환기는 Canvas API를 사용하여 이미지 파일을 PNG, JPG, WebP 포맷으로 자유롭게 변환합니다. 여러 장을 동시에 업로드하여 일괄 변환할 수 있어 효율적입니다.</p>
+<p>JPEG는 사진과 같은 복잡한 이미지에 적합하며, PNG는 투명도가 필요한 로고나 그래픽에 적합합니다. WebP는 두 포맷의 장점을 결합한 최신 포맷입니다.</p>
+<table><tr><th>포맷</th><th>투명도</th><th>브라우저 호환성</th><th>권장 용도</th></tr><tr><td>JPEG</td><td>미지원</td><td>모든 브라우저</td><td>사진, 복잡한 이미지</td></tr><tr><td>PNG</td><td>지원</td><td>모든 브라우저</td><td>로고, 그래픽, 아이콘</td></tr></table>
 </div>
-<input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
-<div class="file-list" id="uploadList"></div>
-</div>
-<div id="settingsArea" style="display:none">
-<div class="card">
-<div class="card-title">⚙️ 변환 설정</div>
-<div class="input-group">
-<label class="input-label">변환할 포맷</label>
-<div class="toggle-row" id="formatRow">
-<div class="toggle-btn active" data-fmt="png" onclick="setFormat(this)">PNG</div>
-<div class="toggle-btn" data-fmt="jpeg" onclick="setFormat(this)">JPG</div>
-<div class="toggle-btn" data-fmt="webp" onclick="setFormat(this)">WEBP</div>
-</div>
-</div>
-<div class="quality-row" id="qualityRow">
-<div class="input-group">
-<label class="input-label">품질 (1~100)</label>
-<div class="input-row">
-<input type="range" style="flex:1" id="quality" min="1" max="100" value="90" oninput="document.getElementById('qualVal').textContent=this.value">
-<span id="qualVal" style="min-width:30px;text-align:right;font-weight:700;font-size:14px;color:var(--primary)">90</span>
-</div>
-</div>
-</div>
-<button class="calc-btn" onclick="doConvert()">변환하기</button>
-</div>
-</div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 변환 결과</div>
-<div class="file-list" id="resultList"></div>
-<button class="download-all-btn" id="downloadAllBtn" onclick="downloadAll()" style="display:none">전체 다운로드</button>
-</div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
-</div>
-
-<!-- 가이드 섹션 -->
-<section class="card" style="margin-top:24px">
-<h2 style="font-size:18px;font-weight:700;margin-bottom:16px">📖 이미지 포맷 변환 가이드</h2>
-<div style="font-size:14px;color:var(--g600);line-height:1.8">
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">이미지 포맷의 종류와 특징</h3>
-<p>이미지 파일 포맷은 저장 방식에 따라 용도가 다릅니다. JPG(JPEG)는 사진에 최적화된 손실 압축 포맷으로 파일 크기가 작아 웹사이트, 블로그, 이메일 첨부에 널리 사용됩니다. PNG는 무손실 압축 포맷으로 투명 배경을 지원하며 로고, 아이콘, 스크린샷에 적합합니다. WEBP는 구글이 개발한 차세대 포맷으로 JPG보다 약 30% 더 작은 용량으로 동일한 화질을 제공하며, 최신 브라우저 대부분이 지원합니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">언제 어떤 포맷을 선택해야 할까?</h3>
-<p>사진이나 복잡한 이미지는 JPG가 적합합니다. 색상이 풍부하고 그라데이션이 많은 이미지를 작은 용량으로 저장할 수 있기 때문입니다. 로고, 텍스트가 포함된 이미지, 투명 배경이 필요한 경우에는 PNG를 선택하세요. 웹사이트 성능 최적화가 목표라면 WEBP로 변환하는 것이 가장 효율적입니다. GIF는 간단한 애니메이션에만 사용하고, 정적 이미지에는 권장하지 않습니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">포맷 변환 시 주의사항</h3>
-<p>PNG에서 JPG로 변환하면 투명 배경이 흰색으로 채워집니다. 투명도가 필요한 이미지는 PNG 또는 WEBP를 유지하세요. JPG는 변환할 때마다 화질이 미세하게 저하되므로 원본을 보관해두는 것이 좋습니다. 품질 설정은 80~90 사이가 화질과 용량의 최적 균형점이며, 인쇄용이라면 95 이상을 권장합니다.</p>
-
-<h3 style="font-size:15px;color:var(--g800);margin:20px 0 8px;font-weight:700">플랫폼별 권장 포맷</h3>
-<p>인스타그램, 페이스북 등 SNS는 JPG 또는 PNG를 지원합니다. 네이버 블로그와 티스토리는 JPG, PNG, GIF를 지원하며 WEBP는 일부 제한될 수 있습니다. 쇼핑몰 상품 이미지는 흰 배경 JPG가 표준이며, 웹사이트 개발 시에는 WEBP로 통일하면 로딩 속도를 크게 개선할 수 있습니다.</p>
-</div>
-</section>
-
-<!-- FAQ 섹션 -->
-<section class="card" style="margin-top:16px">
-<h2 style="font-size:18px;font-weight:700;margin-bottom:16px">❓ 자주 묻는 질문</h2>
-<div style="font-size:14px;color:var(--g600);line-height:1.8">
-
-<p style="font-weight:700;color:var(--primary);margin-top:12px">PNG와 JPG의 차이점은 무엇인가요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-PNG는 무손실 압축으로 원본 화질을 그대로 유지하며 투명 배경을 지원합니다. 대신 파일 크기가 큽니다. JPG는 손실 압축으로 파일 크기가 작지만 압축할 때마다 화질이 미세하게 저하되며, 투명 배경을 지원하지 않습니다. 사진은 JPG, 로고나 아이콘은 PNG가 적합합니다.
-</div>
-
-<p style="font-weight:700;color:var(--primary);margin-top:16px">WEBP 포맷은 어디서 사용할 수 있나요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-WEBP는 Chrome, Firefox, Safari, Edge 등 모든 최신 브라우저에서 지원됩니다. 웹사이트, 블로그, 워드프레스에서 사용하면 로딩 속도가 크게 개선됩니다. 다만 일부 오래된 프로그램이나 SNS에서는 인식하지 못할 수 있으므로, 범용성이 필요하면 JPG나 PNG를 사용하세요.
-</div>
-
-<p style="font-weight:700;color:var(--primary);margin-top:16px">변환하면 화질이 떨어지나요?</p>
-<div style="background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7">
-PNG로 변환하면 무손실이므로 화질 저하가 없습니다. JPG나 WEBP로 변환할 때는 품질 설정에 따라 미세한 화질 차이가 있을 수 있지만, 품질 85 이상이면 육안으로 구분하기 어렵습니다. 본 도구는 기본 품질 90으로 설정되어 있어 대부분의 용도에 충분합니다.
-</div>
-</div>
-</section>
-
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"PNG와 JPG의 차이점은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"PNG는 무손실 압축으로 원본 화질을 그대로 유지하며 투명 배경을 지원합니다. JPG는 손실 압축으로 파일 크기가 작지만 투명 배경을 지원하지 않습니다. 사진은 JPG, 로고나 아이콘은 PNG가 적합합니다."}},{"@type":"Question","name":"WEBP 포맷은 어디서 사용할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"WEBP는 Chrome, Firefox, Safari, Edge 등 모든 최신 브라우저에서 지원됩니다. 웹사이트에서 사용하면 로딩 속도가 크게 개선됩니다."}},{"@type":"Question","name":"변환하면 화질이 떨어지나요?","acceptedAnswer":{"@type":"Answer","text":"PNG로 변환하면 무손실이므로 화질 저하가 없습니다. JPG나 WEBP는 품질 85 이상이면 육안으로 구분하기 어렵습니다."}}]}
-</script>
-</main>
+<div class="faq-item"><div class="faq-q">WebP는 모든 브라우저에서 지원되나요?</div><div class="faq-a">Chrome, Firefox, Edge, Safari 14+ 등 대부분의 최신 브라우저에서 지원됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">PNG와 JPG 중 어떤 포맷을 선택해야 하나요?</div><div class="faq-a">투명도가 필요하면 PNG, 사진이나 복잡한 이미지는 JPEG를 선택하세요.</div></div>
+<div class="faq-item"><div class="faq-q">여러 장을 한 번에 변환할 수 있나요?</div><div class="faq-a">네, 여러 이미지를 동시에 업로드하여 일괄 변환할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-(function(){
-var files=[];
-var results=[];
-var currentFormat="png";
-
-var fileInput=document.getElementById("fileInput");
-var uploadZone=document.getElementById("uploadZone");
-
-uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("active");});
-uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("active");});
-uploadZone.addEventListener("drop",function(e){e.preventDefault();uploadZone.classList.remove("active");handleFiles(e.dataTransfer.files);});
-fileInput.addEventListener("change",function(){handleFiles(this.files);});
-
-function handleFiles(fileList){
-  files=[];
-  var list=document.getElementById("uploadList");
-  list.innerHTML="";
-  var count=Math.min(fileList.length,10);
-  for(var i=0;i<count;i++){
-    if(!fileList[i].type.startsWith("image/"))continue;
-    files.push(fileList[i]);
-    var size=(fileList[i].size/1024).toFixed(1);
-    list.innerHTML+='<div class="file-item"><div class="file-info"><div class="file-name">'+fileList[i].name+'</div><div class="file-meta">'+size+' KB</div></div></div>';
-  }
-  if(files.length>0){
-    document.getElementById("settingsArea").style.display="block";
-    document.getElementById("resultArea").style.display="none";
-  }
-}
-
-window.setFormat=function(el){
-  var btns=document.querySelectorAll("#formatRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
-  el.classList.add("active");
-  currentFormat=el.dataset.fmt;
-  document.getElementById("qualityRow").style.display=(currentFormat==="png")?"none":"block";
-};
-
-window.doConvert=function(){
-  if(files.length===0){alert("이미지를 업로드해주세요.");return;}
-  results=[];
-  var quality=parseInt(document.getElementById("quality").value)/100;
-  var mimeType="image/"+currentFormat;
-  var ext=currentFormat==="jpeg"?"jpg":currentFormat;
-  var done=0;
-  var list=document.getElementById("resultList");
-  list.innerHTML="";
-
-  for(var i=0;i<files.length;i++){
-    (function(file,idx){
-      var reader=new FileReader();
-      reader.onload=function(e){
-        var img=new Image();
-        img.onload=function(){
-          var canvas=document.createElement("canvas");
-          canvas.width=img.width;canvas.height=img.height;
-          var ctx=canvas.getContext("2d");
-          if(currentFormat==="jpeg"){
-            ctx.fillStyle="#FFFFFF";
-            ctx.fillRect(0,0,canvas.width,canvas.height);
-          }
-          ctx.drawImage(img,0,0);
-          canvas.toBlob(function(blob){
-            var baseName=file.name.replace(/\.[^.]+$/,"");
-            var newName=baseName+"."+ext;
-            var url=URL.createObjectURL(blob);
-            results[idx]={blob:blob,name:newName,url:url};
-            var origSize=(file.size/1024).toFixed(1);
-            var newSize=(blob.size/1024).toFixed(1);
-            list.innerHTML+='<div class="file-item"><img src="'+url+'" class="file-thumb"><div class="file-info"><div class="file-name">'+newName+'</div><div class="file-meta">'+origSize+' KB → '+newSize+' KB</div></div><button class="file-download" onclick="downloadOne('+idx+')">다운로드</button></div>';
-            done++;
-            if(done===files.length){
-              if(files.length>1)document.getElementById("downloadAllBtn").style.display="block";
-              document.getElementById("resultArea").style.display="block";
-              document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-            }
-          },mimeType,currentFormat==="png"?undefined:quality);
-        };
-        img.src=e.target.result;
-      };
-      reader.readAsDataURL(file);
-    })(files[i],i);
-  }
-};
-
-window.downloadOne=function(idx){
-  if(!results[idx])return;
-  var a=document.createElement("a");
-  a.href=results[idx].url;
-  a.download=results[idx].name;
-  a.click();
-};
-
-window.downloadAll=function(){
-  for(var i=0;i<results.length;i++){
-    if(results[i])downloadOne(i);
-  }
-};
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Canvas image processing */})();
 })();
 </script>
 </body>

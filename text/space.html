@@ -3,60 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>공백 정리기 - 불필요한 공백·줄바꿈 제거 | modutools</title>
-<meta name="description" content="텍스트의 불필요한 공백, 연속 줄바꿈, 탭 문자를 깔끔하게 정리합니다. 코드 정리, 문서 정리, 복사 붙여넣기 후 정리에 유용합니다.">
-<meta property="og:title" content="공백 정리기 - 불필요한 공백·줄바꿈 제거 | modutools">
-<meta property="og:description" content="불필요한 공백, 연속 줄바꿈, 탭 문자를 깔끔하게 정리.">
+<title>공백 정리기 - 불필요한 공백 줄바꿈 제거 | modutools</title>
+<meta name="description" content="텍스트의 불필요한 공백, 연속 줄바꿈, 탭 문자를 깔끔하게 정리. 코드, 문서, 엑셀 데이터 전처리 유용.">
+<meta property="og:title" content="공백 정리기 - 불필요한 공백 줄바꿈 제거 | modutools">
+<meta property="og:description" content="텍스트의 불필요한 공백, 연속 줄바꿈, 탭 문자를 깔끔하게 정리. 코드, 문서, 엑셀 데이터 전처리 유용.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/text/space.html">
 <link rel="canonical" href="https://modutools.com/text/space.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.text-area{width:100%;min-height:160px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.text-area{width:100%;min-height:180px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
 .text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.text-area::placeholder{color:var(--g400)}
-.btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.convert-btn{padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s;text-align:left}
-.convert-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.convert-btn:active{transform:scale(.97)}
-.all-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.all-btn:hover{background:var(--primary-dark)}
-.all-btn:active{transform:scale(.98)}
-.result-info{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
-.info-badge{font-size:13px;color:var(--g500);background:var(--g100);padding:4px 12px;border-radius:6px}
-.info-badge strong{color:var(--primary)}
-.copy-btn{padding:10px 20px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
-.copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.btn-grid{grid-template-columns:1fr 1fr;gap:6px}.convert-btn{padding:10px;font-size:12px}}
-.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
-.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
-.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
-.mt-faq{margin-top:16px}
-.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
-.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
-.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
-.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
-.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
-.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
-.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+@media(max-width:480px){.page-title{font-size:22px}.text-area{min-height:140px;font-size:13px}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"공백 정리기","url":"https://modutools.com/text/space.html","description":"텍스트의 불필요한 공백, 줄바꿈, 탭을 정리하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"공백 정리기는 어떤 공백을 제거하나요?","acceptedAnswer":{"@type":"Answer","text":"연속된 공백(스페이스 여러 개)을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백(트리밍)도 제거할 수 있습니다."}},
-{"@type":"Question","name":"줄바꿈도 제거되나요?","acceptedAnswer":{"@type":"Answer","text":"기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 제거하는 옵션도 제공하여, 텍스트를 한 줄로 만들 수도 있습니다."}},
-{"@type":"Question","name":"어떤 상황에서 공백 정리가 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"웹페이지에서 복사한 텍스트 정리, PDF에서 추출한 텍스트의 불규칙한 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기 등 다양한 상황에서 활용됩니다."}},
-{"@type":"Question","name":"원본 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다."}}
+{"@type":"Question","name":"공백 정리기는 어떤 공백을 제거하나요?","acceptedAnswer":{"@type":"Answer","text":"연속된 공백을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백도 제거할 수 있습니다."}},
+{"@type":"Question","name":"줄바꿈도 제거되나요?","acceptedAnswer":{"@type":"Answer","text":"연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하는 옵션도 제공합니다."}},
+{"@type":"Question","name":"어떤 상황에서 공백 정리가 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"웹페이지 복사 텍스트 정리, PDF 추출 텍스트의 불규칙 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 엑셀 데이터 전처리 등에 활용됩니다."}},
+{"@type":"Question","name":"입력한 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다."}}
 ]}
 </script>
 </head>
@@ -64,108 +57,49 @@
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
-<h1 class="page-title">공백 정리기</h1>
-<p class="page-sub">불필요한 공백, 줄바꿈, 탭 문자를 깔끔하게 정리합니다</p>
-<div class="card">
-<div class="card-title">📝 텍스트 입력</div>
-<textarea class="text-area" id="textInput" placeholder="여기에 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
-<div class="btn-grid">
-<button class="convert-btn" onclick="clean('multiSpace')">🔹 연속 공백 → 1칸</button>
-<button class="convert-btn" onclick="clean('multiLine')">🔹 연속 줄바꿈 → 1줄</button>
-<button class="convert-btn" onclick="clean('trimLines')">🔹 각 줄 앞뒤 공백 제거</button>
-<button class="convert-btn" onclick="clean('emptyLines')">🔹 빈 줄 모두 제거</button>
-<button class="convert-btn" onclick="clean('tabs')">🔹 탭 → 공백 변환</button>
-<button class="convert-btn" onclick="clean('allSpaces')">🔹 모든 공백 제거</button>
+<h1 class="page-title">🔲 공백 정리기</h1>
+<p class="page-sub">불필요한 공백, 줄바꿈, 탭 문자를 깔끔하게 정리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="card"><div class="card-title">📝 텍스트 입력</div>
+<textarea class="text-area" id="textInput" placeholder="텍스트를 입력하세요..."></textarea>
+<div class="btn-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('multiSpace')">🔹 연속 공백</button><button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('multiLine')">🔹 연속 줄바꿈</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('trimLines')">🔹 앞뒤 공백</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('emptyLines')">🔹 빈 줄 제거</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('tabs')">🔹 탭→공백</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('allSpaces')">🔹 모든 공백 제거</button>
 </div>
-<button class="all-btn" onclick="clean('all')">✨ 한번에 전부 정리</button>
-</div>
-<div id="resultArea" style="display:none">
-<div class="card">
-<div class="card-title">✅ 정리 결과</div>
-<div class="result-info">
-<span class="info-badge">원본 <strong id="origLen">0</strong>자</span>
-<span class="info-badge">결과 <strong id="resultLen">0</strong>자</span>
-<span class="info-badge">제거 <strong id="removedLen">0</strong>자</span>
-</div>
+<button class="all-btn" style="width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px" onclick="clean('all')">✨ 전부 정리</button></div>
+<div id="resultArea" style="display:none"><div class="card"><div class="card-title">✅ 결과</div>
+<div class="result-info" style="display:flex;gap:10px;margin-bottom:12px"><span>원본 <strong id="origLen">0</strong>자</span><span>결과 <strong id="resultLen">0</strong>자</span><span>제거 <strong id="removedLen">0</strong>자</span></div>
 <textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
-<div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
-</div>
-</div>
-
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-
-<div class="mt-guide">
-<h2>공백 정리기 사용 가이드</h2>
-<p>웹페이지, PDF, 메신저 등에서 복사한 텍스트에는 불필요한 공백, 탭, 연속 줄바꿈이 포함되는 경우가 많습니다. 이 도구를 사용하면 한 번에 깔끔하게 정리할 수 있습니다.</p>
-
-<h3>주요 정리 기능</h3>
-<p><strong>연속 공백 합치기</strong> — 스페이스가 여러 개 연속으로 입력된 경우 하나의 공백으로 합칩니다. 웹에서 복사·붙여넣기 할 때 자주 발생하는 문제를 해결합니다.</p>
-<p><strong>줄 앞뒤 공백 제거 (Trim)</strong> — 각 줄의 시작과 끝에 있는 불필요한 공백을 제거합니다. 코드 정리, 데이터 전처리에 필수적인 기능입니다.</p>
-<p><strong>연속 줄바꿈 정리</strong> — 빈 줄이 여러 번 반복되는 경우 하나로 줄여 가독성을 높입니다. PDF에서 추출한 텍스트를 정리할 때 특히 유용합니다.</p>
-<p><strong>탭→공백 변환</strong> — 탭 문자를 공백으로 변환하여 텍스트 정렬을 통일합니다.</p>
-
-<h3>활용 예시</h3>
-<p>블로그·SNS에 글을 올리기 전 텍스트 다듬기, 이메일 본문 정리, 프로그래밍 코드 들여쓰기 통일, 번역 텍스트 후처리, 한글 맞춤법 검사 전 텍스트 전처리 등 다양한 상황에서 활용할 수 있습니다.</p>
-</div>
-
-<div class="mt-faq">
-<div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">공백 정리기는 어떤 공백을 제거하나요?</div>
-<div class="mt-faq-a">연속된 공백(스페이스 여러 개)을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백(트리밍)도 제거할 수 있습니다.</div>
-</div>
-<div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">줄바꿈도 제거되나요?</div>
-<div class="mt-faq-a">기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하여 텍스트를 한 줄로 만드는 옵션도 제공합니다.</div>
-</div>
-<div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">어떤 상황에서 공백 정리가 필요한가요?</div>
-<div class="mt-faq-a">웹페이지에서 복사한 텍스트 정리, PDF에서 추출한 텍스트의 불규칙한 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 번역 결과물 후처리 등 다양한 텍스트 작업에 활용됩니다.</div>
-</div>
-<div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">원본 텍스트가 서버에 저장되나요?</div>
-<div class="mt-faq-a">아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다.</div>
-</div>
-</div>
-
-<p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
-
-</main>
+<div style="text-align:right;margin-top:8px"><button class="copy-btn" style="padding:8px 16px;border:1.5px solid var(--primary);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--primary)" onclick="copyResult()">📋 복사</button></div></div></div>
+<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="guide-section"><div class="guide-card"><h2>📖 공백 정리 가이드</h2>
+<p>웹페이지, PDF, 메신저 등에서 복사한 텍스트에는 불필요한 공백, 탭, 연속 줄바꿈이 포함됩니다. 이 도구로 한 번에 깔끔하게 정리할 수 있습니다.</p>
+<p><strong>연속 공백 합치기</strong>는 스페이스 여러 개를 하나로 합칩니다. <strong>Trim</strong>은 각 줄 앞뒤 공백을 제거합니다. <strong>연속 줄바꿈 정리</strong>는 빈 줄을 하나로 줄여 가독성을 높입니다.</p>
+<table><tr><th>기능</th><th>입력</th><th>출력</th><th>활용</th></tr><tr><td>연속 공백</td><td>Hello   World</td><td>Hello World</td><td>웹 복사 텍스트</td></tr></table></div>
+<div class="faq-item"><div class="faq-q">공백 정리기는 어떤 공백을 제거하나요?</div><div class="faq-a">연속된 공백을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백도 제거할 수 있습니다. 각 기능은 개별 버튼으로 선택 실행 가능합니다.</div></div>
+<div class="faq-item"><div class="faq-q">줄바꿈도 제거되나요?</div><div class="faq-a">연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하는 옵션도 제공합니다. 문서 정리에는 연속 줄바꿈만, 데이터 정리에는 모든 줄바꿈 제거를 선택하세요.</div></div>
+<div class="faq-item"><div class="faq-q">어떤 상황에서 공백 정리가 필요한가요?</div><div class="faq-a">웹페이지 복사 텍스트 정리, PDF 추출 텍스트의 불규칙 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 번역 결과물 후처리, 엑셀 데이터 전처리 등 다양한 텍스트 작업에 활용됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다. 페이지를 닫으면 입력 내용은 완전히 사라집니다.</div></div></div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
-function clean(type){
-  const input=document.getElementById('textInput').value;
-  if(!input){alert('텍스트를 입력해주세요.');return;}
-  let result=input;
-  switch(type){
-    case 'multiSpace':result=result.replace(/ {2,}/g,' ');break;
-    case 'multiLine':result=result.replace(/\n{3,}/g,'\n\n');break;
-    case 'trimLines':result=result.split('\n').map(l=>l.trim()).join('\n');break;
-    case 'emptyLines':result=result.split('\n').filter(l=>l.trim()!=='').join('\n');break;
-    case 'tabs':result=result.replace(/\t/g,'  ');break;
-    case 'allSpaces':result=result.replace(/\s/g,'');break;
-    case 'all':
-      result=result.replace(/\t/g,' ');
-      result=result.split('\n').map(l=>l.trim()).join('\n');
-      result=result.replace(/ {2,}/g,' ');
-      result=result.replace(/\n{3,}/g,'\n\n');
-      result=result.split('\n').filter(l=>l.trim()!=='').join('\n');
-      break;
-  }
-  document.getElementById('origLen').textContent=input.length.toLocaleString();
-  document.getElementById('resultLen').textContent=result.length.toLocaleString();
-  document.getElementById('removedLen').textContent=(input.length-result.length).toLocaleString();
-  document.getElementById('outputText').value=result;
-  document.getElementById('resultArea').style.display='block';
-  document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
-}
-function copyResult(){
-  const t=document.getElementById('outputText').value;
-  if(!t){showToast('복사할 내용이 없습니다');return;}
-  navigator.clipboard.writeText(t).then(()=>showToast('클립보드에 복사했습니다'));
-}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+var ti=document.getElementById("textInput"),to=document.getElementById("outputText"),ra=document.getElementById("resultArea");function clean(t){var i=ti.value;if(!i.trim()){st("텍스트를 입력해주세요.");return;}var r=i;switch(t){case"multiSpace":r=r.replace(/  +/g," ");break;case"multiLine":r=r.replace(/
+{3,}/g,"
+
+");break;case"trimLines":r=r.split("
+").map(function(l){return l.trim();}).join("
+");break;case"emptyLines":r=r.split("
+").filter(function(l){return l.trim();}).join("
+");break;case"tabs":r=r.replace(/	/g," ");break;case"allSpaces":r=r.replace(/s/g,"");break;case"all":r=r.replace(/  +/g," ").replace(/	/g," ").replace(/^s+|s+$/gm,"").replace(/
+{3,}/g,"
+
+");break;}to.value=r;document.getElementById("origLen").textContent=i.length;document.getElementById("resultLen").textContent=r.length;document.getElementById("removedLen").textContent=i.length-r.length;ra.style.display="";}
+})();
 </script>
 </body>
 </html>

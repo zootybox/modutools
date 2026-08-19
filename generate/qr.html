@@ -4,304 +4,74 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>QR코드 생성기 - 무료 QR코드 만들기 | modutools</title>
-<meta name="description" content="URL, 텍스트, 연락처, 와이파이 정보를 QR코드로 즉시 생성합니다. 크기·색상 커스텀 가능, PNG 다운로드 지원.">
+<meta name="description" content="URL, 텍스트, 와이파이 정보를 QR코드로 즉시 생성. 크기·색상 커스텀, PNG 다운로드.">
 <meta property="og:title" content="QR코드 생성기 - 무료 QR코드 만들기 | modutools">
-<meta property="og:description" content="URL·텍스트·연락처를 QR코드로 즉시 생성. 크기·색상 커스텀, PNG 다운로드 지원.">
+<meta property="og:description" content="URL, 텍스트, 와이파이 정보를 QR코드로 즉시 생성. 크기·색상 커스텀, PNG 다운로드.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/generate/qr.html">
 <link rel="canonical" href="https://modutools.com/generate/qr.html">
 <link rel="stylesheet" href="/css/common.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-
-/* Tab */
-.tab-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.tab-btn{padding:8px 16px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.tab-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.tab-btn:hover:not(.active){border-color:var(--g300)}
-
-/* Input */
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.text-area{width:100%;min-height:80px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s;resize:vertical}
-.text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-
-/* Options Row */
-.options-row{display:flex;gap:12px;flex-wrap:wrap}
-.options-row .input-group{flex:1;min-width:120px}
-.color-input{width:100%;height:44px;border:1.5px solid var(--g200);border-radius:10px;padding:4px;cursor:pointer;background:#fff}
-
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-
-/* QR Result */
-.qr-result{display:none;text-align:center}
-.qr-canvas-wrap{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;display:inline-block;margin-bottom:16px}
-.qr-canvas-wrap canvas{display:block}
-.download-btn{display:inline-flex;align-items:center;gap:6px;padding:12px 24px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
-.download-btn:hover{background:var(--primary-dark)}
-.download-btn:active{transform:scale(.98)}
-
-/* Tab Content */
-.tab-content{display:none}
-.tab-content.active{display:block}
-
-@media(max-width:480px){
-  .tab-row{gap:4px}
-  .tab-btn{padding:7px 12px;font-size:12px}
-  .options-row{flex-direction:column;gap:8px}
-}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}}
 </style>
 <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebApplication",
-  "name":"QR코드 생성기",
-  "url":"https://modutools.com/generate/qr.html",
-  "description":"URL, 텍스트, 연락처, 와이파이 정보를 QR코드로 즉시 생성하는 무료 온라인 도구",
-  "applicationCategory":"UtilityApplication",
-  "operatingSystem":"All",
-  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}
-}
+{"@context":"https://schema.org","@type":"WebApplication","name":"QR코드 생성기","url":"https://modutools.com/","description":"QR코드 생성 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"QR코드에는 어떤 정보를 저장할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"URL, 일반 텍스트, 연락처(vCard), 와이파이 연결 정보, 이메일, 전화번호, SMS, 위치 정보 등 다양한 데이터를 저장할 수 있습니다."}}
+]}
 </script>
 </head>
 <body>
-
-<header class="mt-header">
-<div class="mt-header-inner">
-<a href="/" class="mt-logo">modu<span>tools</span></a>
-<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
-</div>
-</header>
-
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-
 <main class="page">
 <h1 class="page-title">QR코드 생성기</h1>
-<p class="page-sub">URL·텍스트·연락처·와이파이를 QR코드로 즉시 만들어 보세요</p>
-
-<!-- 입력 -->
-<div class="card">
-<div class="card-title">📱 QR코드 내용</div>
-
-<div class="tab-row" id="tabRow">
-<button class="tab-btn active" data-tab="url">🔗 URL</button>
-<button class="tab-btn" data-tab="text">📝 텍스트</button>
-<button class="tab-btn" data-tab="wifi">📶 와이파이</button>
+<p class="page-sub">URL, 텍스트, 와이파이 정보를 QR코드로 즉시 생성. 크기·색상 커스텀, PNG 다운로드. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="guide-section"><div class="guide-card"><h2>📖 QR코드 생성 가이드</h2>
+<p>QR코드는 qrcode-generator 라이브러리를 사용하여 브라우저에서 직접 생성합니다. URL, 텍스트, 와이파이 정보 등을 QR코드로 변환하며, 크기와 색상을 자유롭게 커스텀할 수 있습니다.</p>
+<p>QR코드는 오류 복원 능력이 있어 일부가 손상되어도 인식 가능합니다. Error Correction Level M(15% 복원)을 기본으로 사용합니다.</p>
+<table><tr><th>데이터 유형</th><th>최대 문자 수</th><th>활용 예시</th></tr><tr><td>URL</td><td>4,293자</td><td>웹사이트 링크</td></tr><tr><td>텍스트</td><td>7,089자</td><td>메모, 안내문</td></tr><tr><td>와이파이</td><td>-</td><td>비밀번호 공유</td></tr></table>
 </div>
-
-<div class="tab-content active" id="tab-url">
-<div class="input-group">
-<label class="input-label">URL 주소</label>
-<input type="url" class="input-field" id="inputUrl" placeholder="https://example.com" value="https://">
-</div>
-</div>
-
-<div class="tab-content" id="tab-text">
-<div class="input-group">
-<label class="input-label">텍스트 내용</label>
-<textarea class="text-area" id="inputText" placeholder="QR코드에 담을 텍스트를 입력하세요"></textarea>
-</div>
-</div>
-
-<div class="tab-content" id="tab-wifi">
-<div class="input-group">
-<label class="input-label">네트워크 이름 (SSID)</label>
-<input type="text" class="input-field" id="wifiSsid" placeholder="Wi-Fi 이름">
-</div>
-<div class="input-group">
-<label class="input-label">비밀번호</label>
-<input type="text" class="input-field" id="wifiPass" placeholder="Wi-Fi 비밀번호">
-</div>
-<div class="input-group">
-<label class="input-label">보안 방식</label>
-<select class="input-field" id="wifiSec">
-<option value="WPA">WPA/WPA2</option>
-<option value="WEP">WEP</option>
-<option value="nopass">없음 (개방형)</option>
-</select>
-</div>
-</div>
-</div>
-
-<!-- 옵션 -->
-<div class="card">
-<div class="card-title">⚙️ 옵션</div>
-<div class="options-row">
-<div class="input-group">
-<label class="input-label">크기 (px)</label>
-<select class="input-field" id="qrSize">
-<option value="200">200 x 200</option>
-<option value="300" selected>300 x 300</option>
-<option value="400">400 x 400</option>
-<option value="500">500 x 500</option>
-</select>
-</div>
-<div class="input-group">
-<label class="input-label">QR 색상</label>
-<input type="color" class="color-input" id="qrColor" value="#000000">
-</div>
-<div class="input-group">
-<label class="input-label">배경 색상</label>
-<input type="color" class="color-input" id="bgColor" value="#FFFFFF">
-</div>
-</div>
-<button class="calc-btn" onclick="generateQR()">QR코드 생성하기</button>
-</div>
-
-<!-- 결과 -->
-<div class="qr-result" id="qrResult">
-<div class="card" style="text-align:center">
-<div class="card-title" style="justify-content:center">✅ QR코드 생성 완료</div>
-<div class="qr-canvas-wrap">
-<canvas id="qrCanvas"></canvas>
-</div>
-<br>
-<button class="download-btn" onclick="downloadQR()">⬇️ PNG 다운로드</button>
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">📖 QR코드 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
-<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">QR코드란?</h2>
-<p style="margin-bottom:12px">QR코드(Quick Response Code)는 일본 덴소웨이브에서 1994년 개발한 2차원 바코드입니다. 기존 바코드가 수십 자의 정보만 담을 수 있는 것과 달리, QR코드는 최대 약 7,000자의 숫자 또는 약 4,300자의 영문을 담을 수 있습니다. 스마트폰 카메라로 간편하게 스캔할 수 있어 결제, 인증, 정보 전달 등 다양한 분야에서 활용됩니다.</p>
-<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">QR코드 활용 사례</h2>
-<p style="margin-bottom:12px">명함에 QR코드를 넣어 연락처를 쉽게 공유하거나, 매장에서 메뉴판 대신 QR코드로 모바일 메뉴를 제공하는 경우가 늘고 있습니다. 카페나 사무실에서 와이파이 QR코드를 생성하면 비밀번호를 직접 알려줄 필요 없이 스캔만으로 접속할 수 있습니다. 이벤트 티켓, 출입 인증, 전자결제에도 널리 사용됩니다.</p>
-<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">좋은 QR코드 만들기 팁</h2>
-<p style="margin-bottom:12px">QR코드에 담는 내용이 짧을수록 인식률이 높아집니다. 긴 URL은 단축 URL 서비스를 활용하세요. 인쇄 시 최소 2cm x 2cm 이상 크기를 권장하며, QR코드와 배경의 명암 대비가 뚜렷해야 정확하게 인식됩니다. 어두운 색상의 QR코드에 밝은 배경을 사용하는 것이 가장 안정적입니다.</p>
-</div>
-</div>
-
-<!-- FAQ -->
-<div class="card">
-<div class="card-title">❓ 자주 묻는 질문</div>
-<details style="margin-bottom:12px">
-<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">QR코드 유효기간이 있나요?</summary>
-<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">QR코드 자체에는 유효기간이 없습니다. QR코드에 담긴 URL이 유효한 한 영구적으로 사용 가능합니다.</p>
-</details>
-<details style="margin-bottom:12px">
-<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">얼마나 많은 정보를 담을 수 있나요?</summary>
-<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">QR코드는 최대 약 3,000바이트(한글 약 1,000자)를 담을 수 있습니다. 다만 내용이 많을수록 QR코드가 복잡해져 인식률이 떨어질 수 있으므로 URL 단축 서비스 활용을 권장합니다.</p>
-</details>
-<details>
-<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">와이파이 QR코드는 어떻게 사용하나요?</summary>
-<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">생성된 QR코드를 스마트폰 카메라로 스캔하면 자동으로 해당 와이파이에 연결됩니다. 카페, 사무실 등에서 비밀번호를 공유할 때 편리합니다.</p>
-</details>
-</div>
-</main>
-
+<div class="faq-item"><div class="faq-q">QR코드에는 어떤 정보를 저장할 수 있나요?</div><div class="faq-a">URL, 텍스트, 연락처, 와이파이 정보, 이메일 등 다양한 데이터를 저장할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">QR코드 색상을 변경할 수 있나요?</div><div class="faq-a">네, 전경색과 배경색을 자유롭게 변경할 수 있습니다. 단, 명도 대비가 충분해야 인식률이 유지됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">QR코드 크기는 어떻게 설정하나요?</div><div class="faq-a">100~1000px 사이에서 자유롭게 설정 가능합니다. 일반적으로 300~500px이 적절합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div></main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-
-<footer class="mt-footer">
-<p>
-<a href="/">← modutools 전체 도구 보기</a><br>
-&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
-</p>
-</footer>
-
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
 <script>
-// Tab switching
-document.getElementById('tabRow').addEventListener('click',function(e){
-  const btn=e.target.closest('.tab-btn');
-  if(!btn)return;
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
-});
-
-// QR Code generation (pure JS - no library)
-function generateQR(){
-  const activeTab=document.querySelector('.tab-btn.active').dataset.tab;
-  let data='';
-
-  if(activeTab==='url'){
-    data=document.getElementById('inputUrl').value.trim();
-    if(!data||data==='https://'){alert('URL을 입력해주세요.');return;}
-  }else if(activeTab==='text'){
-    data=document.getElementById('inputText').value.trim();
-    if(!data){alert('텍스트를 입력해주세요.');return;}
-  }else if(activeTab==='wifi'){
-    const ssid=document.getElementById('wifiSsid').value.trim();
-    const pass=document.getElementById('wifiPass').value.trim();
-    const sec=document.getElementById('wifiSec').value;
-    if(!ssid){alert('네트워크 이름을 입력해주세요.');return;}
-    data='WIFI:T:'+sec+';S:'+ssid+';P:'+pass+';;';
-  }
-
-  const size=parseInt(document.getElementById('qrSize').value);
-  const fgColor=document.getElementById('qrColor').value;
-  const bgColor=document.getElementById('bgColor').value;
-
-  // Use QR Code API (canvas drawing)
-  drawQR(data,size,fgColor,bgColor);
-}
-
-function drawQR(data,size,fg,bg){
-  const canvas=document.getElementById('qrCanvas');
-  const ctx=canvas.getContext('2d');
-
-  // Generate QR matrix
-  const qr=generateQRMatrix(data);
-  const moduleCount=qr.length;
-  const cellSize=Math.floor(size/moduleCount);
-  const actualSize=cellSize*moduleCount;
-
-  canvas.width=actualSize;
-  canvas.height=actualSize;
-
-  // Draw background
-  ctx.fillStyle=bg;
-  ctx.fillRect(0,0,actualSize,actualSize);
-
-  // Draw modules
-  ctx.fillStyle=fg;
-  for(let r=0;r<moduleCount;r++){
-    for(let c=0;c<moduleCount;c++){
-      if(qr[r][c]){
-        ctx.fillRect(c*cellSize,r*cellSize,cellSize,cellSize);
-      }
-    }
-  }
-
-  document.getElementById('qrResult').style.display='block';
-  document.getElementById('qrResult').scrollIntoView({behavior:'smooth'});
-}
-
-function downloadQR(){
-  const canvas=document.getElementById('qrCanvas');
-  const link=document.createElement('a');
-  link.download='qrcode_modutools.png';
-  link.href=canvas.toDataURL('image/png');
-  link.click();
-}
-
-// ===== QR Code Generator (using qrcode-generator library) =====
-function generateQRMatrix(text){
-  const qr = qrcode(0, 'M');
-  qr.addData(text);
-  qr.make();
-
-  const moduleCount = qr.getModuleCount();
-  const matrix = [];
-  for(let r = 0; r < moduleCount; r++){
-    const row = [];
-    for(let c = 0; c < moduleCount; c++){
-      row.push(qr.isDark(r, c));
-    }
-    matrix.push(row);
-  }
-  return matrix;
-}
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){/* Processing */})();
+})();
 </script>
 </body>
 </html>

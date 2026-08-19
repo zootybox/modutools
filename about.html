@@ -3,15 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>사이트 소개 - modutools</title>
-<meta name="description" content="modutools.com은 누구나 무료로 사용할 수 있는 온라인 도구 모음 사이트입니다. 설치 없이, 서버 전송 없이 브라우저에서 바로 사용하세요.">
+<title>사이트 소개 - modutools: 100% 브라우저 로컬 처리 무료 온라인 도구</title>
+<meta name="description" content="modutools.com은 박성재가 개발한 100% 브라우저 로컬 처리 온라인 도구 모음입니다. 연봉 계산기, 이미지 압축, OCR, PDF 합치기 등 40여 개 도구를 회원가입 없이 무료로 제공합니다. 서버 전송 제로로 개인정보를 보호합니다.">
 <link rel="canonical" href="https://modutools.com/about.html">
+<meta property="og:title" content="사이트 소개 - modutools | 100% 브라우저 로컬 처리">
+<meta property="og:description" content="박성재가 운영하는 modutools.com. 40여 개 무료 온라인 도구를 서버 전송 없이 브라우저에서 직접 사용할 수 있습니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/about.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
 .mt-about{max-width:800px;margin:0 auto;padding:24px 20px 40px}
-.mt-about h1{font-size:1.5rem;font-weight:700;margin-bottom:24px}
+.mt-about h1{font-size:1.5rem;font-weight:700;margin-bottom:6px}
+.mt-about .subtitle{font-size:0.9rem;color:var(--g500);margin-bottom:24px}
 .mt-about h2{font-size:1.1rem;font-weight:700;margin:28px 0 10px;color:var(--g900)}
 .mt-about p{font-size:0.93rem;line-height:1.8;color:var(--g700);margin-bottom:12px}
+.mt-about ul{padding-left:20px;margin:8px 0}
+.mt-about li{font-size:0.93rem;line-height:1.8;color:var(--g700);margin-bottom:4px}
 .mt-values{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:16px 0 24px}
 .mt-value-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:20px;text-align:center}
 .mt-value-card .emoji{font-size:28px;margin-bottom:8px}
@@ -19,7 +26,12 @@
 .mt-value-card .desc{font-size:0.82rem;color:var(--g500);line-height:1.5}
 .mt-contact{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:20px;margin-top:16px}
 .mt-contact p{margin-bottom:4px;font-size:0.9rem}
+/* AdSense 심사 중 광고 슬롯 숨김 */
+.mt-ad{display:none}
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"modutools","url":"https://modutools.com","description":"100% 브라우저 로컬 처리 무료 온라인 도구 모음","author":{"@type":"Person","name":"박성재"},"inLanguage":"ko"}
+</script>
 </head>
 <body>
 
@@ -33,42 +45,68 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
 <main class="mt-about">
-<h1>modutools 소개</h1>
+<h1>modutools 소개 — 모두를 위한 무료 온라인 도구</h1>
+<p class="subtitle">개발자 박성재가 만든 100% 브라우저 로컬 처리 웹 도구 모음</p>
 
-<p><strong>modutools.com</strong>은 "모두를 위한 도구"라는 뜻을 담고 있습니다. 연봉 계산기, 이미지 압축, 단위 변환 등 일상과 업무에서 필요한 온라인 도구를 누구나 무료로, 설치 없이 사용할 수 있도록 만들었습니다.</p>
+<p><strong>modutools.com</strong>은 "모두를 위한 도구"라는 뜻을 담고 있습니다. 연봉 실수령액 계산기, 이미지 압축, OCR 텍스트 추출, PDF 합치기, 글자수 세기, 단위 변환 등 일상과 업무에서 필요한 <strong>40여 개의 온라인 도구</strong>를 누구나 무료로, 설치 없이, 회원가입 없이 사용할 수 있도록 만들었습니다.</p>
 
-<h2>핵심 가치</h2>
+<p>이 사이트의 가장 큰 특징은 <strong>모든 처리가 사용자의 브라우저(클라이언트)에서만 이루어진다는 점</strong>입니다. 입력한 데이터가 외부 서버로 전송되지 않으므로, 개인정보, 금융 정보, 민감한 문서도 안심하고 사용할 수 있습니다. 이는 Google의 Tesseract.js, pdf-lib, Canvas API 등 최신 웹 표준 기술을 활용하여 구현되었습니다.</p>
+
+<h2>운영 철학: 3대 핵심 가치</h2>
 <div class="mt-values">
 <div class="mt-value-card">
 <div class="emoji">🆓</div>
 <div class="label">완전 무료</div>
-<div class="desc">모든 도구를 회원가입 없이 무료로 이용할 수 있습니다.</div>
+<div class="desc">모든 도구를 회원가입 없이, 횟수 제한 없이, 워터마크 없이 무료로 이용할 수 있습니다.</div>
 </div>
 <div class="mt-value-card">
 <div class="emoji">🔒</div>
 <div class="label">개인정보 보호</div>
-<div class="desc">모든 처리는 브라우저에서 이루어지며, 데이터가 서버로 전송되지 않습니다.</div>
-</div>
-<div class="mt-value-card">
-<div class="emoji">📱</div>
-<div class="label">모바일 최적화</div>
-<div class="desc">스마트폰에서도 편리하게 사용할 수 있도록 설계했습니다.</div>
+<div class="desc">모든 처리는 브라우저에서 이루어지며, 데이터가 서버로 전송되지 않습니다. 신분증, 계약서, 영수증도 안전하게 처리합니다.</div>
 </div>
 <div class="mt-value-card">
 <div class="emoji">⚡</div>
 <div class="label">빠른 속도</div>
-<div class="desc">서버 통신 없이 즉시 결과를 확인할 수 있습니다.</div>
+<div class="desc">서버 통신이 없어 즉시 결과를 확인할 수 있습니다. 대용량 파일도 브라우저 메모리에서 실시간 처리합니다.</div>
+</div>
+<div class="mt-value-card">
+<div class="emoji">📱</div>
+<div class="label">모바일 최적화</div>
+<div class="desc">스마트폰, 태블릿, PC 어디서든 편리하게 사용할 수 있도록 반응형으로 설계되었습니다.</div>
 </div>
 </div>
 
-<h2>제공하는 도구</h2>
-<p>현재 금융 계산기, 이미지 편집, 텍스트 처리, 변환기, 생성기, 생활 도구 등 다양한 카테고리의 도구를 제공하고 있으며, 새로운 도구를 꾸준히 추가하고 있습니다.</p>
+<h2>제공하는 도구 카테고리</h2>
+<ul>
+<li><strong>💰 금융 계산기</strong> — 연봉 실수령액, 대출이자, 4대보험, 전월세 전환율, 퇴직금, 적금 이자, 최저시급, 종합소득세, 상속세</li>
+<li><strong>🖼️ 이미지 도구</strong> — 이미지 압축, 리사이즈, 크롭, 포맷 변환, 워터마크, EXIF 제거, 증명사진 규격</li>
+<li><strong>📝 텍스트 도구</strong> — 글자수 세기, 대소문자 변환, 공백 정리, 중복 줄 제거, OCR 텍스트 추출</li>
+<li><strong>🔄 변환기</strong> — 이미지→PDF, PDF 병합, 단위 변환, 날짜 계산, 시간대 변환, 나이 계산, 색상 변환, TTS</li>
+<li><strong>🎲 생성기</strong> — QR코드, 비밀번호, 랜덤 숫자, 닉네임 생성</li>
+<li><strong>🏠 생활 도구</strong> — BMI 계산, 전기요금 계산, 연차 계산, 학점 계산</li>
+<li><strong>🏋️ 운동 도구</strong> — 인터벌 타이머</li>
+</ul>
+
+<h2>기술 스택과 보안</h2>
+<p>modutools는 순수 HTML, CSS, JavaScript(Vanilla JS)로 구축되었으며, 별도의 백엔드 서버나 데이터베이스가 없습니다. 주요 기술 스택은 다음과 같습니다:</p>
+<ul>
+<li><strong>이미지 처리</strong> — Canvas API, File API, Tesseract.js (OCR)</li>
+<li><strong>PDF 처리</strong> — pdf-lib (CDN), jsPDF</li>
+<li><strong>QR 코드 생성</strong> — qrcode-generator (CDN, 로컬 인코딩)</li>
+<li><strong>음성 합성</strong> — Web Speech API (브라우저 내장 TTS)</li>
+<li><strong>데이터 저장</strong> — localStorage (최근 사용 도구 기록, 서버 전송 없음)</li>
+</ul>
+<p>모든 CDN 라이브러리는 브라우저에서 실행되는 클라이언트 사이드 라이브러리이며, 어떤 데이터도 외부 서버로 전송되지 않습니다. 사용자가 업로드한 파일은 브라우저 메모리에서만 처리되고, 탭을 닫으면 자동으로 삭제됩니다.</p>
+
+<h2>운영자 소개</h2>
+<p>modutools는 개발자 <strong>박성재</strong>가 기획, 디자인, 개발, 운영을 모두 담당하고 있습니다. "누구나 쉽게 사용할 수 있는 무료 도구"라는 철학 아래, 개인정보 보호를 최우선으로 하여 사이트를 운영하고 있습니다. 새로운 도구를 지속적으로 추가하고 있으며, 사용자 피드백을 적극 반영하여 기능을 개선하고 있습니다.</p>
 
 <h2>문의</h2>
 <div class="mt-contact">
 <p><strong>운영자</strong>: 박성재</p>
 <p><strong>이메일</strong>: contact@modutools.com</p>
 <p><strong>사이트</strong>: <a href="https://modutools.com" style="color:var(--primary)">modutools.com</a></p>
+<p><strong>운영 목적</strong>: 개인정보를 보호하는 무료 온라인 도구를 누구나 제약 없이 사용할 수 있도록 제공</p>
 </div>
 </main>
 
@@ -77,7 +115,7 @@
 <footer class="mt-footer">
 <p>
 <a href="/">← modutools 전체 도구 보기</a><br>
-&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구 · 100% 브라우저 로컬 처리
 </p>
 </footer>
 

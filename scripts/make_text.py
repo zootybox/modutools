@@ -1,0 +1,164 @@
+import codecs, os, sys
+sys.stdout.reconfigure(encoding='utf-8')
+DIR = 'c:/Users/user/Documents/GitHub/modutools'
+def w(rel, content):
+    p = os.path.join(DIR, rel)
+    codecs.open(p, 'w', 'utf-8').write(content)
+    print(f'  [OK] {rel} ({len(content)} bytes)')
+
+H = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>%T%</title>
+<meta name="description" content="%D%">
+<meta property="og:title" content="%T%">
+<meta property="og:description" content="%D%">
+<meta property="og:type" content="website">
+<meta property="og:url" content="%U%">
+<link rel="canonical" href="%U%">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
+.security-badge span{font-size:14px}
+.text-area{width:100%;min-height:180px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
+.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
+.mt-ad,.ad-slot,.ad-slot-middle{display:none}
+.guide-section{margin-top:24px}
+.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
+.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
+.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
+.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
+.faq-q::after{content:'\\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.page-title{font-size:22px}.text-area{min-height:140px;font-size:13px}}
+</style>
+%J%
+</head>
+<body>
+<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="page">
+"""
+F = """</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
+<script>
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+%S%
+})();
+</script>
+</body>
+</html>"""
+
+def make(T, D, U, J, B, S):
+    return H.replace('%T%',T).replace('%D%',D).replace('%U%',U).replace('%J%',J) + B + F.replace('%S%',S)
+
+print('Templates loaded')
+
+# ===== text/space.html =====
+T2 = '공백 정리기 - 불필요한 공백 줄바꿈 제거 | modutools'
+D2 = '텍스트의 불필요한 공백, 연속 줄바꿈, 탭 문자를 깔끔하게 정리. 코드 정리, 문서 정리, 엑셀 데이터 전처리에 유용.'
+U2 = 'https://modutools.com/text/space.html'
+J2 = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"공백 정리기","url":"https://modutools.com/text/space.html","description":"텍스트의 불필요한 공백, 줄바꿈, 탭을 정리하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"공백 정리기는 어떤 공백을 제거하나요?","acceptedAnswer":{"@type":"Answer","text":"연속된 공백을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백도 제거할 수 있습니다."}},
+{"@type":"Question","name":"줄바꿈도 제거되나요?","acceptedAnswer":{"@type":"Answer","text":"기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하여 텍스트를 한 줄로 만드는 옵션도 제공합니다."}},
+{"@type":"Question","name":"어떤 상황에서 공백 정리가 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"웹페이지 복사 텍스트 정리, PDF 추출 텍스트의 불규칙 공백 제거, 코드 들여쓰기 통일, SNS 블로그 글 작성 전 텍스트 다듬기 등에 활용됩니다."}},
+{"@type":"Question","name":"입력한 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다."}}
+]}
+</script>"""
+print('space.html J2 ready')
+B2 = """<h1 class="page-title">🔲 공백 정리기</h1>
+<p class="page-sub">불필요한 공백, 줄바꿈, 탭 문자를 깔끔하게 정리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="card"><div class="card-title">📝 텍스트 입력</div>
+<textarea class="text-area" id="textInput" placeholder="텍스트를 입력하세요..."></textarea>
+<div class="btn-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('multiSpace')">🔹 연속 공백</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('multiLine')">🔹 연속 줄바꿈</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('trimLines')">🔹 앞뒤 공백</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('emptyLines')">🔹 빈 줄 제거</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('tabs')">🔹 탭→공백</button>
+<button class="tool-btn" style="padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--g700);font-family:inherit" onclick="clean('allSpaces')">🔹 모든 공백 제거</button>
+</div>
+<button class="all-btn" style="width:100%;padding:14px;border:none;border-radius:10px;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px" onclick="clean('all')">✨ 한번에 전부 정리</button></div>
+<div id="resultArea" style="display:none"><div class="card"><div class="card-title">✅ 정리 결과</div>
+<div class="result-info" style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap"><span>원본 <strong id="origLen">0</strong>자</span><span>결과 <strong id="resultLen">0</strong>자</span><span>제거 <strong id="removedLen">0</strong>자</span></div>
+<textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
+<div style="margin-top:12px;text-align:right"><button class="copy-btn" style="padding:8px 16px;border:1.5px solid var(--primary);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--primary)" onclick="copyResult()">📋 복사</button></div></div></div>
+<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>"""
+G2 = """<div class="guide-section"><div class="guide-card"><h2>📖 공백 정리 가이드</h2>
+<p>웹페이지, PDF, 메신저 등에서 복사한 텍스트에는 불필요한 공백, 탭, 연속 줄바꿈이 포함됩니다. 이 도구로 한 번에 깔끔하게 정리할 수 있습니다.</p>
+<p><strong>연속 공백 합치기</strong>는 스페이스 여러 개를 하나로 합칩니다. <strong>Trim</strong>은 각 줄 앞뒤 공백을 제거합니다. <strong>연속 줄바꿈 정리</strong>는 빈 줄을 하나로 줄입니다.</p>
+<table><tr><th>기능</th><th>입력</th><th>출력</th><th>활용</th></tr><tr><td>연속 공백</td><td>Hello   World</td><td>Hello World</td><td>웹 복사 텍스트</td></tr><tr><td>줄바꿈 정리</td><td>\\n\\n\\n</td><td>\\n</td><td>PDF 텍스트</td></tr><tr><td>Trim</td><td>"  text  "</td><td>"text"</td><td>엑셀 데이터</td></tr></table></div>
+# ===== text/dedupe.html =====
+T3 = '중복 줄 제거 - 텍스트 중복 라인 삭제 | modutools'
+D3 = '텍스트에서 중복된 줄을 자동으로 제거. 순서 유지, 빈 줄 제거 옵션 지원. 엑셀 데이터 정리, 이메일 목록 정리에 유용.'
+U3 = 'https://modutools.com/text/dedupe.html'
+J3 = """<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"중복 줄 제거","url":"https://modutools.com/text/dedupe.html","description":"텍스트에서 중복된 줄을 자동으로 제거하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"중복 줄 제거는 어떤 상황에서 유용한가요?","acceptedAnswer":{"@type":"Answer","text":"엑셀 복사 데이터 정리, 이메일·전화번호 목록 중복 제거, 로그 파일 분석, 코드 중복 라인 제거, 키워드 목록 정리 등에 활용됩니다."}},
+{"@type":"Question","name":"원래 순서가 유지되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다."}},
+{"@type":"Question","name":"대소문자를 구분하나요?","acceptedAnswer":{"@type":"Answer","text":"기본 설정에서는 대소문자를 구분합니다. Hello와 hello는 서로 다른 줄로 인식됩니다. 대소문자 무시 옵션을 활성화하면 동일한 줄로 처리합니다."}},
+{"@type":"Question","name":"처리할 수 있는 텍스트 양에 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터 메모리 범위 내에서 수만 줄까지 처리 가능합니다."}}
+]}
+</script>"""
+B3 = """<h1 class="page-title">📋 중복 줄 제거</h1>
+<p class="page-sub">텍스트에서 중복된 줄을 자동으로 찾아 제거 · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="card"><div class="card-title">📝 텍스트 입력</div>
+<textarea class="text-area" id="inputText" placeholder="텍스트를 입력하세요..."></textarea>
+<div class="option-row" style="display:flex;gap:12px;margin:12px 0;flex-wrap:wrap">
+<label style="font-size:13px;color:var(--g700);display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="optEmpty" checked> 빈 줄 제거</label>
+<label style="font-size:13px;color:var(--g700);display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="optTrim" checked> 앞뒤 공백 제거</label>
+<label style="font-size:13px;color:var(--g700);display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="optCase"> 대소문자 무시</label>
+</div>
+<button class="calc-btn" style="width:100%;padding:16px;border:none;border-radius:12px;background:linear-gradient(135deg,#2563EB,#1D4ED8);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit" onclick="process()">중복 줄 제거하기</button></div>
+<div id="resultArea" style="display:none"><div class="card"><div class="card-title">✅ 결과</div>
+<div class="result-info" style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap"><span>원본 <strong id="origCount">0</strong>줄</span><span>결과 <strong id="resultCount">0</strong>줄</span><span>제거 <strong id="removedCount">0</strong>줄</span></div>
+<textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
+<div style="margin-top:12px;text-align:right"><button class="copy-btn" style="padding:8px 16px;border:1.5px solid var(--primary);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--primary)" onclick="copyResult()">📋 복사</button></div></div></div>
+<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>"""
+G3 = """<div class="guide-section"><div class="guide-card"><h2>📖 중복 줄 제거 가이드</h2>
+<p>텍스트 데이터를 다루다 보면 같은 내용이 반복되는 줄이 생기기 마련입니다. 이 도구는 중복된 줄을 자동으로 찾아 제거하고, 고유한 줄만 남겨줍니다. Set(집합) 자료구조 기반으로 동작하며, 대량의 데이터도 빠르게 처리합니다.</p>
+<p><strong>엑셀·스프레드시트 데이터 정리:</strong> 엑셀에서 복사한 열 데이터에 중복된 항목이 있을 때, 이 도구에 붙여넣으면 고유한 값만 추출할 수 있습니다. <strong>이메일·연락처 목록 정리:</strong> 여러 출처에서 모은 이메일 주소에서 중복을 제거하여 깔끔한 목록을 만들 수 있습니다.</p>
+<table><tr><th>옵션</th><th>설명</th><th>활용 예시</th></tr><tr><td>빈 줄 제거</td><td>텍스트 내의 빈 줄을 모두 제거</td><td>엑셀 복사 데이터 정리</td></tr><tr><td>앞뒤 공백 제거</td><td>각 줄의 앞뒤 공백을 Trim</td><td>공백이 포함된 데이터 정규화</td></tr><tr><td>대소문자 무시</td><td>대소문자 차이를 무시하고 중복 판별</td><td>이메일 주소 중복 제거</td></tr></table></div>
+<div class="faq-item"><div class="faq-q">중복 줄 제거는 어떤 상황에서 유용한가요?</div><div class="faq-a">엑셀에서 복사한 데이터 정리, 이메일·전화번호 목록에서 중복 제거, 로그 파일 분석, 프로그래밍 코드의 중복 라인 제거, 키워드 목록 정리 등 텍스트 기반 작업 전반에 활용됩니다. 특히 대량의 데이터에서 중복을 빠르게 제거해야 할 때 유용합니다.</div></div>
+<div class="faq-item"><div class="faq-q">원래 순서가 유지되나요?</div><div class="faq-a">네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 그대로 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다. 이는 Set 자료구조의 특성을 활용한 방식으로, 순서가 중요한 데이터를 처리할 때 특히 유용합니다.</div></div>
+<div class="faq-item"><div class="faq-q">대소문자를 구분하나요?</div><div class="faq-a">기본 설정에서는 대소문자를 구분합니다. Hello와 hello는 서로 다른 줄로 인식됩니다. 대소문자 무시 옵션을 활성화하면 비교 전에 모든 텍스트를 소문자로 변환하여 동일한 줄로 처리하므로, 이메일 주소나 URL처럼 대소문자 차이가 무의미한 데이터를 정리할 때 유용합니다.</div></div>
+<div class="faq-item"><div class="faq-q">처리할 수 있는 텍스트 양에 제한이 있나요?</div><div class="faq-a">서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리 가능합니다. 일반적인 문서 작업(수천 줄 이하)에서는 성능 저하 없이 즉시 처리됩니다.</div></div></div>"""
+S3 = 'var ii=document.getElementById("inputText"),oo=document.getElementById("outputText"),rr=document.getElementById("resultArea");function process(){var i=ii.value;if(!i.trim()){st("텍스트를 입력해주세요.");return;}var e=document.getElementById("optEmpty").checked,t=document.getElementById("optTrim").checked,c=document.getElementById("optCase").checked;var l=i.split("\\n");var o=l.length;if(e){l=l.filter(function(x){return x.trim();});}if(t){l=l.map(function(x){return x.trim();});}var s=[];var seen={};for(var k=0;k<l.length;k++){var key=c?l[k].toLowerCase():l[k];if(!seen[key]){s.push(l[k]);seen[key]=true;}}var r=s.length;oo.value=s.join("\\n");document.getElementById("origCount").textContent=o;document.getElementById("resultCount").textContent=r;document.getElementById("removedCount").textContent=o-r;rr.style.display="";}'
+w('text/dedupe.html', make(T3, D3, U3, J3, B3 + G3, S3))
+print('dedupe.html done!')
+print('=== ALL TEXT FILES GENERATED ===')
+<div class="faq-item"><div class="faq-q">공백 정리기는 어떤 공백을 제거하나요?</div><div class="faq-a">연속된 공백을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백도 제거할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">줄바꿈도 제거되나요?</div><div class="faq-a">연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하는 옵션도 제공합니다.</div></div>
+<div class="faq-item"><div class="faq-q">어떤 상황에서 공백 정리가 필요한가요?</div><div class="faq-a">웹페이지 복사 텍스트 정리, PDF 추출 텍스트의 불규칙 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 엑셀 데이터 전처리 등에 활용됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다.</div></div></div>"""
+S2 = 'var ti=document.getElementById("textInput"),to=document.getElementById("outputText"),ra=document.getElementById("resultArea");function clean(t){var i=ti.value;if(!i.trim()){st("텍스트를 입력해주세요.");return;}var r=i;switch(t){case"multiSpace":r=r.replace(/  +/g," ");break;case"multiLine":r=r.replace(/\\n{3,}/g,"\\n\\n");break;case"trimLines":r=r.split("\\n").map(function(l){return l.trim();}).join("\\n");break;case"emptyLines":r=r.split("\\n").filter(function(l){return l.trim();}).join("\\n");break;case"tabs":r=r.replace(/\\t/g," ");break;case"allSpaces":r=r.replace(/\\s/g,"");break;case"all":r=r.replace(/  +/g," ").replace(/\\t/g," ").replace(/^\\s+|\\s+$/gm,"").replace(/\\n{3,}/g,"\\n\\n");break;}to.value=r;document.getElementById("origLen").textContent=i.length;document.getElementById("resultLen").textContent=r.length;document.getElementById("removedLen").textContent=i.length-r.length;ra.style.display="";}'
+w('text/space.html', make(T2, D2, U2, J2, B2 + G2, S2))
+print('space.html done!')
