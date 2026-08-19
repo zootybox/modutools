@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"닉네임 생성기","url":"https://modutools.com/","description":"닉네임 생성 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"닉네임 생성 방식은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"형용사+명사 조합, 랜덤 문자열 등 다양한 방식으로 생성됩니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/generate/nickname.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">닉네임 생성기</h1>
 <p class="page-sub">게임, SNS, 커뮤니티에서 사용할 랜덤 닉네임 즉시 생성. 한글, 영문, 혼합 스타일. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 닉네임 생성 가이드</h2>
 <p>닉네임 생성기는 게임, SNS, 커뮤니티에서 사용할 랜덤 닉네임을 즉시 생성합니다. 한글, 영문, 혼합 스타일을 지원하며, 원하는 개수만큼 한 번에 생성할 수 있습니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">중복 닉네임이 생성될 수 있나요?</div><div class="faq-a">랜덤 생성이므로 중복 가능성이 낮지만, 특수문자나 숫자를 추가하여 피할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">생성된 닉네임을 저장할 수 있나요?</div><div class="faq-a">복사하여 원하는 곳에 직접 저장하세요.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

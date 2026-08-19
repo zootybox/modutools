@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"날짜 계산기","url":"https://modutools.com/convert/","description":"D-Day/날짜 차이 계산 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"D-Day 계산 시 시작일과 종료일 중 어떤 날짜가 포함되나요?","acceptedAnswer":{"@type":"Answer","text":"시작일 미포함, 종료일 포함하여 계산합니다. 오늘부터 내일까지는 D-1입니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/date.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">날짜 계산기</h1>
 <p class="page-sub">두 날짜 사이 일수 계산, D-Day 카운트다운, 날짜 더하기/빼기. 기념일, 만기일 계산에 유용. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 날짜 계산 가이드</h2>
 <p>날짜 계산기는 D-Day, 두 날짜 사이 일수 차이, 특정 날짜에 일수 더하기/빼기를 지원합니다. 기념일, 만기일, 출산예정일, 프로젝트 마감일 등 다양한 용도로 활용 가능합니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">윤년은 어떻게 반영되나요?</div><div class="faq-a">4년마다 2월 29일이 추가되는 윤년을 자동 반영합니다.</div></div>
 <div class="faq-item"><div class="faq-q">출산예정일 계산도 가능한가요?</div><div class="faq-a">네, 마지막 생리일 기준 약 280일 후를 출산예정일로 계산할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Convert processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

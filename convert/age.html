@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"나이 계산기","url":"https://modutools.com/convert/","description":"만나이/한국나이/띠 계산 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"만나이와 한국나이의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"만나이는 생일 기준으로 1년이 지나야 1살 증가합니다. 한국나이는 태어난 해를 1살로 하고 매년 1월 1일에 1살씩 추가됩니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/age.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">나이 계산기</h1>
 <p class="page-sub">생년월일 입력하면 만나이, 한국나이, 띠, 다음 생일까지 남은 일수 확인. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 나이 계산 가이드</h2>
 <p>2023년 6월 28일부터 만 나이 통일법이 시행되어 모든 법적·행정적 나이는 만나이로 통일되었습니다. 생일이 지나면 1살 증가하는 방식으로, 한국나이와 1~2살 차이가 발생할 수 있습니다.</p>
@@ -65,7 +71,8 @@
 <div class="faq-item"><div class="faq-q">만나이 통일법이 시행된 이유는 무엇인가요?</div><div class="faq-a">한국나이와 만나이가 혼용되어 발생하는 행정적 혼란을 해소하기 위해 2023년 6월부터 시행되었습니다.</div></div>
 <div class="faq-item"><div class="faq-q">띠는 어떻게 계산되나요?</div><div class="faq-a">태어난 해의 12지신 동물이 띠가 됩니다. 예: 2000년생=용띠.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -74,5 +81,6 @@
 (function(){/* Convert processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

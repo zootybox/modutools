@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"증명사진 규격 맞추기","url":"https://modutools.com/image/","description":"증명사진 규격 편집 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"증명사진 규격별 표준 크기는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"여권 3.5×4.5cm, 주민등록증 3×4cm, 운전면허증 3×4cm, 이력서 3×4cm, 미국 비자 5×5cm입니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/image/id-photo.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">증명사진 규격 맞추기</h1>
 <p class="page-sub">여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지 편집. 배경색 변경, 크기 조정. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 증명사진 규격 가이드</h2>
 <p>증명사진 규격 맞추기 도구는 Canvas API로 이미지를 각종 공식 증명사진 규격에 맞게 편집합니다. 배경색을 흰색, 회색, 파란색 등으로 변경하고 지정된 크기로 자동 크롭됩니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">배경색을 변경할 수 있나요?</div><div class="faq-a">네, 흰색, 회색, 파란색 등으로 변경 가능합니다.</div></div>
 <div class="faq-item"><div class="faq-q">해상도는 어떻게 설정해야 하나요?</div><div class="faq-a">300DPI 이상 권장, 여권사진은 최소 600×800px 이상이 적합합니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Canvas image processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

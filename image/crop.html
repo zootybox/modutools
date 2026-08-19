@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 자르기","url":"https://modutools.com/image/","description":"이미지 크롭 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"비율별 자르기는 어떤 규격이 있나요?","acceptedAnswer":{"@type":"Answer","text":"1:1(Instagram), 4:3(일반 사진), 16:9(와이드스크린), 3:2(DSLR) 등 다양한 비율을 지원합니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/image/crop.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">이미지 자르기</h1>
 <p class="page-sub">이미지에서 원하는 영역만 선택하여 자릅니다. 자유 비율, 1:1, 4:3, 16:9 비율 프리셋 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 이미지 자르기 가이드</h2>
 <p>이미지 자르기(크롭)는 Canvas API를 사용하여 브라우저에서 직접 이미지의 원하는 영역만 선택하여 추출합니다. 사진 구도 교정, 불필요한 영역 제거, SNS 규격에 맞는 이미지 제작에 유용합니다.</p>
@@ -65,7 +71,8 @@
 <div class="faq-item"><div class="faq-q">자르기 후 이미지 해상도는 어떻게 되나요?</div><div class="faq-a">선택한 영역의 픽셀 그대로 유지됩니다. 원본보다 커지지 않으므로 화질 저하가 없습니다.</div></div>
 <div class="faq-item"><div class="faq-q">자유 비율로 자를 수 있나요?</div><div class="faq-a">네, 자유 비율 모드에서는 원하는 영역을 마우스로 직접 드래그하여 선택할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -74,5 +81,6 @@
 (function(){/* Canvas image processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

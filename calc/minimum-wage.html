@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"최저시급 월급 계산기","url":"https://modutools.com/calc/","description":"2026년 최저시급 기준 월급 계산 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -50,6 +52,9 @@
 {"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어집니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/calc/minimum-wage.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -57,6 +62,7 @@
 <main class="page">
 <h1 class="page-title">최저시급 월급 계산기</h1>
 <p class="page-sub">2026년 최저시급 기준 일급, 월급, 연봉, 주휴수당 포함 금액 계산.</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 최저시급 월급 계산 가이드</h2>
 <p>2026년 최저시급 기준 월급 계산기는 시간당 임금을 기준으로 일급, 주급, 월급, 연봉을 환산합니다. 주휴수당 포함 여부와 근무 시간을 설정할 수 있습니다.</p>
@@ -68,7 +74,8 @@
 <div class="faq-item"><div class="faq-q">주휴수당은 어떻게 계산되나요?</div><div class="faq-a">주 15시간 이상 근무하는 근로자에게 1주일에 1회 이상의 유급 주휴일이 주어집니다.</div></div>
 <div class="faq-item"><div class="faq-q">5인 미만 사업장도 최저시급이 적용되나요?</div><div class="faq-a">네, 5인 미만 사업장도 최저시급이 동일하게 적용됩니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -137,5 +144,6 @@ function calculate(){
 }})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

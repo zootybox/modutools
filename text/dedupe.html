@@ -40,6 +40,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}.text-area{min-height:140px;font-size:13px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"중복 줄 제거","url":"https://modutools.com/text/dedupe.html","description":"텍스트에서 중복된 줄을 자동으로 제거하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -52,6 +54,9 @@
 {"@type":"Question","name":"처리할 수 있는 텍스트 양에 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터 메모리 범위 내에서 수만 줄까지 처리 가능합니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/text/dedupe.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -59,6 +64,7 @@
 <main class="page">
 <h1 class="page-title">📋 중복 줄 제거</h1>
 <p class="page-sub">텍스트에서 중복된 줄을 자동으로 찾아 제거</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="card"><div class="card-title">📝 텍스트 입력</div>
 <textarea class="text-area" id="inputText" placeholder="텍스트를 입력하세요..."></textarea>
@@ -80,7 +86,8 @@
 <div class="faq-item"><div class="faq-q">중복 줄 제거는 어떤 상황에서 유용한가요?</div><div class="faq-a">엑셀에서 복사한 데이터 정리, 이메일·전화번호 목록에서 중복 제거, 로그 파일 분석, 프로그래밍 코드의 중복 라인 제거, 키워드 목록 정리 등 텍스트 기반 작업 전반에 활용됩니다. 특히 대량의 데이터에서 중복을 빠르게 제거해야 할 때 유용합니다.</div></div>
 <div class="faq-item"><div class="faq-q">원래 순서가 유지되나요?</div><div class="faq-a">네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 그대로 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다. 이는 Set 자료구조의 특성을 활용한 방식으로, 순서가 중요한 데이터를 처리할 때 특히 유용합니다.</div></div>
 <div class="faq-item"><div class="faq-q">대소문자를 구분하나요?</div><div class="faq-a">기본 설정에서는 대소문자를 구분합니다. Hello와 hello는 서로 다른 줄로 인식됩니다. 대소문자 무시 옵션을 활성화하면 비교 전에 모든 텍스트를 소문자로 변환하여 동일한 줄로 처리하므로, 이메일 주소나 URL처럼 대소문자 차이가 무의미한 데이터를 정리할 때 유용합니다.</div></div>
-<div class="faq-item"><div class="faq-q">처리할 수 있는 텍스트 양에 제한이 있나요?</div><div class="faq-a">서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리 가능합니다. 일반적인 문서 작업에서는 성능 저하 없이 즉시 처리됩니다.</div></div></div></main>
+<div class="faq-item"><div class="faq-q">처리할 수 있는 텍스트 양에 제한이 있나요?</div><div class="faq-a">서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리 가능합니다. 일반적인 문서 작업에서는 성능 저하 없이 즉시 처리됩니다.</div></div></div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -91,5 +98,6 @@ var ii=document.getElementById("inputText"),oo=document.getElementById("outputTe
 ");document.getElementById("origCount").textContent=o;document.getElementById("resultCount").textContent=r;document.getElementById("removedCount").textContent=o-r;rr.style.display="";}
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

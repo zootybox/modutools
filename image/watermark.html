@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"워터마크 넣기","url":"https://modutools.com/image/","description":"이미지 워터마크 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"워터마크의 적절한 투명도는 어느 정도인가요?","acceptedAnswer":{"@type":"Answer","text":"30~50% 투명도가 적절합니다. 너무 낮으면 효과가 미미하고, 너무 높으면 원본 이미지가 가려집니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/image/watermark.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">워터마크 넣기</h1>
 <p class="page-sub">이미지에 텍스트 워터마크를 추가. 위치, 크기, 투명도, 색상, 회전 설정 가능. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 워터마크 추가 가이드</h2>
 <p>워터마크는 Canvas API로 이미지에 텍스트를 합성합니다. 저작권 보호, 브랜드 홍보, 불법 복제 방지 목적으로 사용됩니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">워터마크 위치는 어떻게 선택하나요?</div><div class="faq-a">우측 하단이 가장 일반적입니다. 이미지 전체 반복 배치하면 제거가 더 어렵습니다.</div></div>
 <div class="faq-item"><div class="faq-q">폰트 크기는 어떻게 설정하나요?</div><div class="faq-a">이미지 크기의 3~5%가 적절합니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Canvas image processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

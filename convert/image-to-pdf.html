@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 PDF 변환","url":"https://modutools.com/convert/","description":"이미지를 PDF로 변환하는 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"PDF 변환 시 이미지 해상도는 유지되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 원본 이미지 해상도를 그대로 유지하여 PDF로 변환합니다. 용지 크기에 맞게 자동 조정됩니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/image-to-pdf.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">이미지 PDF 변환</h1>
 <p class="page-sub">여러 장의 이미지(JPG, PNG, WEBP)를 하나의 PDF 파일로 변환. 순서 변경, 용지 설정 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 이미지 PDF 변환 가이드</h2>
 <p>이미지 PDF 변환기는 jsPDF 라이브러리를 사용하여 브라우저에서 직접 여러 장의 이미지를 하나의 PDF 파일로 변환합니다. 이미지 순서를 드래그로 변경할 수 있으며, A4, A3, Letter 등 다양한 용지 크기를 지원합니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">이미지 순서를 변경할 수 있나요?</div><div class="faq-a">네, 드래그 앤 드롭으로 순서를 변경할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">최대 몇 장까지 변환 가능한가요?</div><div class="faq-a">브라우저 메모리 범위 내에서 제한 없이 가능합니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Convert processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"무료 TTS 음성 변환","url":"https://modutools.com/","description":"텍스트 음성 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"TTS와 실제 사람 음성의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"TTS는 합성 음성으로 자연스러움이 향상 중이지만, 감정과 억양은 실제 사람에 비해 부족합니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/generate/tts.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">무료 TTS 음성 변환 및 저장 | modutools</h1>
 <p class="page-sub">텍스트를 음성으로 변환하고 WAV 파일로 저장. 한국어·영어 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 TTS 음성 생성 가이드</h2>
 <p>TTS는 Web Speech API를 사용해 텍스트를 음성으로 변환하고 WAV 파일로 저장합니다. 한국어·영어 지원, 다양한 음성 선택 가능.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">음성 파일을 다운로드할 수 있나요?</div><div class="faq-a">네, WAV 형식으로 다운로드하여 저장할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">긴 텍스트도 변환 가능한가요?</div><div class="faq-a">네, 브라우저 메모리가 허용하는 범위 내에서 가능합니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. Web Speech API는 브라우저 내장 API입니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"색상 코드 변환","url":"https://modutools.com/convert/","description":"HEX/RGB/HSL 색상 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"HEX와 RGB의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"HEX는 16진수 6자리(#FF0000)로 표현하고, RGB는 0~255 숫자 3개(255,0,0)로 표현합니다. 같은 색상을 다른 형식으로 표기한 것입니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/color.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">색상 코드 변환</h1>
 <p class="page-sub">HEX, RGB, HSL 색상 코드를 상호 변환. 색상 미리보기, 복사 기능 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 색상 코드 변환 가이드</h2>
 <p>HEX, RGB, HSL은 색상을 표현하는 세 가지 주요 방식입니다. HEX는 웹 디자인에서 가장 널리 사용되며, RGB는 디지털 기기 화면 표준입니다. HSL(색조, 채도, 명도)은 직관적인 색상 조정에 유용합니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">HSL이 직관적인 이유는 무엇인가요?</div><div class="faq-a">색조(Hue)로 색상 종류를, 채도(Saturation)로 선명도를, 명도(Lightness)로 밝기를 각각 조절할 수 있어 직관적입니다.</div></div>
 <div class="faq-item"><div class="faq-q">웹 접근성 대비비는 어떻게 확인하나요?</div><div class="faq-a">텍스트와 배경색의 명도 차이를 계산하여 WCAG 기준 충족 여부를 확인할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Convert processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

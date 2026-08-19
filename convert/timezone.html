@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"시간대 변환기","url":"https://modutools.com/convert/","description":"세계 시간대 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"서머타임(DST)은 어떻게 적용되나요?","acceptedAnswer":{"@type":"Answer","text":"미국, 유럽 등에서 3월~11월 중 적용되어 1시간 앞당겨집니다. 한국은 미적용입니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/timezone.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">시간대 변환기</h1>
 <p class="page-sub">전 세계 주요 도시 시간대 실시간 변환. 한국, 미국, 유럽, 일본 등 주요 시간대 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 시간대 변환 가이드</h2>
 <p>세계 시간대 변환기는 UTC 기준으로 각 도시의 시간대 차이를 계산합니다. 한국은 UTC+9, 미국 동부는 UTC-5(서머타임 적용 시), 일본은 UTC+9입니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">UTC와 GMT의 차이는 무엇인가요?</div><div class="faq-a">실용적으로 동일하나, UTC는 원자시계, GMT는 태양시 기반입니다.</div></div>
 <div class="faq-item"><div class="faq-q">한국은 왜 서머타임을 적용하지 않나요?</div><div class="faq-a">1988년 이후 폐지되었으며, 효과가 미미하다는 판단입니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 브라우저에서만 처리됩니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Convert processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

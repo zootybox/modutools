@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"대출이자 계산기","url":"https://modutools.com/calc/","description":"대출 원금, 금리, 기간별 상환 방식 비교 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -50,6 +52,9 @@
 {"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/calc/loan.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -57,6 +62,7 @@
 <main class="page">
 <h1 class="page-title">대출이자 계산기</h1>
 <p class="page-sub">대출 상환 방식별 월 납입금과 총 이자를 비교. 원리금균등, 원금균등, 만기일시 상환 방식 지원.</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 대출이자 계산 가이드</h2>
 <p>대출이자 계산기는 원금, 금리, 상환 기간을 입력하면 원리금균등·원금균등·만기일시 세 가지 상환 방식별로 월 납입금과 총 이자를 비교해줍니다. 주택담보대출, 신용대출, 자동차 할부 등 다양한 대출 상품의 조건을 비교할 때 유용합니다.</p>
@@ -68,7 +74,8 @@
 <div class="faq-item"><div class="faq-q">중도상환수수료는 얼마인가요?</div><div class="faq-a">일반적으로 중도상환액의 1.2~1.4%이며, 은행별로 상이합니다. 3년 경과 후에는 면제되는 경우가 많습니다.</div></div>
 <div class="faq-item"><div class="faq-q">금리 변동 위험은 어떻게 대비해야 하나요?</div><div class="faq-a">변동금리 대출은 금리 상승 시 이자 부담이 증가할 수 있습니다. 안정성을 원한다면 고정금리나 혼합형을 선택하는 것이 좋습니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -225,5 +232,6 @@ function toggleTable(){
 })();})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

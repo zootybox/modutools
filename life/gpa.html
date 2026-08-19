@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"학점 계산기","url":"https://modutools.com/","description":"GPA 계산 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"4.5만점과 4.3만점의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"A+의 최고 점수가 4.5인지 4.3인지의 차이입니다. 학교 기준에 따라 선택하세요."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/life/gpa.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">학점 계산기</h1>
 <p class="page-sub">과목별 학점과 성적을 입력하면 평균 학점(GPA) 자동 계산. 4.5만점, 4.3만점 지원. · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 학점 계산 가이드</h2>
 <p>학점 계산기는 과목별 학점과 성적을 입력하면 평균 평점(GPA)을 자동 계산합니다. 4.5만점과 4.3만점을 모두 지원하며, 각 성적의 등급별 점수를 기준으로 계산합니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">F 학점은 계산에 포함되나요?</div><div class="faq-a">네, F 학점은 0점으로 계산에 포함됩니다.</div></div>
 <div class="faq-item"><div class="faq-q">전공 평점과 전체 평점을 따로 계산할 수 있나요?</div><div class="faq-a">전체 평점만 계산됩니다. 전공 과목만 따로 입력하여 확인할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

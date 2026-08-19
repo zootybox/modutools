@@ -38,6 +38,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 압축기","url":"https://modutools.com/image/","description":"JPG, PNG, WEBP 이미지 압축 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -47,6 +49,9 @@
 {"@type":"Question","name":"무손실 압축과 손실 압축의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"무손실 압축(PNG)은 원본과 동일한 화질을 유지하지만 용량 감소 효과가 제한적입니다. 손실 압축(JPEG)은 사람이 인식하기 어려운 정보를 제거하여 용량을 크게 줄이지만, 압축률이 높을수록 화질 저하가 발생할 수 있습니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/image/compress.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -54,6 +59,7 @@
 <main class="page">
 <h1 class="page-title">이미지 압축기</h1>
 <p class="page-sub">JPG, PNG, WEBP 이미지를 화질 유지하며 용량을 줄여보세요. 서버 전송 없이 브라우저에서 100%  · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
 <div class="guide-section"><div class="guide-card"><h2>📖 이미지 압축 가이드</h2>
 <p>이미지 압축기는 Canvas API를 사용하여 브라우저에서 직접 이미지 용량을 줄입니다. JPEG, PNG, WebP 포맷을 지원하며, 품질을 0~100% 사이에서 조절할 수 있습니다. 서버 업로드 없이 100% 로컬에서 처리되므로 개인정보가 안전합니다.</p>
@@ -64,7 +70,8 @@
 <div class="faq-item"><div class="faq-q">이미지 압축 시 화질 저하를 최소화하려면 어떻게 해야 하나요?</div><div class="faq-a">JPEG 압축 시 품질 80~90%를 권장합니다. 70% 이하로 낮추면 눈에 띄는 화질 저하가 발생할 수 있습니다. 중요한 이미지는 무손실 포맷을 선택하세요.</div></div>
 <div class="faq-item"><div class="faq-q">여러 장의 이미지를 한 번에 압축할 수 있나요?</div><div class="faq-a">네, 여러 이미지를 동시에 업로드하여 일괄 압축할 수 있습니다. 각 이미지마다 개별 다운로드가 가능합니다.</div></div>
 <div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 이미지가 서버로 전송되지 않습니다.</div></div>
-</div></main>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -73,5 +80,6 @@
 (function(){/* Canvas image processing */})();
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>

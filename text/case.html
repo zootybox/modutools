@@ -40,6 +40,8 @@
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 @media(max-width:480px){.page-title{font-size:22px}.text-area{min-height:140px;font-size:13px}}
+
+.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"대소문자 변환","url":"https://modutools.com/text/case.html","description":"영문 텍스트를 대문자, 소문자, 첫 글자 대문자, CamelCase, PascalCase, snake_case, kebab-case로 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -52,6 +54,9 @@
 {"@type":"Question","name":"입력한 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다."}}
 ]}
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/text/case.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
 </head>
 <body>
 <header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
@@ -59,6 +64,7 @@
 <main class="page">
 <h1 class="page-title">🔠 대소문자 변환</h1>
 <p class="page-sub">영문 텍스트를 원하는 형식으로 일괄 변환 · 100% 브라우저 로컬 처리</p>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="card"><div class="card-title">📝 텍스트 입력</div>
 <textarea class="text-area" id="textInput" placeholder="여기에 영문 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
@@ -83,7 +89,8 @@
 <div class="faq-item"><div class="faq-q">프로그래밍 언어별 네이밍 컨벤션은 어떻게 다른가요?</div><div class="faq-a">Java는 변수명과 메서드명에 camelCase, 클래스명에 PascalCase를 사용합니다. Python은 모든 식별자에 snake_case를 사용하는 것이 PEP 8 표준입니다. JavaScript는 Java와 유사하게 camelCase를 사용하지만 파일명은 kebab-case를 사용하는 관례가 있습니다. C#은 Microsoft의 공식 가이드라인에 따라 PascalCase를 광범위하게 사용합니다. SQL은 키워드를 대문자로, 테이블명과 컬럼명은 snake_case로 작성하는 것이 일반적입니다.</div></div>
 <div class="faq-item"><div class="faq-q">한글이 포함된 텍스트도 변환되나요?</div><div class="faq-a">한글에는 대소문자 구분이 없으므로 변환되지 않습니다. 영문 알파벳(A-Z, a-z)만 변환 대상이며, 한글·숫자·특수문자·공백은 원래 그대로 유지됩니다. 따라서 한영 혼합 텍스트도 안심하고 사용할 수 있습니다.</div></div>
 <div class="faq-item"><div class="faq-q">Title Case와 Sentence Case의 차이는 무엇인가요?</div><div class="faq-a">Title Case는 모든 단어의 첫 글자를 대문자로 바꾸며, 관사(a, an, the)나 접속사(and, but, or)는 소문자로 유지하는 것이 일반적인 규칙입니다(예: The Lord of the Rings). Sentence Case는 문장의 첫 글자만 대문자로 바꾸고 나머지는 소문자로 유지합니다(예: The lord of the rings). 영문 논문 제목에는 Title Case, 일반 문서 본문에는 Sentence Case가 적합합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다. 페이지를 닫으면 입력 내용은 완전히 사라집니다.</div></div></div></main>
+<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다. 페이지를 닫으면 입력 내용은 완전히 사라집니다.</div></div></div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+</main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
@@ -92,5 +99,6 @@
 var ti=document.getElementById("textInput"),to=document.getElementById("outputText"),ra=document.getElementById("resultArea");function convert(t){var i=ti.value;if(!i.trim()){st("텍스트를 입력해주세요.");return;}var r="";switch(t){case"upper":r=i.toUpperCase();break;case"lower":r=i.toLowerCase();break;case"title":r=i.replace(/\b\w/g,function(c){return c.toUpperCase();});break;case"sentence":r=i.replace(/(^|\.\s+)(\w)/g,function(m){return m.toUpperCase();});break;case"camel":r=i.replace(/[^a-zA-Z0-9]+(\w)/g,function(_,c){return c.toUpperCase();}).replace(/^[A-Z]/,function(c){return c.toLowerCase();});break;case"pascal":r=i.replace(/[^a-zA-Z0-9]+(\w)/g,function(_,c){return c.toUpperCase();}).replace(/^[a-z]/,function(c){return c.toUpperCase();});break;case"snake":r=i.replace(/[^a-zA-Z0-9]+/g,"_").replace(/([a-z])([A-Z])/g,"$1_$2").toLowerCase();break;case"kebab":r=i.replace(/[^a-zA-Z0-9]+/g,"-").replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase();break;}to.value=r;ra.style.display="";}window.convert=convert;window.copyResult=function(){if(!to.value)return;navigator.clipboard.writeText(to.value).then(function(){st("결과가 복사되었습니다!");}).catch(function(){to.select();document.execCommand("copy");st("결과가 복사되었습니다!");});};
 })();
 </script>
+<div class="toast" id="toast"></div>
 </body>
 </html>
