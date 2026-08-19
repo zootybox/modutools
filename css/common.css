@@ -20,9 +20,8 @@ a{text-decoration:none;color:inherit}
 .mt-nav a{font-size:13px;color:var(--g500);padding:6px 12px;border-radius:8px;transition:.2s}
 .mt-nav a:hover,.mt-nav a.active{color:var(--primary);background:var(--primary-light)}
 
-/* Ad Slot */
-.mt-ad{max-width:1080px;margin:20px auto;padding:0 20px;text-align:center}
-.mt-ad-box{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:16px;color:var(--g400);font-size:12px}
+/* Ad Slot - 심사 중 완전 숨김 */
+.mt-ad,.mt-ad-box,.ad-slot,.ad-slot-middle,.ad-slot-inner,.ad-placeholder,.ad-box{display:none !important}
 
 /* Footer */
 .mt-footer{background:#fff;border-top:1px solid var(--g200);padding:32px 20px;text-align:center;margin-top:60px}
