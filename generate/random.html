@@ -60,17 +60,64 @@
 <h1 class="page-title">랜덤 숫자 생성기</h1>
 <p class="page-sub">범위를 지정해 랜덤 숫자 생성. 로또 번호, 추첨, 제비뽑기, 순서 정하기에 유용. · 100% 브라우저 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+
+<div class="card">
+<div class="card-title">🎲 빠른 설정</div>
+<div class="quick-btns">
+<button class="quick-btn" onclick="quickSet(1,45,6,true)">🍀 로또 (1~45, 6개)</button>
+<button class="quick-btn" onclick="quickSet(1,10,1,false)">🎯 1~10 뽑기</button>
+<button class="quick-btn" onclick="quickSet(1,100,1,false)">🔢 1~100 뽑기</button>
+<button class="quick-btn" onclick="quickSet(1,6,1,false)">🎲 주사위</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">⚙️ 설정</div>
+<div class="input-group">
+<label class="input-label">숫자 범위</label>
+<div class="input-row">
+<input type="number" class="input-field" id="minVal" value="1" inputmode="numeric">
+<span class="input-sep">~</span>
+<input type="number" class="input-field" id="maxVal" value="45" inputmode="numeric">
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">생성 개수</label>
+<input type="number" class="input-field" id="genCount" value="6" min="1" max="100" inputmode="numeric" style="text-align:center">
+</div>
+<div class="option-row">
+<label class="option-label"><input type="checkbox" id="optNoDup" checked> 중복 제외</label>
+<label class="option-label"><input type="checkbox" id="optSort" checked> 오름차순 정렬</label>
+</div>
+<button class="calc-btn" onclick="generate()">🎲 숫자 생성</button>
+</div>
+
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">✨ 결과</div>
+<div class="number-display" id="numberDisplay"></div>
+<div class="number-text" id="numberText"></div>
+<button class="copy-btn" onclick="copyResult()">📋 결과 복사</button>
+<div class="history" id="history"></div>
+</div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">진정한 난수와 의사 난수의 차이는 무엇인가요?</div><div class="faq-a">Math.random()은 의사 난수로, 알고리즘 기반이지만 실용적인 목적에는 충분한 무작위성을 제공합니다.</div></div>
+<div class="faq-item"><div class="faq-q">생성 결과가 편향될 수 있나요?</div><div class="faq-a">Math.random()은 균등 분포를 보장하므로, 충분한 샘플에서는 각 숫자가 비슷한 빈도로 나타납니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 랜덤 숫자 생성 가이드</h2>
 <p>랜덤 숫자 생성기는 사용자가 지정한 범위 내에서 무작위 숫자를 생성합니다. 중복 허용/제외 옵션을 선택할 수 있으며, 여러 개의 숫자를 한 번에 생성할 수 있습니다.</p>
 <p>로또 번호 생성(1~45, 6개, 중복 제외), 제비뽑기, 순서 정하기, 난수표 생성 등 다양한 용도로 활용 가능합니다. Math.random() 기반의 균등 분포 난수를 사용합니다.</p>
 <table><tr><th>용도</th><th>범위 설정</th><th>개수</th></tr><tr><td>로또 번호</td><td>1~45</td><td>6개</td></tr><tr><td>제비뽑기</td><td>1~인원수</td><td>1개</td></tr><tr><td>난수표</td><td>0~9999</td><td>여러 개</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">로또 번호 생성 시 중복 제외는 어떻게 동작하나요?</div><div class="faq-a">1~45 범위에서 중복 없이 6개 숫자를 무작위 추출합니다. 각 숫자는 동일 확률로 선택됩니다.</div></div>
-<div class="faq-item"><div class="faq-q">진정한 난수와 의사 난수의 차이는 무엇인가요?</div><div class="faq-a">Math.random()은 의사 난수로, 알고리즘 기반이지만 실용적인 목적에는 충분한 무작위성을 제공합니다.</div></div>
-<div class="faq-item"><div class="faq-q">생성 결과가 편향될 수 있나요?</div><div class="faq-a">Math.random()은 균등 분포를 보장하므로, 충분한 샘플에서는 각 숫자가 비슷한 빈도로 나타납니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">로또 번호 생성 시 중복 제외는 어떻게 동작하나요?</div><div class="faq-a">1~45 범위에서 중복 없이 6개 숫자를 무작위 추출합니다. 각 숫자는 동일 확률로 선택됩니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

@@ -60,17 +60,90 @@
 <h1 class="page-title">이미지 PDF 변환</h1>
 <p class="page-sub">여러 장의 이미지(JPG, PNG, WEBP)를 하나의 PDF 파일로 변환. 순서 변경, 용지 설정 지원. · 100% 브라우저 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
+
+<div class="card">
+<div class="card-title">🖼️ 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">📁</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WEBP 지원 · 최대 30장</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
+<div class="thumb-list" id="thumbList"></div>
+<div class="thumb-count" id="thumbCount"></div>
+</div>
+<div id="settingsArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ PDF 설정</div>
+<div class="input-group">
+<label class="input-label">용지 크기</label>
+<div class="toggle-row" id="sizeRow">
+<div class="toggle-btn active" data-val="a4" onclick="setOpt(this,'sizeRow')">A4</div>
+<div class="toggle-btn" data-val="letter" onclick="setOpt(this,'sizeRow')">Letter</div>
+<div class="toggle-btn" data-val="a3" onclick="setOpt(this,'sizeRow')">A3</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">용지 방향</label>
+<div class="toggle-row" id="orientRow">
+<div class="toggle-btn active" data-val="portrait" onclick="setOpt(this,'orientRow')">📐 세로</div>
+<div class="toggle-btn" data-val="landscape" onclick="setOpt(this,'orientRow')">📏 가로</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">여백</label>
+<div class="toggle-row" id="marginRow">
+<div class="toggle-btn" data-val="0" onclick="setOpt(this,'marginRow')">없음</div>
+<div class="toggle-btn" data-val="10" onclick="setOpt(this,'marginRow')">작게</div>
+<div class="toggle-btn active" data-val="20" onclick="setOpt(this,'marginRow')">보통</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">이미지 맞춤</label>
+<div class="toggle-row" id="fitRow">
+<div class="toggle-btn active" data-val="fit" onclick="setOpt(this,'fitRow')">페이지에 맞춤</div>
+<div class="toggle-btn" data-val="fill" onclick="setOpt(this,'fitRow')">꽉 채우기</div>
+</div>
+</div>
+</div>
+<button class="calc-btn" id="convertBtn" onclick="convertPDF()">📄 PDF 만들기</button>
+<div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="result-box">
+<div class="result-icon">✅</div>
+<div class="result-title">PDF 변환 완료!</div>
+<div class="result-sub" id="resultSub">-</div>
+</div>
+<button class="download-btn" id="downloadBtn">📥 PDF 다운로드</button>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+
+<div class="card">
+<div class="card-title">📖 이미지 PDF 변환 가이드</div>
+<div style="font-size:13px;line-height:1.8;color:#64748B">
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">이미지를 PDF로 변환하는 이유</strong><br>여러 장의 스캔 문서, 캡처 이미지, 사진을 하나의 PDF로 합치면 파일 관리가 편리하고 공유가 쉬워집니다. PDF는 어떤 기기에서 열어도 동일한 레이아웃을 유지하며, 문서의 무결성을 보장합니다. 이력서 첨부, 과제 제출, 계약서 스캔본 정리 등 다양한 상황에서 활용됩니다.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">용지 크기와 방향 선택</strong><br>A4(210×297mm)는 한국에서 가장 많이 사용하는 문서 규격이며, Letter(216×279mm)는 미국 표준입니다. 세로 방향은 일반 문서에, 가로 방향은 와이드 사진이나 프레젠테이션 자료에 적합합니다. 이미지 비율에 맞는 용지와 방향을 선택하면 여백이 최소화됩니다.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">이미지 순서와 품질</strong><br>PDF 내 페이지 순서는 이미지 업로드 순서와 동일합니다. 드래그로 순서를 변경할 수 있으니 원하는 배치로 조정하세요. 원본 이미지 해상도가 높을수록 PDF 화질이 좋아지지만 파일 크기도 커집니다. 웹용이라면 이미지를 먼저 압축한 후 PDF로 변환하는 것이 효율적입니다.</p>
+<p><strong style="font-size:15px;color:#0F172A">서버 전송 없는 안전한 변환</strong><br>본 도구는 브라우저에서 직접 PDF를 생성하므로 이미지가 외부 서버로 전송되지 않습니다. 개인정보가 포함된 신분증 사본, 의료 문서, 계약서 등도 안심하고 변환할 수 있습니다. 변환 완료 후 이미지 데이터는 브라우저 메모리에서 자동 삭제됩니다.</p>
+</div>
+</div>
+
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">이미지 순서를 변경할 수 있나요?</div><div class="faq-a">네, 드래그 앤 드롭으로 순서를 변경할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">최대 몇 장까지 변환 가능한가요?</div><div class="faq-a">브라우저 메모리 범위 내에서 제한 없이 가능합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 이미지 PDF 변환 가이드</h2>
 <p>이미지 PDF 변환기는 jsPDF 라이브러리를 사용하여 브라우저에서 직접 여러 장의 이미지를 하나의 PDF 파일로 변환합니다. 이미지 순서를 드래그로 변경할 수 있으며, A4, A3, Letter 등 다양한 용지 크기를 지원합니다.</p>
 <p>공공기관 제출용 문서는 일반적으로 A4 용지에 맞춰 PDF를 작성하는 것이 안전합니다. 이미지가 너무 크면 용지에 맞게 자동 축소됩니다.</p>
 <table><tr><th>용지</th><th>크기(mm)</th><th>권장 용도</th></tr><tr><td>A4</td><td>210×297</td><td>문서, 보고서</td></tr><tr><td>A3</td><td>297×420</td><td>도면, 포스터</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">PDF 변환 시 이미지 해상도는 유지되나요?</div><div class="faq-a">네, 원본 해상도를 유지합니다.</div></div>
-<div class="faq-item"><div class="faq-q">이미지 순서를 변경할 수 있나요?</div><div class="faq-a">네, 드래그 앤 드롭으로 순서를 변경할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">최대 몇 장까지 변환 가능한가요?</div><div class="faq-a">브라우저 메모리 범위 내에서 제한 없이 가능합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">PDF 변환 시 이미지 해상도는 유지되나요?</div><div class="faq-a">네, 원본 해상도를 유지합니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

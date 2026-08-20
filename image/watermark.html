@@ -60,17 +60,102 @@
 <h1 class="page-title">워터마크 넣기</h1>
 <p class="page-sub">이미지에 텍스트 워터마크를 추가. 위치, 크기, 투명도, 색상, 회전 설정 가능. · 100% 브라우저 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 업로드 없음 · 용량/횟수 무제한 100% 로컬 처리</div>
+
+<div class="card">
+<div class="card-title">💧 이미지 업로드</div>
+<div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+<div class="upload-icon">🖼️</div>
+<div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
+</div>
+<input type="file" class="file-input" id="fileInput" accept="image/*">
+</div>
+<div id="editorArea" style="display:none">
+<div class="card">
+<div class="card-title">⚙️ 워터마크 설정</div>
+<div class="input-group">
+<label class="input-label">워터마크 텍스트</label>
+<input type="text" class="input-field" id="wmText" value="modutools.com" placeholder="워터마크 텍스트 입력">
+</div>
+<div class="input-group">
+<label class="input-label">위치</label>
+<div class="pos-grid" id="posGrid">
+<div class="pos-btn" data-pos="tl" onclick="setPos(this)">좌상단</div>
+<div class="pos-btn" data-pos="tc" onclick="setPos(this)">상단 중앙</div>
+<div class="pos-btn" data-pos="tr" onclick="setPos(this)">우상단</div>
+<div class="pos-btn" data-pos="ml" onclick="setPos(this)">좌 중앙</div>
+<div class="pos-btn active" data-pos="mc" onclick="setPos(this)">중앙</div>
+<div class="pos-btn" data-pos="mr" onclick="setPos(this)">우 중앙</div>
+<div class="pos-btn" data-pos="bl" onclick="setPos(this)">좌하단</div>
+<div class="pos-btn" data-pos="bc" onclick="setPos(this)">하단 중앙</div>
+<div class="pos-btn" data-pos="br" onclick="setPos(this)">우하단</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">모드</label>
+<div class="toggle-row" id="modeRow">
+<div class="toggle-btn active" data-mode="single" onclick="setMode(this)">단일</div>
+<div class="toggle-btn" data-mode="tile" onclick="setMode(this)">타일 (반복)</div>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">글자 크기</label>
+<div class="input-row">
+<input type="range" class="range-input" id="fontSize" min="10" max="120" value="36" oninput="updateVal('fontSize','fontSizeVal','px');drawPreview()">
+<span class="range-val" id="fontSizeVal">36px</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">투명도</label>
+<div class="input-row">
+<input type="range" class="range-input" id="opacity" min="5" max="100" value="30" oninput="updateVal('opacity','opacityVal','%');drawPreview()">
+<span class="range-val" id="opacityVal">30%</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">회전 각도</label>
+<div class="input-row">
+<input type="range" class="range-input" id="rotation" min="-90" max="90" value="-30" oninput="updateVal('rotation','rotationVal','deg');drawPreview()">
+<span class="range-val" id="rotationVal">-30deg</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">색상</label>
+<div class="input-row">
+<input type="color" class="color-input" id="wmColor" value="#ffffff" oninput="drawPreview()">
+<span style="font-size:13px;color:var(--g500);margin-left:4px">워터마크 글자 색상</span>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">👁️ 미리보기</div>
+<div class="preview-area"><canvas id="previewCanvas"></canvas></div>
+<button class="calc-btn" onclick="doExport()">워터마크 적용 후 다운로드</button>
+</div>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">✅ 완성</div>
+<div class="preview-wrap"><img id="resultImg" class="preview-img"></div>
+<button class="download-btn" onclick="downloadResult()">다운로드</button>
+</div>
+<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">워터마크 위치는 어떻게 선택하나요?</div><div class="faq-a">우측 하단이 가장 일반적입니다. 이미지 전체 반복 배치하면 제거가 더 어렵습니다.</div></div>
+<div class="faq-item"><div class="faq-q">폰트 크기는 어떻게 설정하나요?</div><div class="faq-a">이미지 크기의 3~5%가 적절합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 워터마크 추가 가이드</h2>
 <p>워터마크는 Canvas API로 이미지에 텍스트를 합성합니다. 저작권 보호, 브랜드 홍보, 불법 복제 방지 목적으로 사용됩니다.</p>
 <p>워터마크 위치는 우측 하단이 가장 일반적입니다. 이미지 전체에 반복 배치하면 제거가 더 어렵습니다. 투명도 30~50%가 적절합니다.</p>
 <table><tr><th>위치</th><th>장점</th><th>단점</th></tr><tr><td>중앙</td><td>제거 곤란</td><td>이미지 가림</td></tr><tr><td>우측 하단</td><td>덜 방해됨</td><td>자르기 쉬움</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">워터마크의 적절한 투명도는 어느 정도인가요?</div><div class="faq-a">30~50% 투명도가 적절합니다.</div></div>
-<div class="faq-item"><div class="faq-q">워터마크 위치는 어떻게 선택하나요?</div><div class="faq-a">우측 하단이 가장 일반적입니다. 이미지 전체 반복 배치하면 제거가 더 어렵습니다.</div></div>
-<div class="faq-item"><div class="faq-q">폰트 크기는 어떻게 설정하나요?</div><div class="faq-a">이미지 크기의 3~5%가 적절합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">워터마크의 적절한 투명도는 어느 정도인가요?</div><div class="faq-a">30~50% 투명도가 적절합니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

@@ -63,18 +63,81 @@
 <h1 class="page-title">퇴직금 계산기</h1>
 <p class="page-sub">근로기준법상 법정 퇴직금 계산. 1일 평균임금, 근속연수 기준 퇴직금 산정.</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
+
+<div class="card">
+<div class="card-title">📦 근무 정보 입력</div>
+<div class="input-group">
+<label class="input-label">입사일</label>
+<input type="date" class="input-field" id="startDate">
+</div>
+<div class="input-group">
+<label class="input-label">퇴사일 (마지막 근무일)</label>
+<input type="date" class="input-field" id="endDate">
+</div>
+<div class="input-group">
+<label class="input-label">퇴직 전 3개월 월 평균임금 (세전)</label>
+<div class="input-row">
+<input type="text" class="input-field" id="avgSalary" placeholder="3,000,000" inputmode="numeric">
+<span class="input-unit">원</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">연간 상여금 (없으면 0)</label>
+<div class="input-row">
+<input type="text" class="input-field" id="bonus" placeholder="0" inputmode="numeric" value="0">
+<span class="input-unit">원</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">연차수당 (미사용 연차, 없으면 0)</label>
+<div class="input-row">
+<input type="text" class="input-field" id="annualPay" placeholder="0" inputmode="numeric" value="0">
+<span class="input-unit">원</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">퇴직금 계산하기</button>
+</div>
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 퇴직금 계산 결과</div>
+<div class="result-big">
+<div class="result-number" id="mainResult">-</div>
+<div class="result-label">예상 퇴직금 (세전)</div>
+</div>
+<div id="detailList"></div>
+</div>
+<p class="disclaimer">※ 근로기준법 제34조 기준이며, 1년 이상 근무 시 퇴직금 지급 의무가 있습니다.<br>퇴직소득세는 근속연수, 환산급여 등에 따라 달라지므로 정확한 세후 금액은 국세청에서 확인하세요.</p>
+</div>
+
+<div class="card">
+<div class="card-title">📖 퇴직금 가이드</div>
+<div style="font-size:14px;line-height:1.8;color:#334155">
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">퇴직금 지급 조건</h2>
+<p style="margin-bottom:12px">근로기준법에 따라 1년 이상 계속 근무한 근로자가 퇴직할 때 퇴직금을 지급받을 수 있습니다. 정규직뿐 아니라 계약직, 아르바이트도 주 15시간 이상, 1년 이상 근무하면 퇴직금 대상이 됩니다. 퇴직금은 퇴직일로부터 14일 이내에 지급해야 합니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">퇴직금 계산 공식</h2>
+<p style="margin-bottom:12px">퇴직금 = 1일 평균임금 x 30일 x (총 재직일수 / 365일)로 계산됩니다. 1일 평균임금은 퇴직 전 3개월간 지급받은 총 임금(기본급 + 상여금 + 수당)을 해당 기간의 총 일수로 나눈 금액입니다. 상여금과 미사용 연차수당도 평균임금에 포함됩니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">퇴직소득세</h2>
+<p style="margin-bottom:12px">퇴직금에는 퇴직소득세가 부과됩니다. 퇴직소득세는 근속연수, 환산급여에 따라 계산되며, 장기 근속자일수록 세금 부담이 줄어드는 구조입니다. 퇴직소득세는 퇴직금 지급 시 원천징수되며, 이듬해 5월에 종합소득세 신고를 통해 정산할 수 있습니다.</p>
+</div>
+</div>
+
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">평균임금에 포함되는 항목은 무엇인가요?</div><div class="faq-a">기본급, 각종 수당, 상여금, 연차수당, 주휴수당 등이 포함됩니다.</div></div>
+<div class="faq-item"><div class="faq-q">퇴직금은 언제 지급받을 수 있나요?</div><div class="faq-a">퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 퇴직금 계산 가이드</h2>
 <p>퇴직금 계산기는 근로기준법에 따라 1년 이상 근속한 근로자의 법정 퇴직금을 계산합니다. 퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)로 산정됩니다.</p>
 <p>1일 평균임금은 퇴직일 이전 3개월 동안의 총 임금을 총 일수로 나누어 계산합니다. 포함되는 임금에는 기본급, 각종 수당, 상여금(월할 환산), 연차수당 등이 포함됩니다.</p>
 <p>2026년 기준 퇴직금은 근로자 퇴직급여 보장법에 따라 지급되며, 퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생할 수 있습니다.</p>
 <table><tr><th>항목</th><th>산정 기준</th></tr><tr><td>1일 평균임금</td><td>퇴직 전 3개월 임금 ÷ 3개월 총 일수</td></tr><tr><td>퇴직금</td><td>1일 평균임금 × 30일 × 근속연수 ÷ 365</td></tr><tr><td>지급 기한</td><td>퇴직일로부터 14일 이내</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">퇴직금 계산 공식은 어떻게 되나요?</div><div class="faq-a">퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)입니다.</div></div>
-<div class="faq-item"><div class="faq-q">평균임금에 포함되는 항목은 무엇인가요?</div><div class="faq-a">기본급, 각종 수당, 상여금, 연차수당, 주휴수당 등이 포함됩니다.</div></div>
-<div class="faq-item"><div class="faq-q">퇴직금은 언제 지급받을 수 있나요?</div><div class="faq-a">퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">퇴직금 계산 공식은 어떻게 되나요?</div><div class="faq-a">퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)입니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

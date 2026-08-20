@@ -1,0 +1,394 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>2026 ?곕큺 ?ㅼ닔?뱀븸 怨꾩궛湲?| modutools</title>
+<meta name="description" content="2026??4?蹂댄뿕쨌?뚮뱷??諛섏쁺 ?곕큺 ?ㅼ닔?뱀븸 怨꾩궛湲? ?곕큺 ?먮뒗 ?붽툒???낅젰?섎㈃ 怨듭젣 ?댁뿭怨??ㅼ닔?뱀븸??利됱떆 ?뺤씤?⑸땲??">
+<link rel="canonical" href="https://modutools.com/calc/salary.html">
+<meta property="og:title" content="2026 ?곕큺 ?ㅼ닔?뱀븸 怨꾩궛湲?| modutools">
+<meta property="og:description" content="2026??4?蹂댄뿕쨌?뚮뱷??諛섏쁺 ?곕큺 ?ㅼ닔?뱀븸. ?곕큺 ?먮뒗 ?붽툒???낅젰?섎㈃ 怨듭젣 ?댁뿭怨??ㅼ닔?뱀븸??利됱떆 ?뺤씤?⑸땲??">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/calc/salary.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* Input Group */
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+
+/* Toggle */
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.toggle-btn:hover:not(.active){border-color:var(--g300)}
+
+/* Slider */
+.slider-wrap{margin-bottom:16px}
+.slider-info{display:flex;justify-content:space-between;margin-bottom:8px}
+.slider-info span{font-size:13px;color:var(--g500)}
+.slider-info strong{font-size:15px;color:var(--g900)}
+input[type="range"]{width:100%;height:6px;-webkit-appearance:none;background:var(--g200);border-radius:3px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--primary);cursor:pointer;box-shadow:0 2px 6px rgba(37,99,235,.3)}
+
+/* Result */
+.result-box{background:linear-gradient(135deg,#2563EB,#1D4ED8);border-radius:var(--radius);padding:28px 24px;color:#fff;text-align:center;margin-bottom:16px}
+.result-label{font-size:13px;opacity:.8;margin-bottom:4px}
+.result-value{font-size:36px;font-weight:800;letter-spacing:-1px}
+.result-sub{font-size:13px;opacity:.7;margin-top:6px}
+
+/* Breakdown */
+.breakdown{margin-top:4px}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--g100);font-size:14px}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-row .label{color:var(--g500)}
+.breakdown-row .value{font-weight:700;font-variant-numeric:tabular-nums}
+.breakdown-row.total{border-top:2px solid var(--g200);padding-top:14px;margin-top:4px;font-size:15px}
+.breakdown-row.total .label{color:var(--g900);font-weight:700}
+.breakdown-row.total .value{color:#DC2626}
+
+/* Chart */
+.chart-bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:16px 0 12px;gap:2px}
+.chart-bar div{height:100%;border-radius:4px;transition:width .4s ease}
+.chart-legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px}
+.chart-legend-item{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--g500)}
+.chart-legend-dot{width:8px;height:8px;border-radius:2px}
+
+/* Info */
+.info-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;margin-top:16px}
+.info-box p{font-size:12px;color:var(--g500);line-height:1.7}
+.info-box strong{color:var(--g700)}
+
+/* Responsive */
+@media(max-width:480px){
+  .page{padding:16px 16px 40px}
+  .page-title{font-size:20px}
+  .result-value{font-size:28px}
+  .card{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav">
+      <a href="/">???꾧뎄 紐⑸줉</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Ad Top -->
+<div class="mt-ad"><div class="mt-ad-box">愿묎퀬 ?곸뿭 (AD)</div></div>
+
+<div class="page">
+  <h1 class="page-title">?뮫 ?곕큺 ?ㅼ닔?뱀븸 怨꾩궛湲?/h1>
+  <p class="page-sub">2026??4?蹂댄뿕쨌?뚮뱷??湲곗? | 遺?묎?議???諛섏쁺</p>
+
+  <!-- ?낅젰 移대뱶 -->
+  <div class="card">
+    <div class="card-title">?뱷 湲됱뿬 ?뺣낫 ?낅젰</div>
+
+    <div class="toggle-row">
+      <div class="toggle-btn active" data-mode="annual" onclick="setMode('annual')">?곕큺</div>
+      <div class="toggle-btn" data-mode="monthly" onclick="setMode('monthly')">?붽툒</div>
+    </div>
+
+    <div class="slider-wrap">
+      <div class="slider-info">
+        <span id="modeLabel">?곕큺</span>
+        <strong id="sliderDisplay">3,000留뚯썝</strong>
+      </div>
+      <input type="range" id="salarySlider" min="2000" max="15000" value="3000" step="100" oninput="onSlider()">
+      <div style="display:flex;justify-content:space-between">
+        <span style="font-size:11px;color:var(--g400)">2,000留뚯썝</span>
+        <span style="font-size:11px;color:var(--g400)">1??5,000留뚯썝</span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">吏곸젒 ?낅젰</label>
+      <div class="input-row">
+        <input type="text" class="input-field" id="salaryInput" value="30,000,000" inputmode="numeric" oninput="onInput()">
+        <span class="input-unit">??/span>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">遺?묎?議???(蹂몄씤 ?ы븿)</label>
+      <div class="toggle-row" id="familyToggle" style="flex-wrap:wrap">
+        <div class="toggle-btn active" data-fam="1" onclick="setFamily(1)">1紐?/div>
+        <div class="toggle-btn" data-fam="2" onclick="setFamily(2)">2紐?/div>
+        <div class="toggle-btn" data-fam="3" onclick="setFamily(3)">3紐?/div>
+        <div class="toggle-btn" data-fam="4" onclick="setFamily(4)">4紐?/div>
+        <div class="toggle-btn" data-fam="5" onclick="setFamily(5)">5紐?</div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">鍮꾧낵?몄븸 (?앸? ??</label>
+      <div class="input-row">
+        <input type="text" class="input-field" id="nonTaxInput" value="200,000" inputmode="numeric" oninput="calculate()">
+        <span class="input-unit">????/span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 寃곌낵 -->
+  <div class="result-box" id="resultBox">
+    <div class="result-label">???ㅼ닔?뱀븸</div>
+    <div class="result-value" id="resultValue">0??/div>
+    <div class="result-sub" id="resultSub">???ㅼ닔?뱀븸: 0??/div>
+  </div>
+
+  <!-- Ad Mid -->
+  <div class="mt-ad" style="padding:0;margin-bottom:16px"><div class="mt-ad-box">愿묎퀬 ?곸뿭 (AD)</div></div>
+
+  <!-- 怨듭젣 ?댁뿭 -->
+  <div class="card">
+    <div class="card-title">?뱤 怨듭젣 ?댁뿭</div>
+
+    <div class="chart-bar" id="chartBar"></div>
+    <div class="chart-legend" id="chartLegend"></div>
+
+    <div class="breakdown">
+      <div class="breakdown-row">
+        <span class="label">援???곌툑 (4.75%)</span>
+        <span class="value" id="d_pension">0??/span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label">嫄닿컯蹂댄뿕 (3.595%)</span>
+        <span class="value" id="d_health">0??/span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label">?κ린?붿뼇蹂댄뿕 (13.14%)</span>
+        <span class="value" id="d_care">0??/span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label">怨좎슜蹂댄뿕 (0.9%)</span>
+        <span class="value" id="d_employ">0??/span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label">?뚮뱷??/span>
+        <span class="value" id="d_income">0??/span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label">吏諛⑹냼?앹꽭 (?뚮뱷?몄쓽 10%)</span>
+        <span class="value" id="d_local">0??/span>
+      </div>
+      <div class="breakdown-row total">
+        <span class="label">怨듭젣 ?⑷퀎</span>
+        <span class="value" id="d_total">0??/span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ?덈궡 -->
+  <div class="info-box">
+    <p>
+      <strong>?뱦 2026??湲곗? ?붿쑉</strong><br>
+      ??援???곌툑: 9.5% (洹쇰줈??4.75%, 湲곗??뚮뱷?붿븸 ?곹븳 637留뚯썝)<br>
+      ??嫄닿컯蹂댄뿕: 7.19% (洹쇰줈??3.595%)<br>
+      ???κ린?붿뼇蹂댄뿕: 嫄닿컯蹂댄뿕猷뚯쓽 13.14%<br>
+      ??怨좎슜蹂댄뿕: 1.8% (洹쇰줈??0.9%)<br>
+      ???뚮뱷?? 洹쇰줈?뚮뱷 媛꾩씠?몄븸??湲곗? (洹쇱궗移?<br>
+      ??蹂?怨꾩궛湲곕뒗 李멸퀬?⑹씠硫? ?ㅼ젣 湲됱뿬紐낆꽭?쒖? 李⑥씠媛 ?덉쓣 ???덉뒿?덈떎.
+    </p>
+  </div>
+
+<div class="card" style="margin-top:16px">
+<div class="card-title">?뱰 ?곕큺 ?ㅼ닔?뱀븸 媛?대뱶</div>
+<div style="font-size:13px;line-height:1.8;color:#64748B">
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">?곕큺 ?ㅼ닔?뱀븸?대??</strong><br>?곕큺 ?ㅼ닔?뱀븸? 洹쇰줈?먭? ?뚯궗?먯꽌 諛쏅뒗 ?곕큺(?몄쟾 湲됱뿬)?먯꽌 援???곌툑, 嫄닿컯蹂댄뿕, ?κ린?붿뼇蹂댄뿕, 怨좎슜蹂댄뿕 ??4?蹂댄뿕猷뚯? ?뚮뱷?? 吏諛⑹냼?앹꽭瑜?怨듭젣?????ㅼ젣濡??듭옣???낃툑?섎뒗 湲덉븸??留먰빀?덈떎. 媛숈? ?곕큺?대씪??遺?묎?議??? 鍮꾧낵????ぉ???곕씪 ?ㅼ닔?뱀븸???щ씪吏????덉뒿?덈떎.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">4?蹂댄뿕 怨듭젣 ??ぉ</strong><br>援???곌툑? ??湲됱뿬??4.5%瑜?洹쇰줈?먭? 遺?댄븯硫? 嫄닿컯蹂댄뿕? 3.545%, ?κ린?붿뼇蹂댄뿕? 嫄닿컯蹂댄뿕??12.81%, 怨좎슜蹂댄뿕? 0.9%媛 怨듭젣?⑸땲?? 援???곌툑? 湲곗??뚮뱷?붿븸 ?곹븳(617留뚯썝)???덉뼱 怨좎냼?앹옄??寃쎌슦 ?쇱젙 湲덉븸 ?댁긽? 怨듭젣?섏? ?딆뒿?덈떎.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">?뚮뱷??怨꾩궛 諛⑹떇</strong><br>洹쇰줈?뚮뱷 媛꾩씠?몄븸?쒖뿉 ?곕씪 ??湲됱뿬, 遺?묎?議??섎? 湲곗??쇰줈 ?뚮뱷?멸? ?먯쿇吏뺤닔?⑸땲?? 吏諛⑹냼?앹꽭???뚮뱷?몄쓽 10%媛 異붽?濡?怨듭젣?⑸땲?? ?곕쭚?뺤궛???듯빐 ?ㅼ젣 ?⑸??댁빞 ???멸툑怨??대? ?⑸????멸툑??李⑥씠瑜??뺤궛?섍쾶 ?⑸땲??</p>
+<p><strong style="font-size:15px;color:#0F172A">鍮꾧낵????ぉ?대??</strong><br>?앸?(??20留뚯썝), ?먭??댁쟾蹂댁“湲???20留뚯썝), 異쒖궛쨌蹂댁쑁?섎떦(??10留뚯썝) ?깆? 鍮꾧낵????ぉ?쇰줈 ?멸툑 怨꾩궛?먯꽌 ?쒖쇅?⑸땲?? 鍮꾧낵??湲덉븸???댁닔濡??ㅼ닔?뱀븸???섏뼱?섎?濡? 蹂몄씤??鍮꾧낵????ぉ???뺥솗???뚯븙?섎뒗 寃껋씠 以묒슂?⑸땲??</p>
+</div>
+</div>
+
+<!-- Ad Bottom -->
+<div class="mt-ad"><div class="mt-ad-box">愿묎퀬 ?곸뿭 (AD)</div></div>
+
+<footer class="mt-footer">
+  <p>
+    <a href="/">??modutools ?꾩껜 ?꾧뎄 蹂닿린</a><br>
+    &copy; 2026 modutools.com ??紐⑤몢瑜??꾪븳 臾대즺 ?⑤씪???꾧뎄
+  </p>
+</footer>
+
+<script>
+let mode = 'annual'; // annual or monthly
+let family = 1;
+
+function fmt(n){ return Math.floor(n).toLocaleString('ko-KR'); }
+function parseMoney(s){ return parseInt(s.replace(/[^0-9]/g,''),10) || 0; }
+
+function setMode(m){
+  mode = m;
+  document.querySelectorAll('[data-mode]').forEach(b => b.classList.toggle('active', b.dataset.mode===m));
+  const slider = document.getElementById('salarySlider');
+  const input = document.getElementById('salaryInput');
+  if(m==='annual'){
+    slider.min=2000; slider.max=15000; slider.step=100;
+    document.getElementById('modeLabel').textContent='?곕큺';
+  } else {
+    slider.min=150; slider.max=1500; slider.step=10;
+    document.getElementById('modeLabel').textContent='?붽툒';
+  }
+  onSlider();
+}
+
+function setFamily(n){
+  family = n;
+  document.querySelectorAll('#familyToggle .toggle-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.fam)===n));
+  calculate();
+}
+
+function onSlider(){
+  const v = parseInt(document.getElementById('salarySlider').value);
+  const display = v >= 10000 ? (v/10000).toFixed(v%10000?1:0)+'?듭썝' : fmt(v)+'留뚯썝';
+  document.getElementById('sliderDisplay').textContent = display;
+  document.getElementById('salaryInput').value = fmt(v*10000);
+  calculate();
+}
+
+function onInput(){
+  const raw = parseMoney(document.getElementById('salaryInput').value);
+  document.getElementById('salaryInput').value = fmt(raw);
+  const sliderVal = Math.round(raw/10000);
+  document.getElementById('salarySlider').value = sliderVal;
+  const display = sliderVal >= 10000 ? (sliderVal/10000).toFixed(sliderVal%10000?1:0)+'?듭썝' : fmt(sliderVal)+'留뚯썝';
+  document.getElementById('sliderDisplay').textContent = display;
+  calculate();
+}
+
+// 洹쇰줈?뚮뱷 媛꾩씠?몄븸 洹쇱궗 怨꾩궛 (媛꾩씠?몄븸?????洹쇱궗)
+function calcIncomeTax(monthlyTaxable, fam){
+  const annual = monthlyTaxable * 12;
+  // 洹쇰줈?뚮뱷怨듭젣
+  let deduction = 0;
+  if(annual <= 5000000) deduction = annual * 0.7;
+  else if(annual <= 15000000) deduction = 3500000 + (annual-5000000)*0.4;
+  else if(annual <= 45000000) deduction = 7500000 + (annual-15000000)*0.15;
+  else if(annual <= 100000000) deduction = 12000000 + (annual-45000000)*0.05;
+  else deduction = 14750000 + (annual-100000000)*0.02;
+
+  let taxableIncome = annual - deduction;
+
+  // ?몄쟻怨듭젣 (蹂몄씤 + 遺?묎?議?
+  const personalDeduction = fam * 1500000;
+  // ?쒖?怨듭젣
+  const standardDeduction = 1300000;
+  // 援???곌툑 怨듭젣 (洹쇱궗)
+  const pensionDeduction = Math.min(monthlyTaxable * 0.0475, 302575) * 12;
+  // 嫄닿컯蹂댄뿕+?κ린?붿뼇 怨듭젣 (洹쇱궗)
+  const healthDeduction = monthlyTaxable * 0.04067 * 12;
+
+  taxableIncome = taxableIncome - personalDeduction - standardDeduction - pensionDeduction - healthDeduction;
+  if(taxableIncome < 0) taxableIncome = 0;
+
+  // ?몄쑉 ?곸슜
+  let tax = 0;
+  if(taxableIncome <= 14000000) tax = taxableIncome * 0.06;
+  else if(taxableIncome <= 50000000) tax = 840000 + (taxableIncome-14000000)*0.15;
+  else if(taxableIncome <= 88000000) tax = 6240000 + (taxableIncome-50000000)*0.24;
+  else if(taxableIncome <= 150000000) tax = 15360000 + (taxableIncome-88000000)*0.35;
+  else if(taxableIncome <= 300000000) tax = 37060000 + (taxableIncome-150000000)*0.38;
+  else if(taxableIncome <= 500000000) tax = 94060000 + (taxableIncome-300000000)*0.40;
+  else if(taxableIncome <= 1000000000) tax = 174060000 + (taxableIncome-500000000)*0.42;
+  else tax = 384060000 + (taxableIncome-1000000000)*0.45;
+
+  // 洹쇰줈?뚮뱷?몄븸怨듭젣
+  let taxCredit = 0;
+  if(tax <= 1300000) taxCredit = tax * 0.55;
+  else taxCredit = 715000 + (tax-1300000)*0.30;
+  if(taxCredit > 740000) taxCredit = 740000;
+
+  const finalTax = Math.max(0, tax - taxCredit);
+  return Math.floor(finalTax / 12);
+}
+
+function calculate(){
+  const rawSalary = parseMoney(document.getElementById('salaryInput').value);
+  const nonTax = parseMoney(document.getElementById('nonTaxInput').value);
+
+  let annualSalary, monthlySalary;
+  if(mode === 'annual'){
+    annualSalary = rawSalary;
+    monthlySalary = Math.floor(rawSalary / 12);
+  } else {
+    monthlySalary = rawSalary;
+    annualSalary = rawSalary * 12;
+  }
+
+  const monthlyTaxable = Math.max(0, monthlySalary - nonTax);
+
+  // 援???곌툑 (?곹븳 637留뚯썝)
+  const pensionBase = Math.min(monthlyTaxable, 6370000);
+  const pension = Math.floor(pensionBase * 0.0475);
+
+  // 嫄닿컯蹂댄뿕
+  const health = Math.floor(monthlyTaxable * 0.03595);
+
+  // ?κ린?붿뼇蹂댄뿕 (嫄닿컯蹂댄뿕猷뚯쓽 13.14%)
+  const care = Math.floor(health * 0.1314);
+
+  // 怨좎슜蹂댄뿕
+  const employ = Math.floor(monthlyTaxable * 0.009);
+
+  // ?뚮뱷??  const incomeTax = calcIncomeTax(monthlyTaxable, family);
+
+  // 吏諛⑹냼?앹꽭
+  const localTax = Math.floor(incomeTax * 0.1);
+
+  const totalDeduction = pension + health + care + employ + incomeTax + localTax;
+  const netMonthly = monthlySalary - totalDeduction;
+  const netAnnual = netMonthly * 12;
+
+  // Display
+  document.getElementById('resultValue').textContent = fmt(netMonthly) + '??;
+  document.getElementById('resultSub').textContent = '???ㅼ닔?뱀븸: ' + fmt(netAnnual) + '??;
+
+  document.getElementById('d_pension').textContent = fmt(pension) + '??;
+  document.getElementById('d_health').textContent = fmt(health) + '??;
+  document.getElementById('d_care').textContent = fmt(care) + '??;
+  document.getElementById('d_employ').textContent = fmt(employ) + '??;
+  document.getElementById('d_income').textContent = fmt(incomeTax) + '??;
+  document.getElementById('d_local').textContent = fmt(localTax) + '??;
+  document.getElementById('d_total').textContent = fmt(totalDeduction) + '??;
+
+  // Chart
+  const items = [
+    {label:'援???곌툑', value:pension, color:'#3B82F6'},
+    {label:'嫄닿컯蹂댄뿕', value:health, color:'#10B981'},
+    {label:'?κ린?붿뼇', value:care, color:'#06B6D4'},
+    {label:'怨좎슜蹂댄뿕', value:employ, color:'#F59E0B'},
+    {label:'?뚮뱷??, value:incomeTax, color:'#EF4444'},
+    {label:'吏諛⑹냼?앹꽭', value:localTax, color:'#EC4899'},
+  ];
+  const chartBar = document.getElementById('chartBar');
+  const chartLegend = document.getElementById('chartLegend');
+  const total = totalDeduction || 1;
+  chartBar.innerHTML = items.map(i => 
+    `<div style="width:${(i.value/total*100).toFixed(1)}%;background:${i.color}"></div>`
+  ).join('');
+  chartLegend.innerHTML = items.map(i =>
+    `<div class="chart-legend-item"><div class="chart-legend-dot" style="background:${i.color}"></div>${i.label} ${fmt(i.value)}??/div>`
+  ).join('');
+}
+
+// Init
+calculate();
+</script>
+</body>
+</html>

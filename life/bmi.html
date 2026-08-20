@@ -60,17 +60,136 @@
 <h1 class="page-title">BMI 계산기</h1>
 <p class="page-sub">키와 체중을 입력하면 BMI를 즉시 계산. 저체중·정상·과체중·비만 단계 확인. · 100% 브라우저 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+
+<!-- 입력 -->
+<div class="card">
+<div class="card-title">⚖️ 신체 정보 입력</div>
+<div class="input-group">
+<label class="input-label">키</label>
+<div class="input-row">
+<input type="number" class="input-field" id="height" placeholder="170" inputmode="decimal" step="0.1">
+<span class="input-unit">cm</span>
+</div>
+</div>
+<div class="input-group">
+<label class="input-label">체중</label>
+<div class="input-row">
+<input type="number" class="input-field" id="weight" placeholder="65" inputmode="decimal" step="0.1">
+<span class="input-unit">kg</span>
+</div>
+</div>
+<button class="calc-btn" onclick="calculate()">BMI 계산하기</button>
+</div>
+
+<!-- 결과 -->
+<div class="result-area" id="resultArea">
+<div class="card">
+<div class="card-title">📊 BMI 결과</div>
+<div class="bmi-result">
+<div class="bmi-number" id="bmiNumber">-</div>
+<div class="bmi-category" id="bmiCategory">-</div>
+<div class="bmi-range" id="bmiRange"></div>
+</div>
+
+<div class="bmi-bar-wrap">
+<div class="bmi-bar">
+<div class="bmi-marker" id="bmiMarker"></div>
+</div>
+<div class="bmi-labels">
+<span>저체중</span><span>정상</span><span>과체중</span><span>비만</span><span>고도비만</span>
+</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-box">
+<div class="stat-value" id="normalMin">-</div>
+<div class="stat-label">정상 체중 최소</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="normalMax">-</div>
+<div class="stat-label">정상 체중 최대</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="idealWeight">-</div>
+<div class="stat-label">표준 체중 (BMI 22)</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="weightDiff">-</div>
+<div class="stat-label">표준 체중과 차이</div>
+</div>
+</div>
+</div>
+
+<!-- 분류표 -->
+<div class="card">
+<div class="card-title">📋 BMI 분류 기준 (대한비만학회)</div>
+<table class="bmi-table">
+<thead><tr><th>분류</th><th>BMI 범위</th></tr></thead>
+<tbody id="bmiTableBody">
+<tr data-cat="underweight"><td><span class="color-dot" style="background:#3B82F6"></span>저체중</td><td>18.5 미만</td></tr>
+<tr data-cat="normal"><td><span class="color-dot" style="background:#22C55E"></span>정상</td><td>18.5 ~ 22.9</td></tr>
+<tr data-cat="overweight"><td><span class="color-dot" style="background:#EAB308"></span>과체중 (비만 전단계)</td><td>23.0 ~ 24.9</td></tr>
+<tr data-cat="obese1"><td><span class="color-dot" style="background:#F97316"></span>1단계 비만</td><td>25.0 ~ 29.9</td></tr>
+<tr data-cat="obese2"><td><span class="color-dot" style="background:#EF4444"></span>2단계 비만</td><td>30.0 ~ 34.9</td></tr>
+<tr data-cat="obese3"><td><span class="color-dot" style="background:#DC2626"></span>3단계 비만 (고도비만)</td><td>35.0 이상</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">📖 BMI 가이드</div>
+<div style="font-size:14px;line-height:1.8;color:#334155">
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">BMI 계산 공식</h2>
+<p style="margin-bottom:12px">BMI(Body Mass Index, 체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 예를 들어 키 170cm, 체중 70kg인 경우 BMI = 70 / (1.7 x 1.7) = 24.2 입니다. 간단한 계산으로 비만 여부를 대략적으로 판단할 수 있어 전 세계적으로 널리 사용됩니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">한국 vs WHO 기준 차이</h2>
+<p style="margin-bottom:12px">WHO(세계보건기구)는 BMI 25 이상을 과체중, 30 이상을 비만으로 분류합니다. 반면 대한비만학회는 아시아인의 체형적 특성을 고려하여 BMI 23 이상을 과체중, 25 이상을 비만으로 분류합니다. 본 계산기는 한국 기준을 적용합니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">BMI의 한계</h2>
+<p style="margin-bottom:12px">BMI는 근육량, 체지방률, 체수분량을 반영하지 못합니다. 근육이 많은 운동선수는 BMI가 높게 나오지만 실제로 비만이 아닐 수 있고, 반대로 근육량이 적은 마른 비만의 경우 BMI가 정상이어도 건강 위험이 있을 수 있습니다. 정확한 건강 평가를 위해서는 체지방률 측정, 허리둘레 측정, 전문의 상담을 병행하는 것이 좋습니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">건강한 체중 관리 팁</h2>
+<p style="margin-bottom:12px">건강한 체중을 유지하려면 균형 잡힌 식단과 규칙적인 운동이 중요합니다. 급격한 다이어트보다는 하루 300~500kcal 정도의 적자를 유지하며 주 3~5회 유산소 운동과 근력 운동을 병행하는 것이 효과적입니다. BMI 수치에 집착하기보다 체지방률과 근육량의 균형을 맞추는 것이 바람직합니다.</p>
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="card">
+<div class="card-title">❓ 자주 묻는 질문</div>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">BMI란 무엇인가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">BMI(Body Mass Index, 체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 비만도를 판단하는 가장 보편적인 지표로, 대한비만학회 기준 18.5~22.9가 정상 범위입니다.</p>
+</details>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">BMI의 한계는?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">BMI는 근육량, 체지방률, 체형을 반영하지 못합니다. 운동선수는 근육이 많아 BMI가 높게 나올 수 있고, 노인은 낮게 나올 수 있습니다. 정확한 건강 평가는 체지방률 측정과 전문의 상담을 권장합니다.</p>
+</details>
+<details>
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">한국 기준과 WHO 기준이 다른가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">네, 다릅니다. WHO는 25 이상을 과체중, 30 이상을 비만으로 분류하지만, 대한비만학회는 아시아인 체형을 고려해 23 이상을 과체중, 25 이상을 비만으로 분류합니다. 본 계산기는 한국 기준을 적용합니다.</p>
+</details>
+</div>
+</main>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer">
+<p>
+<a href="/">← modutools 전체 도구 보기</a><br>
+&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+</p>
+</footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">BMI가 높으면 항상 건강에 문제가 있나요?</div><div class="faq-a">운동선수는 근육량이 많아 BMI가 높아도 건강할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">정상 체중 범위는 어떻게 계산되나요?</div><div class="faq-a">정상 BMI(18.5~23)에 해당하는 체중 범위를 계산하여 표시합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 BMI 계산 가이드</h2>
 <p>BMI는 체중(kg)을 키(m)의 제곱으로 나눈 비만도 평가 지표입니다. 대한비만학회 기준: 18.5 미만 저체중, 18.5~23 정상, 23~25 과체중, 25~30 1단계 비만, 30~35 2단계 비만, 35 이상 3단계 비만입니다.</p>
 <p>BMI는 간편하지만 근육량이 많은 운동선수는 높게, 노인은 낮게 나올 수 있습니다. 정확한 평가는 체지방률 측정과 전문의 상담을 권장합니다.</p>
 <table><tr><th>구분</th><th>BMI 범위</th><th>한국 기준</th></tr><tr><td>저체중</td><td>18.5 미만</td><td>증량 필요</td></tr><tr><td>정상</td><td>18.5~23</td><td>정상 범위</td></tr><tr><td>과체중</td><td>23~25</td><td>주의</td></tr><tr><td>비만</td><td>25 이상</td><td>관리 필요</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">한국 BMI 기준과 WHO 기준의 차이는 무엇인가요?</div><div class="faq-a">WHO는 25 이상 과체중이나, 한국은 23 이상으로 더 엄격합니다.</div></div>
-<div class="faq-item"><div class="faq-q">BMI가 높으면 항상 건강에 문제가 있나요?</div><div class="faq-a">운동선수는 근육량이 많아 BMI가 높아도 건강할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">정상 체중 범위는 어떻게 계산되나요?</div><div class="faq-a">정상 BMI(18.5~23)에 해당하는 체중 범위를 계산하여 표시합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">한국 BMI 기준과 WHO 기준의 차이는 무엇인가요?</div><div class="faq-a">WHO는 25 이상 과체중이나, 한국은 23 이상으로 더 엄격합니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

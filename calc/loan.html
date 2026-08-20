@@ -63,25 +63,165 @@
 <h1 class="page-title">대출이자 계산기</h1>
 <p class="page-sub">대출 상환 방식별 월 납입금과 총 이자를 비교. 원리금균등, 원금균등, 만기일시 상환 방식 지원.</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 입력 데이터 서버 전송 없음 · 100% 브라우저 로컬 연산</div>
+
+<!-- 입력 -->
+<div class="card">
+<div class="card-title">🏦 대출 조건 입력</div>
+
+<div class="input-group">
+<label class="input-label">대출 원금</label>
+<div class="input-row">
+<input type="text" class="input-field" id="principal" placeholder="0" inputmode="numeric">
+<span class="input-unit">만원</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">연 이자율</label>
+<div class="input-row">
+<input type="text" class="input-field" id="rate" placeholder="0.0" inputmode="decimal">
+<span class="input-unit">%</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">대출 기간</label>
+<div class="input-row">
+<input type="text" class="input-field" id="period" placeholder="0" inputmode="numeric">
+<span class="input-unit" id="periodUnit">년</span>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">기간 단위</label>
+<div class="toggle-row">
+<div class="toggle-btn active" data-unit="year" onclick="setUnit(this)">년</div>
+<div class="toggle-btn" data-unit="month" onclick="setUnit(this)">개월</div>
+</div>
+</div>
+
+<div class="input-group">
+<label class="input-label">상환 방식</label>
+<div class="toggle-row">
+<div class="toggle-btn active" data-type="equal_payment" onclick="setType(this)">원리금균등</div>
+<div class="toggle-btn" data-type="equal_principal" onclick="setType(this)">원금균등</div>
+<div class="toggle-btn" data-type="bullet" onclick="setType(this)">만기일시</div>
+</div>
+</div>
+
+<button class="calc-btn" onclick="calculate()">계산하기</button>
+</div>
+
+<!-- 결과 -->
+<div class="result-area" id="resultArea">
+
+<!-- 선택 방식 결과 -->
+<div class="card">
+<div class="card-title">📊 계산 결과</div>
+<div class="stats-grid">
+<div class="stat-box highlight">
+<div class="stat-value" id="monthlyPayment">-</div>
+<div class="stat-label" id="monthlyLabel">월 납입금</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="totalInterest">-</div>
+<div class="stat-label">총 이자</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="totalPayment">-</div>
+<div class="stat-label">총 상환금</div>
+</div>
+<div class="stat-box">
+<div class="stat-value" id="principalAmt">-</div>
+<div class="stat-label">대출 원금</div>
+</div>
+</div>
+</div>
+
+<!-- 방식별 비교 -->
+<div class="card">
+<div class="card-title">📋 상환 방식별 비교</div>
+<div class="compare-grid" id="compareGrid"></div>
+</div>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<!-- 상환 스케줄 -->
+<div class="card">
+<div class="card-title">📅 월별 상환 스케줄</div>
+<div class="table-wrap" id="tableWrap" style="display:none">
+<table class="schedule-table">
+<thead>
+<tr><th>회차</th><th>납입금</th><th>원금</th><th>이자</th><th>잔금</th></tr>
+</thead>
+<tbody id="scheduleBody"></tbody>
+</table>
+</div>
+<button class="table-toggle" id="tableToggle" onclick="toggleTable()">📋 상환 스케줄 펼치기</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">📖 대출이자 가이드</div>
+<div style="font-size:14px;line-height:1.8;color:#334155">
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">대출 상환 방식의 종류</h2>
+<p style="margin-bottom:12px">대출 상환 방식은 크게 원리금균등상환, 원금균등상환, 만기일시상환 세 가지로 나뉩니다. 각 방식에 따라 매월 납입하는 금액과 총 이자 부담이 크게 달라지므로, 본인의 자금 상황에 맞는 방식을 선택하는 것이 중요합니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">원리금균등상환</h2>
+<p style="margin-bottom:12px">매월 동일한 금액(원금+이자)을 납부하는 방식입니다. 초반에는 이자 비중이 높고 후반으로 갈수록 원금 비중이 커집니다. 매달 같은 금액을 내므로 가계 예산 관리가 쉽다는 장점이 있으며, 주택담보대출에서 가장 많이 사용됩니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">원금균등상환</h2>
+<p style="margin-bottom:12px">매월 같은 금액의 원금을 갚고, 이자는 남은 원금에 대해 계산하는 방식입니다. 초기 납입금이 가장 크고 점차 줄어들며, 원리금균등 방식보다 총 이자 부담이 적습니다. 초반 상환 여력이 있는 분에게 유리합니다.</p>
+<h2 style="font-size:16px;font-weight:700;margin-bottom:12px">만기일시상환</h2>
+<p style="margin-bottom:12px">대출 기간 동안 매월 이자만 납부하고, 만기일에 원금 전액을 한꺼번에 갚는 방식입니다. 월 부담이 가장 적지만 총 이자는 가장 많습니다. 전세자금대출이나 단기 사업자금에 주로 사용됩니다.</p>
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="card">
+<div class="card-title">❓ 자주 묻는 질문</div>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">원리금균등 vs 원금균등, 어떤 게 유리한가요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0"><strong>원리금균등</strong>은 매월 같은 금액을 내므로 자금 관리가 쉽습니다. <strong>원금균등</strong>은 초반 납입금이 크지만 총 이자가 적어 장기적으로 유리합니다. 여유 자금이 있다면 원금균등, 안정적 납입을 원하면 원리금균등을 추천합니다.</p>
+</details>
+<details style="margin-bottom:12px">
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">만기일시상환이란?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">대출 기간 동안 매월 이자만 납부하고, 만기일에 원금 전액을 한꺼번에 상환하는 방식입니다. 월 부담이 가장 적지만 총 이자는 가장 많습니다. 전세자금 대출에서 주로 사용됩니다.</p>
+</details>
+<details>
+<summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">실제 대출과 차이가 있나요?</summary>
+<p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">본 계산기는 단순 이자 계산으로, 실제 대출에서는 중도상환수수료, 금리 변동, 거치기간, 보증료 등 추가 비용이 발생할 수 있습니다. 정확한 금액은 해당 금융기관에 확인하시기 바랍니다.</p>
+</details>
+</div>
+</main>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer">
+<p>
+<a href="/">← modutools 전체 도구 보기</a><br>
+&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구
+</p>
+</footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">중도상환수수료는 얼마인가요?</div><div class="faq-a">일반적으로 중도상환액의 1.2~1.4%이며, 은행별로 상이합니다. 3년 경과 후에는 면제되는 경우가 많습니다.</div></div>
+<div class="faq-item"><div class="faq-q">금리 변동 위험은 어떻게 대비해야 하나요?</div><div class="faq-a">변동금리 대출은 금리 상승 시 이자 부담이 증가할 수 있습니다. 안정성을 원한다면 고정금리나 혼합형을 선택하는 것이 좋습니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 대출이자 계산 가이드</h2>
 <p>대출이자 계산기는 원금, 금리, 상환 기간을 입력하면 원리금균등·원금균등·만기일시 세 가지 상환 방식별로 월 납입금과 총 이자를 비교해줍니다. 주택담보대출, 신용대출, 자동차 할부 등 다양한 대출 상품의 조건을 비교할 때 유용합니다.</p>
 <p>원리금균등 상환은 매월 동일한 금액을 납입하므로 자금 계획이 쉬우나 총 이자 부담이 원금균등보다 높습니다. 원금균등 상환은 매월 납입하는 원금이 일정하여 총 이자가 가장 적지만, 초기 월 납입액이 높은 단점이 있습니다.</p>
 <p>만기일시 상환은 매월 이자만 납입하고 만기에 원금 전액을 상환하는 방식으로, 초기 부담이 가장 적습니다. 그러나 만기에 큰 금액이 필요하므로 목돈 마련 계획이 필요합니다.</p>
 <table><tr><th>상환 방식</th><th>월 납입액</th><th>총 이자</th><th>초기 부담</th></tr><tr><td>원리금균등</td><td>일정</td><td>중간</td><td>낮음</td></tr><tr><td>원금균등</td><td>감소</td><td>가장 적음</td><td>높음</td></tr><tr><td>만기일시</td><td>이자만</td><td>가장 높음</td><td>가장 낮음</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">원리금균등과 원금균등의 차이는 무엇인가요?</div><div class="faq-a">원리금균등은 매월 같은 금액을 납입하며 초기엔 이자 비중이 높고 후기엔 원금 비중이 높아집니다. 원금균등은 매월 같은 원금을 납입하여 총 이자가 적지만 초기 부담이 큽니다.</div></div>
-<div class="faq-item"><div class="faq-q">중도상환수수료는 얼마인가요?</div><div class="faq-a">일반적으로 중도상환액의 1.2~1.4%이며, 은행별로 상이합니다. 3년 경과 후에는 면제되는 경우가 많습니다.</div></div>
-<div class="faq-item"><div class="faq-q">금리 변동 위험은 어떻게 대비해야 하나요?</div><div class="faq-a">변동금리 대출은 금리 상승 시 이자 부담이 증가할 수 있습니다. 안정성을 원한다면 고정금리나 혼합형을 선택하는 것이 좋습니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">원리금균등과 원금균등의 차이는 무엇인가요?</div><div class="faq-a">원리금균등은 매월 같은 금액을 납입하며 초기엔 이자 비중이 높고 후기엔 원금 비중이 높아집니다. 원금균등은 매월 같은 원금을 납입하여 총 이자가 적지만 초기 부담이 큽니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
 (function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 (function(){let currentUnit='year';
 let currentType='equal_payment';
 

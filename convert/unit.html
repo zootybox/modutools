@@ -60,17 +60,49 @@
 <h1 class="page-title">단위 변환기</h1>
 <p class="page-sub">길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위 즉시 변환. cm↔inch, kg↔lb, 평↔㎡ 등. · 100% 브라우저 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 변환</div>
+
+<div class="card">
+<div class="card-title">카테고리</div>
+<div class="cat-tabs" id="catTabs"></div>
+</div>
+<div class="card">
+<div class="card-title" id="convertTitle">길이 변환</div>
+<div class="convert-wrap">
+<div class="convert-row">
+<input type="number" class="convert-input" id="fromVal" value="1" inputmode="decimal" step="any">
+<select class="convert-select" id="fromUnit"></select>
+</div>
+<div class="swap-btn" id="swapBtn">&#8693;</div>
+<div class="convert-row">
+<input type="number" class="convert-input" id="toVal" readonly style="background:var(--g50)">
+<select class="convert-select" id="toUnit"></select>
+</div>
+</div>
+<div class="result-display">
+<span class="result-value" id="resultValue">-</span><span class="result-unit" id="resultUnit"></span>
+<div class="result-formula" id="resultFormula"></div>
+</div>
+</div>
+<div class="card">
+<div class="card-title">자주 쓰는 변환</div>
+<div id="commonList"></div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+
+</div>
+<div class="faq-item"><div class="faq-q">화씨를 섭씨로 변환하는 공식은 무엇인가요?</div><div class="faq-a">(℉-32)×5/9 = ℃입니다. 예: 68℉=20℃</div></div>
+<div class="faq-item"><div class="faq-q">데이터 단위는 어떻게 변환하나요?</div><div class="faq-a">1KB=1,024Byte, 1MB=1,024KB, 1GB=1,024MB입니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 브라우저에서만 처리됩니다.</div></div>
+</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
 <div class="guide-section"><div class="guide-card"><h2>📖 단위 변환 가이드</h2>
 <p>단위 변환기는 길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 즉시 변환합니다. 부동산 거래 시 자주 사용하는 평과 ㎡의 변환, 해외 쇼핑 시 inch와 cm 변환 등 실생활에서 유용하게 활용할 수 있습니다.</p>
 <p>미국/영국에서 사용하는 야드파운드법(imperial units)과 국제단위계(SI) 간의 변환은 해외 여행, 무역, 요리 등 다양한 상황에서 필요합니다.</p>
 <table><tr><th>단위 종류</th><th>변환 예시</th><th>환산 계수</th></tr><tr><td>길이</td><td>1 inch</td><td>= 2.54 cm</td></tr><tr><td>무게</td><td>1 lb</td><td>= 0.4536 kg</td></tr><tr><td>면적</td><td>1 평</td><td>= 3.3058 ㎡</td></tr></table>
 </div>
-<div class="faq-item"><div class="faq-q">평과 제곱미터 환산은 어떻게 하나요?</div><div class="faq-a">1평 = 3.3058㎡, ㎡÷3.3058=평입니다.</div></div>
-<div class="faq-item"><div class="faq-q">화씨를 섭씨로 변환하는 공식은 무엇인가요?</div><div class="faq-a">(℉-32)×5/9 = ℃입니다. 예: 68℉=20℃</div></div>
-<div class="faq-item"><div class="faq-q">데이터 단위는 어떻게 변환하나요?</div><div class="faq-a">1KB=1,024Byte, 1MB=1,024KB, 1GB=1,024MB입니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 브라우저에서만 처리됩니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">평과 제곱미터 환산은 어떻게 하나요?</div><div class="faq-a">1평 = 3.3058㎡, ㎡÷3.3058=평입니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>

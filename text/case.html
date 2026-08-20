@@ -64,8 +64,7 @@
 <main class="page">
 <h1 class="page-title">🔠 대소문자 변환</h1>
 <p class="page-sub">영문 텍스트를 원하는 형식으로 일괄 변환 · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 <div class="card"><div class="card-title">📝 텍스트 입력</div>
 <textarea class="text-area" id="textInput" placeholder="여기에 영문 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
 <div class="btn-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px">
@@ -81,15 +80,16 @@
 <div id="resultArea" style="display:none"><div class="card"><div class="card-title">✅ 변환 결과</div>
 <textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
 <div style="margin-top:12px;text-align:right"><button class="copy-btn" style="padding:8px 16px;border:1.5px solid var(--primary);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--primary);font-family:inherit" onclick="copyResult()">📋 결과 복사</button></div></div></div>
-<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div><div class="guide-section"><div class="guide-card"><h2>📖 대소문자 변환 가이드</h2>
+<div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div></div>
+<div class="faq-item"><div class="faq-q">한글이 포함된 텍스트도 변환되나요?</div><div class="faq-a">한글에는 대소문자 구분이 없으므로 변환되지 않습니다. 영문 알파벳(A-Z, a-z)만 변환 대상이며, 한글·숫자·특수문자·공백은 원래 그대로 유지됩니다. 따라서 한영 혼합 텍스트도 안심하고 사용할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">Title Case와 Sentence Case의 차이는 무엇인가요?</div><div class="faq-a">Title Case는 모든 단어의 첫 글자를 대문자로 바꾸며, 관사(a, an, the)나 접속사(and, but, or)는 소문자로 유지하는 것이 일반적인 규칙입니다(예: The Lord of the Rings). Sentence Case는 문장의 첫 글자만 대문자로 바꾸고 나머지는 소문자로 유지합니다(예: The lord of the rings). 영문 논문 제목에는 Title Case, 일반 문서 본문에는 Sentence Case가 적합합니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다. 페이지를 닫으면 입력 내용은 완전히 사라집니다.</div></div></div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="guide-section"><div class="guide-card"><h2>📖 대소문자 변환 가이드</h2>
 <p>대소문자 변환은 영문 텍스트를 다양한 형식으로 일괄 변환할 때 유용합니다. 특히 프로그래밍에서는 언어별로 정해진 네이밍 컨벤션을 따르는 것이 중요합니다.</p>
 <p><strong>UPPER CASE</strong>는 SQL 키워드, 상수 등에 사용됩니다. <strong>lower case</strong>는 이메일, URL, 파일명에서 일관성을 유지합니다. <strong>Title Case</strong>는 각 단어 첫 글자를 대문자로, 영문 제목에 사용됩니다.</p>
 <p>CamelCase(helloWorld)는 JavaScript, Java에서 변수명에 사용됩니다. PascalCase(HelloWorld)는 C#, Java에서 클래스명에 사용됩니다. snake_case(hello_world)는 Python에서 변수명에 사용됩니다. kebab-case(hello-world)는 HTML/CSS 클래스명, URL 슬러그에 사용됩니다.</p>
 <table><tr><th>표기법</th><th>예시</th><th>주 사용 언어</th><th>용도</th></tr><tr><td>camelCase</td><td>userName</td><td>Java, JavaScript</td><td>변수명, 함수명</td></tr><tr><td>PascalCase</td><td>UserProfile</td><td>C#, Java, TypeScript</td><td>클래스명</td></tr><tr><td>snake_case</td><td>user_name</td><td>Python, Ruby, C</td><td>변수명, 함수명</td></tr><tr><td>kebab-case</td><td>user-name</td><td>HTML, CSS, URL</td><td>클래스명, URL</td></tr><tr><td>UPPER_CASE</td><td>MAX_SIZE</td><td>모든 언어</td><td>상수, 환경 변수</td></tr></table></div>
-<div class="faq-item"><div class="faq-q">프로그래밍 언어별 네이밍 컨벤션은 어떻게 다른가요?</div><div class="faq-a">Java는 변수명과 메서드명에 camelCase, 클래스명에 PascalCase를 사용합니다. Python은 모든 식별자에 snake_case를 사용하는 것이 PEP 8 표준입니다. JavaScript는 Java와 유사하게 camelCase를 사용하지만 파일명은 kebab-case를 사용하는 관례가 있습니다. C#은 Microsoft의 공식 가이드라인에 따라 PascalCase를 광범위하게 사용합니다. SQL은 키워드를 대문자로, 테이블명과 컬럼명은 snake_case로 작성하는 것이 일반적입니다.</div></div>
-<div class="faq-item"><div class="faq-q">한글이 포함된 텍스트도 변환되나요?</div><div class="faq-a">한글에는 대소문자 구분이 없으므로 변환되지 않습니다. 영문 알파벳(A-Z, a-z)만 변환 대상이며, 한글·숫자·특수문자·공백은 원래 그대로 유지됩니다. 따라서 한영 혼합 텍스트도 안심하고 사용할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">Title Case와 Sentence Case의 차이는 무엇인가요?</div><div class="faq-a">Title Case는 모든 단어의 첫 글자를 대문자로 바꾸며, 관사(a, an, the)나 접속사(and, but, or)는 소문자로 유지하는 것이 일반적인 규칙입니다(예: The Lord of the Rings). Sentence Case는 문장의 첫 글자만 대문자로 바꾸고 나머지는 소문자로 유지합니다(예: The lord of the rings). 영문 논문 제목에는 Title Case, 일반 문서 본문에는 Sentence Case가 적합합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어지며, 서버로 데이터가 전송되지 않습니다. 개인정보가 포함된 문서도 안심하고 사용할 수 있습니다. 페이지를 닫으면 입력 내용은 완전히 사라집니다.</div></div></div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
+<div class="faq-item"><div class="faq-q">프로그래밍 언어별 네이밍 컨벤션은 어떻게 다른가요?</div><div class="faq-a">Java는 변수명과 메서드명에 camelCase, 클래스명에 PascalCase를 사용합니다. Python은 모든 식별자에 snake_case를 사용하는 것이 PEP 8 표준입니다. JavaScript는 Java와 유사하게 camelCase를 사용하지만 파일명은 kebab-case를 사용하는 관례가 있습니다. C#은 Microsoft의 공식 가이드라인에 따라 PascalCase를 광범위하게 사용합니다. SQL은 키워드를 대문자로, 테이블명과 컬럼명은 snake_case로 작성하는 것이 일반적입니다.</div>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
