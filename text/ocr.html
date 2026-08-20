@@ -12,6 +12,24 @@
 <meta property="og:url" content="https://modutools.com/text/ocr.html">
 <link rel="stylesheet" href="/css/common.css">
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js">
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <style>
 /* ── Layout ── */
@@ -120,7 +138,52 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 텍스트 추출 (OCR)","url":"https://modutools.com/text/ocr.html","description":"이미지 속 글자를 텍스트로 추출하는 무료 온라인 OCR 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type": "Question", "name": "🔍 인식률을 높이려면 어떻게 해야 하나요?", "acceptedAnswer": {"@type": "Answer", "text": "이미지가 선명하고 글자와 배경의 대비가 뚜렷할수록 인식률이 높아집니다. 기울어진 문서는 미리 회전 보정하고, 어두운 이미지는 밝기를 조정한 후 업로드하세요. 인쇄된 활자체는 90% 이상의 높은 인식률을 보이지만, 손글씨나 특수 폰트는 인식률이 낮을 수 있습니다. 해상도는 300DPI 이상이 권장됩니다."}},
+{"@type": "Question", "name": "🌐 인터넷 연결이 필요한가요?", "acceptedAnswer": {"@type": "Answer", "text": "네, 첫 번째 OCR 실행 시 Tesseract.js 언어 데이터(약 2~5MB)를 다운로드하기 위해 인터넷 연결이 필요합니다. 이후 동일 언어로 다시 사용할 때는 브라우저 캐시를 활용하여 추가 다운로드 없이 오프라인으로도 사용 가능합니다."}},
+{"@type": "Question", "name": "📄 PDF 파일에서 OCR을 할 수 있나요?", "acceptedAnswer": {"@type": "Answer", "text": "현재는 이미지 파일(JPG, PNG, WebP)만 지원합니다. PDF 파일의 경우 먼저 이미지로 변환한 후 OCR 도구를 사용해주세요. (PDF 페이지를 캡처하거나, modutools의 이미지 변환 도구를 활용할 수 있습니다.)"}},
+{"@type": "Question", "name": "🔒 개인정보 보호는 어떻게 이루어지나요?", "acceptedAnswer": {"@type": "Answer", "text": "모든 OCR 처리는 사용자의 브라우저 내에서만 이루어집니다. Tesseract.js 엔진이 로컬에서 이미지를 분석하며, 어떤 데이터도 외부 서버로 전송되지 않습니다. 업로드한 이미지와 추출된 텍스트는 서버에 저장되지 않으며, 브라우저 탭을 닫으면 자동으로 삭제됩니다. 작업 완료 후 페이지를 새로고침하거나 '새로 하기' 버튼을 클릭하면 메모리에서도 안전하게 제거됩니다."}}
+]}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+</script>
+
 </head>
 <body>
 
@@ -252,6 +315,24 @@ document.getElementById("resetBtn").addEventListener("click",function(){r=null;i
 document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
 function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 })();
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 
 
 document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
