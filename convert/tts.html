@@ -3,82 +3,497 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>무료 TTS 텍스트 음성 변환 - 한국어 영어 음성 읽기 | modutools</title>
-<meta name="description" content="텍스트를 자연스러운 음성으로 변환. 한국어·영어 지원, 속도·톤·볼륨 조절 가능.">
+<title>무료 TTS 텍스트 음성 변환 : 한국어 영어 음성 읽기 | modutools</title>
+<meta name="description" content="텍스트를 자연스러운 음성으로 변환하세요. 한국어·영어 지원, 속도·톤·볼륨 세부 조절. 서버 전송 없이 브라우저에서 100% 안전하게 작동합니다.">
+<link rel="canonical" href="https://modutools.com/convert/tts.html">
 <meta property="og:title" content="무료 TTS 텍스트 음성 변환 - 한국어 영어 음성 읽기 | modutools">
-<meta property="og:description" content="텍스트를 자연스러운 음성으로 변환. 한국어·영어 지원, 속도·톤·볼륨 조절 가능.">
+<meta property="og:description" content="텍스트를 자연스러운 음성으로 변환. 한국어·영어 지원, 속도·톤·볼륨 세부 조절. 서버 전송 없이 브라우저에서 100% 안전하게 작동.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/convert/tts.html">
-<link rel="canonical" href="https://modutools.com/convert/tts.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.tool-page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.tool-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.tool-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
+.tool-card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+/* 텍스트 입력 */
+.tool-textarea{width:100%;min-height:180px;padding:16px;border:1.5px solid var(--g200);border-radius:var(--radius);font-size:15px;line-height:1.7;background:#fdfdfd;resize:vertical;font-family:inherit;outline:none;transition:.2s}
+.tool-textarea:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.tool-char-count{text-align:right;font-size:12px;color:var(--g400);margin-top:6px}
+
+/* 음성 선택 */
+.tool-select-wrap{margin-bottom:16px}
+.tool-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.tool-select{width:100%;padding:12px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-family:inherit;outline:none;transition:.2s;background:#fff;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394A3B8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.tool-select:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+
+/* 슬라이더 설정 */
+.tool-setting-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.tool-setting-grid.triple{grid-template-columns:1fr 1fr 1fr}
+.tool-range-card{background:var(--g50);padding:16px;border-radius:var(--radius);border:1px solid var(--g100)}
+.tool-range-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.tool-range-header span{font-size:12px;color:var(--g500)}
+.tool-range-header b{font-size:14px;color:var(--g900);font-weight:700;font-variant-numeric:tabular-nums}
+input[type="range"]{width:100%;height:6px;-webkit-appearance:none;background:var(--g200);border-radius:3px;outline:none}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--primary);cursor:pointer;box-shadow:0 2px 6px rgba(37,99,235,.3)}
+
+/* 버튼 */
+.tool-btn-area{display:flex;gap:8px}
+.tool-btn{flex:1;height:52px;border:none;border-radius:var(--radius);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.tool-btn:hover{transform:translateY(-1px)}
+.tool-btn:active{transform:translateY(0)}
+.tool-btn-sub{background:var(--g100);color:var(--g700)}
+.tool-btn-sub:hover{background:var(--g200)}
+.tool-btn-main{flex:1.5;background:var(--primary);color:#fff}
+.tool-btn-main:hover{background:var(--primary-dark)}
+.tool-btn-stop{background:#EF4444;color:#fff;display:none}
+
+/* 상태 메시지 */
+.tool-status{margin-top:16px;padding:14px;border-radius:var(--radius);font-size:13px;text-align:center;font-weight:600;display:none}
+.tool-status.info{background:var(--primary-light);color:var(--primary);display:block}
+.tool-status.warn{background:#FEF3C7;color:#D97706;display:block}
+.tool-status.ok{background:#D1FAE5;color:#059669;display:block}
+
+/* 브라우저 지원 안내 */
+.tool-compat{background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+.tool-compat-title{font-size:13px;font-weight:700;color:var(--g700);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.tool-compat-list{font-size:12px;color:var(--g500);line-height:1.8}
+
+/* 가이드 섹션 (SEO) */
+.tool-guide{margin-top:40px}
+.tool-guide-title{font-size:18px;font-weight:700;color:var(--g900);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.tool-guide-body{font-size:14px;color:var(--g600);line-height:1.8}
+.tool-guide-body h3{font-size:15px;color:var(--g800);margin:24px 0 8px;font-weight:700}
+.tool-faq-q{font-weight:700;color:var(--primary);margin-top:16px;display:block}
+.tool-faq-a{background:var(--g50);padding:12px 14px;border-radius:8px;margin-top:6px;font-size:13px;line-height:1.7}
+
+/* 면책 */
+.tool-disclaimer{margin-top:32px;padding:16px;background:var(--g50);border-radius:var(--radius);border:1px solid var(--g200)}
+.tool-disclaimer p{font-size:11px;color:var(--g400);line-height:1.7}
+.tool-disclaimer strong{color:var(--g500)}
+
+/* 자연스러운 읽기 토글 */
+.tool-natural-toggle{margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.tool-toggle-label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;font-weight:600;color:var(--g800)}
+.tool-toggle-label input{display:none}
+.tool-toggle-switch{width:40px;height:22px;background:var(--g200);border-radius:11px;position:relative;transition:.2s;flex-shrink:0}
+.tool-toggle-switch::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.tool-toggle-label input:checked+.tool-toggle-switch{background:var(--primary)}
+.tool-toggle-label input:checked+.tool-toggle-switch::after{left:21px}
+.tool-toggle-desc{font-size:11px;color:var(--g400)}
+
+@media(max-width:480px){
+  .tool-setting-grid.triple{grid-template-columns:1fr 1fr;gap:8px}
+  .tool-setting-grid.triple .tool-range-card:last-child{grid-column:1/-1}
+  .tool-btn-area{flex-direction:column}
+  .tool-btn{height:48px}
+  .tool-btn-main{flex:1}
+}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"무료 TTS","url":"https://modutools.com/convert/","description":"텍스트 음성 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Web Speech API는 인터넷이 없어도 작동하나요?","acceptedAnswer":{"@type":"Answer","text":"네, 음성 데이터가 캐시되면 오프라인에서도 TTS 사용이 가능합니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/tts.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">무료 TTS 텍스트 음성 변환</h1>
-<p class="page-sub">텍스트를 자연스러운 음성으로 변환. 한국어·영어 지원, 속도·톤·볼륨 조절 가능. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-</div>
-<div class="faq-item"><div class="faq-q">음성 파일을 다운로드할 수 있나요?</div><div class="faq-a">네, WAV 형식으로 음성 파일을 다운로드하여 저장할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">최대 몇 글자까지 변환 가능한가요?</div><div class="faq-a">브라우저에 따라 다르지만 일반적으로 수천 자까지 지원합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. Web Speech API는 브라우저 내장 API로 서버 전송이 없습니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 TTS 음성 변환 가이드</h2>
-<p>TTS는 Web Speech API를 사용하여 브라우저에서 직접 텍스트를 음성으로 변환합니다. 서버 전송 없이 로컬에서 처리되므로 개인정보가 안전합니다.</p>
-<p>한국어와 영어를 지원하며, 성별, 속도, 톤, 볼륨을 세부 조절할 수 있습니다. 생성된 음성은 WAV 파일로 다운로드하여 저장할 수 있습니다.</p>
-<table><tr><th>언어</th><th>지원 음성</th><th>품질</th></tr><tr><td>한국어</td><td>여성/남성</td><td>자연스러움</td></tr><tr><td>영어(미국)</td><td>여성/남성</td><td>매우 자연스러움</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">Web Speech API는 인터넷이 없어도 작동하나요?</div><div class="faq-a">네, 음성 데이터가 캐시되면 오프라인에서도 사용 가능합니다.</div>
+
+<header class="mt-header">
+  <div class="mt-header-inner">
+    <a href="/" class="mt-logo">modu<span>tools</span></a>
+    <nav class="mt-nav">
+      <a href="/">홈</a>
+      <a href="/about.html">소개</a>
+    </nav>
+  </div>
+</header>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+<main class="tool-page">
+  <h1 class="tool-title">TTS 텍스트 음성 변환</h1>
+  <p class="tool-sub">텍스트를 입력하면 자연스러운 음성으로 읽어줍니다. 속도·톤·볼륨까지 세밀하게 조절하세요.</p>
+
+  <!-- 입력 카드 -->
+  <div class="tool-card">
+    <div class="tool-card-title">📝 텍스트 입력</div>
+    <textarea id="toolInput" class="tool-textarea" placeholder="읽어줄 내용을 입력하세요. 최대 5,000자까지 지원합니다." maxlength="5000"></textarea>
+    <div class="tool-char-count"><span id="charCount">0</span> / 5,000자</div>
+  </div>
+
+  <!-- 음성 설정 카드 -->
+  <div class="tool-card">
+    <div class="tool-card-title">🎙️ 음성 설정</div>
+
+    <div class="tool-select-wrap">
+      <label class="tool-label">음성 선택</label>
+      <select id="voiceSelect" class="tool-select">
+        <option value="">음성을 불러오는 중...</option>
+      </select>
+    </div>
+
+    <div class="tool-natural-toggle">
+      <label class="tool-toggle-label">
+        <input type="checkbox" id="naturalMode" checked>
+        <span class="tool-toggle-switch"></span>
+        <span class="tool-toggle-text">🗣️ 자연스러운 읽기</span>
+      </label>
+      <span class="tool-toggle-desc">문장 사이에 쉼을 넣어 사람처럼 읽어줍니다</span>
+    </div>
+
+    <div class="tool-setting-grid triple">
+      <div class="tool-range-card">
+        <div class="tool-range-header"><span>속도</span><b id="speedVal">0.9x</b></div>
+        <input type="range" id="speed" min="0.3" max="2.0" step="0.1" value="0.9">
+      </div>
+      <div class="tool-range-card">
+        <div class="tool-range-header"><span>톤 (높낮이)</span><b id="pitchVal">1.0</b></div>
+        <input type="range" id="pitch" min="0.5" max="2.0" step="0.1" value="1.0">
+      </div>
+      <div class="tool-range-card">
+        <div class="tool-range-header"><span>볼륨</span><b id="volumeVal">100%</b></div>
+        <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+      </div>
+    </div>
+
+    <div class="tool-btn-area">
+      <button id="btnPreview" class="tool-btn tool-btn-main" onclick="handlePreview()">▶ 미리 듣기</button>
+      <button id="btnStop" class="tool-btn tool-btn-stop" onclick="handleStop()">■ 정지</button>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:var(--g50);border-radius:8px;font-size:11px;color:var(--g400);line-height:1.6">
+      💡 음성 파일 저장이 필요하시면 PC 녹음 프로그램(OBS Studio, Windows 녹음기 등)으로 시스템 오디오를 녹음해 주세요.
+    </div>
+
+    <div id="statusMsg" class="tool-status"></div>
+  </div>
+
+  <!-- 브라우저 호환 안내 -->
+  <div class="tool-compat">
+    <div class="tool-compat-title">💡 사용 안내</div>
+    <div class="tool-compat-list">
+      · 이 도구는 브라우저 내장 음성(Web Speech API)을 사용합니다.<br>
+      · 음성 종류는 사용 중인 기기·브라우저에 따라 다를 수 있습니다.<br>
+      · Chrome, Edge 브라우저에서 가장 많은 음성을 지원합니다.<br>
+      · 모든 처리는 사용자의 기기에서 이루어지며, 서버로 전송되지 않습니다.
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- SEO 가이드 섹션 -->
+  <div class="tool-guide">
+    <div class="tool-guide-title">📖 TTS(텍스트 음성 변환) 활용 가이드</div>
+    <div class="tool-guide-body">
+      <h3>TTS란 무엇인가요?</h3>
+      TTS(Text-to-Speech)는 텍스트를 사람의 음성으로 변환해주는 기술입니다. 별도 프로그램 설치 없이 웹 브라우저에서 바로 텍스트를 음성으로 들을 수 있어, 학습·업무·접근성 등 다양한 분야에서 활용됩니다.
+
+      <h3>어떤 상황에서 유용한가요?</h3>
+      외국어 발음 확인, 긴 글의 청취 학습, 시각 장애인을 위한 웹 접근성 지원, 발표 연습용 원고 읽기, 유튜브 영상 나레이션 초안 확인 등 다양한 용도로 활용할 수 있습니다.
+
+      <h3>세부 설정 활용 팁</h3>
+      속도를 0.7~0.8배로 낮추면 외국어 학습에 적합하고, 1.3~1.5배로 높이면 빠른 내용 확인에 유리합니다. 톤(높낮이)을 조절하면 다양한 느낌의 음성을 만들 수 있습니다.
+
+      <span class="tool-faq-q">Q. 음성이 나오지 않아요</span>
+      <div class="tool-faq-a">기기 음량이 켜져 있는지 확인하세요. Chrome 또는 Edge 브라우저 사용을 권장합니다. 일부 모바일 기기에서는 무음 모드를 해제해야 합니다.</div>
+
+      <span class="tool-faq-q">Q. 음성을 파일로 저장할 수 없나요?</span>
+      <div class="tool-faq-a">현재 브라우저 보안 정책으로 인해 TTS 음성을 직접 파일로 저장하는 기능은 지원되지 않습니다. 파일이 필요하시면 OBS Studio, Windows 녹음기 등 PC 녹음 프로그램으로 시스템 오디오를 녹음해 주세요.</div>
+
+      <span class="tool-faq-q">Q. 한국어 음성이 적거나 하나뿐이에요</span>
+      <div class="tool-faq-a">음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. 아래 방법으로 무료 음성을 추가할 수 있습니다.<br><br>
+      <strong>▸ Windows 10/11:</strong> 설정 → 시간 및 언어 → 음성 → '음성 추가' 클릭 → 한국어 선택 후 설치 (해미, 인준 등 추가됨)<br>
+      <strong>▸ Mac:</strong> 시스템 설정 → 손쉬운 사용 → 음성 콘텐츠 → 시스템 음성 관리 → 한국어 음성 다운로드<br>
+      <strong>▸ Android:</strong> 설정 → 접근성 → TTS 출력 → Google TTS 엔진 → 언어에서 한국어 설치<br>
+      <strong>▸ iPhone/iPad:</strong> 설정 → 손쉬운 사용 → 음성 콘텐츠 → 음성 → 한국어에서 추가 음성 다운로드<br><br>
+      설치 후 브라우저를 새로고침하면 새 음성이 자동으로 목록에 나타납니다.</div>
+    </div>
+  </div>
+
+  <div class="mt-ad"><div class="mt-ad-box">광고 영역</div></div>
+
+  <!-- 면책 조항 -->
+  <div class="tool-disclaimer">
+    <p><strong>면책 조항</strong> — 본 도구는 브라우저 내장 Web Speech API를 활용한 무료 서비스로, 음성 합성의 품질·정확도·자연스러움은 사용자의 기기·운영체제·브라우저 환경에 따라 달라질 수 있습니다. 이에 대해 modutools는 기술적 보증을 하지 않습니다. 모든 텍스트 데이터는 사용자 기기에서만 처리되며, 외부 서버로 전송되지 않습니다.</p>
+  </div>
 </main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
+
+<footer class="mt-footer">
+  <p>© 2026 modutools. All rights reserved.<br>
+  <a href="/privacy.html">개인정보처리방침</a> · <a href="/terms.html">이용약관</a></p>
+</footer>
+
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Convert processing */})();
+(function(){
+  var synth=window.speechSynthesis;
+  var voiceSel=document.getElementById('voiceSelect');
+  var inputEl=document.getElementById('toolInput');
+  var speedEl=document.getElementById('speed');
+  var pitchEl=document.getElementById('pitch');
+  var volumeEl=document.getElementById('volume');
+  var naturalEl=document.getElementById('naturalMode');
+  var statusEl=document.getElementById('statusMsg');
+  var btnPreview=document.getElementById('btnPreview');
+  var btnStop=document.getElementById('btnStop');
+  var allVoices=[];
+  var LIMIT=5000;
+  var stopRequested=false;
+
+  /* \uae00\uc790 \uc218 \uce74\uc6b4\ud2b8 */
+  inputEl.addEventListener('input',function(){
+    var len=this.value.length;
+    document.getElementById('charCount').textContent=len.toLocaleString();
+    if(len>=LIMIT){showStatus('\uc785\ub825 \uac00\ub2a5\ud55c \ucd5c\ub300 \uae00\uc790 \uc218(5,000\uc790)\uc5d0 \ub3c4\ub2ec\ud588\uc2b5\ub2c8\ub2e4.','warn');}
+  });
+
+  /* \uc2ac\ub77c\uc774\ub354 \uac12 \ud45c\uc2dc */
+  speedEl.oninput=function(){document.getElementById('speedVal').textContent=Number(this.value).toFixed(1)+'x';};
+  pitchEl.oninput=function(){document.getElementById('pitchVal').textContent=Number(this.value).toFixed(1);};
+  volumeEl.oninput=function(){document.getElementById('volumeVal').textContent=Math.round(this.value*100)+'%';};
+
+  /* \uc74c\uc131 \uc774\ub984 \ub9e4\ud551 */
+  var nameMap={
+    'Google \ud55c\uad6d\uc5b4':'\ud55c\uad6d\uc5b4 \uae30\ubcf8','Google Korean':'\ud55c\uad6d\uc5b4 \uae30\ubcf8',
+    'Microsoft Heami':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\ud574\ubbf8)','Microsoft SunHi':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc120\ud76c)',
+    'Microsoft InJoon':'\ud55c\uad6d\uc5b4 \ub0a8\uc131 (\uc778\uc900)','Microsoft Jian':'\ud55c\uad6d\uc5b4 \ub0a8\uc131 (\uc9c0\uc548)',
+    'Yuna':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc720\ub098)','Sora':'\ud55c\uad6d\uc5b4 \uc5ec\uc131 (\uc18c\ub77c)',
+    'Google US English':'\uc601\uc5b4 \uae30\ubcf8 (US)','Google UK English Male':'\uc601\uc5b4 \ub0a8\uc131 (UK)',
+    'Google UK English Female':'\uc601\uc5b4 \uc5ec\uc131 (UK)',
+    'Microsoft Zira':'\uc601\uc5b4 \uc5ec\uc131 (Zira)','Microsoft David':'\uc601\uc5b4 \ub0a8\uc131 (David)',
+    'Microsoft Mark':'\uc601\uc5b4 \ub0a8\uc131 (Mark)','Microsoft Jenny':'\uc601\uc5b4 \uc5ec\uc131 (Jenny)',
+    'Samantha':'\uc601\uc5b4 \uc5ec\uc131 (Samantha)','Alex':'\uc601\uc5b4 \ub0a8\uc131 (Alex)',
+    'Daniel':'\uc601\uc5b4 \ub0a8\uc131 (Daniel)','Karen':'\uc601\uc5b4 \uc5ec\uc131 (Karen)'
+  };
+  function getLabel(v,lang,idx){
+    var key=v.name.replace(/ Online \(Natural\)| Desktop| - .+$/g,'');
+    if(nameMap[key]) return nameMap[key];
+    var pre=lang==='ko'?'\ud55c\uad6d\uc5b4':'\uc601\uc5b4';
+    if(/female/i.test(v.name)) return pre+' \uc5ec\uc131 '+(idx+1);
+    if(/male/i.test(v.name)) return pre+' \ub0a8\uc131 '+(idx+1);
+    return pre+' \uc74c\uc131 '+(idx+1);
+  }
+
+  /* \uc74c\uc131 \ub85c\ub4dc */
+  function loadVoices(){
+    var prevVal=voiceSel.value;
+    allVoices=synth.getVoices();
+    var ko=[],en=[];
+    var enSeen={};
+    allVoices.forEach(function(v){
+      if(/^ko/i.test(v.lang)) ko.push(v);
+      else if(/^en-(US|GB)/i.test(v.lang)){
+        /* \uc911\ubcf5 \uc774\ub984 \ubc29\uc9c0 + \ucd5c\ub300 8\uac1c */
+        var shortName=v.name.replace(/ Online \(Natural\)| Desktop| - .+$/g,'');
+        if(!enSeen[shortName]&&en.length<8){enSeen[shortName]=true;en.push(v);}
+      }
+    });
+    var html='';
+    if(ko.length){
+      html+='<optgroup label="\ud55c\uad6d\uc5b4">';
+      ko.forEach(function(v,i){html+='<option value="'+v.name+'">'+getLabel(v,'ko',i)+'</option>';});
+      html+='</optgroup>';
+    }
+    if(en.length){
+      html+='<optgroup label="\uc601\uc5b4">';
+      en.forEach(function(v,i){html+='<option value="'+v.name+'">'+getLabel(v,'en',i)+'</option>';});
+      html+='</optgroup>';
+    }
+    if(!ko.length&&!en.length) html='<option value="">\uc0ac\uc6a9 \uac00\ub2a5\ud55c \uc74c\uc131\uc774 \uc5c6\uc2b5\ub2c8\ub2e4</option>';
+    voiceSel.innerHTML=html;
+    /* 이전 선택 복원 */
+    if(prevVal){
+      var opts=voiceSel.querySelectorAll('option');
+      for(var i=0;i<opts.length;i++){
+        if(opts[i].value===prevVal){voiceSel.value=prevVal;break;}
+      }
+    }
+  }
+  loadVoices();
+  if(synth.onvoiceschanged!==undefined) synth.onvoiceschanged=loadVoices;
+
+  /* \uc0c1\ud0dc \ud45c\uc2dc */
+  function showStatus(msg,type){
+    statusEl.className='tool-status '+(type||'info');
+    statusEl.textContent=msg;
+    statusEl.style.display='block';
+  }
+  function hideStatus(){statusEl.style.display='none';}
+
+  /* \uc7ac\uc0dd \uc0c1\ud0dc UI */
+  function setPlaying(on){
+    btnPreview.style.display=on?'none':'flex';
+    btnStop.style.display=on?'flex':'none';
+  }
+
+  /* \uc720\ud6a8\uc131 \uac80\uc0ac */
+  function validate(){
+    var text=inputEl.value.trim();
+    if(!text){showStatus('\ud14d\uc2a4\ud2b8\ub97c \uc785\ub825\ud574 \uc8fc\uc138\uc694.','warn');return null;}
+    if(!voiceSel.value){showStatus('\uc0ac\uc6a9 \uac00\ub2a5\ud55c \uc74c\uc131\uc774 \uc5c6\uc2b5\ub2c8\ub2e4. \ub2e4\ub978 \ube0c\ub77c\uc6b0\uc800\ub97c \uc0ac\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');return null;}
+    return text;
+  }
+
+  /* utterance \uc0dd\uc131 */
+  function createUtterance(text){
+    var u=new SpeechSynthesisUtterance(text);
+    var voice=allVoices.find(function(v){return v.name===voiceSel.value;});
+    if(voice) u.voice=voice;
+    u.rate=parseFloat(speedEl.value);
+    u.pitch=parseFloat(pitchEl.value);
+    u.volume=parseFloat(volumeEl.value);
+    return u;
+  }
+
+  /* \ubb38\uc7a5 \ubd84\ud560 (\uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uc77d\uae30\uc6a9) */
+  function splitSentences(text){
+    var parts=text.split(/(?<=[.!?\u3002\uff01\uff1f])\s*/);
+    var result=[];
+    for(var i=0;i<parts.length;i++){
+      var p=parts[i].trim();
+      if(!p) continue;
+      /* \ub108\ubb34 \uae34 \ubb38\uc7a5\uc740 \uc27c\ud45c\ub85c \ucd94\uac00 \ubd84\ud560 */
+      if(p.length>80){
+        var subs=p.split(/(?<=[,;:\uff0c\u3001])\s*/);
+        for(var j=0;j<subs.length;j++){
+          if(subs[j].trim()) result.push(subs[j].trim());
+        }
+      } else {
+        result.push(p);
+      }
+    }
+    return result.length?result:[text];
+  }
+
+  /* \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uc77d\uae30: \ubb38\uc7a5\ubcc4 \uc7ac\uc0dd + \ub51c\ub808\uc774 */
+  function speakNatural(sentences,onAllDone,onError){
+    var idx=0;
+    stopRequested=false;
+    function next(){
+      if(stopRequested||idx>=sentences.length){
+        if(!stopRequested&&onAllDone) onAllDone();
+        return;
+      }
+      var s=sentences[idx];
+      var u=createUtterance(s);
+      /* \ubb38\uc7a5 \ub05d\uc5d0\uc11c \uc0b4\uc9dd \ub290\ub9ac\uac8c */
+      var isEnd=/[.!?\u3002\uff01\uff1f]$/.test(s);
+      var isComma=/[,;:\uff0c\u3001]$/.test(s);
+      var delay=isEnd?380:isComma?200:120;
+
+      u.onend=function(){
+        idx++;
+        if(!stopRequested) setTimeout(next,delay);
+      };
+      u.onerror=function(){
+        if(onError) onError();
+      };
+      startResumeHack();
+      synth.speak(u);
+    }
+    if(idx===0) setPlaying(true);
+    next();
+  }
+
+  /* Chrome \uae34 \ud14d\uc2a4\ud2b8 \ubc84\uadf8 \uc6b0\ud68c */
+  var resumeTimer=null;
+  function startResumeHack(){
+    clearInterval(resumeTimer);
+    resumeTimer=setInterval(function(){if(synth.speaking&&!synth.paused)synth.resume();},13000);
+  }
+  function stopResumeHack(){clearInterval(resumeTimer);resumeTimer=null;}
+
+  /* \ubbf8\ub9ac \ub4e3\uae30 */
+  window.handlePreview=function(){
+    var text=validate();
+    if(!text)return;
+    if(synth.speaking)synth.cancel();
+    hideStatus();
+    stopRequested=false;
+
+    if(naturalEl.checked){
+      var sentences=splitSentences(text);
+      speakNatural(sentences,function(){
+        setPlaying(false);stopResumeHack();
+      },function(){
+        setPlaying(false);stopResumeHack();
+        showStatus('\uc74c\uc131 \uc7ac\uc0dd \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');
+      });
+    } else {
+      var u=createUtterance(text);
+      u.onstart=function(){setPlaying(true);};
+      u.onend=function(){setPlaying(false);stopResumeHack();};
+      u.onerror=function(){setPlaying(false);stopResumeHack();showStatus('\uc74c\uc131 \uc7ac\uc0dd \uc911 \uc624\ub958\uac00 \ubc1c\uc0dd\ud588\uc2b5\ub2c8\ub2e4.','warn');};
+      synth.speak(u);
+      startResumeHack();
+    }
+  };
+
+  /* \uc815\uc9c0 */
+  window.handleStop=function(){
+    stopRequested=true;
+    synth.cancel();
+    setPlaying(false);
+    stopResumeHack();
+    hideStatus();
+  };
+
+  /* API \ubbf8\uc9c0\uc6d0 \ube0c\ub77c\uc6b0\uc800 */
+  if(!('speechSynthesis' in window)){
+    showStatus('\uc774 \ube0c\ub77c\uc6b0\uc800\ub294 \uc74c\uc131 \ubcc0\ud658\uc744 \uc9c0\uc6d0\ud558\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4. Chrome \ub610\ub294 Edge \ube0c\ub77c\uc6b0\uc800\ub97c \uc774\uc6a9\ud574 \uc8fc\uc138\uc694.','warn');
+    btnPreview.disabled=true;
+  }
 })();
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+</script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"TTS 텍스트 음성 변환",
+  "url":"https://modutools.com/convert/tts.html",
+  "applicationCategory":"UtilityApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"},
+  "description":"텍스트를 자연스러운 음성으로 변환하세요. 한국어·영어 지원, 속도·톤·볼륨 세부 조절 가능."
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"TTS 음성이 나오지 않아요","acceptedAnswer":{"@type":"Answer","text":"기기 음량이 켜져 있는지 확인하세요. Chrome 또는 Edge 브라우저 사용을 권장합니다. 일부 모바일 기기에서는 무음 모드를 해제해야 합니다."}},
+    {"@type":"Question","name":"음성을 파일로 저장할 수 없나요?","acceptedAnswer":{"@type":"Answer","text":"현재 브라우저 보안 정책으로 인해 TTS 음성을 직접 파일로 저장하는 기능은 지원되지 않습니다. OBS Studio, Windows 녹음기 등 PC 녹음 프로그램으로 시스템 오디오를 녹음해 주세요."}},
+    {"@type":"Question","name":"한국어 음성이 적거나 하나뿐이에요","acceptedAnswer":{"@type":"Answer","text":"음성 목록은 기기에 설치된 음성팩에 따라 달라집니다. Windows는 설정 → 시간 및 언어 → 음성에서, Mac은 시스템 설정 → 손쉬운 사용 → 음성 콘텐츠에서 무료로 추가 음성을 설치할 수 있습니다. 설치 후 브라우저를 새로고침하면 새 음성이 자동으로 목록에 나타납니다."}}
+  ]
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

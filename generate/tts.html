@@ -3,65 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>무료 TTS 음성 변환 및 저장 | modutools</title>
-<meta name="description" content="텍스트를 음성으로 변환하고 WAV 파일로 저장. 한국어·영어 지원.">
+<title>무료 TTS 음성 변환 및 저장 - 모두의 도구 | modutools</title>
+<meta name="description" content="텍스트를 음성으로 변환하고 WAV 파일로 저장합니다. 한국어·영어 지원, 다양한 음성 선택 가능. 서버 전송 없이 브라우저에서 100% 안전하게 작동.">
+<link rel="canonical" href="https://modutools.com/generate/tts.html">
 <meta property="og:title" content="무료 TTS 음성 변환 및 저장 | modutools">
-<meta property="og:description" content="텍스트를 음성으로 변환하고 WAV 파일로 저장. 한국어·영어 지원.">
+<meta property="og:description" content="텍스트를 음성으로 변환하고 WAV 파일로 저장. 한국어·영어 지원, 다양한 음성 선택 가능. 서버 전송 없이 브라우저에서 100% 안전하게 작동.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/generate/tts.html">
-<link rel="canonical" href="https://modutools.com/generate/tts.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+/* 기존 상세 페이지 규격 반영 */
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
+
+/* 카드 및 입력창 최적화 */
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-label{font-size:13px;font-weight:600;color:var(--g600);margin-bottom:8px;display:block}
+.tts-textarea {
+    width: 100%; min-height: 180px; padding: 16px;
+    border: 1px solid var(--g200); border-radius: var(--radius);
+    font-size: 15px; line-height: 1.6; background: #fdfdfd; resize: none; margin-bottom: 20px;
+}
+.tts-textarea:focus { border-color: var(--primary); outline: none; background: #fff; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+/* 설정 슬라이더 (BMI 스타일) */
+.setting-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+.range-card { background: var(--g50); padding: 16px; border-radius: var(--radius); }
+.range-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 10px; color: var(--g500); }
+.range-header b { color: var(--g900); font-weight: 700; }
+input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer; }
+
+/* 버튼 디자인 개선 */
+.btn-area { display: flex; gap: 8px; }
+.btn-sub { flex: 1; background: var(--g100); color: var(--g800); font-weight: 600; }
+.btn-main { flex: 1.5; background: var(--primary); color: #fff; font-weight: 700; }
+.mt-btn:hover { opacity: 0.9; transform: translateY(-1px); transition: all 0.2s; }
+
+/* 상태 알림 레이어 */
+#statusMsg { 
+    margin-top: 16px; padding: 12px; border-radius: var(--radius); 
+    background: #eff6ff; color: var(--primary); font-size: 13px; 
+    text-align: center; font-weight: 600; display: none; 
+}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"무료 TTS 음성 변환","url":"https://modutools.com/","description":"텍스트 음성 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"TTS와 실제 사람 음성의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"TTS는 합성 음성으로 자연스러움이 향상 중이지만, 감정과 억양은 실제 사람에 비해 부족합니다."}}
+{"@type":"Question","name":"TTS 음성 변환은 어떤 언어를 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저에 내장된 음성 엔진을 사용하며, 한국어와 영어를 포함해 브라우저가 지원하는 다양한 언어로 텍스트를 읽어줍니다."}},
+{"@type":"Question","name":"생성된 음성을 파일로 저장할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"브라우저 Web Speech API를 사용하므로 직접 파일 저장은 지원하지 않습니다. 녹음 앱을 함께 사용하면 저장이 가능합니다."}},
+{"@type":"Question","name":"음성 속도를 조절할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"네, 속도와 높낮이를 슬라이더로 조절할 수 있습니다. 느리게 들으면서 발음을 확인하거나 빠르게 들을 수 있습니다."}},
+{"@type":"Question","name":"입력한 텍스트가 서버에 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 브라우저 내장 음성 합성 기능을 사용하므로 텍스트가 외부 서버로 전송되지 않습니다."}}
 ]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/generate/tts.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">무료 TTS 음성 변환 및 저장 | modutools</h1>
-<p class="page-sub">텍스트를 음성으로 변환하고 WAV 파일로 저장. 한국어·영어 지원. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
 
-<div class="card">
+<header class="header">
+    <div class="header-inner">
+        <a href="/" class="logo">modutools</a>
+    </div>
+</header>
+
+<main class="page">
+    <h1 class="page-title">TTS 음성 변환</h1>
+    <p class="page-sub">텍스트를 입력하고 원하는 목소리로 변환하여 소장해 보세요.</p>
+
+    <div class="card">
         <label class="input-label">내용 입력</label>
         <textarea id="ttsInput" class="tts-textarea" placeholder="읽어줄 내용을 입력하세요..."></textarea>
 
@@ -92,26 +128,78 @@
     <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 </main>
 
-
-</div>
-<div class="faq-item"><div class="faq-q">음성 파일을 다운로드할 수 있나요?</div><div class="faq-a">네, WAV 형식으로 다운로드하여 저장할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">긴 텍스트도 변환 가능한가요?</div><div class="faq-a">네, 브라우저 메모리가 허용하는 범위 내에서 가능합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 텍스트가 서버에 저장되나요?</div><div class="faq-a">아닙니다. Web Speech API는 브라우저 내장 API입니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 TTS 음성 생성 가이드</h2>
-<p>TTS는 Web Speech API를 사용해 텍스트를 음성으로 변환하고 WAV 파일로 저장합니다. 한국어·영어 지원, 다양한 음성 선택 가능.</p>
-<p>생성된 음성은 WAV 파일로 다운로드하여 오프라인 재생, 동영상 편집, 프레젠테이션 등에 활용할 수 있습니다.</p>
-<table><tr><th>언어</th><th>음성</th><th>용도</th></tr><tr><td>한국어</td><td>여성/남성</td><td>내레이션, 안내</td></tr><tr><td>영어</td><td>여성/남성</td><td>외국어 학습</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">TTS와 실제 사람 음성의 차이는 무엇인가요?</div><div class="faq-a">TTS는 합성 음성으로, 자연스러움은 향상 중이나 감정 표현은 제한적입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Processing */})();
-})();
+const synth = window.speechSynthesis;
+const voiceSelect = document.getElementById('voiceSelect');
+const speedIn = document.getElementById('speed');
+const pitchIn = document.getElementById('pitch');
+let voices = [];
+
+function loadVoices() {
+    voices = synth.getVoices();
+    voiceSelect.innerHTML = voices
+        .filter(v => v.lang.includes('ko') || v.lang.includes('en'))
+        .map(v => `<option value="${v.name}">${v.name} (${v.lang})</option>`)
+        .join('');
+}
+if (speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = loadVoices;
+}
+loadVoices();
+
+speedIn.oninput = (e) => document.getElementById('speedVal').textContent = e.target.value;
+pitchIn.oninput = (e) => document.getElementById('pitchVal').textContent = e.target.value;
+
+function preview() {
+    if (synth.speaking) synth.cancel();
+    const text = document.getElementById('ttsInput').value;
+    if (!text) return;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.voice = voices.find(v => v.name === voiceSelect.value);
+    utter.rate = speedIn.value;
+    utter.pitch = pitchIn.value;
+    synth.speak(utter);
+}
+
+async function download() {
+    const text = document.getElementById('ttsInput').value;
+    if (!text) return;
+    if (synth.speaking) synth.cancel();
+
+    const status = document.getElementById('statusMsg');
+    status.style.display = 'block';
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const dest = audioCtx.createMediaStreamDestination();
+    const recorder = new MediaRecorder(dest.stream);
+    const chunks = [];
+
+    recorder.ondataavailable = (e) => chunks.push(e.data);
+    recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'audio/wav' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `modutools-tts-${Date.now()}.wav`;
+        a.click();
+        status.style.display = 'none';
+        audioCtx.close();
+    };
+
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.voice = voices.find(v => v.name === voiceSelect.value);
+    utter.rate = speedIn.value;
+    utter.pitch = pitchIn.value;
+
+    recorder.start();
+    synth.speak(utter);
+    utter.onend = () => { setTimeout(() => recorder.stop(), 500); };
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

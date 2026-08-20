@@ -3,54 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>증명사진 규격 맞추기 - 여권 이력서 주민등록증 | modutools</title>
-<meta name="description" content="여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지 편집. 배경색 변경, 크기 조정.">
-<meta property="og:title" content="증명사진 규격 맞추기 - 여권 이력서 주민등록증 | modutools">
-<meta property="og:description" content="여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지 편집. 배경색 변경, 크기 조정.">
+<title>증명사진 규격 맞추기 - 여권·이력서·주민등록증 | modutools</title>
+<meta name="description" content="여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지를 편집합니다. 배경색 변경, 크기 조정 지원.">
+<link rel="canonical" href="https://modutools.com/image/id-photo.html">
+<meta property="og:title" content="증명사진 규격 맞추기 - 여권·이력서·주민등록증 | modutools">
+<meta property="og:description" content="여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지를 편집. 배경색 변경, 크기 조정 지원.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/image/id-photo.html">
-<link rel="canonical" href="https://modutools.com/image/id-photo.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
+.upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
+.upload-icon{font-size:36px;margin-bottom:8px}
+.upload-text{font-size:14px;color:var(--g500)}
+.upload-text strong{color:var(--primary)}
+.file-input{display:none}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.spec-btn{padding:14px 10px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;transition:.2s;background:#fff;text-align:center}
+.spec-btn:hover{border-color:var(--primary);background:var(--primary-light)}
+.spec-btn.active{border-color:var(--primary);background:var(--primary-light)}
+.spec-name{font-size:14px;font-weight:700;color:var(--g900)}
+.spec-size{font-size:11px;color:var(--g400);margin-top:2px}
+.crop-area{position:relative;margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid var(--g200);touch-action:none;user-select:none;-webkit-user-select:none}
+.crop-area canvas{display:block;width:100%;height:auto}
+.guide-box{position:absolute;border:2px dashed rgba(255,255,255,0.7);pointer-events:none}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.range-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--g200);outline:none}
+.range-input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.range-val{min-width:40px;text-align:right;font-size:14px;font-weight:700;color:var(--primary)}
+.bg-row{display:flex;gap:8px;margin-bottom:16px}
+.bg-btn{width:36px;height:36px;border-radius:8px;cursor:pointer;border:2px solid var(--g200);transition:.2s}
+.bg-btn:hover,.bg-btn.active{border-color:var(--primary);transform:scale(1.1)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.result-area{display:none}
+.preview-wrap{text-align:center;margin-bottom:16px}
+.preview-img{max-height:300px;border-radius:10px;border:1px solid var(--g200)}
+.info-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid var(--g100)}
+.info-row .label{color:var(--g500)}
+.info-row .value{font-weight:700;color:var(--g900)}
+.download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
+.download-btn:hover{background:var(--primary-dark)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.spec-grid{grid-template-columns:1fr 1fr;gap:6px}.spec-btn{padding:10px 8px}.spec-name{font-size:12px}}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"증명사진 규격 맞추기","url":"https://modutools.com/image/","description":"증명사진 규격 편집 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"증명사진 규격별 표준 크기는 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"여권 3.5×4.5cm, 주민등록증 3×4cm, 운전면허증 3×4cm, 이력서 3×4cm, 미국 비자 5×5cm입니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/image/id-photo.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"증명사진 규격 맞추기","url":"https://modutools.com/image/id-photo.html","description":"여권, 이력서, 주민등록증 증명사진 규격에 맞게 편집하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
@@ -58,9 +80,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">증명사진 규격 맞추기</h1>
-<p class="page-sub">여권, 이력서, 주민등록증, 비자 등 증명사진 규격에 맞게 이미지 편집. 배경색 변경, 크기 조정. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-
+<p class="page-sub">여권, 이력서, 주민등록증 등 규격에 맞게 사진을 편집합니다</p>
 <div class="card">
 <div class="card-title">🪪 사진 업로드</div>
 <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
@@ -164,31 +184,138 @@
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"이 도구로 만든 사진을 공식 서류에 사용할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"본 도구는 이미지 크기와 비율을 규격에 맞게 조정해주지만, 공식 증명사진의 세부 요건을 자동으로 검증하지는 않습니다. 공식 서류에는 사진관 촬영을 권장합니다."}},{"@type":"Question","name":"여권 사진과 이력서 사진의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"여권 사진은 35×45mm로 이력서 사진(30×40mm)보다 크며 규정이 엄격합니다. 여권은 정면 무표정, 흰색 배경이 필수이고, 이력서는 자연스러운 미소면 충분합니다."}},{"@type":"Question","name":"배경색을 바꿀 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"현재 본 도구는 원본 배경을 유지하면서 크기만 조정합니다. 흰색이나 밝은 배경 앞에서 촬영한 원본 사진을 사용하는 것이 좋습니다."}}]}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-
-
-</div>
-<div class="faq-item"><div class="faq-q">배경색을 변경할 수 있나요?</div><div class="faq-a">네, 흰색, 회색, 파란색 등으로 변경 가능합니다.</div></div>
-<div class="faq-item"><div class="faq-q">해상도는 어떻게 설정해야 하나요?</div><div class="faq-a">300DPI 이상 권장, 여권사진은 최소 600×800px 이상이 적합합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 이미지가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 증명사진 규격 가이드</h2>
-<p>증명사진 규격 맞추기 도구는 Canvas API로 이미지를 각종 공식 증명사진 규격에 맞게 편집합니다. 배경색을 흰색, 회색, 파란색 등으로 변경하고 지정된 크기로 자동 크롭됩니다.</p>
-<p>여권사진은 3.5×4.5cm로 배경 흰색, 6개월 이내 촬영 사진이어야 합니다. 주민등록증과 운전면허증은 3×4cm, 미국 비자는 5×5cm 정사각형입니다.</p>
-<table><tr><th>용도</th><th>규격</th><th>배경색</th></tr><tr><td>여권</td><td>3.5×4.5cm</td><td>흰색</td></tr><tr><td>주민등록증</td><td>3×4cm</td><td>흰색</td></tr><tr><td>운전면허증</td><td>3×4cm</td><td>흰색</td></tr><tr><td>이력서</td><td>3×4cm</td><td>흰색/회색</td></tr><tr><td>미국 비자</td><td>5×5cm</td><td>흰색</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">증명사진 규격별 표준 크기는 어떻게 되나요?</div><div class="faq-a">여권 3.5×4.5cm, 주민등록증 3×4cm, 미국 비자 5×5cm입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Canvas image processing */})();
+(function(){
+var origImg=null,resultBlob=null;
+var specW=413,specH=531;
+var canvas=document.getElementById("editCanvas");
+var ctx=canvas.getContext("2d");
+
+document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
+document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
+document.getElementById("uploadZone").addEventListener("drop",function(e){e.preventDefault();if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);});
+
+function loadFile(file){
+  if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var img=new Image();
+    img.onload=function(){
+      origImg=img;
+      document.getElementById("posX").value=50;
+      document.getElementById("posY").value=50;
+      document.getElementById("zoom").value=100;
+      document.getElementById("editorArea").style.display="block";
+      document.getElementById("resultArea").style.display="none";
+      drawPreview();
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+window.setSpec=function(el){
+  var btns=document.querySelectorAll(".spec-btn");
+  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  el.classList.add("active");
+  specW=parseInt(el.dataset.w);
+  specH=parseInt(el.dataset.h);
+  if(origImg)drawPreview();
+};
+
+var posXEl=document.getElementById("posX");
+var posYEl=document.getElementById("posY");
+var zoomEl=document.getElementById("zoom");
+
+posXEl.addEventListener("input",function(){document.getElementById("posXVal").textContent=this.value;drawPreview();});
+posYEl.addEventListener("input",function(){document.getElementById("posYVal").textContent=this.value;drawPreview();});
+zoomEl.addEventListener("input",function(){document.getElementById("zoomVal").textContent=this.value+"%";drawPreview();});
+
+function drawPreview(){
+  if(!origImg)return;
+  var ratio=specW/specH;
+  var displayW=Math.min(300,specW);
+  var displayH=displayW/ratio;
+  canvas.width=displayW;canvas.height=displayH;
+  ctx.fillStyle="#FFFFFF";
+  ctx.fillRect(0,0,displayW,displayH);
+
+  var zoom=parseInt(zoomEl.value)/100;
+  var px=parseInt(posXEl.value)/100;
+  var py=parseInt(posYEl.value)/100;
+
+  var imgRatio=origImg.width/origImg.height;
+  var drawW,drawH;
+  if(imgRatio>ratio){
+    drawH=displayH*zoom;
+    drawW=drawH*imgRatio;
+  }else{
+    drawW=displayW*zoom;
+    drawH=drawW/imgRatio;
+  }
+  var ox=(displayW-drawW)*px;
+  var oy=(displayH-drawH)*py;
+  ctx.drawImage(origImg,ox,oy,drawW,drawH);
+}
+
+window.doExport=function(){
+  if(!origImg){alert("사진을 먼저 업로드해주세요.");return;}
+  var outCanvas=document.createElement("canvas");
+  outCanvas.width=specW;outCanvas.height=specH;
+  var outCtx=outCanvas.getContext("2d");
+  outCtx.fillStyle="#FFFFFF";
+  outCtx.fillRect(0,0,specW,specH);
+
+  var ratio=specW/specH;
+  var zoom=parseInt(zoomEl.value)/100;
+  var px=parseInt(posXEl.value)/100;
+  var py=parseInt(posYEl.value)/100;
+  var imgRatio=origImg.width/origImg.height;
+
+  var drawW,drawH;
+  if(imgRatio>ratio){
+    drawH=specH*zoom;
+    drawW=drawH*imgRatio;
+  }else{
+    drawW=specW*zoom;
+    drawH=drawW/imgRatio;
+  }
+  var ox=(specW-drawW)*px;
+  var oy=(specH-drawH)*py;
+  outCtx.drawImage(origImg,ox,oy,drawW,drawH);
+
+  outCanvas.toBlob(function(blob){
+    resultBlob=blob;
+    document.getElementById("previewImg").src=URL.createObjectURL(blob);
+    document.getElementById("infoSpec").textContent=specW+" x "+specH+" px";
+    document.getElementById("infoSize").textContent=(blob.size/1024).toFixed(1)+" KB";
+    document.getElementById("resultArea").style.display="block";
+    document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+  },"image/jpeg",0.95);
+};
+
+window.downloadResult=function(){
+  if(!resultBlob)return;
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(resultBlob);
+  a.download="id_photo_"+specW+"x"+specH+".jpg";
+  a.click();
+};
 })();
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

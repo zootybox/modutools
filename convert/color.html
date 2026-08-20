@@ -4,53 +4,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>색상 코드 변환 - HEX RGB HSL 상호 변환 | modutools</title>
-<meta name="description" content="HEX, RGB, HSL 색상 코드를 상호 변환. 색상 미리보기, 복사 기능 지원.">
+<meta name="description" content="HEX, RGB, HSL 색상 코드를 상호 변환합니다. 색상 미리보기, 복사 기능 지원. 웹 디자인, CSS 작업에 유용합니다.">
+<link rel="canonical" href="https://modutools.com/convert/color.html">
 <meta property="og:title" content="색상 코드 변환 - HEX RGB HSL 상호 변환 | modutools">
-<meta property="og:description" content="HEX, RGB, HSL 색상 코드를 상호 변환. 색상 미리보기, 복사 기능 지원.">
+<meta property="og:description" content="HEX, RGB, HSL 색상 코드를 상호 변환합니다. 색상 미리보기, 복사 기능 지원. 웹 디자인, CSS 작업에 유용합니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/convert/color.html">
-<link rel="canonical" href="https://modutools.com/convert/color.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.color-preview{width:100%;height:120px;border-radius:10px;border:1px solid var(--g200);margin-bottom:16px;transition:background .2s}
+.picker-row{display:flex;gap:12px;align-items:center;margin-bottom:16px}
+.color-picker{width:60px;height:60px;border:none;border-radius:10px;cursor:pointer;padding:0;background:none}
+.color-picker::-webkit-color-swatch-wrapper{padding:0}
+.color-picker::-webkit-color-swatch{border-radius:10px;border:2px solid var(--g200)}
+.picker-label{font-size:13px;color:var(--g500)}
+.code-group{margin-bottom:12px}
+.code-label{font-size:12px;font-weight:600;color:var(--g400);margin-bottom:4px}
+.code-row{display:flex;gap:6px;align-items:center}
+.code-input{flex:1;border:1.5px solid var(--g200);border-radius:8px;padding:10px 12px;font-size:15px;font-family:'Courier New',monospace;outline:none;transition:.2s}
+.code-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.copy-btn{padding:10px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s;white-space:nowrap}
+.copy-btn:hover{border-color:var(--primary);color:var(--primary)}
+.rgb-sliders{margin-top:16px}
+.slider-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.slider-label{width:20px;font-size:13px;font-weight:700;text-align:center}
+.slider-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;outline:none}
+.slider-input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--g300);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.slider-val{width:40px;text-align:right;font-size:13px;font-weight:600;color:var(--g700)}
+.palette-title{font-size:13px;font-weight:600;color:var(--g400);margin:16px 0 8px}
+.palette-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.palette-item{aspect-ratio:1;border-radius:8px;cursor:pointer;border:2px solid transparent;transition:.2s}
+.palette-item:hover{border-color:var(--g900);transform:scale(1.1)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:480px){.color-preview{height:80px}.palette-grid{grid-template-columns:repeat(6,1fr);gap:4px}}
+.mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--g700);margin-bottom:10px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:#fff;border:1px solid var(--g200);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:14px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"색상 코드 변환","url":"https://modutools.com/convert/","description":"HEX/RGB/HSL 색상 변환 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"색상 코드 변환","url":"https://modutools.com/convert/color.html","description":"HEX, RGB, HSL 색상 코드를 상호 변환하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"HEX와 RGB의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"HEX는 16진수 6자리(#FF0000)로 표현하고, RGB는 0~255 숫자 3개(255,0,0)로 표현합니다. 같은 색상을 다른 형식으로 표기한 것입니다."}}
+{"@type":"Question","name":"색상 코드 변환기는 어떤 형식을 지원하나요?","acceptedAnswer":{"@type":"Answer","text":"HEX(#FF5733), RGB(rgb(255,87,51)), HSL(hsl(11,100%,60%)) 형식 간 상호 변환을 지원합니다."}},
+{"@type":"Question","name":"HEX 코드란 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"HEX는 16진수로 색상을 표현하는 방식으로, 웹 디자인에서 가장 많이 사용됩니다. #기호 뒤에 6자리 숫자·영문으로 구성됩니다."}},
+{"@type":"Question","name":"디자인 작업에 어떻게 활용하나요?","acceptedAnswer":{"@type":"Answer","text":"Figma·Photoshop에서 사용하는 HEX 코드를 CSS의 RGB로 변환하거나, 색상 팔레트를 다른 형식으로 통일할 때 유용합니다."}},
+{"@type":"Question","name":"투명도(Alpha) 값도 변환되나요?","acceptedAnswer":{"@type":"Answer","text":"RGBA, HSLA 형식의 투명도 값도 지원합니다. 투명도를 포함한 색상 코드를 상호 변환할 수 있습니다."}}
 ]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/convert/color.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 </head>
 <body>
@@ -58,9 +95,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">색상 코드 변환</h1>
-<p class="page-sub">HEX, RGB, HSL 색상 코드를 상호 변환. 색상 미리보기, 복사 기능 지원. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-
+<p class="page-sub">HEX, RGB, HSL 색상 코드를 상호 변환합니다</p>
 <div class="card">
 <div class="card-title">🎨 색상 선택</div>
 <div class="color-preview" id="colorPreview" style="background:#2563EB"></div>
@@ -115,28 +150,139 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
-
-
-</div>
-<div class="faq-item"><div class="faq-q">HSL이 직관적인 이유는 무엇인가요?</div><div class="faq-a">색조(Hue)로 색상 종류를, 채도(Saturation)로 선명도를, 명도(Lightness)로 밝기를 각각 조절할 수 있어 직관적입니다.</div></div>
-<div class="faq-item"><div class="faq-q">웹 접근성 대비비는 어떻게 확인하나요?</div><div class="faq-a">텍스트와 배경색의 명도 차이를 계산하여 WCAG 기준 충족 여부를 확인할 수 있습니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 색상 코드 변환 가이드</h2>
-<p>HEX, RGB, HSL은 색상을 표현하는 세 가지 주요 방식입니다. HEX는 웹 디자인에서 가장 널리 사용되며, RGB는 디지털 기기 화면 표준입니다. HSL(색조, 채도, 명도)은 직관적인 색상 조정에 유용합니다.</p>
-<p>웹 접근성(WCAG 2.1)을 준수하려면 텍스트와 배경색 간의 대비비가 4.5:1 이상(일반 텍스트) 또는 3:1 이상(큰 텍스트)이어야 합니다. 본 도구로 대비비를 확인할 수 있습니다.</p>
-<table><tr><th>표기법</th><th>예시</th><th>범위</th><th>용도</th></tr><tr><td>HEX</td><td>#FF5733</td><td>000000~FFFFFF</td><td>웹 CSS</td></tr><tr><td>RGB</td><td>rgb(255,87,51)</td><td>0~255</td><td>디지털 화면</td></tr><tr><td>HSL</td><td>hsl(9,100%,60%)</td><td>0~360°, 0~100%</td><td>색상 조정</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">HEX와 RGB의 차이는 무엇인가요?</div><div class="faq-a">같은 색상을 다른 형식으로 표현한 것입니다. HEX는 16진수, RGB는 0~255 숫자입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Convert processing */})();
+(function(){
+var PALETTE=["#EF4444","#F97316","#EAB308","#22C55E","#14B8A6","#3B82F6","#6366F1","#A855F7","#EC4899","#F43F5E","#000000","#374151","#6B7280","#9CA3AF","#D1D5DB","#FFFFFF","#1E40AF","#047857","#B91C1C","#92400E","#4C1D95","#831843","#FEF3C7","#DBEAFE","#D1FAE5","#FCE7F3","#EDE9FE","#FEE2E2","#CCFBF1","#FFF7ED"];
+
+var preview=document.getElementById("colorPreview");
+var picker=document.getElementById("colorPicker");
+var hexIn=document.getElementById("hexInput");
+var rgbIn=document.getElementById("rgbInput");
+var hslIn=document.getElementById("hslInput");
+var rS=document.getElementById("rSlider");
+var gS=document.getElementById("gSlider");
+var bS=document.getElementById("bSlider");
+
+function updateFromRGB(r,g,b){
+  var hex="#"+pad(r)+pad(g)+pad(b);
+  var hsl=rgbToHsl(r,g,b);
+  preview.style.background=hex;
+  picker.value=hex;
+  hexIn.value=hex.toUpperCase();
+  rgbIn.value="rgb("+r+", "+g+", "+b+")";
+  hslIn.value="hsl("+hsl[0]+", "+hsl[1]+"%, "+hsl[2]+"%)";
+  rS.value=r;gS.value=g;bS.value=b;
+  document.getElementById("rVal").textContent=r;
+  document.getElementById("gVal").textContent=g;
+  document.getElementById("bVal").textContent=b;
+}
+
+function pad(n){var s=n.toString(16);return s.length<2?"0"+s:s;}
+
+function rgbToHsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  var max=Math.max(r,g,b),min=Math.min(r,g,b);
+  var h=0,s=0,l=(max+min)/2;
+  if(max!==min){
+    var d=max-min;
+    s=l>0.5?d/(2-max-min):d/(max+min);
+    if(max===r)h=((g-b)/d+(g<b?6:0))/6;
+    else if(max===g)h=((b-r)/d+2)/6;
+    else h=((r-g)/d+4)/6;
+  }
+  return[Math.round(h*360),Math.round(s*100),Math.round(l*100)];
+}
+
+function hslToRgb(h,s,l){
+  h/=360;s/=100;l/=100;
+  var r,g,b;
+  if(s===0){r=g=b=l;}
+  else{
+    var q=l<0.5?l*(1+s):l+s-l*s;
+    var p=2*l-q;
+    r=hue2rgb(p,q,h+1/3);
+    g=hue2rgb(p,q,h);
+    b=hue2rgb(p,q,h-1/3);
+  }
+  return[Math.round(r*255),Math.round(g*255),Math.round(b*255)];
+}
+
+function hue2rgb(p,q,t){
+  if(t<0)t+=1;if(t>1)t-=1;
+  if(t<1/6)return p+(q-p)*6*t;
+  if(t<1/2)return q;
+  if(t<2/3)return p+(q-p)*(2/3-t)*6;
+  return p;
+}
+
+picker.addEventListener("input",function(){
+  var hex=this.value;
+  var r=parseInt(hex.substr(1,2),16);
+  var g=parseInt(hex.substr(3,2),16);
+  var b=parseInt(hex.substr(5,2),16);
+  updateFromRGB(r,g,b);
+});
+
+hexIn.addEventListener("change",function(){
+  var v=this.value.replace(/[^0-9a-fA-F#]/g,"");
+  if(v.charAt(0)!=="#")v="#"+v;
+  if(v.length===4)v="#"+v[1]+v[1]+v[2]+v[2]+v[3]+v[3];
+  if(v.length===7){
+    var r=parseInt(v.substr(1,2),16);
+    var g=parseInt(v.substr(3,2),16);
+    var b=parseInt(v.substr(5,2),16);
+    if(!isNaN(r)&&!isNaN(g)&&!isNaN(b))updateFromRGB(r,g,b);
+  }
+});
+
+rgbIn.addEventListener("change",function(){
+  var m=this.value.match(/(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  if(m)updateFromRGB(parseInt(m[1]),parseInt(m[2]),parseInt(m[3]));
+});
+
+hslIn.addEventListener("change",function(){
+  var m=this.value.match(/(\d+)\s*,\s*(\d+)%?\s*,\s*(\d+)%?/);
+  if(m){
+    var rgb=hslToRgb(parseInt(m[1]),parseInt(m[2]),parseInt(m[3]));
+    updateFromRGB(rgb[0],rgb[1],rgb[2]);
+  }
+});
+
+rS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+gS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+bS.addEventListener("input",function(){updateFromRGB(parseInt(rS.value),parseInt(gS.value),parseInt(bS.value));});
+
+var palEl=document.getElementById("palette");
+var palHTML="";
+for(var i=0;i<PALETTE.length;i++){
+  palHTML+='<div class="palette-item" style="background:'+PALETTE[i]+'" data-color="'+PALETTE[i]+'"></div>';
+}
+palEl.innerHTML=palHTML;
+palEl.addEventListener("click",function(e){
+  var item=e.target.closest(".palette-item");
+  if(!item)return;
+  var hex=item.dataset.color;
+  var r=parseInt(hex.substr(1,2),16);
+  var g=parseInt(hex.substr(3,2),16);
+  var b=parseInt(hex.substr(5,2),16);
+  updateFromRGB(r,g,b);
+});
+
+window.copyCode=function(id){
+  var val=document.getElementById(id).value;
+  navigator.clipboard.writeText(val).then(function(){
+    var t=document.getElementById("toast");
+    t.textContent=val+" 복사됨";
+    t.classList.add("show");
+    setTimeout(function(){t.classList.remove("show");},2000);
+  });
+};
 })();
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
-<div class="toast" id="toast"></div>
 </body>
 </html>

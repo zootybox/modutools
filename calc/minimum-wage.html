@@ -3,57 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>최저시급 월급 계산기 - 2026년 최저임금 | modutools</title>
-<meta name="description" content="2026년 최저시급 기준 일급, 월급, 연봉, 주휴수당 포함 금액 계산.">
-<meta property="og:title" content="최저시급 월급 계산기 - 2026년 최저임금 | modutools">
-<meta property="og:description" content="2026년 최저시급 기준 일급, 월급, 연봉, 주휴수당 포함 금액 계산.">
+<title>최저시급 월급 계산기 - 2026년 최저임금 기준 | modutools</title>
+<meta name="description" content="2026년 최저시급 기준으로 주휴수당 포함 월급, 연봉, 실수령액을 계산합니다. 근무시간 설정 가능.">
+<link rel="canonical" href="https://modutools.com/calc/minimum-wage.html">
+<meta property="og:title" content="최저시급 월급 계산기 - 2026년 최저임금 기준 | modutools">
+<meta property="og:description" content="2026년 최저시급 기준으로 주휴수당 포함 월급, 연봉, 실수령액을 계산합니다. 근무시간 설정 가능.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/minimum-wage.html">
-<link rel="canonical" href="https://modutools.com/calc/minimum-wage.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:14px;text-align:center}
+.stat-box.highlight{background:var(--primary-light);border-color:var(--primary)}
+.stat-value{font-size:20px;font-weight:800;color:var(--primary)}
+.stat-label{font-size:11px;color:var(--g500);margin-top:2px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.info-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;margin-top:12px;font-size:13px;line-height:1.7;color:var(--g700)}
+.info-box strong{color:var(--primary)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.stat-value{font-size:17px}.stats-grid{gap:6px}}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"최저시급 월급 계산기","url":"https://modutools.com/calc/","description":"2026년 최저시급 기준 월급 계산 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"2026년 최저시급은 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"2026년 최저시급은 시간당 10,030원입니다. 주 40시간 기준 월급은 약 209만 원(주휴수당 포함)입니다."}},
-{"@type":"Question","name":"주휴수당은 어떻게 계산되나요?","acceptedAnswer":{"@type":"Answer","text":"주 15시간 이상 근무하는 근로자에게 1주일에 1회 이상의 유급 주휴일이 주어집니다. 주휴수당은 1일 소정근로시간 × 시급으로 계산됩니다."}},
-{"@type":"Question","name":"5인 미만 사업장도 최저시급이 적용되나요?","acceptedAnswer":{"@type":"Answer","text":"네, 5인 미만 사업장도 최저시급이 동일하게 적용됩니다. 다만 연장근로 가산수당(1.5배)은 5인 이상 사업장에만 적용됩니다."}},
-{"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어집니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/calc/minimum-wage.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"최저시급 월급 계산기","url":"https://modutools.com/calc/minimum-wage.html","description":"2026년 최저시급 기준 월급, 연봉, 실수령액을 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
@@ -61,9 +70,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">최저시급 월급 계산기</h1>
-<p class="page-sub">2026년 최저시급 기준 일급, 월급, 연봉, 주휴수당 포함 금액 계산.</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-
+<p class="page-sub">2026년 최저시급 기준으로 주휴수당 포함 월급을 계산합니다</p>
 <div class="card">
 <div class="card-title">⏰ 근무 조건 입력</div>
 <div class="input-group">
@@ -133,27 +140,8 @@
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-
-
-</div>
-<div class="faq-item"><div class="faq-q">주휴수당은 어떻게 계산되나요?</div><div class="faq-a">주 15시간 이상 근무하는 근로자에게 1주일에 1회 이상의 유급 주휴일이 주어집니다.</div></div>
-<div class="faq-item"><div class="faq-q">5인 미만 사업장도 최저시급이 적용되나요?</div><div class="faq-a">네, 5인 미만 사업장도 최저시급이 동일하게 적용됩니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 최저시급 월급 계산 가이드</h2>
-<p>2026년 최저시급 기준 월급 계산기는 시간당 임금을 기준으로 일급, 주급, 월급, 연봉을 환산합니다. 주휴수당 포함 여부와 근무 시간을 설정할 수 있습니다.</p>
-<p>주휴수당은 1주일에 15시간 이상 근무하는 근로자에게 1일분의 유급 휴일을 보장하는 제도입니다. 주 40시간 근무 기준 월 209시간으로 계산됩니다.</p>
-<p>5인 미만 사업장에도 최저시급은 동일하게 적용되며, 위반 시 3년 이하의 징역 또는 2천만 원 이하의 벌금이 부과될 수 있습니다.</p>
-<table><tr><th>구분</th><th>금액</th></tr><tr><td>2026년 최저시급</td><td>10,030원</td></tr><tr><td>일급(8시간)</td><td>80,240원</td></tr><tr><td>월급(40시간, 주휴 포함)</td><td>약 2,096,270원</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">2026년 최저시급은 얼마인가요?</div><div class="faq-a">2026년 최저시급은 시간당 10,030원입니다. 주 40시간 기준 월급은 약 209만 원입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){var includeWeekly="yes";
+var includeWeekly="yes";
 
 document.querySelectorAll(".comma-input").forEach(function(el){
   el.addEventListener("input",function(){
@@ -213,8 +201,12 @@ function calculate(){
   document.getElementById("detailList").innerHTML=html;
   document.getElementById("resultArea").style.display="block";
   document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-}})();
-})();
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

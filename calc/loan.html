@@ -3,66 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>대출이자 계산기 - 원리금균등 원금균등 만기일시 | modutools</title>
-<meta name="description" content="대출 상환 방식별 월 납입금과 총 이자를 비교. 원리금균등, 원금균등, 만기일시 상환 방식 지원.">
-<meta property="og:title" content="대출이자 계산기 - 원리금균등 원금균등 만기일시 | modutools">
-<meta property="og:description" content="대출 상환 방식별 월 납입금과 총 이자를 비교. 원리금균등, 원금균등, 만기일시 상환 방식 지원.">
+<title>대출이자 계산기 - 원리금균등·원금균등·만기일시 | modutools</title>
+<meta name="description" content="대출 원금, 금리, 기간을 입력하면 원리금균등·원금균등·만기일시 상환 방식별 월 납입금과 총 이자를 즉시 계산합니다.">
+<meta property="og:title" content="대출이자 계산기 - 상환 방식별 이자 비교 | modutools">
+<meta property="og:description" content="대출 원금·금리·기간 입력만으로 상환 방식별 월 납입금과 총 이자를 즉시 비교.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/loan.html">
 <link rel="canonical" href="https://modutools.com/calc/loan.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+
+.toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.toggle-btn:hover:not(.active){border-color:var(--g300)}
+
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+
+/* Result */
+.result-area{display:none}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center}
+.stat-box.highlight{background:var(--primary-light);border-color:var(--primary)}
+.stat-value{font-size:20px;font-weight:800;color:var(--primary);margin-bottom:2px}
+.stat-label{font-size:12px;color:var(--g500);font-weight:600}
+
+/* Compare */
+.compare-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.compare-card{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px}
+.compare-card.active{background:var(--primary-light);border-color:var(--primary)}
+.compare-title{font-size:14px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.compare-row{display:flex;justify-content:space-between;padding:4px 0;font-size:13px}
+.compare-row .label{color:var(--g500)}
+.compare-row .value{font-weight:700;color:var(--g900)}
+
+/* Table */
+.table-wrap{overflow-x:auto;margin-top:12px;border:1px solid var(--g200);border-radius:10px}
+.schedule-table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px}
+.schedule-table th{background:var(--g100);padding:10px 8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
+.schedule-table td{padding:8px;text-align:right;border-bottom:1px solid var(--g100);color:var(--g700)}
+.schedule-table td:first-child{text-align:center;color:var(--g500)}
+.schedule-table tr:last-child td{border-bottom:none}
+.table-toggle{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;cursor:pointer;font-size:13px;font-weight:600;color:var(--primary);background:none;border:1px solid var(--g200);border-radius:10px;width:100%;font-family:inherit;transition:.2s;margin-top:12px}
+.table-toggle:hover{background:var(--primary-light)}
+
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .stat-value{font-size:17px}
+  .toggle-row{flex-wrap:wrap}
+  .toggle-btn{min-width:calc(50% - 4px)}
+}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"대출이자 계산기","url":"https://modutools.com/calc/","description":"대출 원금, 금리, 기간별 상환 방식 비교 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"원리금균등과 원금균등의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"원리금균등은 매월 같은 금액을 납입하며 초기엔 이자 비중이 높고 후기엔 원금 비중이 높아집니다. 원금균등은 매월 같은 원금을 납입하여 총 이자가 적지만 초기 부담이 큽니다."}},
-{"@type":"Question","name":"중도상환수수료는 얼마인가요?","acceptedAnswer":{"@type":"Answer","text":"일반적으로 중도상환액의 1.2~1.4%이며, 은행별로 상이합니다. 3년 경과 후에는 면제되는 경우가 많습니다."}},
-{"@type":"Question","name":"금리 변동 위험은 어떻게 대비해야 하나요?","acceptedAnswer":{"@type":"Answer","text":"변동금리 대출은 금리 상승 시 이자 부담이 증가할 수 있습니다. 안정성을 원한다면 고정금리나 혼합형(고정→변동)을 선택하는 것이 좋습니다."}},
-{"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/calc/loan.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{
+  "@context":"https://schema.org",
+  "@type":"WebApplication",
+  "name":"대출이자 계산기",
+  "url":"https://modutools.com/calc/loan.html",
+  "description":"원리금균등·원금균등·만기일시 상환 방식별 월 납입금과 총 이자를 계산하는 무료 온라인 도구",
+  "applicationCategory":"FinanceApplication",
+  "operatingSystem":"All",
+  "offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}
+}
+
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
+
+<header class="mt-header">
+<div class="mt-header-inner">
+<a href="/" class="mt-logo">modu<span>tools</span></a>
+<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
+</div>
+</header>
+
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
 <main class="page">
 <h1 class="page-title">대출이자 계산기</h1>
-<p class="page-sub">대출 상환 방식별 월 납입금과 총 이자를 비교. 원리금균등, 원금균등, 만기일시 상환 방식 지원.</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
+<p class="page-sub">대출 조건을 입력하면 상환 방식별 월 납입금과 총 이자를 비교합니다</p>
 
 <!-- 입력 -->
 <div class="card">
@@ -202,27 +251,8 @@
 </p>
 </footer>
 
-
-</div>
-<div class="faq-item"><div class="faq-q">중도상환수수료는 얼마인가요?</div><div class="faq-a">일반적으로 중도상환액의 1.2~1.4%이며, 은행별로 상이합니다. 3년 경과 후에는 면제되는 경우가 많습니다.</div></div>
-<div class="faq-item"><div class="faq-q">금리 변동 위험은 어떻게 대비해야 하나요?</div><div class="faq-a">변동금리 대출은 금리 상승 시 이자 부담이 증가할 수 있습니다. 안정성을 원한다면 고정금리나 혼합형을 선택하는 것이 좋습니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어지며, 입력한 금액이 서버로 전송되지 않습니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 대출이자 계산 가이드</h2>
-<p>대출이자 계산기는 원금, 금리, 상환 기간을 입력하면 원리금균등·원금균등·만기일시 세 가지 상환 방식별로 월 납입금과 총 이자를 비교해줍니다. 주택담보대출, 신용대출, 자동차 할부 등 다양한 대출 상품의 조건을 비교할 때 유용합니다.</p>
-<p>원리금균등 상환은 매월 동일한 금액을 납입하므로 자금 계획이 쉬우나 총 이자 부담이 원금균등보다 높습니다. 원금균등 상환은 매월 납입하는 원금이 일정하여 총 이자가 가장 적지만, 초기 월 납입액이 높은 단점이 있습니다.</p>
-<p>만기일시 상환은 매월 이자만 납입하고 만기에 원금 전액을 상환하는 방식으로, 초기 부담이 가장 적습니다. 그러나 만기에 큰 금액이 필요하므로 목돈 마련 계획이 필요합니다.</p>
-<table><tr><th>상환 방식</th><th>월 납입액</th><th>총 이자</th><th>초기 부담</th></tr><tr><td>원리금균등</td><td>일정</td><td>중간</td><td>낮음</td></tr><tr><td>원금균등</td><td>감소</td><td>가장 적음</td><td>높음</td></tr><tr><td>만기일시</td><td>이자만</td><td>가장 높음</td><td>가장 낮음</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">원리금균등과 원금균등의 차이는 무엇인가요?</div><div class="faq-a">원리금균등은 매월 같은 금액을 납입하며 초기엔 이자 비중이 높고 후기엔 원금 비중이 높아집니다. 원금균등은 매월 같은 원금을 납입하여 총 이자가 적지만 초기 부담이 큽니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){let currentUnit='year';
+let currentUnit='year';
 let currentType='equal_payment';
 
 function setUnit(el){
@@ -368,9 +398,12 @@ function toggleTable(){
     wrap.style.display='none';
     btn.textContent='📋 상환 스케줄 펼치기';
   }
-}})();
-})();})();
-})();
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

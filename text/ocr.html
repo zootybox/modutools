@@ -11,7 +11,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/text/ocr.html">
 <link rel="stylesheet" href="/css/common.css">
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js">
+</script>
 <style>
 /* ── Layout ── */
 .page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
@@ -118,6 +119,7 @@
 }
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 텍스트 추출 (OCR)","url":"https://modutools.com/text/ocr.html","description":"이미지 속 글자를 텍스트로 추출하는 무료 온라인 OCR 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
@@ -250,6 +252,11 @@ document.getElementById("resetBtn").addEventListener("click",function(){r=null;i
 document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
 function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 })();
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 </body>
 </html>

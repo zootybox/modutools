@@ -3,57 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>퇴직금 계산기 - 근로기준법 기준 퇴직금 | modutools</title>
-<meta name="description" content="근로기준법상 법정 퇴직금 계산. 1일 평균임금, 근속연수 기준 퇴직금 산정.">
-<meta property="og:title" content="퇴직금 계산기 - 근로기준법 기준 퇴직금 | modutools">
-<meta property="og:description" content="근로기준법상 법정 퇴직금 계산. 1일 평균임금, 근속연수 기준 퇴직금 산정.">
+<title>퇴직금 계산기 - 근속연수 기준 퇴직금 계산 | modutools</title>
+<meta name="description" content="입사일, 퇴사일, 월 평균임금을 입력하면 퇴직금을 자동 계산합니다. 근로기준법 기준, 세전·세후 금액 모두 표시.">
+<link rel="canonical" href="https://modutools.com/calc/severance.html">
+<meta property="og:title" content="퇴직금 계산기 - 근속연수 기준 퇴직금 계산 | modutools">
+<meta property="og:description" content="입사일, 퇴사일, 월 평균임금을 입력하면 퇴직금을 자동 계산합니다. 근로기준법 기준, 세전·세후 금액 모두 표시.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/severance.html">
-<link rel="canonical" href="https://modutools.com/calc/severance.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:32px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
+.detail-row.total .value{color:var(--primary)}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:26px}}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"퇴직금 계산기","url":"https://modutools.com/calc/","description":"법정 퇴직금 계산 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"퇴직금 계산 공식은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)입니다. 1일 평균임금은 퇴직일 이전 3개월 총 임금을 총 일수로 나눈 금액입니다."}},
-{"@type":"Question","name":"평균임금에 포함되는 항목은 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"기본급, 각종 수당, 상여금(월할 계산), 연차수당, 주휴수당 등이 포함됩니다. 경조사 휴가 수당 등 일시적 지급액은 제외될 수 있습니다."}},
-{"@type":"Question","name":"퇴직금은 언제 지급받을 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생할 수 있습니다."}},
-{"@type":"Question","name":"입력한 금액이 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 모든 계산은 브라우저에서만 이루어집니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/calc/severance.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"퇴직금 계산기","url":"https://modutools.com/calc/severance.html","description":"입사일, 퇴사일, 평균임금으로 퇴직금을 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
@@ -61,9 +65,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">퇴직금 계산기</h1>
-<p class="page-sub">근로기준법상 법정 퇴직금 계산. 1일 평균임금, 근속연수 기준 퇴직금 산정.</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-
+<p class="page-sub">입사일, 퇴사일, 평균임금을 입력하면 퇴직금을 계산합니다</p>
 <div class="card">
 <div class="card-title">📦 근무 정보 입력</div>
 <div class="input-group">
@@ -124,27 +126,8 @@
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-
-
-</div>
-<div class="faq-item"><div class="faq-q">평균임금에 포함되는 항목은 무엇인가요?</div><div class="faq-a">기본급, 각종 수당, 상여금, 연차수당, 주휴수당 등이 포함됩니다.</div></div>
-<div class="faq-item"><div class="faq-q">퇴직금은 언제 지급받을 수 있나요?</div><div class="faq-a">퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생합니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 금액이 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 계산은 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 퇴직금 계산 가이드</h2>
-<p>퇴직금 계산기는 근로기준법에 따라 1년 이상 근속한 근로자의 법정 퇴직금을 계산합니다. 퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)로 산정됩니다.</p>
-<p>1일 평균임금은 퇴직일 이전 3개월 동안의 총 임금을 총 일수로 나누어 계산합니다. 포함되는 임금에는 기본급, 각종 수당, 상여금(월할 환산), 연차수당 등이 포함됩니다.</p>
-<p>2026년 기준 퇴직금은 근로자 퇴직급여 보장법에 따라 지급되며, 퇴직일로부터 14일 이내에 지급되어야 합니다. 지연 시 연 20%의 지연 이자가 발생할 수 있습니다.</p>
-<table><tr><th>항목</th><th>산정 기준</th></tr><tr><td>1일 평균임금</td><td>퇴직 전 3개월 임금 ÷ 3개월 총 일수</td></tr><tr><td>퇴직금</td><td>1일 평균임금 × 30일 × 근속연수 ÷ 365</td></tr><tr><td>지급 기한</td><td>퇴직일로부터 14일 이내</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">퇴직금 계산 공식은 어떻게 되나요?</div><div class="faq-a">퇴직금 = 1일 평균임금 × 30일 × (근속연수 ÷ 365)입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){document.querySelectorAll("#avgSalary,#bonus,#annualPay").forEach(function(el){
+document.querySelectorAll("#avgSalary,#bonus,#annualPay").forEach(function(el){
   el.addEventListener("input",function(){
     var v=this.value.replace(/[^\d]/g,"");
     this.value=v?parseInt(v).toLocaleString():"";
@@ -202,8 +185,12 @@ function calculate(){
   document.getElementById("detailList").innerHTML=html;
   document.getElementById("resultArea").style.display="block";
   document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
-}})();
-})();
+}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>

@@ -4,53 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>전기요금 계산기 - 주택용 전기요금 계산 | modutools</title>
-<meta name="description" content="월 사용량(kWh) 입력하면 주택용 전기요금 즉시 계산. 누진세 구간별 요금, 부가세 포함.">
+<meta name="description" content="월 사용량(kWh)을 입력하면 주택용 전기요금을 즉시 계산합니다. 누진세 구간별 요금, 부가세, 전력기금 포함.">
+<link rel="canonical" href="https://modutools.com/life/electric.html">
 <meta property="og:title" content="전기요금 계산기 - 주택용 전기요금 계산 | modutools">
-<meta property="og:description" content="월 사용량(kWh) 입력하면 주택용 전기요금 즉시 계산. 누진세 구간별 요금, 부가세 포함.">
+<meta property="og:description" content="월 사용량(kWh)을 입력하면 주택용 전기요금을 즉시 계산합니다. 누진세 구간별 요금, 부가세, 전력기금 포함.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/life/electric.html">
-<link rel="canonical" href="https://modutools.com/life/electric.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
+.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
+.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 .card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.input-group{margin-bottom:16px}
+.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
+.input-row{display:flex;gap:8px;align-items:center}
+.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
+.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
+.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
+.calc-btn:hover{background:var(--primary-dark)}
+.calc-btn:active{transform:scale(.98)}
+.result-area{display:none}
+.result-big{text-align:center;padding:16px 0}
+.result-number{font-size:36px;font-weight:800;color:var(--primary)}
+.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+.detail-list{margin-top:12px}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
+.detail-row:last-child{border-bottom:none}
+.detail-row .label{color:var(--g500)}
+.detail-row .value{font-weight:700;color:var(--g900)}
+.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
+.detail-row.total .value{color:var(--primary)}
+.tier-bar{margin-top:16px}
+.tier-item{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px}
+.tier-fill{height:8px;border-radius:4px;transition:.3s}
+.tier-label{min-width:80px;color:var(--g500)}
+.tier-value{color:var(--g700);font-weight:600;min-width:70px;text-align:right}
+.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
+@media(max-width:480px){.result-number{font-size:28px}}
+
 .security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
 .security-badge span{font-size:14px}
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.mt-ad,.ad-slot,.ad-slot-middle{display:none}
 .guide-section{margin-top:24px}
 .guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
 .guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
-.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
-.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 .faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
 .faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:'\25bc';font-size:10px;color:var(--g400);transition:transform .25s}
+.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
 .faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13px;color:var(--g600);line-height:1.8}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
 .faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-@media(max-width:480px){.page-title{font-size:22px}}
 
-.mt-ad{display:none}
 </style>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"전기요금 계산기","url":"https://modutools.com/","description":"전기요금 계산 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"주택용 전기요금 누진세 구간은 어떻게 되나요?","acceptedAnswer":{"@type":"Answer","text":"1단계 200kWh 이하, 2단계 201~400kWh, 3단계 400kWh 초과입니다."}}
-]}
-</script>
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"modutools","url":"https://modutools.com/life/electric.html","description":"무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+{"@context":"https://schema.org","@type":"WebApplication","name":"전기요금 계산기","url":"https://modutools.com/life/electric.html","description":"월 사용량으로 주택용 전기요금을 계산하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+
 </script>
 </head>
 <body>
@@ -58,9 +71,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <main class="page">
 <h1 class="page-title">전기요금 계산기</h1>
-<p class="page-sub">월 사용량(kWh) 입력하면 주택용 전기요금 즉시 계산. 누진세 구간별 요금, 부가세 포함. · 100% 브라우저 로컬 처리</p>
-<div class="security-badge"><span>🔒</span> 서버 전송 없음 · 100% 브라우저 로컬 처리</div>
-
+<p class="page-sub">월 사용량을 입력하면 주택용 전기요금을 계산합니다</p>
 <div class="card">
 <div class="card-title">💡 사용량 입력</div>
 <div class="input-group">
@@ -108,27 +119,74 @@
 </main>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-
-
-</div>
-<div class="faq-item"><div class="faq-q">여름철 전기요금이 더 비싼 이유는 무엇인가요?</div><div class="faq-a">에어컨 사용으로 3단계 진입 가구가 많아지기 때문입니다.</div></div>
-<div class="faq-item"><div class="faq-q">전기요금 고지서의 부가세는 어떻게 계산되나요?</div><div class="faq-a">기본요금+전력량요금의 10%가 부가세, 3.7%가 전력기금입니다.</div></div>
-<div class="faq-item"><div class="faq-q">입력한 정보가 서버에 저장되나요?</div><div class="faq-a">아닙니다. 모든 처리는 브라우저에서만 이루어집니다.</div></div>
-</div><div class="ad-slot-middle"><div class="ad-label">광고</div><div class="ad-slot-inner">광고 영역 (AD)</div></div>
-<div class="guide-section"><div class="guide-card"><h2>📖 전기요금 계산 가이드</h2>
-<p>주택용 전기요금은 3단계 누진세가 적용됩니다. 1단계(200kWh 이하)는 저렴하고, 3단계(400kWh 초과)는 높은 요금이 적용됩니다. 전기요금은 기본요금+전력량요금+부가세(10%)+전력기금(3.7%)로 구성됩니다.</p>
-<p>여름철(7~8월) 에어컨 사용으로 3단계 진입 가구가 많아 전기요금이 증가합니다. 이 기간에는 누진세 완화 조치가 적용될 수 있습니다.</p>
-<table><tr><th>구간</th><th>사용량</th><th>특징</th></tr><tr><td>1단계</td><td>200kWh 이하</td><td>저렴한 요금</td></tr><tr><td>2단계</td><td>201~400kWh</td><td>중간 요금</td></tr><tr><td>3단계</td><td>400kWh 초과</td><td>높은 요금</td></tr></table>
-</div>
-<div class="faq-item"><div class="faq-q">주택용 전기요금 누진세 구간은 어떻게 되나요?</div><div class="faq-a">1단계 200kWh 이하, 2단계 201~400kWh, 3단계 400kWh 초과입니다.</div>
-</main>
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-<div class="toast" id="toast"></div>
 <script>
-(function(){document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});var tt=document.getElementById("toast"),tmr=null;function st(m){tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-(function(){/* Processing */})();
-})();
+var TIERS=[
+  {limit:200,base:910,rate:120.0,label:"1구간 (0~200kWh)"},
+  {limit:400,base:1600,rate:214.6,label:"2구간 (201~400kWh)"},
+  {limit:Infinity,base:7300,rate:307.3,label:"3구간 (401kWh~)"}
+];
+var CLIMATE_RATE=9.0;
+var FUEL_RATE=-1.8;
+
+function calculate(){
+  var kwh=parseInt(document.getElementById("kwh").value)||0;
+  if(kwh<=0){alert("사용량을 입력해주세요.");return;}
+
+  var baseFee=0,usageFee=0,remaining=kwh,tierIdx=0;
+  var tierDetails=[];
+
+  if(kwh<=200){baseFee=TIERS[0].base;tierIdx=0;}
+  else if(kwh<=400){baseFee=TIERS[1].base;tierIdx=1;}
+  else{baseFee=TIERS[2].base;tierIdx=2;}
+
+  remaining=kwh;
+  var prev=0;
+  for(var i=0;i<TIERS.length;i++){
+    var tierMax=TIERS[i].limit;
+    var tierKwh=Math.min(remaining,tierMax-prev);
+    if(tierKwh<=0)break;
+    var tierCost=tierKwh*TIERS[i].rate;
+    usageFee+=tierCost;
+    tierDetails.push({label:TIERS[i].label,kwh:tierKwh,cost:tierCost});
+    remaining-=tierKwh;
+    prev=tierMax;
+  }
+
+  var climateFee=kwh*CLIMATE_RATE;
+  var fuelFee=kwh*FUEL_RATE;
+  var subtotal=baseFee+usageFee+climateFee+fuelFee;
+  if(subtotal<0)subtotal=0;
+  var vat=Math.round(subtotal*0.1);
+  var fund=Math.floor(subtotal*0.037/10)*10;
+  var total=Math.round(subtotal)+vat+fund;
+
+  document.getElementById("baseFee").textContent=fmt(baseFee)+"원";
+  document.getElementById("usageFee").textContent=fmt(Math.round(usageFee))+"원";
+  document.getElementById("climateFee").textContent=fmt(Math.round(climateFee))+"원";
+  document.getElementById("fuelFee").textContent=fmt(Math.round(fuelFee))+"원";
+  document.getElementById("vat").textContent=fmt(vat)+"원";
+  document.getElementById("fund").textContent=fmt(fund)+"원";
+  document.getElementById("totalFee").textContent=fmt(total)+"원";
+  document.getElementById("totalBill").textContent=fmt(total)+"원";
+
+  var barHTML="";
+  for(var j=0;j<tierDetails.length;j++){
+    var pct=Math.round(tierDetails[j].kwh/kwh*100);
+    var colors=["#3B82F6","#EAB308","#EF4444"];
+    barHTML+='<div class="tier-item"><span class="tier-label">'+tierDetails[j].label+'</span><div class="tier-fill" style="width:'+pct+'%;background:'+colors[j]+'"></div><span class="tier-value">'+tierDetails[j].kwh+'kWh / '+fmt(Math.round(tierDetails[j].cost))+'원</span></div>';
+  }
+  document.getElementById("tierBar").innerHTML=barHTML;
+
+  document.getElementById("resultArea").style.display="block";
+  document.getElementById("resultArea").scrollIntoView({behavior:"smooth"});
+}
+
+function fmt(n){return n.toLocaleString();}
+
+
+document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
+var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+
 </script>
 <div class="toast" id="toast"></div>
 </body>
