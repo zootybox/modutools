@@ -44,7 +44,7 @@
 
   // Build sidebar HTML
   var html='<aside class="sidebar">';
-  html+='<a href="/" class="sidebar-logo">modu<span>tools</span></a>';
+  html+='<div class="sidebar-logo-wrap"><a href="/" class="sidebar-logo">modu<span>tools</span></a></div>';
   html+='<nav class="sidebar-nav">';
   html+='<a href="/" class="sidebar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">\U0001f3e0</span> 홈</a>';
   html+='<div class="sidebar-divider"></div>';
@@ -54,7 +54,7 @@
   });
   html+='</nav>';
   html+='<div class="sidebar-footer">';
-  html+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">\U0001f319</span> <span>테마 변경</span></button>';
+  html+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">\U0001f319</span> 테마 변경</button>';
   html+='</div>';
   html+='</aside>';
 
@@ -79,7 +79,11 @@
       var wrapper=document.createElement('div');
       wrapper.className='main-area';
       mainContent.parentNode.insertBefore(wrapper,mainContent);
-      wrapper.appendChild(mainContent);
+      // Wrap in .main-content
+      var innerWrap=document.createElement('div');
+      innerWrap.className='main-content';
+      wrapper.appendChild(innerWrap);
+      innerWrap.appendChild(mainContent);
       // Also move footer into main-area
       var footer=document.querySelector('.mt-footer');
       if(footer)wrapper.appendChild(footer);

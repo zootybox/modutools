@@ -93,8 +93,10 @@
 
   <!-- Sidebar -->
   <aside class="sidebar">
-    <a href="/" class="sidebar-logo">modu<span>tools</span></a>
-    <nav class="sidebar-nav">
+    <div class="sidebar-logo-wrap">
+      <a href="/" class="sidebar-logo">modu<span>tools</span></a>
+    </div>
+  <nav class="sidebar-nav">
       <a href="/" class="sidebar-item active"><span class="emoji">🏠</span> 홈</a>
       <div class="sidebar-divider"></div>
       <a href="#calc" class="sidebar-item"><span class="emoji">💰</span> 계산기</a>
@@ -126,11 +128,14 @@
           <a href="#generate">생성기</a>
           <a href="#life">생활</a>
           <a href="#sports">운동</a>
+          <button class="theme-btn" data-theme-toggle><span class="theme-icon">🌙</span></button>
         </nav>
       </div>
     </header>
 
-    <!-- Hero -->
+    <div class="main-content">
+
+<!-- Hero -->
     <section class="hero">
       <div class="hero-badge">🔒 100% 브라우저 처리 · 서버 전송 없음</div>
       <h1>모두를 위한 무료 온라인 도구</h1>
@@ -577,6 +582,8 @@
   </div>
 
 </main>
+
+</div><!-- /.main-content -->
 
 <!-- Footer (inside main-area) -->
 <footer class="mt-footer">
