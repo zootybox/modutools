@@ -54,12 +54,12 @@
 .search-no-result .nr-text{font-size:16px;font-weight:700;color:var(--g700);margin-bottom:6px}
 .search-no-result .nr-sub{font-size:13px;color:var(--g400)}
 .tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
-.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer;height:100%}
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer;height:100%}
 .tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .tool-emoji{font-size:26px;line-height:1;flex-shrink:0;margin-top:2px}
 .tool-info{flex:1;min-width:0}
-.tool-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px}
-.tool-desc{font-size:12px;color:var(--g500);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tool-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px;color:var(--text)}
+.tool-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap}
 .badge-new{background:#DCFCE7;color:#16A34A}
 .badge-hot{background:#FEE2E2;color:#DC2626}
@@ -70,13 +70,8 @@
 .recent-section .main{padding-bottom:0}
 .recent-clear{margin-left:auto;background:none;border:1px solid var(--g200);color:var(--g400);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s}
 .recent-clear:hover{color:var(--g600);border-color:var(--g300)}
-
-/* Main bottom section spacing */
 .main .card:last-child{margin-bottom:0}
 .main .card + .card{margin-top:0}
-
-/* Principles grid card uniform height */
-.principles-grid .principle-card{height:100%}
 
 @media(max-width:640px){
   .hero{padding:36px 20px 24px}
@@ -94,72 +89,94 @@
 </head>
 <body>
 
-<!-- Header -->
-<header class="mt-header">
-  <div class="mt-header-inner">
-    <a href="/" class="mt-logo">modu<span>tools</span></a>
-    <nav class="mt-nav">
-      <a href="/" class="active">도구</a>
-      <a href="#calc">계산기</a>
-      <a href="#image">이미지</a>
-      <a href="#text">텍스트</a>
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="/" class="sidebar-logo">modu<span>tools</span></a>
+    <nav class="sidebar-nav">
+      <a href="/" class="sidebar-item active"><span class="emoji">🏠</span> 홈</a>
+      <div class="sidebar-divider"></div>
+      <a href="#calc" class="sidebar-item"><span class="emoji">💰</span> 계산기</a>
+      <a href="#image" class="sidebar-item"><span class="emoji">🖼️</span> 이미지</a>
+      <a href="#text" class="sidebar-item"><span class="emoji">📝</span> 텍스트</a>
+      <a href="#convert" class="sidebar-item"><span class="emoji">🔄</span> 변환기</a>
+      <a href="#generate" class="sidebar-item"><span class="emoji">⚡</span> 생성기</a>
+      <a href="#life" class="sidebar-item"><span class="emoji">🏠</span> 생활</a>
+      <a href="#sports" class="sidebar-item"><span class="emoji">🏋️</span> 운동</a>
     </nav>
-  </div>
-</header>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-badge">🔒 100% 브라우저 처리 · 서버 전송 없음</div>
-  <h1>모두를 위한 무료 온라인 도구</h1>
-  <p>계산기, 변환기, 이미지 도구까지 — 설치 없이 바로 사용하세요</p>
-</section>
-
-<!-- Search -->
-<div class="search-wrap">
-  <div class="search-box">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="도구 검색 (예: 연봉, 이미지, 글자수)">
-  </div>
-</div>
-
-<!-- Quick Tags -->
-<div class="quick-tags" id="quickTags">
-  <span class="quick-tag active" data-filter="all">전체</span>
-  <span class="quick-tag" data-filter="calc">💰 계산기</span>
-  <span class="quick-tag" data-filter="image">🖼️ 이미지</span>
-  <span class="quick-tag" data-filter="text">📝 텍스트</span>
-  <span class="quick-tag" data-filter="convert">🔄 변환기</span>
-  <span class="quick-tag" data-filter="generate">⚡ 생성기</span>
-  <span class="quick-tag" data-filter="life">🏠 생활</span>
-  <span class="quick-tag" data-filter="sports">🏋️ 운동</span>
-</div>
-
-<!-- 검색 결과 없음 -->
-<div class="search-no-result" id="noResult">
-  <div class="nr-icon">🔍</div>
-  <div class="nr-text">검색 결과가 없습니다</div>
-  <div class="nr-sub">다른 키워드로 검색해 보세요</div>
-</div>
-
-<!-- Ad Top -->
-<div class="mt-ad">
-  <div class="mt-ad-box">광고 영역 (AD)</div>
-</div>
-
-<!-- 최근 사용한 도구 -->
-<section class="recent-section" id="recentSection" style="display:none">
-  <div class="main">
-    <div class="cat-head">
-      <div class="cat-icon" style="background:#EDE9FE">⏱️</div>
-      <div class="cat-title">최근 사용한 도구</div>
-      <button class="recent-clear" id="recentClear" title="기록 삭제">✕ 초기화</button>
+    <div class="sidebar-footer">
+      <button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">🌙</span> <span>테마 변경</span></button>
     </div>
-    <div class="tool-grid" id="recentGrid"></div>
-  </div>
-</section>
+  </aside>
 
-<!-- Main Content -->
-<main class="main">
+  <!-- Main Area -->
+  <div class="main-area">
+
+    <!-- Header -->
+    <header class="mt-header">
+      <div class="mt-header-inner">
+        <a href="/" class="mt-logo">modu<span>tools</span></a>
+        <nav class="mt-nav">
+          <a href="/" class="active">도구</a>
+          <a href="#calc">계산기</a>
+          <a href="#image">이미지</a>
+          <a href="#text">텍스트</a>
+          <a href="#convert">변환기</a>
+          <a href="#generate">생성기</a>
+          <a href="#life">생활</a>
+          <a href="#sports">운동</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">🔒 100% 브라우저 처리 · 서버 전송 없음</div>
+      <h1>모두를 위한 무료 온라인 도구</h1>
+      <p>계산기, 변환기, 이미지 도구까지 — 설치 없이 바로 사용하세요</p>
+    </section>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="도구 검색 (예: 연봉, 이미지, 글자수)">
+      </div>
+    </div>
+
+    <!-- Quick Tags -->
+    <div class="quick-tags" id="quickTags">
+      <span class="quick-tag active" data-filter="all">전체</span>
+      <span class="quick-tag" data-filter="calc">💰 계산기</span>
+      <span class="quick-tag" data-filter="image">🖼️ 이미지</span>
+      <span class="quick-tag" data-filter="text">📝 텍스트</span>
+      <span class="quick-tag" data-filter="convert">🔄 변환기</span>
+      <span class="quick-tag" data-filter="generate">⚡ 생성기</span>
+      <span class="quick-tag" data-filter="life">🏠 생활</span>
+      <span class="quick-tag" data-filter="sports">🏋️ 운동</span>
+    </div>
+
+    <div class="search-no-result" id="noResult">
+      <div class="nr-icon">🔍</div>
+      <div class="nr-text">검색 결과가 없습니다</div>
+      <div class="nr-sub">다른 키워드로 검색해 보세요</div>
+    </div>
+
+    <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+    <section class="recent-section" id="recentSection" style="display:none">
+      <div class="main">
+        <div class="cat-head">
+          <div class="cat-icon" style="background:#EDE9FE">⏱️</div>
+          <div class="cat-title">최근 사용한 도구</div>
+          <button class="recent-clear" id="recentClear" title="기록 삭제">✕ 초기화</button>
+        </div>
+        <div class="tool-grid" id="recentGrid"></div>
+      </div>
+    </section>
+
+    <main class="main">
 
   <!-- 금융 계산기 -->
   <section class="category" data-cat="calc" id="calc">
@@ -561,12 +578,7 @@
 
 </main>
 
-<!-- Ad Bottom -->
-<div class="mt-ad">
-  <div class="mt-ad-box">광고 영역 (AD)</div>
-</div>
-
-<!-- Footer -->
+<!-- Footer (inside main-area) -->
 <footer class="mt-footer">
   <p>
     <strong>modutools.com</strong> — 모두를 위한 무료 온라인 도구<br>
@@ -575,6 +587,11 @@
     &copy; 2026 modutools. All rights reserved.
   </p>
 </footer>
+
+  </div><!-- /.main-area -->
+</div><!-- /.app-layout -->
+
+<div class="toast" id="toast"></div>
 
 <script>
 // Search filter
