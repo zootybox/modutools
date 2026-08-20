@@ -117,16 +117,16 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
-var currentMode="toMonthly";
+let currentMode="toMonthly";
 function setMode(el){
-  var btns=document.querySelectorAll("#modeRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#modeRow .toggle-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentMode=el.dataset.mode;
   buildInputs();
 }
 function buildInputs(){
-  var html="";
+  let html="";
   if(currentMode==="toMonthly"){
     html+='<div class="input-group"><label class="input-label">전세 보증금</label><div class="input-row"><input type="text" class="input-field comma-input" id="fullDeposit" placeholder="30000" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
     html+='<div class="input-group"><label class="input-label">변경할 보증금 (월세 전환 시)</label><div class="input-row"><input type="text" class="input-field comma-input" id="newDeposit" placeholder="10000" inputmode="numeric"><span class="input-unit">만원</span></div></div>';
@@ -137,7 +137,7 @@ function buildInputs(){
   document.getElementById("inputFields").innerHTML=html;
   document.querySelectorAll(".comma-input").forEach(function(el){
     el.addEventListener("input",function(){
-      var v=this.value.replace(/[^\d]/g,"");
+      const v=this.value.replace(/[^\d]/g,"");
       this.value=v?parseInt(v).toLocaleString():"";
     });
   });
@@ -146,17 +146,17 @@ function getNum(id){return parseInt((document.getElementById(id).value||"0").rep
 function fmt(n){return Math.round(n).toLocaleString();}
 
 function calculate(){
-  var rate=parseFloat(document.getElementById("convRate").value)||0;
+  const rate=parseFloat(document.getElementById("convRate").value)||0;
   if(rate<=0){alert("전환율을 입력해주세요.");return;}
-  var html="";
+  let html="";
   if(currentMode==="toMonthly"){
-    var full=getNum("fullDeposit");
-    var newDep=getNum("newDeposit");
+    const full=getNum("fullDeposit");
+    const newDep=getNum("newDeposit");
     if(full<=0){alert("전세 보증금을 입력해주세요.");return;}
     if(newDep>=full){alert("변경할 보증금은 전세금보다 작아야 합니다.");return;}
-    var diff=full-newDep;
-    var monthly=diff*10000*(rate/100)/12;
-    var monthlyMan=Math.round(monthly/10000);
+    const diff=full-newDep;
+    const monthly=diff*10000*(rate/100)/12;
+    const monthlyMan=Math.round(monthly/10000);
     document.getElementById("mainResult").textContent="월세 "+fmt(monthlyMan)+"만원";
     document.getElementById("mainLabel").textContent="보증금 "+fmt(newDep)+"만원 / 월 "+fmt(monthlyMan)+"만원";
     html='<div class="detail-row"><span class="label">기존 전세금</span><span class="value">'+fmt(full)+'만원</span></div>';
@@ -166,12 +166,12 @@ function calculate(){
     html+='<div class="detail-row"><span class="label">월세</span><span class="value">'+fmt(monthlyMan)+'만원 ('+fmt(Math.round(monthly))+'원)</span></div>';
     html+='<div class="detail-row"><span class="label">연간 월세 합계</span><span class="value">'+fmt(monthlyMan*12)+'만원</span></div>';
   }else{
-    var curDep=getNum("curDeposit");
-    var rent=getNum("monthlyRent");
+    const curDep=getNum("curDeposit");
+    const rent=getNum("monthlyRent");
     if(rent<=0){alert("월세를 입력해주세요.");return;}
-    var convertedDeposit=rent*10000*12/(rate/100);
-    var totalDeposit=curDep*10000+convertedDeposit;
-    var totalMan=Math.round(totalDeposit/10000);
+    const convertedDeposit=rent*10000*12/(rate/100);
+    const totalDeposit=curDep*10000+convertedDeposit;
+    const totalMan=Math.round(totalDeposit/10000);
     document.getElementById("mainResult").textContent="전세 환산 "+fmt(totalMan)+"만원";
     document.getElementById("mainLabel").textContent="보증금 "+fmt(curDep)+"만원 + 월세 "+fmt(rent)+"만원 환산";
     html='<div class="detail-row"><span class="label">현재 보증금</span><span class="value">'+fmt(curDep)+'만원</span></div>';

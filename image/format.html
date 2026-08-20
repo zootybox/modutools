@@ -164,12 +164,12 @@ PNG로 변환하면 무손실이므로 화질 저하가 없습니다. JPG나 WEB
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var files=[];
-var results=[];
-var currentFormat="png";
+let files=[];
+let results=[];
+let currentFormat="png";
 
-var fileInput=document.getElementById("fileInput");
-var uploadZone=document.getElementById("uploadZone");
+const fileInput=document.getElementById("fileInput");
+const uploadZone=document.getElementById("uploadZone");
 
 uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("active");});
 uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("active");});
@@ -178,13 +178,13 @@ fileInput.addEventListener("change",function(){handleFiles(this.files);});
 
 function handleFiles(fileList){
   files=[];
-  var list=document.getElementById("uploadList");
+  let list=document.getElementById("uploadList");
   list.innerHTML="";
-  var count=Math.min(fileList.length,10);
-  for(var i=0;i<count;i++){
+  const count=Math.min(fileList.length,10);
+  for(let i=0;i<count;i++){
     if(!fileList[i].type.startsWith("image/"))continue;
     files.push(fileList[i]);
-    var size=(fileList[i].size/1024).toFixed(1);
+    const size=(fileList[i].size/1024).toFixed(1);
     list.innerHTML+='<div class="file-item"><div class="file-info"><div class="file-name">'+fileList[i].name+'</div><div class="file-meta">'+size+' KB</div></div></div>';
   }
   if(files.length>0){
@@ -194,8 +194,8 @@ function handleFiles(fileList){
 }
 
 window.setFormat=function(el){
-  var btns=document.querySelectorAll("#formatRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#formatRow .toggle-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentFormat=el.dataset.fmt;
   document.getElementById("qualityRow").style.display=(currentFormat==="png")?"none":"block";
@@ -204,35 +204,35 @@ window.setFormat=function(el){
 window.doConvert=function(){
   if(files.length===0){alert("이미지를 업로드해주세요.");return;}
   results=[];
-  var quality=parseInt(document.getElementById("quality").value)/100;
-  var mimeType="image/"+currentFormat;
-  var ext=currentFormat==="jpeg"?"jpg":currentFormat;
-  var done=0;
-  var list=document.getElementById("resultList");
+  const quality=parseInt(document.getElementById("quality").value)/100;
+  const mimeType="image/"+currentFormat;
+  const ext=currentFormat==="jpeg"?"jpg":currentFormat;
+  let done=0;
+  const list=document.getElementById("resultList");
   list.innerHTML="";
 
-  for(var i=0;i<files.length;i++){
+  for(let i=0;i<files.length;i++){
     (function(file,idx){
-      var reader=new FileReader();
+      const reader=new FileReader();
       reader.onload=function(e){
-        var img=new Image();
+        const img=new Image();
         img.onload=function(){
-          var canvas=document.createElement("canvas");
+          const canvas=document.createElement("canvas");
           canvas.width=img.width;canvas.height=img.height;
-          var ctx=canvas.getContext("2d");
+          const ctx=canvas.getContext("2d");
           if(currentFormat==="jpeg"){
             ctx.fillStyle="#FFFFFF";
             ctx.fillRect(0,0,canvas.width,canvas.height);
           }
           ctx.drawImage(img,0,0);
           canvas.toBlob(function(blob){
-            var baseName=file.name.replace(/\.[^.]+$/,"");
-            var newName=baseName+"."+ext;
-            var url=URL.createObjectURL(blob);
+            const baseName=file.name.replace(/\.[^.]+$/,"");
+            const newName=baseName+"."+ext;
+            const url=URL.createObjectURL(blob);
             results[idx]={blob:blob,name:newName,url:url};
-            var origSize=(file.size/1024).toFixed(1);
-            var newSize=(blob.size/1024).toFixed(1);
-            list.innerHTML+='<div class="file-item"><img src="'+url+'" class="file-thumb"><div class="file-info"><div class="file-name">'+newName+'</div><div class="file-meta">'+origSize+' KB → '+newSize+' KB</div></div><button class="file-download" onclick="downloadOne('+idx+')">다운로드</button></div>';
+            const origSize=(file.size/1024).toFixed(1);
+            const newSize=(blob.size/1024).toFixed(1);
+            list.innerHTML+='<div class="file-item"><img src="'+url+'" class="file-thumb" alt="'+newName+'"><div class="file-info"><div class="file-name">'+newName+'</div><div class="file-meta">'+origSize+' KB → '+newSize+' KB</div></div><button class="file-download" onclick="downloadOne('+idx+')">다운로드</button></div>';
             done++;
             if(done===files.length){
               if(files.length>1)document.getElementById("downloadAllBtn").style.display="block";
@@ -250,14 +250,14 @@ window.doConvert=function(){
 
 window.downloadOne=function(idx){
   if(!results[idx])return;
-  var a=document.createElement("a");
+  const a=document.createElement("a");
   a.href=results[idx].url;
   a.download=results[idx].name;
   a.click();
 };
 
 window.downloadAll=function(){
-  for(var i=0;i<results.length;i++){
+  for(let i=0;i<results.length;i++){
     if(results[i])downloadOne(i);
   }
 };

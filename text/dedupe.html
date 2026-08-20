@@ -172,7 +172,7 @@ document.getElementById('copyResultBtn').addEventListener('click',function(){
 });
 /* mt-faq toggle via delegation */
 document.querySelector('.mt-faq').addEventListener('click',function(e){
-  var q=e.target.closest('.mt-faq-q');
+  const q=e.target.closest('.mt-faq-q');
   if(q)q.parentElement.classList.toggle('open');
 });
 

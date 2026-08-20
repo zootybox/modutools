@@ -146,18 +146,18 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
-var includeWeekly="yes";
+let includeWeekly="yes";
 
 document.querySelectorAll(".comma-input").forEach(function(el){
   el.addEventListener("input",function(){
-    var v=this.value.replace(/[^\d]/g,"");
+    const v=this.value.replace(/[^\d]/g,"");
     this.value=v?parseInt(v).toLocaleString():"";
   });
 });
 
 function setWeekly(el){
-  var btns=document.querySelectorAll("#weeklyPayRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#weeklyPayRow .toggle-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   includeWeekly=el.dataset.val;
 }
@@ -166,34 +166,34 @@ function getNum(id){return parseInt((document.getElementById(id).value||"0").rep
 function fmt(n){return Math.round(n).toLocaleString();}
 
 function calculate(){
-  var wage=getNum("hourlyWage");
-  var dailyH=parseFloat(document.getElementById("dailyHours").value)||0;
-  var weeklyD=parseInt(document.getElementById("weeklyDays").value)||0;
+  const wage=getNum("hourlyWage");
+  const dailyH=parseFloat(document.getElementById("dailyHours").value)||0;
+  const weeklyD=parseInt(document.getElementById("weeklyDays").value)||0;
 
   if(wage<=0){alert("시급을 입력해주세요.");return;}
   if(dailyH<=0){alert("일 근무시간을 입력해주세요.");return;}
   if(weeklyD<=0){alert("주 근무일수를 입력해주세요.");return;}
 
-  var weeklyHours=dailyH*weeklyD;
-  var weeklyAllowanceHours=0;
+  const weeklyHours=dailyH*weeklyD;
+  let weeklyAllowanceHours=0;
   if(includeWeekly==="yes"&&weeklyHours>=15){
     weeklyAllowanceHours=dailyH;
   }
 
-  var totalWeeklyHours=weeklyHours+weeklyAllowanceHours;
-  var monthlyHours=totalWeeklyHours*4.345;
-  var monthlyPay=Math.round(wage*monthlyHours);
-  var annualPay=monthlyPay*12;
-  var weeklyPay=Math.round(wage*totalWeeklyHours);
-  var dailyPay=Math.round(wage*dailyH);
-  var weeklyAllowance=Math.round(wage*weeklyAllowanceHours);
+  const totalWeeklyHours=weeklyHours+weeklyAllowanceHours;
+  const monthlyHours=totalWeeklyHours*4.345;
+  const monthlyPay=Math.round(wage*monthlyHours);
+  const annualPay=monthlyPay*12;
+  const weeklyPay=Math.round(wage*totalWeeklyHours);
+  const dailyPay=Math.round(wage*dailyH);
+  const weeklyAllowance=Math.round(wage*weeklyAllowanceHours);
 
   document.getElementById("monthlyPay").textContent=fmt(monthlyPay)+"원";
   document.getElementById("annualPay").textContent=fmt(annualPay)+"원";
   document.getElementById("weeklyPay").textContent=fmt(weeklyPay)+"원";
   document.getElementById("dailyPay").textContent=fmt(dailyPay)+"원";
 
-  var html="";
+  let html="";
   html+='<div class="detail-row"><span class="label">시급</span><span class="value">'+fmt(wage)+'원</span></div>';
   html+='<div class="detail-row"><span class="label">주 근무시간</span><span class="value">'+weeklyHours+'시간 ('+dailyH+'h x '+weeklyD+'일)</span></div>';
   if(weeklyAllowanceHours>0){

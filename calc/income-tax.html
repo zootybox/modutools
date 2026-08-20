@@ -121,7 +121,7 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
-var BRACKETS=[
+const BRACKETS=[
   {limit:14000000,rate:0.06,deduction:0,label:"1,400만원 이하"},
   {limit:50000000,rate:0.15,deduction:1260000,label:"1,400만~5,000만원"},
   {limit:88000000,rate:0.24,deduction:5760000,label:"5,000만~8,800만원"},
@@ -134,7 +134,7 @@ var BRACKETS=[
 
 document.querySelectorAll(".comma-input").forEach(function(el){
   el.addEventListener("input",function(){
-    var v=this.value.replace(/[^\d]/g,"");
+    const v=this.value.replace(/[^\d]/g,"");
     this.value=v?parseInt(v).toLocaleString():"";
   });
 });
@@ -143,12 +143,12 @@ function getNum(id){return parseInt((document.getElementById(id).value||"0").rep
 function fmt(n){return Math.round(n).toLocaleString();}
 
 function calculate(){
-  var taxBase=getNum("taxBase");
+  const taxBase=getNum("taxBase");
   if(taxBase<=0){alert("과세표준을 입력해주세요.");return;}
 
-  var incomeTax=0;
-  var bracketIdx=0;
-  for(var i=0;i<BRACKETS.length;i++){
+  let incomeTax=0;
+  let bracketIdx=0;
+  for(let i=0;i<BRACKETS.length;i++){
     if(taxBase<=BRACKETS[i].limit){
       incomeTax=taxBase*BRACKETS[i].rate-BRACKETS[i].deduction;
       bracketIdx=i;
@@ -157,13 +157,13 @@ function calculate(){
   }
 
   incomeTax=Math.max(0,Math.round(incomeTax));
-  var localTax=Math.round(incomeTax*0.1);
-  var totalTax=incomeTax+localTax;
-  var effectiveRate=(totalTax/taxBase*100).toFixed(1);
+  const localTax=Math.round(incomeTax*0.1);
+  const totalTax=incomeTax+localTax;
+  const effectiveRate=(totalTax/taxBase*100).toFixed(1);
 
   document.getElementById("mainResult").textContent=fmt(totalTax)+"원";
 
-  var html="";
+  let html="";
   html+='<div class="detail-row"><span class="label">과세표준</span><span class="value">'+fmt(taxBase)+'원</span></div>';
   html+='<div class="detail-row"><span class="label">적용 세율</span><span class="value">'+(BRACKETS[bracketIdx].rate*100)+'%</span></div>';
   html+='<div class="detail-row"><span class="label">누진공제</span><span class="value">'+fmt(BRACKETS[bracketIdx].deduction)+'원</span></div>';
@@ -173,14 +173,14 @@ function calculate(){
   html+='<div class="detail-row"><span class="label">실효세율</span><span class="value">'+effectiveRate+'%</span></div>';
   document.getElementById("detailList").innerHTML=html;
 
-  var tbody="";
-  var prev=0;
-  for(var j=0;j<BRACKETS.length;j++){
-    var b=BRACKETS[j];
-    var tierBase=Math.min(taxBase,b.limit)-prev;
+  let tbody="";
+  let prev=0;
+  for(let j=0;j<BRACKETS.length;j++){
+    const b=BRACKETS[j];
+    let tierBase=Math.min(taxBase,b.limit)-prev;
     if(tierBase<=0)tierBase=0;
-    var tierTax=tierBase*b.rate;
-    var isActive=j===bracketIdx;
+    const tierTax=tierBase*b.rate;
+    const isActive=j===bracketIdx;
     tbody+='<tr'+(isActive?' class="active"':'')+'>';
     tbody+='<td>'+b.label+'</td>';
     tbody+='<td>'+(b.rate*100)+'%</td>';

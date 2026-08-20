@@ -134,7 +134,7 @@
 <script>
 document.querySelectorAll("#avgSalary,#bonus,#annualPay").forEach(function(el){
   el.addEventListener("input",function(){
-    var v=this.value.replace(/[^\d]/g,"");
+    const v=this.value.replace(/[^\d]/g,"");
     this.value=v?parseInt(v).toLocaleString():"";
   });
 });
@@ -142,37 +142,37 @@ function getNum(id){return parseInt((document.getElementById(id).value||"0").rep
 function fmt(n){return Math.round(n).toLocaleString();}
 
 function calculate(){
-  var startStr=document.getElementById("startDate").value;
-  var endStr=document.getElementById("endDate").value;
+  const startStr=document.getElementById("startDate").value;
+  const endStr=document.getElementById("endDate").value;
   if(!startStr||!endStr){alert("입사일과 퇴사일을 입력해주세요.");return;}
-  var start=new Date(startStr);
-  var end=new Date(endStr);
+  const start=new Date(startStr);
+  const end=new Date(endStr);
   if(start>=end){alert("퇴사일이 입사일보다 이후여야 합니다.");return;}
 
-  var avgSalary=getNum("avgSalary");
+  const avgSalary=getNum("avgSalary");
   if(avgSalary<=0){alert("평균임금을 입력해주세요.");return;}
-  var bonus=getNum("bonus");
-  var annualPay=getNum("annualPay");
+  const bonus=getNum("bonus");
+  const annualPay=getNum("annualPay");
 
-  var diffMs=end.getTime()-start.getTime();
-  var totalDays=Math.floor(diffMs/(1000*60*60*24))+1;
+  const diffMs=end.getTime()-start.getTime();
+  const totalDays=Math.floor(diffMs/(1000*60*60*24))+1;
 
   if(totalDays<365){alert("퇴직금은 1년(365일) 이상 근무 시 지급됩니다.\n현재 근무일수: "+totalDays+"일");return;}
 
-  var dailyAvg=avgSalary/30;
-  var bonusDaily=bonus/12/30;
-  var annualDaily=annualPay/12/30;
-  var totalDailyAvg=dailyAvg+bonusDaily+annualDaily;
-  var monthlyAvg=totalDailyAvg*30;
+  const dailyAvg=avgSalary/30;
+  const bonusDaily=bonus/12/30;
+  const annualDaily=annualPay/12/30;
+  const totalDailyAvg=dailyAvg+bonusDaily+annualDaily;
+  const monthlyAvg=totalDailyAvg*30;
 
-  var severance=totalDailyAvg*30*(totalDays/365);
+  const severance=totalDailyAvg*30*(totalDays/365);
 
-  var years=Math.floor(totalDays/365);
-  var remainDays=totalDays%365;
+  const years=Math.floor(totalDays/365);
+  const remainDays=totalDays%365;
 
   document.getElementById("mainResult").textContent=fmt(severance)+"원";
 
-  var html="";
+  let html="";
   html+='<div class="detail-row"><span class="label">입사일</span><span class="value">'+startStr+'</span></div>';
   html+='<div class="detail-row"><span class="label">퇴사일</span><span class="value">'+endStr+'</span></div>';
   html+='<div class="detail-row"><span class="label">총 근무일수</span><span class="value">'+fmt(totalDays)+'일 ('+years+'년 '+remainDays+'일)</span></div>';
@@ -183,7 +183,7 @@ function calculate(){
   html+='<div class="detail-row total"><span class="label">예상 퇴직금</span><span class="value">'+fmt(severance)+'원</span></div>';
 
   if(severance>=10000000){
-    var manwon=Math.round(severance/10000);
+    const manwon=Math.round(severance/10000);
     html+='<div class="detail-row"><span class="label"></span><span class="value" style="color:var(--g400)">약 '+fmt(manwon)+'만원</span></div>';
   }
 

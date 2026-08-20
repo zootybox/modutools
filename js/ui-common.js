@@ -6,9 +6,9 @@ document.querySelectorAll(".faq-q").forEach(function(q){
 });
 
 /* Toast Notification */
-var toastTimer=null;
+let toastTimer=null;
 function showToast(m){
-  var tt=document.getElementById("toast");
+  const tt=document.getElementById("toast");
   if(!tt)return;
   tt.textContent=m;
   tt.classList.add("show");

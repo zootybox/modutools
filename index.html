@@ -630,10 +630,10 @@ cards.forEach(card => {
 
 // 최근 사용한 도구
 (function(){
-  var KEY='modutools_recent';
-  var MAX=6;
-  var section=document.getElementById('recentSection');
-  var grid=document.getElementById('recentGrid');
+  const KEY='modutools_recent';
+  const MAX=6;
+  const section=document.getElementById('recentSection');
+  const grid=document.getElementById('recentGrid');
 
   function getRecent(){
     try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return [];}
@@ -645,14 +645,14 @@ cards.forEach(card => {
   // 도구 클릭 시 기록
   document.querySelectorAll('.tool-card[href]').forEach(function(card){
     card.addEventListener('click',function(){
-      var href=this.getAttribute('href');
-      var name=this.dataset.name||'';
-      var emoji=this.querySelector('.tool-emoji');
+      const href=this.getAttribute('href');
+      const name=this.dataset.name||'';
+      let emoji=this.querySelector('.tool-emoji');
       emoji=emoji?emoji.textContent.trim():'🔧';
-      var desc=this.querySelector('.tool-desc');
+      let desc=this.querySelector('.tool-desc');
       desc=desc?desc.textContent.trim():'';
 
-      var list=getRecent();
+      let list=getRecent();
       // 이미 있으면 제거 후 맨 앞에 추가
       list=list.filter(function(item){return item.href!==href;});
       list.unshift({href:href,name:name,emoji:emoji,desc:desc,time:Date.now()});
@@ -663,7 +663,7 @@ cards.forEach(card => {
 
   // 최근 사용 도구 렌더링
   function render(){
-    var list=getRecent();
+    const list=getRecent();
     if(!list.length){section.style.display='none';return;}
     section.style.display='';
     grid.innerHTML=list.map(function(item){

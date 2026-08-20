@@ -88,7 +88,7 @@
 <button class="preset-btn" onclick="setRatio(this,9/16)">9:16</button>
 </div>
 <div class="crop-container" id="cropContainer">
-<img id="cropImage">
+<img id="cropImage" alt="자르기 대상 이미지">
 <div class="crop-box" id="cropBox">
 <div class="crop-handle crop-handle-tl" data-handle="tl"></div>
 <div class="crop-handle crop-handle-tr" data-handle="tr"></div>
@@ -110,7 +110,7 @@
 <div class="result-area" id="resultArea">
 <div class="card">
 <div class="card-title">✅ 자르기 결과</div>
-<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
+<div class="preview-wrap"><img id="previewImg" class="preview-img" alt="자르기 결과 미리보기"></div>
 <div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
 <div class="info-row"><span class="label">자른 크기</span><span class="value" id="infoCrop">-</span></div>
 <button class="download-btn" onclick="downloadResult()">다운로드</button>
@@ -178,13 +178,13 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var origImg=null,origW=0,origH=0,resultBlob=null,resultName="";
-var cropRatio=0;
-var box={x:10,y:10,w:80,h:80};
-var dragging=null,dragStart={x:0,y:0},boxStart={};
-var containerEl=document.getElementById("cropContainer");
-var boxEl=document.getElementById("cropBox");
-var imgEl=document.getElementById("cropImage");
+let origImg=null,origW=0,origH=0,resultBlob=null,resultName="";
+let cropRatio=0;
+let box={x:10,y:10,w:80,h:80};
+let dragging=null,dragStart={x:0,y:0},boxStart={};
+const containerEl=document.getElementById("cropContainer");
+const boxEl=document.getElementById("cropBox");
+const imgEl=document.getElementById("cropImage");
 
 document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
 document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
@@ -193,9 +193,9 @@ document.getElementById("uploadZone").addEventListener("drop",function(e){e.prev
 function loadFile(file){
   if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
   resultName=file.name.replace(/\.[^.]+$/,"")+"_cropped";
-  var reader=new FileReader();
+  const reader=new FileReader();
   reader.onload=function(e){
-    var img=new Image();
+    const img=new Image();
     img.onload=function(){
       origImg=img;origW=img.width;origH=img.height;
       imgEl.src=e.target.result;
@@ -219,9 +219,9 @@ function updateInputs(){
 }
 
 function getPos(e){
-  var rect=containerEl.getBoundingClientRect();
-  var clientX=e.touches?e.touches[0].clientX:e.clientX;
-  var clientY=e.touches?e.touches[0].clientY:e.clientY;
+  const rect=containerEl.getBoundingClientRect();
+  const clientX=e.touches?e.touches[0].clientX:e.clientX;
+  const clientY=e.touches?e.touches[0].clientY:e.clientY;
   return{x:(clientX-rect.left)/rect.width*100,y:(clientY-rect.top)/rect.height*100};
 }
 
@@ -230,7 +230,7 @@ boxEl.addEventListener("touchstart",startDrag,{passive:false});
 
 function startDrag(e){
   e.preventDefault();
-  var handle=e.target.dataset.handle;
+  const handle=e.target.dataset.handle;
   dragging=handle||"move";
   dragStart=getPos(e);
   boxStart={x:box.x,y:box.y,w:box.w,h:box.h};
@@ -243,22 +243,22 @@ function startDrag(e){
 function onDrag(e){
   e.preventDefault();
   if(!dragging)return;
-  var pos=getPos(e);
-  var dx=pos.x-dragStart.x;
-  var dy=pos.y-dragStart.y;
+  const pos=getPos(e);
+  const dx=pos.x-dragStart.x;
+  const dy=pos.y-dragStart.y;
 
   if(dragging==="move"){
     box.x=Math.max(0,Math.min(100-box.w,boxStart.x+dx));
     box.y=Math.max(0,Math.min(100-box.h,boxStart.y+dy));
   }else{
-    var nx=boxStart.x,ny=boxStart.y,nw=boxStart.w,nh=boxStart.h;
+    let nx=boxStart.x,ny=boxStart.y,nw=boxStart.w,nh=boxStart.h;
     if(dragging.includes("r")){nw=Math.max(5,boxStart.w+dx);}
     if(dragging.includes("l")){nx=boxStart.x+dx;nw=Math.max(5,boxStart.w-dx);}
     if(dragging.includes("b")){nh=Math.max(5,boxStart.h+dy);}
     if(dragging.includes("t")){ny=boxStart.y+dy;nh=Math.max(5,boxStart.h-dy);}
     if(cropRatio>0){
-      var imgAspect=origW/origH;
-      var boxAspectPx=(nw/100*origW)/(nh/100*origH);
+      const imgAspect=origW/origH;
+      const boxAspectPx=(nw/100*origW)/(nh/100*origH);
       if(dragging.includes("r")||dragging.includes("l")){
         nh=nw/100*origW/cropRatio/origH*100;
       }else{
@@ -283,12 +283,12 @@ function endDrag(){
 }
 
 window.setRatio=function(el,r){
-  var btns=document.querySelectorAll("#presetRow .preset-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#presetRow .preset-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   cropRatio=r;
   if(r>0&&origImg){
-    var newH=box.w/100*origW/r/origH*100;
+    let newH=box.w/100*origW/r/origH*100;
     if(box.y+newH>100)newH=100-box.y;
     box.h=newH;
     updateBox();updateInputs();
@@ -297,14 +297,14 @@ window.setRatio=function(el,r){
 
 document.getElementById("cropW").addEventListener("change",function(){
   if(!origImg)return;
-  var w=parseInt(this.value)||1;
+  let w=parseInt(this.value)||1;
   box.w=Math.min(100,w/origW*100);
   if(cropRatio>0)box.h=box.w/100*origW/cropRatio/origH*100;
   updateBox();updateInputs();
 });
 document.getElementById("cropH").addEventListener("change",function(){
   if(!origImg)return;
-  var h=parseInt(this.value)||1;
+  let h=parseInt(this.value)||1;
   box.h=Math.min(100,h/origH*100);
   if(cropRatio>0)box.w=box.h/100*origH*cropRatio/origW*100;
   updateBox();updateInputs();
@@ -312,13 +312,13 @@ document.getElementById("cropH").addEventListener("change",function(){
 
 window.doCrop=function(){
   if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
-  var sx=Math.round(origW*box.x/100);
-  var sy=Math.round(origH*box.y/100);
-  var sw=Math.round(origW*box.w/100);
-  var sh=Math.round(origH*box.h/100);
-  var canvas=document.createElement("canvas");
+  const sx=Math.round(origW*box.x/100);
+  const sy=Math.round(origH*box.y/100);
+  const sw=Math.round(origW*box.w/100);
+  const sh=Math.round(origH*box.h/100);
+  const canvas=document.createElement("canvas");
   canvas.width=sw;canvas.height=sh;
-  var ctx=canvas.getContext("2d");
+  const ctx=canvas.getContext("2d");
   ctx.drawImage(origImg,sx,sy,sw,sh,0,0,sw,sh);
   canvas.toBlob(function(blob){
     resultBlob=blob;
@@ -332,7 +332,7 @@ window.doCrop=function(){
 
 window.downloadResult=function(){
   if(!resultBlob)return;
-  var a=document.createElement("a");
+  const a=document.createElement("a");
   a.href=URL.createObjectURL(resultBlob);
   a.download=resultName+".png";
   a.click();

@@ -119,7 +119,7 @@
 <div class="result-area" id="resultArea">
 <div class="card">
 <div class="card-title">✅ 완성</div>
-<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
+<div class="preview-wrap"><img id="previewImg" class="preview-img" alt="증명사진 편집 미리보기"></div>
 <div class="info-row"><span class="label">규격</span><span class="value" id="infoSpec">-</span></div>
 <div class="info-row"><span class="label">크기</span><span class="value" id="infoSize">-</span></div>
 <button class="download-btn" onclick="downloadResult()">다운로드</button>
@@ -187,10 +187,10 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var origImg=null,resultBlob=null;
-var specW=413,specH=531;
-var canvas=document.getElementById("editCanvas");
-var ctx=canvas.getContext("2d");
+let origImg=null,resultBlob=null;
+let specW=413,specH=531;
+const canvas=document.getElementById("editCanvas");
+const ctx=canvas.getContext("2d");
 
 document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
 document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
@@ -198,9 +198,9 @@ document.getElementById("uploadZone").addEventListener("drop",function(e){e.prev
 
 function loadFile(file){
   if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
-  var reader=new FileReader();
+  const reader=new FileReader();
   reader.onload=function(e){
-    var img=new Image();
+    const img=new Image();
     img.onload=function(){
       origImg=img;
       document.getElementById("posX").value=50;
@@ -216,17 +216,17 @@ function loadFile(file){
 }
 
 window.setSpec=function(el){
-  var btns=document.querySelectorAll(".spec-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll(".spec-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   specW=parseInt(el.dataset.w);
   specH=parseInt(el.dataset.h);
   if(origImg)drawPreview();
 };
 
-var posXEl=document.getElementById("posX");
-var posYEl=document.getElementById("posY");
-var zoomEl=document.getElementById("zoom");
+const posXEl=document.getElementById("posX");
+const posYEl=document.getElementById("posY");
+const zoomEl=document.getElementById("zoom");
 
 posXEl.addEventListener("input",function(){document.getElementById("posXVal").textContent=this.value;drawPreview();});
 posYEl.addEventListener("input",function(){document.getElementById("posYVal").textContent=this.value;drawPreview();});
@@ -234,19 +234,19 @@ zoomEl.addEventListener("input",function(){document.getElementById("zoomVal").te
 
 function drawPreview(){
   if(!origImg)return;
-  var ratio=specW/specH;
-  var displayW=Math.min(300,specW);
-  var displayH=displayW/ratio;
+  let ratio=specW/specH;
+  const displayW=Math.min(300,specW);
+  const displayH=displayW/ratio;
   canvas.width=displayW;canvas.height=displayH;
   ctx.fillStyle="#FFFFFF";
   ctx.fillRect(0,0,displayW,displayH);
 
-  var zoom=parseInt(zoomEl.value)/100;
-  var px=parseInt(posXEl.value)/100;
-  var py=parseInt(posYEl.value)/100;
+  let zoom=parseInt(zoomEl.value)/100;
+  let px=parseInt(posXEl.value)/100;
+  let py=parseInt(posYEl.value)/100;
 
-  var imgRatio=origImg.width/origImg.height;
-  var drawW,drawH;
+  let imgRatio=origImg.width/origImg.height;
+  let drawW,drawH;
   if(imgRatio>ratio){
     drawH=displayH*zoom;
     drawW=drawH*imgRatio;
@@ -254,26 +254,26 @@ function drawPreview(){
     drawW=displayW*zoom;
     drawH=drawW/imgRatio;
   }
-  var ox=(displayW-drawW)*px;
-  var oy=(displayH-drawH)*py;
+  let ox=(displayW-drawW)*px;
+  let oy=(displayH-drawH)*py;
   ctx.drawImage(origImg,ox,oy,drawW,drawH);
 }
 
 window.doExport=function(){
   if(!origImg){alert("사진을 먼저 업로드해주세요.");return;}
-  var outCanvas=document.createElement("canvas");
+  const outCanvas=document.createElement("canvas");
   outCanvas.width=specW;outCanvas.height=specH;
-  var outCtx=outCanvas.getContext("2d");
+  const outCtx=outCanvas.getContext("2d");
   outCtx.fillStyle="#FFFFFF";
   outCtx.fillRect(0,0,specW,specH);
 
-  var ratio=specW/specH;
-  var zoom=parseInt(zoomEl.value)/100;
-  var px=parseInt(posXEl.value)/100;
-  var py=parseInt(posYEl.value)/100;
-  var imgRatio=origImg.width/origImg.height;
+  const ratio=specW/specH;
+  const zoom=parseInt(zoomEl.value)/100;
+  const px=parseInt(posXEl.value)/100;
+  const py=parseInt(posYEl.value)/100;
+  const imgRatio=origImg.width/origImg.height;
 
-  var drawW,drawH;
+  let drawW,drawH;
   if(imgRatio>ratio){
     drawH=specH*zoom;
     drawW=drawH*imgRatio;
@@ -281,8 +281,8 @@ window.doExport=function(){
     drawW=specW*zoom;
     drawH=drawW/imgRatio;
   }
-  var ox=(specW-drawW)*px;
-  var oy=(specH-drawH)*py;
+  const ox=(specW-drawW)*px;
+  const oy=(specH-drawH)*py;
   outCtx.drawImage(origImg,ox,oy,drawW,drawH);
 
   outCanvas.toBlob(function(blob){
@@ -297,7 +297,7 @@ window.doExport=function(){
 
 window.downloadResult=function(){
   if(!resultBlob)return;
-  var a=document.createElement("a");
+  const a=document.createElement("a");
   a.href=URL.createObjectURL(resultBlob);
   a.download="id_photo_"+specW+"x"+specH+".jpg";
   a.click();

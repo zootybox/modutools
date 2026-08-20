@@ -115,7 +115,7 @@
 <div class="result-area" id="resultArea">
 <div class="card">
 <div class="card-title">✅ 리사이즈 결과</div>
-<div class="preview-wrap"><img id="previewImg" class="preview-img"></div>
+<div class="preview-wrap"><img id="previewImg" class="preview-img" alt="이미지 크기 조정 미리보기"></div>
 <div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
 <div class="info-row"><span class="label">변경 크기</span><span class="value" id="infoNew">-</span></div>
 <div class="info-row"><span class="label">파일 크기</span><span class="value" id="infoSize">-</span></div>
@@ -148,14 +148,14 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var origImg=null;
-var origW=0,origH=0,ratio=1;
-var resultBlob=null,resultName="";
+let origImg=null;
+let origW=0,origH=0,ratio=1;
+let resultBlob=null,resultName="";
 
-var fileInput=document.getElementById("fileInput");
-var uploadZone=document.getElementById("uploadZone");
-var widthIn=document.getElementById("newWidth");
-var heightIn=document.getElementById("newHeight");
+const fileInput=document.getElementById("fileInput");
+const uploadZone=document.getElementById("uploadZone");
+const widthIn=document.getElementById("newWidth");
+const heightIn=document.getElementById("newHeight");
 
 uploadZone.addEventListener("dragover",function(e){e.preventDefault();uploadZone.classList.add("active");});
 uploadZone.addEventListener("dragleave",function(){uploadZone.classList.remove("active");});
@@ -165,9 +165,9 @@ fileInput.addEventListener("change",function(){if(this.files.length)loadFile(thi
 function loadFile(file){
   if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
   resultName=file.name.replace(/\.[^.]+$/,"")+"_resized";
-  var reader=new FileReader();
+  const reader=new FileReader();
   reader.onload=function(e){
-    var img=new Image();
+    const img=new Image();
     img.onload=function(){
       origImg=img;origW=img.width;origH=img.height;
       ratio=origW/origH;
@@ -215,17 +215,17 @@ window.setSize=function(w,h){
 
 window.doResize=function(){
   if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
-  var w=parseInt(widthIn.value)||1;
-  var h=parseInt(heightIn.value)||1;
-  var canvas=document.createElement("canvas");
+  const w=parseInt(widthIn.value)||1;
+  const h=parseInt(heightIn.value)||1;
+  const canvas=document.createElement("canvas");
   canvas.width=w;canvas.height=h;
-  var ctx=canvas.getContext("2d");
+  const ctx=canvas.getContext("2d");
   ctx.imageSmoothingEnabled=true;
   ctx.imageSmoothingQuality="high";
   ctx.drawImage(origImg,0,0,w,h);
   canvas.toBlob(function(blob){
     resultBlob=blob;
-    var url=URL.createObjectURL(blob);
+    const url=URL.createObjectURL(blob);
     document.getElementById("previewImg").src=url;
     document.getElementById("infoOrig").textContent=origW+" x "+origH+" px";
     document.getElementById("infoNew").textContent=w+" x "+h+" px";
@@ -237,7 +237,7 @@ window.doResize=function(){
 
 window.downloadResult=function(){
   if(!resultBlob)return;
-  var a=document.createElement("a");
+  const a=document.createElement("a");
   a.href=URL.createObjectURL(resultBlob);
   a.download=resultName+".png";
   a.click();

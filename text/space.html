@@ -148,7 +148,7 @@
 <script>
 /* Convert buttons - delegated via data-clean attribute */
 document.querySelector('.btn-grid').addEventListener('click',function(e){
-  var btn=e.target.closest('[data-clean]');
+  const btn=e.target.closest('[data-clean]');
   if(btn)clean(btn.dataset.clean);
 });
 document.getElementById('cleanAllBtn').addEventListener('click',function(){clean('all');});
@@ -185,7 +185,7 @@ document.getElementById('copyResultBtn').addEventListener('click',function(){
 });
 /* mt-faq toggle via delegation */
 document.querySelector('.mt-faq').addEventListener('click',function(e){
-  var q=e.target.closest('.mt-faq-q');
+  const q=e.target.closest('.mt-faq-q');
   if(q)q.parentElement.classList.toggle('open');
 });
 

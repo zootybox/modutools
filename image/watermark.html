@@ -149,7 +149,7 @@
 <div class="result-area" id="resultArea">
 <div class="card">
 <div class="card-title">✅ 완성</div>
-<div class="preview-wrap"><img id="resultImg" class="preview-img"></div>
+<div class="preview-wrap"><img id="resultImg" class="preview-img" alt="워터마크 적용 결과 이미지"></div>
 <button class="download-btn" onclick="downloadResult()">다운로드</button>
 </div>
 <p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
@@ -169,10 +169,10 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var origImg=null,resultBlob=null,resultName="";
-var currentPos="mc",currentMode="single";
-var pvCanvas=document.getElementById("previewCanvas");
-var pvCtx=pvCanvas.getContext("2d");
+let origImg=null,resultBlob=null,resultName="";
+let currentPos="mc",currentMode="single";
+const pvCanvas=document.getElementById("previewCanvas");
+const pvCtx=pvCanvas.getContext("2d");
 
 document.getElementById("fileInput").addEventListener("change",function(){if(this.files.length)loadFile(this.files[0]);});
 document.getElementById("uploadZone").addEventListener("dragover",function(e){e.preventDefault();});
@@ -182,9 +182,9 @@ document.getElementById("wmText").addEventListener("input",function(){drawPrevie
 function loadFile(file){
   if(!file.type.startsWith("image/")){alert("이미지 파일만 업로드 가능합니다.");return;}
   resultName=file.name.replace(/\.[^.]+$/,"")+"_watermarked";
-  var reader=new FileReader();
+  const reader=new FileReader();
   reader.onload=function(e){
-    var img=new Image();
+    const img=new Image();
     img.onload=function(){
       origImg=img;
       document.getElementById("editorArea").style.display="block";
@@ -197,16 +197,16 @@ function loadFile(file){
 }
 
 window.setPos=function(el){
-  var btns=document.querySelectorAll("#posGrid .pos-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  let btns=document.querySelectorAll("#posGrid .pos-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentPos=el.dataset.pos;
   drawPreview();
 };
 
 window.setMode=function(el){
-  var btns=document.querySelectorAll("#modeRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#modeRow .toggle-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentMode=el.dataset.mode;
   drawPreview();
@@ -234,20 +234,20 @@ function drawWatermark(ctx,w,h,s){
   ctx.textBaseline="middle";
 
   if(currentMode==="tile"){
-    var angle=s.rotation*Math.PI/180;
-    var gap=s.fontSize*4;
+    const angle=s.rotation*Math.PI/180;
+    const gap=s.fontSize*4;
     ctx.rotate(angle);
-    var diag=Math.sqrt(w*w+h*h);
-    for(var ty=-diag;ty<diag*2;ty+=gap){
-      for(var tx=-diag;tx<diag*2;tx+=gap){
+    const diag=Math.sqrt(w*w+h*h);
+    for(let ty=-diag;ty<diag*2;ty+=gap){
+      for(let tx=-diag;tx<diag*2;tx+=gap){
         ctx.fillText(s.text,tx,ty);
       }
     }
   }else{
-    var tw=ctx.measureText(s.text).width;
-    var th=s.fontSize;
-    var pad=Math.max(20,s.fontSize*0.5);
-    var x=pad,y=pad+th/2;
+    const tw=ctx.measureText(s.text).width;
+    const th=s.fontSize;
+    const pad=Math.max(20,s.fontSize*0.5);
+    let x=pad,y=pad+th/2;
     if(currentPos.includes("c")&&!currentPos.includes("t")&&!currentPos.includes("b")){y=h/2;}
     if(currentPos.includes("b")){y=h-pad-th/2;}
     if(currentPos.includes("c")&&currentPos.length===2&&currentPos[1]==="c"){x=(w-tw)/2;}
@@ -264,22 +264,22 @@ function drawWatermark(ctx,w,h,s){
 
 function drawPreview(){
   if(!origImg)return;
-  var maxW=600;
-  var scale=Math.min(1,maxW/origImg.width);
-  var w=Math.round(origImg.width*scale);
-  var h=Math.round(origImg.height*scale);
+  const maxW=600;
+  const scale=Math.min(1,maxW/origImg.width);
+  const w=Math.round(origImg.width*scale);
+  const h=Math.round(origImg.height*scale);
   pvCanvas.width=w;pvCanvas.height=h;
   pvCtx.drawImage(origImg,0,0,w,h);
-  var s=getSettings();
+  const s=getSettings();
   s.fontSize=Math.round(s.fontSize*scale);
   drawWatermark(pvCtx,w,h,s);
 }
 
 window.doExport=function(){
   if(!origImg){alert("이미지를 먼저 업로드해주세요.");return;}
-  var outCanvas=document.createElement("canvas");
+  const outCanvas=document.createElement("canvas");
   outCanvas.width=origImg.width;outCanvas.height=origImg.height;
-  var outCtx=outCanvas.getContext("2d");
+  const outCtx=outCanvas.getContext("2d");
   outCtx.drawImage(origImg,0,0);
   drawWatermark(outCtx,origImg.width,origImg.height,getSettings());
   outCanvas.toBlob(function(blob){
@@ -292,7 +292,7 @@ window.doExport=function(){
 
 window.downloadResult=function(){
   if(!resultBlob)return;
-  var a=document.createElement("a");
+  const a=document.createElement("a");
   a.href=URL.createObjectURL(resultBlob);
   a.download=resultName+".png";
   a.click();

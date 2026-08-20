@@ -134,19 +134,19 @@
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
-var currentTax="normal";
-var TAX_RATES={normal:0.154,low:0.095,free:0};
+let currentTax="normal";
+const TAX_RATES={normal:0.154,low:0.095,free:0};
 
 document.querySelectorAll(".comma-input").forEach(function(el){
   el.addEventListener("input",function(){
-    var v=this.value.replace(/[^\d]/g,"");
+    const v=this.value.replace(/[^\d]/g,"");
     this.value=v?parseInt(v).toLocaleString():"";
   });
 });
 
 function setTax(el){
-  var btns=document.querySelectorAll("#taxRow .toggle-btn");
-  for(var i=0;i<btns.length;i++)btns[i].classList.remove("active");
+  const btns=document.querySelectorAll("#taxRow .toggle-btn");
+  for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentTax=el.dataset.tax;
 }
@@ -155,39 +155,39 @@ function getNum(id){return parseInt((document.getElementById(id).value||"0").rep
 function fmt(n){return Math.round(n).toLocaleString();}
 
 function calculate(){
-  var monthly=getNum("monthly");
-  var rate=parseFloat(document.getElementById("rate").value)||0;
-  var months=parseInt(document.getElementById("months").value)||0;
+  const monthly=getNum("monthly");
+  const rate=parseFloat(document.getElementById("rate").value)||0;
+  const months=parseInt(document.getElementById("months").value)||0;
   if(monthly<=0){alert("월 적립액을 입력해주세요.");return;}
   if(rate<=0){alert("이자율을 입력해주세요.");return;}
   if(months<=0){alert("적금 기간을 입력해주세요.");return;}
 
-  var totalDeposit=monthly*months;
-  var taxRate=TAX_RATES[currentTax];
-  var monthlyRate=rate/100/12;
+  const totalDeposit=monthly*months;
+  const taxRate=TAX_RATES[currentTax];
+  const monthlyRate=rate/100/12;
 
   // 단리: 매월 불입금 x 잔여개월 x 월이자율
-  var simpleInterest=0;
-  for(var i=1;i<=months;i++){
+  let simpleInterest=0;
+  for(let i=1;i<=months;i++){
     simpleInterest+=monthly*(months-i+1)*monthlyRate;
   }
-  var simpleTax=Math.round(simpleInterest*taxRate);
-  var simpleAfterTax=simpleInterest-simpleTax;
-  var simpleTotal=totalDeposit+Math.round(simpleAfterTax);
+  const simpleTax=Math.round(simpleInterest*taxRate);
+  const simpleAfterTax=simpleInterest-simpleTax;
+  const simpleTotal=totalDeposit+Math.round(simpleAfterTax);
 
   // 복리: 매월 불입금에 복리 적용
-  var compoundTotal=0;
-  for(var j=1;j<=months;j++){
+  let compoundTotal=0;
+  for(let j=1;j<=months;j++){
     compoundTotal+=monthly*Math.pow(1+monthlyRate,months-j+1);
   }
-  var compoundInterest=compoundTotal-totalDeposit;
-  var compoundTax=Math.round(compoundInterest*taxRate);
-  var compoundAfterTax=compoundInterest-compoundTax;
-  var compoundFinal=totalDeposit+Math.round(compoundAfterTax);
+  const compoundInterest=compoundTotal-totalDeposit;
+  const compoundTax=Math.round(compoundInterest*taxRate);
+  const compoundAfterTax=compoundInterest-compoundTax;
+  const compoundFinal=totalDeposit+Math.round(compoundAfterTax);
 
   document.getElementById("mainResult").textContent=fmt(simpleTotal)+"원";
 
-  var html="";
+  let html="";
   html+='<div class="compare-card highlight"><div class="compare-title">단리</div>';
   html+='<div class="compare-row"><span class="label">총 납입액</span><span class="value">'+fmt(totalDeposit)+'원</span></div>';
   html+='<div class="compare-row"><span class="label">세전 이자</span><span class="value">'+fmt(Math.round(simpleInterest))+'원</span></div>';

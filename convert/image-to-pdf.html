@@ -159,18 +159,18 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 (function(){
-var images=[];
-var pdfBlob=null;
-var dragIdx=null;
-var fileInput=document.getElementById("fileInput");
-var uploadZone=document.getElementById("uploadZone");
+const images=[];
+let pdfBlob=null;
+let dragIdx=null;
+const fileInput=document.getElementById("fileInput");
+const uploadZone=document.getElementById("uploadZone");
 
 uploadZone.addEventListener("dragover",function(e){e.preventDefault();});
 uploadZone.addEventListener("drop",function(e){e.preventDefault();addFiles(e.dataTransfer.files);});
 fileInput.addEventListener("change",function(){addFiles(this.files);this.value="";});
 
 function addFiles(fileList){
-  for(var i=0;i<fileList.length;i++){
+  for(let i=0;i<fileList.length;i++){
     if(!fileList[i].type.startsWith("image/"))continue;
     if(images.length>=30)break;
     images.push({file:fileList[i],url:URL.createObjectURL(fileList[i])});
@@ -181,14 +181,14 @@ function addFiles(fileList){
 }
 
 function renderThumbs(){
-  var list=document.getElementById("thumbList");
+  const list=document.getElementById("thumbList");
   list.innerHTML="";
-  for(var i=0;i<images.length;i++){
-    var div=document.createElement("div");
+  for(let i=0;i<images.length;i++){
+    const div=document.createElement("div");
     div.className="thumb-item";
     div.draggable=true;
     div.dataset.idx=i;
-    div.innerHTML='<img class="thumb-img" src="'+images[i].url+'"><button class="thumb-remove" data-idx="'+i+'">&times;</button><div class="thumb-num">'+(i+1)+"</div>";
+    div.innerHTML='<img class="thumb-img" src="'+images[i].url+'" alt="'+images[i].file.name+'"><button class="thumb-remove" data-idx="'+i+'">&times;</button><div class="thumb-num">'+(i+1)+"</div>";
     div.addEventListener("dragstart",onDragStart);
     div.addEventListener("dragover",onDragOver);
     div.addEventListener("dragleave",onDragLeave);
@@ -199,7 +199,7 @@ function renderThumbs(){
   list.querySelectorAll(".thumb-remove").forEach(function(btn){
     btn.addEventListener("click",function(e){
       e.stopPropagation();
-      var idx=parseInt(this.dataset.idx);
+      let idx=parseInt(this.dataset.idx);
       // Revoke the object URL to free memory
       if(images[idx] && images[idx].url) URL.revokeObjectURL(images[idx].url);
       images.splice(idx,1);
@@ -216,9 +216,9 @@ function onDragLeave(){this.classList.remove("over");}
 function onDragEnd(){document.querySelectorAll(".thumb-item").forEach(function(el){el.classList.remove("dragging","over");});}
 function onDrop(e){
   e.preventDefault();this.classList.remove("over");
-  var toIdx=parseInt(this.dataset.idx);
+  const toIdx=parseInt(this.dataset.idx);
   if(dragIdx===null||dragIdx===toIdx)return;
-  var item=images.splice(dragIdx,1)[0];
+  const item=images.splice(dragIdx,1)[0];
   images.splice(toIdx,0,item);
   renderThumbs();
 }
@@ -229,41 +229,41 @@ window.setOpt=function(el,rowId){
 };
 
 function getOpt(rowId){
-  var active=document.querySelector("#"+rowId+" .toggle-btn.active");
+  const active=document.querySelector("#"+rowId+" .toggle-btn.active");
   return active?active.dataset.val:"";
 }
 
 window.convertPDF=function(){
   if(!images.length)return;
-  var btn=document.getElementById("convertBtn");
+  const btn=document.getElementById("convertBtn");
   btn.disabled=true;btn.textContent="변환 중...";
-  var bar=document.getElementById("progressBar");
-  var fill=document.getElementById("progressFill");
+  const bar=document.getElementById("progressBar");
+  const fill=document.getElementById("progressFill");
   bar.style.display="block";fill.style.width="0%";
 
-  var size=getOpt("sizeRow");
-  var orient=getOpt("orientRow");
-  var margin=parseInt(getOpt("marginRow"));
-  var fitMode=getOpt("fitRow");
+  const size=getOpt("sizeRow");
+  const orient=getOpt("orientRow");
+  const margin=parseInt(getOpt("marginRow"));
+  const fitMode=getOpt("fitRow");
 
-  var jsPDF=window.jspdf.jsPDF;
-  var doc=new jsPDF({orientation:orient==="landscape"?"l":"p",unit:"mm",format:size});
+  const jsPDF=window.jspdf.jsPDF;
+  const doc=new jsPDF({orientation:orient==="landscape"?"l":"p",unit:"mm",format:size});
 
-  var pageW=doc.internal.pageSize.getWidth();
-  var pageH=doc.internal.pageSize.getHeight();
-  var idx=0;
+  const pageW=doc.internal.pageSize.getWidth();
+  const pageH=doc.internal.pageSize.getHeight();
+  let idx=0;
 
   function addNext(){
     if(idx>=images.length){
       // Revoke all image URLs after conversion (memory cleanup)
       images.forEach(function(item){if(item.url)URL.revokeObjectURL(item.url);});
       pdfBlob=doc.output("blob");
-      var sizeKB=(pdfBlob.size/1024).toFixed(0);
-      var sizeMB=(pdfBlob.size/1048576).toFixed(1);
+      const sizeKB=(pdfBlob.size/1024).toFixed(0);
+      const sizeMB=(pdfBlob.size/1048576).toFixed(1);
       document.getElementById("resultSub").textContent=images.length+"장 · "+(pdfBlob.size>1048576?sizeMB+"MB":sizeKB+"KB");
       document.getElementById("resultArea").style.display="block";
       document.getElementById("downloadBtn").onclick=function(){
-        var a=document.createElement("a");
+        const a=document.createElement("a");
         a.href=URL.createObjectURL(pdfBlob);
         a.download="modutools_images.pdf";
         a.click();
@@ -274,25 +274,25 @@ window.convertPDF=function(){
       return;
     }
     if(idx>0)doc.addPage();
-    var img=new Image();
+    const img=new Image();
     img.onload=function(){
-      var iw=img.width,ih=img.height;
-      var aw=pageW-margin*2,ah=pageH-margin*2;
-      var w,h,x,y;
+      const iw=img.width,ih=img.height;
+      const aw=pageW-margin*2,ah=pageH-margin*2;
+      let w,h,x,y;
       if(fitMode==="fill"){
-        var scale=Math.max(aw/iw,ah/ih);
+        let scale=Math.max(aw/iw,ah/ih);
         w=iw*scale;h=ih*scale;
         x=(pageW-w)/2;y=(pageH-h)/2;
       }else{
-        var scale=Math.min(aw/iw,ah/ih);
+        const scale=Math.min(aw/iw,ah/ih);
         w=iw*scale;h=ih*scale;
         x=(pageW-w)/2;y=(pageH-h)/2;
       }
-      var canvas=document.createElement("canvas");
+      const canvas=document.createElement("canvas");
       canvas.width=iw;canvas.height=ih;
-      var ctx=canvas.getContext("2d");
+      const ctx=canvas.getContext("2d");
       ctx.drawImage(img,0,0);
-      var dataUrl=canvas.toDataURL("image/jpeg",0.92);
+      const dataUrl=canvas.toDataURL("image/jpeg",0.92);
       doc.addImage(dataUrl,"JPEG",x,y,w,h);
       idx++;
       fill.style.width=Math.round(idx/images.length*100)+"%";

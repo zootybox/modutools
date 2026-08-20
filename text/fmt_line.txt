@@ -1,0 +1,1 @@
+﻿            list.innerHTML+='<div class="file-item"><img src="'+url+'" class="file-thumb"><div class="file-info"><div class="file-name">'+newName+'</div><div class="file-meta">'+origSize+' KB → '+newSize+' KB</div></div><button class="file-download" onclick="downloadOne('+idx+')">다운로드</button></div>';
