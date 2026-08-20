@@ -67,12 +67,8 @@
 .progress-bar-fill{height:100%;background:linear-gradient(90deg,#2563EB,#3B82F6);border-radius:4px;transition:width .3s ease;width:0%}
 .progress-sub{font-size:11px;color:var(--g400);margin-top:6px;text-align:right}
 </style>
-/* ── Ad Slot ── */
-.ad-slot,.ad-slot-middle{margin:20px 0;text-align:center}
-.ad-label{font-size:10px;color:var(--g400);margin-bottom:4px;letter-spacing:.5px}
-.ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-
-/* ── Result Area ── */
+<style>
+/* OCR Result Area */
 .result-area{display:none}
 .result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .result-header .result-meta{font-size:13px;color:var(--g500);font-weight:600}
@@ -85,19 +81,8 @@
 .result-btn:active{transform:scale(.97)}
 .result-btn.primary-btn{background:var(--g900);color:#fff;border-color:var(--g900)}
 .result-btn.primary-btn:hover{background:#000;color:#fff}
-
-/* ── Reset Button ── */
 .reset-btn{width:100%;padding:14px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g500);margin-top:12px}
 .reset-btn:hover{border-color:var(--g400);color:var(--g700);background:var(--g50)}
-
-/* ── SEO / FAQ ── */
-
-.guide-card p,.guide-card li{font-size:13px;line-height:1.8;color:var(--g600)}
-.guide-card ul{padding-left:18px;margin:6px 0}
-.guide-card li{margin-bottom:4px}
-/* ── Toast ── */
-
-/* ── Responsive ── */
 @media(max-width:480px){
   .page-title{font-size:22px}
   .upload-zone{padding:32px 16px}
@@ -105,9 +90,8 @@
   .lang-btn{font-size:12px;padding:8px 10px;min-width:70px}
   .result-actions{flex-direction:column}
   .result-btn{min-width:auto}
-  
 }
-<script type="application/ld+json">
+</style><script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 텍스트 추출 (OCR)","url":"https://modutools.com/text/ocr.html","description":"이미지 속 글자를 텍스트로 추출하는 무료 온라인 OCR 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 
 </script>
