@@ -91,22 +91,6 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   .tool-btn{height:48px}
   .tool-btn-main{flex:1}
 }
-
-.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
-.security-badge span{font-size:14px}
-.guide-section{margin-top:24px}
-.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
-.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
-.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
-.faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
-.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
 </style>
 </head>
 <body>
@@ -126,7 +110,6 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
 <main class="tool-page">
   <h1 class="tool-title">TTS 텍스트 음성 변환</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
-
 
   <p class="tool-sub">텍스트를 입력하면 자연스러운 음성으로 읽어줍니다. 속도·톤·볼륨까지 세밀하게 조절하세요.</p>
 
@@ -469,28 +452,6 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;hei
   }
 })();
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 
 <script type="application/ld+json">
@@ -505,28 +466,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
   "description":"텍스트를 자연스러운 음성으로 변환하세요. 한국어·영어 지원, 속도·톤·볼륨 세부 조절 가능."
 }
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 <script type="application/ld+json">
 {
@@ -539,29 +478,8 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
   ]
 }
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 <div class="toast" id="toast"></div>
+<script src="/js/ui-common.js"></script>
 </body>
 </html>

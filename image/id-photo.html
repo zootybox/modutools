@@ -53,43 +53,9 @@
 .download-btn:hover{background:var(--primary-dark)}
 .disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
 @media(max-width:480px){.spec-grid{grid-template-columns:1fr 1fr;gap:6px}.spec-btn{padding:10px 8px}.spec-name{font-size:12px}}
-
-.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
-.security-badge span{font-size:14px}
-.guide-section{margin-top:24px}
-.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
-.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
-.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
-.faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
-.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"증명사진 규격 맞추기","url":"https://modutools.com/image/id-photo.html","description":"여권, 이력서, 주민등록증 증명사진 규격에 맞게 편집하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 
 </script>
 </head>
@@ -99,7 +65,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <main class="page">
 <h1 class="page-title">증명사진 규격 맞추기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
-
 
 <p class="page-sub">여권, 이력서, 주민등록증 등 규격에 맞게 사진을 편집합니다</p>
 <div class="card">
@@ -205,28 +170,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"이 도구로 만든 사진을 공식 서류에 사용할 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"본 도구는 이미지 크기와 비율을 규격에 맞게 조정해주지만, 공식 증명사진의 세부 요건을 자동으로 검증하지는 않습니다. 공식 서류에는 사진관 촬영을 권장합니다."}},{"@type":"Question","name":"여권 사진과 이력서 사진의 차이는 무엇인가요?","acceptedAnswer":{"@type":"Answer","text":"여권 사진은 35×45mm로 이력서 사진(30×40mm)보다 크며 규정이 엄격합니다. 여권은 정면 무표정, 흰색 배경이 필수이고, 이력서는 자연스러운 미소면 충분합니다."}},{"@type":"Question","name":"배경색을 바꿀 수 있나요?","acceptedAnswer":{"@type":"Answer","text":"현재 본 도구는 원본 배경을 유지하면서 크기만 조정합니다. 흰색이나 밝은 배경 앞에서 촬영한 원본 사진을 사용하는 것이 좋습니다."}}]}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 
 </script>
 
@@ -361,29 +304,8 @@ window.downloadResult=function(){
 };
 })();
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 <div class="toast" id="toast"></div>
+<script src="/js/ui-common.js"></script>
 </body>
 </html>

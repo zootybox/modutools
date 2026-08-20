@@ -31,8 +31,7 @@
 .info-badge strong{color:var(--primary)}
 .copy-btn{padding:10px 20px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
 .copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
 @media(max-width:480px){.text-area{min-height:140px;font-size:13px}}
 .mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
 .mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
@@ -46,43 +45,9 @@
 .mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
 .mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
 .mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
-
-.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
-.security-badge span{font-size:14px}
-.guide-section{margin-top:24px}
-.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
-.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
-.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
-.faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
-.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"중복 줄 제거","url":"https://modutools.com/text/dedupe.html","description":"텍스트에서 중복된 줄을 자동으로 제거하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 
 </script>
 <script type="application/ld+json">
@@ -93,28 +58,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 {"@type":"Question","name":"처리할 수 있는 텍스트 양에 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리할 수 있습니다. 일반적인 사용에서는 제한을 느끼기 어렵습니다."}}
 ]}
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 </head>
 <body>
@@ -123,7 +66,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <main class="page">
 <h1 class="page-title">중복 줄 제거</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
-
 
 <p class="page-sub">텍스트에서 중복된 줄을 자동으로 찾아 제거합니다</p>
 <div class="card">
@@ -134,7 +76,7 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <label class="option-label"><input type="checkbox" id="optTrim" checked> 앞뒤 공백 제거</label>
 <label class="option-label"><input type="checkbox" id="optCase"> 대소문자 무시</label>
 </div>
-<button class="calc-btn" onclick="process()">중복 줄 제거하기</button>
+<button class="calc-btn" id="processBtn">중복 줄 제거하기</button>
 </div>
 <div id="resultArea" style="display:none">
 <div class="card">
@@ -145,7 +87,7 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <span class="info-badge">제거 <strong id="removedCount">0</strong>줄</span>
 </div>
 <textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
-<div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
+<div style="margin-top:12px;text-align:right"><button class="copy-btn" id="copyResultBtn">📋 결과 복사</button></div>
 </div>
 </div>
 
@@ -167,25 +109,24 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 
 <div class="mt-faq">
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">중복 줄 제거는 어떤 상황에서 유용한가요?</div>
+<div class="mt-faq-q">중복 줄 제거는 어떤 상황에서 유용한가요?</div>
 <div class="mt-faq-a">엑셀에서 복사한 데이터 정리, 이메일·전화번호 목록에서 중복 제거, 로그 파일 분석, 프로그래밍 코드의 중복 라인 제거, 키워드 목록 정리 등 텍스트 기반 작업 전반에 활용됩니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">원래 순서가 유지되나요?</div>
+<div class="mt-faq-q">원래 순서가 유지되나요?</div>
 <div class="mt-faq-a">네, 기본적으로 원래 줄 순서를 유지하면서 중복된 줄만 제거합니다. 처음 등장한 줄은 그대로 유지되고, 이후 동일한 줄이 다시 나오면 삭제됩니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">대소문자를 구분하나요?</div>
+<div class="mt-faq-q">대소문자를 구분하나요?</div>
 <div class="mt-faq-a">기본 설정에서는 대소문자를 구분합니다. Hello와 hello는 서로 다른 줄로 인식됩니다. 대소문자 무시 옵션을 활용하면 동일한 줄로 처리할 수 있습니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">처리할 수 있는 텍스트 양에 제한이 있나요?</div>
+<div class="mt-faq-q">처리할 수 있는 텍스트 양에 제한이 있나요?</div>
 <div class="mt-faq-a">서버로 전송하지 않고 브라우저에서 직접 처리하므로, 사용자 컴퓨터의 메모리 범위 내에서 수만 줄까지 처리 가능합니다. 일반적인 사용에서는 제한을 느끼기 어렵습니다.</div>
 </div>
 </div>
 
 <p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
-
 
 <div class="guide-section"><div class="guide-card"><h2>클라이언트 브라우저 로컬 처리 안내</h2>
 <p>본 도구는 100% 클라이언트 사이드(브라우저)에서만 동작합니다. 입력한 데이터는 외부 서버로 전혀 전송되지 않으며, 사용자의 브라우저 메모리에서만 일시적으로 처리됩니다. 모든 JavaScript 코드와 CSS 스타일은 브라우저 내에서 로컬 실행되므로, 개인정보, 금융 정보, 문서 등 민감한 데이터도 안심하고 사용할 수 있습니다.</p>
@@ -201,7 +142,7 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
-function process(){
+document.getElementById('processBtn').addEventListener('click',function(){
   const input=document.getElementById('inputText').value;
   if(!input.trim()){alert('텍스트를 입력해주세요.');return;}
   const optEmpty=document.getElementById('optEmpty').checked;
@@ -223,36 +164,19 @@ function process(){
   document.getElementById('outputText').value=result.join('\n');
   document.getElementById('resultArea').style.display='block';
   document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
-}
-function copyResult(){
+});
+document.getElementById('copyResultBtn').addEventListener('click',function(){
   const t=document.getElementById('outputText').value;
   if(!t){showToast('복사할 내용이 없습니다');return;}
   navigator.clipboard.writeText(t).then(()=>showToast('클립보드에 복사했습니다'));
-}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+});
+/* mt-faq toggle via delegation */
+document.querySelector('.mt-faq').addEventListener('click',function(e){
+  var q=e.target.closest('.mt-faq-q');
+  if(q)q.parentElement.classList.toggle('open');
+});
 
 </script>
+<script src="/js/ui-common.js"></script>
 </body>
 </html>

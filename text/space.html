@@ -32,8 +32,7 @@
 .info-badge strong{color:var(--primary)}
 .copy-btn{padding:10px 20px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
 .copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;opacity:0;transition:.3s;z-index:999}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
 @media(max-width:480px){.btn-grid{grid-template-columns:1fr 1fr;gap:6px}.convert-btn{padding:10px;font-size:12px}}
 .mt-guide{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-top:16px}
 .mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--g900)}
@@ -47,43 +46,9 @@
 .mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--g600);line-height:1.8}
 .mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
 .mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
-
-.security-badge{display:inline-flex;align-items:center;gap:6px;background:#ECFDF5;color:#059669;font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:20px;border:1px solid #A7F3D0}
-.security-badge span{font-size:14px}
-.guide-section{margin-top:24px}
-.guide-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:12px}
-.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--g900)}
-.guide-card p{font-size:13px;line-height:1.8;color:var(--g600);margin-bottom:10px}
-.faq-item{border:1px solid var(--g200);border-radius:10px;margin-bottom:8px;overflow:hidden;background:#fff}
-.faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--g900);user-select:none}
-.faq-q::after{content:"\25bc";font-size:10px;color:var(--g400);transition:transform .25s}
-.faq-item.open .faq-q::after{transform:rotate(180deg)}
-.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s;font-size:13px;color:var(--g600);line-height:1.8}
-.faq-item.open .faq-a{max-height:600px;padding:0 16px 14px}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--g900);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;opacity:0;transition:.35s;z-index:999;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"공백 정리기","url":"https://modutools.com/text/space.html","description":"텍스트의 불필요한 공백, 줄바꿈, 탭을 정리하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
 
 </script>
 <script type="application/ld+json">
@@ -94,28 +59,6 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 {"@type":"Question","name":"원본 텍스트가 서버에 저장되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다."}}
 ]}
 
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
 </script>
 </head>
 <body>
@@ -125,20 +68,19 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <h1 class="page-title">공백 정리기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-
 <p class="page-sub">불필요한 공백, 줄바꿈, 탭 문자를 깔끔하게 정리합니다</p>
 <div class="card">
 <div class="card-title">📝 텍스트 입력</div>
 <textarea class="text-area" id="textInput" placeholder="여기에 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
 <div class="btn-grid">
-<button class="convert-btn" onclick="clean('multiSpace')">🔹 연속 공백 → 1칸</button>
-<button class="convert-btn" onclick="clean('multiLine')">🔹 연속 줄바꿈 → 1줄</button>
-<button class="convert-btn" onclick="clean('trimLines')">🔹 각 줄 앞뒤 공백 제거</button>
-<button class="convert-btn" onclick="clean('emptyLines')">🔹 빈 줄 모두 제거</button>
-<button class="convert-btn" onclick="clean('tabs')">🔹 탭 → 공백 변환</button>
-<button class="convert-btn" onclick="clean('allSpaces')">🔹 모든 공백 제거</button>
+<button class="convert-btn" data-clean="multiSpace">🔹 연속 공백 → 1칸</button>
+<button class="convert-btn" data-clean="multiLine">🔹 연속 줄바꿈 → 1줄</button>
+<button class="convert-btn" data-clean="trimLines">🔹 각 줄 앞뒤 공백 제거</button>
+<button class="convert-btn" data-clean="emptyLines">🔹 빈 줄 모두 제거</button>
+<button class="convert-btn" data-clean="tabs">🔹 탭 → 공백 변환</button>
+<button class="convert-btn" data-clean="allSpaces">🔹 모든 공백 제거</button>
 </div>
-<button class="all-btn" onclick="clean('all')">✨ 한번에 전부 정리</button>
+<button class="all-btn" id="cleanAllBtn">✨ 한번에 전부 정리</button>
 </div>
 <div id="resultArea" style="display:none">
 <div class="card">
@@ -149,7 +91,7 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <span class="info-badge">제거 <strong id="removedLen">0</strong>자</span>
 </div>
 <textarea class="text-area" id="outputText" readonly style="background:var(--g50)"></textarea>
-<div style="margin-top:12px;text-align:right"><button class="copy-btn" onclick="copyResult()">📋 결과 복사</button></div>
+<div style="margin-top:12px;text-align:right"><button class="copy-btn" id="copyResultBtn">📋 결과 복사</button></div>
 </div>
 </div>
 
@@ -171,25 +113,24 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 
 <div class="mt-faq">
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">공백 정리기는 어떤 공백을 제거하나요?</div>
+<div class="mt-faq-q">공백 정리기는 어떤 공백을 제거하나요?</div>
 <div class="mt-faq-a">연속된 공백(스페이스 여러 개)을 하나로 합치고, 연속 줄바꿈을 정리하며, 탭 문자를 공백으로 변환합니다. 줄 앞뒤의 불필요한 공백(트리밍)도 제거할 수 있습니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">줄바꿈도 제거되나요?</div>
+<div class="mt-faq-q">줄바꿈도 제거되나요?</div>
 <div class="mt-faq-a">기본적으로 연속된 빈 줄(2줄 이상)을 하나로 줄입니다. 모든 줄바꿈을 완전히 제거하여 텍스트를 한 줄로 만드는 옵션도 제공합니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">어떤 상황에서 공백 정리가 필요한가요?</div>
+<div class="mt-faq-q">어떤 상황에서 공백 정리가 필요한가요?</div>
 <div class="mt-faq-a">웹페이지에서 복사한 텍스트 정리, PDF에서 추출한 텍스트의 불규칙한 공백 제거, 코드 들여쓰기 통일, SNS·블로그 글 작성 전 텍스트 다듬기, 번역 결과물 후처리 등 다양한 텍스트 작업에 활용됩니다.</div>
 </div>
 <div class="mt-faq-item">
-<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">원본 텍스트가 서버에 저장되나요?</div>
+<div class="mt-faq-q">원본 텍스트가 서버에 저장되나요?</div>
 <div class="mt-faq-a">아닙니다. 입력한 텍스트는 브라우저에서만 처리되며 서버로 전송되지 않습니다. 개인정보가 포함된 텍스트도 안심하고 사용할 수 있습니다.</div>
 </div>
 </div>
 
 <p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
-
 
 <div class="guide-section"><div class="guide-card"><h2>클라이언트 브라우저 로컬 처리 안내</h2>
 <p>본 도구는 100% 클라이언트 사이드(브라우저)에서만 동작합니다. 입력한 데이터는 외부 서버로 전혀 전송되지 않으며, 사용자의 브라우저 메모리에서만 일시적으로 처리됩니다. 모든 JavaScript 코드와 CSS 스타일은 브라우저 내에서 로컬 실행되므로, 개인정보, 금융 정보, 문서 등 민감한 데이터도 안심하고 사용할 수 있습니다.</p>
@@ -205,6 +146,12 @@ var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <div class="toast" id="toast"></div>
 <script>
+/* Convert buttons - delegated via data-clean attribute */
+document.querySelector('.btn-grid').addEventListener('click',function(e){
+  var btn=e.target.closest('[data-clean]');
+  if(btn)clean(btn.dataset.clean);
+});
+document.getElementById('cleanAllBtn').addEventListener('click',function(){clean('all');});
 function clean(type){
   const input=document.getElementById('textInput').value;
   if(!input){alert('텍스트를 입력해주세요.');return;}
@@ -231,35 +178,18 @@ function clean(type){
   document.getElementById('resultArea').style.display='block';
   document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
 }
-function copyResult(){
+document.getElementById('copyResultBtn').addEventListener('click',function(){
   const t=document.getElementById('outputText').value;
   if(!t){showToast('복사할 내용이 없습니다');return;}
   navigator.clipboard.writeText(t).then(()=>showToast('클립보드에 복사했습니다'));
-}
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
-
-
-document.querySelectorAll(".faq-q").forEach(function(q){q.addEventListener("click",function(){this.parentElement.classList.toggle("open");});});
-var tt=document.getElementById("toast"),tmr=null;function st(m){if(!tt)return;tt.textContent=m;tt.classList.add("show");clearTimeout(tmr);tmr=setTimeout(function(){tt.classList.remove("show");},2500);}
+});
+/* mt-faq toggle via delegation */
+document.querySelector('.mt-faq').addEventListener('click',function(e){
+  var q=e.target.closest('.mt-faq-q');
+  if(q)q.parentElement.classList.toggle('open');
+});
 
 </script>
+<script src="/js/ui-common.js"></script>
 </body>
 </html>
