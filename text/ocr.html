@@ -182,13 +182,8 @@
   <button class="reset-btn" id="resetBtn">🔄 새로 하기</button>
 </div>
 
-</main>
 
-<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
-
-<div class="toast" id="toast"></div>
 
 <div class="guide-section">
   <div class="guide-card">
@@ -219,7 +214,15 @@
     <div class="faq-a">모든 OCR 처리는 사용자의 브라우저 내에서만 이루어집니다. Tesseract.js 엔진이 로컬에서 이미지를 분석하며, 어떤 데이터도 외부 서버로 전송되지 않습니다. 업로드한 이미지와 추출된 텍스트는 서버에 저장되지 않으며, 브라우저 탭을 닫으면 자동으로 삭제됩니다. 작업 완료 후 페이지를 새로고침하거나 '새로 하기' 버튼을 클릭하면 메모리에서도 안전하게 제거됩니다.</div>
   </div>
 </div>
-<body>
+</main>
+
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+
+<div class="toast" id="toast"></div>
+
+
 <script>
 (function(){let r=null,cl="kor+eng",ip=false,uz=document.getElementById("uploadZone"),fi=document.getElementById("fileInput"),pr=document.getElementById("previewImg"),pw=document.getElementById("previewWrap"),fn=document.getElementById("fileName"),fs=document.getElementById("fileSize"),ui=document.getElementById("uploadIcon"),ut=document.getElementById("uploadText"),us=document.getElementById("uploadSub"),ob=document.getElementById("ocrBtn"),pgw=document.getElementById("progressWrap"),pgf=document.getElementById("progressFill"),pgl=document.getElementById("progressLabel"),pgp=document.getElementById("progressPct"),pgs=document.getElementById("progressSub"),to=document.getElementById("textOutput"),ra=document.getElementById("resultArea"),rs=document.getElementById("resultStats");
 uz.addEventListener("click",function(e){if(e.target.closest(".preview-change-btn")||e.target.closest(".preview-wrap"))return;fi.click();});
