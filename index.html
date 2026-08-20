@@ -39,15 +39,15 @@
 
 /* Category */
 .main{max-width:1080px;margin:0 auto;padding:0 20px 40px}
-.category{margin-bottom:36px}
-.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.category{margin-bottom:48px}
+.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
 .cat-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
 .cat-title{font-size:17px;font-weight:700}
 .cat-count{font-size:12px;color:var(--g400);margin-left:2px}
 
 /* Tool Grid */
-.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
-.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.tool-card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer;height:100%}
 .tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .tool-emoji{font-size:26px;line-height:1;flex-shrink:0;margin-top:2px}
 .tool-info{flex:1;min-width:0}
@@ -64,12 +64,21 @@
 .recent-clear{margin-left:auto;background:none;border:1px solid var(--g200);color:var(--g400);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s}
 .recent-clear:hover{color:var(--g600);border-color:var(--g300)}
 
+/* Main bottom section spacing */
+.main .card:last-child{margin-bottom:0}
+.main .card + .card{margin-top:0}
+
+/* Principles grid card uniform height */
+.principles-grid .principle-card{height:100%}
+
 @media(max-width:640px){
   .hero{padding:36px 20px 24px}
   .hero h1{font-size:24px}
   .tool-grid{grid-template-columns:1fr 1fr;gap:8px}
   .tool-card{padding:14px;flex-direction:column;gap:8px}
   .tool-emoji{font-size:24px}
+  .category{margin-bottom:36px}
+  .main .card{padding:18px}
 }
 @media(max-width:380px){
   .tool-grid{grid-template-columns:1fr}
@@ -500,43 +509,43 @@
     </div>
   </section>
 
+  <!-- 3대 운영 원칙 -->
+  <div class="card" style="margin-top:40px;margin-bottom:0">
+    <div class="card-title">🔒 modutools의 3대 운영 원칙</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:100%;margin:0 auto">
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🔒</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">서버 전송 제로 보안</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">모든 도구는 사용자의 브라우저에서만 실행됩니다. 입력한 데이터(이미지, PDF, 텍스트, 금융 정보)가 외부 서버로 전송되지 않아 개인정보가 안전합니다.</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🆓</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">무제한 무료</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">회원가입, 워터마크, 횟수 제한이 전혀 없습니다. 모든 기능을 제한 없이 무료로 사용할 수 있습니다. iLovePDF, Smallpdf 등 유료 서비스의 무료 대안입니다.</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">⚡</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">즉시 처리 속도</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">서버 통신이 없어 업로드 즉시 결과를 확인할 수 있습니다. 대용량 파일도 브라우저 메모리에서 실시간 처리하여 대기 시간이 없습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 카테고리별 안내 -->
+  <div class="card" style="margin-top:0">
+    <div class="card-title">📂 카테고리별 도구 안내</div>
+    <div style="font-size:13px;line-height:1.8;color:var(--g600)">
+      <p style="margin-bottom:10px"><strong>💰 금융 계산기</strong> — 연봉 실수령액(4대보험·소득세 반영), 대출이자(원리금균등·원금균등·만기일시), 4대보험 공제액, 전월세 전환율, 퇴직금, 적금 이자(단리·복리), 최저시급 월급, 종합소득세, 상속세·증여세를 계산합니다. 모든 계산은 2026년 최신 세법·요율 기준을 적용합니다.</p>
+      <p style="margin-bottom:10px"><strong>🖼️ 이미지 도구</strong> — 이미지 압축(JPEG/PNG/WebP 품질 조절), 리사이즈(비율 유지 옵션), 크롭(자유/고정 비율), 포맷 변환, 워터마크 추가(텍스트·투명도·위치 설정), EXIF 메타데이터 제거(GPS 위치정보 삭제), 증명사진 규격 맞추기(여권·이력서·주민등록증)를 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>📝 텍스트 도구</strong> — 글자수 세기(공백 포함/제외, 바이트, 단어, 문장 수), 대소문자 변환(UPPER/lower/Title/Sentence/camelCase), 공백 정리(연속 공백·줄바꿈·탭 정리), 중복 줄 제거(순서 유지 옵션), OCR 이미지 텍스트 추출(한국어+영어)을 제공합니다.</p>
+      <p style="margin-bottom:10px"><strong>🔄 변환기</strong> — 이미지를 PDF로 변환(여러 장 합치기, 순서 변경, 용지 설정), PDF 병합, 단위 변환(길이·무게·면적·부피·온도·속도·데이터), 날짜 계산(D-Day·날짜 차이·날짜 더하기), 시간대 변환, 나이 계산(만나이·한국나이·띠), 색상 코드 변환(HEX·RGB·HSL), TTS 텍스트 음성 변환을 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>🎲 생성기</strong> — QR코드 생성(URL·텍스트·와이파이 정보, 크기·색상 커스텀), 비밀번호 생성(길이·문자 종류·강도 표시), 랜덤 숫자 생성(범위·중복 제외 옵션), 닉네임 생성(한글·영문·혼합)을 제공합니다.</p>
+      <p style="margin-bottom:10px"><strong>🏠 생활 도구</strong> — BMI 계산(대한비만학회 기준·정상 체중 범위·이상 체중), 전기요금 계산(주택용 누진세), 연차 계산(근로기준법 기준), 학점 계산(4.5/4.3만점)을 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>🏋️ 운동 도구</strong> — 인터벌 타이머(타바타·HIIT 운동, 운동/휴식 시간 설정, 라운드 반복, 음성 안내, 화면 꺼짐 방지)를 제공합니다.</p>
+    </div>
+  </div>
+
 </main>
-
-<!-- 3대 운영 원칙 -->
-<div class="card" style="margin-top:24px">
-<div class="card-title">🔒 modutools의 3대 운영 원칙</div>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:100%;margin:0 auto">
-<div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
-<div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🔒</div>
-<div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">서버 전송 제로 보안</div>
-<div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">모든 도구는 사용자의 브라우저에서만 실행됩니다. 입력한 데이터(이미지, PDF, 텍스트, 금융 정보)가 외부 서버로 전송되지 않아 개인정보가 안전합니다.</div>
-</div>
-<div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
-<div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🆓</div>
-<div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">무제한 무료</div>
-<div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">회원가입, 워터마크, 횟수 제한이 전혀 없습니다. 모든 기능을 제한 없이 무료로 사용할 수 있습니다. iLovePDF, Smallpdf 등 유료 서비스의 무료 대안입니다.</div>
-</div>
-<div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
-<div style="font-size:36px;margin-bottom:10px;flex-shrink:0">⚡</div>
-<div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">즉시 처리 속도</div>
-<div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">서버 통신이 없어 업로드 즉시 결과를 확인할 수 있습니다. 대용량 파일도 브라우저 메모리에서 실시간 처리하여 대기 시간이 없습니다.</div>
-</div>
-</div>
-</div>
-
-<!-- 카테고리별 안내 -->
-<div class="card" style="margin-top:0">
-<div class="card-title">📂 카테고리별 도구 안내</div>
-<div style="font-size:13px;line-height:1.8;color:var(--g600)">
-<p style="margin-bottom:10px"><strong>💰 금융 계산기</strong> — 연봉 실수령액(4대보험·소득세 반영), 대출이자(원리금균등·원금균등·만기일시), 4대보험 공제액, 전월세 전환율, 퇴직금, 적금 이자(단리·복리), 최저시급 월급, 종합소득세, 상속세·증여세를 계산합니다. 모든 계산은 2026년 최신 세법·요율 기준을 적용합니다.</p>
-<p style="margin-bottom:10px"><strong>🖼️ 이미지 도구</strong> — 이미지 압축(JPEG/PNG/WebP 품질 조절), 리사이즈(비율 유지 옵션), 크롭(자유/고정 비율), 포맷 변환, 워터마크 추가(텍스트·투명도·위치 설정), EXIF 메타데이터 제거(GPS 위치정보 삭제), 증명사진 규격 맞추기(여권·이력서·주민등록증)를 지원합니다.</p>
-<p style="margin-bottom:10px"><strong>📝 텍스트 도구</strong> — 글자수 세기(공백 포함/제외, 바이트, 단어, 문장 수), 대소문자 변환(UPPER/lower/Title/Sentence/camelCase), 공백 정리(연속 공백·줄바꿈·탭 정리), 중복 줄 제거(순서 유지 옵션), OCR 이미지 텍스트 추출(한국어+영어)을 제공합니다.</p>
-<p style="margin-bottom:10px"><strong>🔄 변환기</strong> — 이미지를 PDF로 변환(여러 장 합치기, 순서 변경, 용지 설정), PDF 병합, 단위 변환(길이·무게·면적·부피·온도·속도·데이터), 날짜 계산(D-Day·날짜 차이·날짜 더하기), 시간대 변환, 나이 계산(만나이·한국나이·띠), 색상 코드 변환(HEX·RGB·HSL), TTS 텍스트 음성 변환을 지원합니다.</p>
-<p style="margin-bottom:10px"><strong>🎲 생성기</strong> — QR코드 생성(URL·텍스트·와이파이 정보, 크기·색상 커스텀), 비밀번호 생성(길이·문자 종류·강도 표시), 랜덤 숫자 생성(범위·중복 제외 옵션), 닉네임 생성(한글·영문·혼합)을 제공합니다.</p>
-<p style="margin-bottom:10px"><strong>🏠 생활 도구</strong> — BMI 계산(대한비만학회 기준·정상 체중 범위·이상 체중), 전기요금 계산(주택용 누진세), 연차 계산(근로기준법 기준), 학점 계산(4.5/4.3만점)을 지원합니다.</p>
-<p style="margin-bottom:10px"><strong>🏋️ 운동 도구</strong> — 인터벌 타이머(타바타·HIIT 운동, 운동/휴식 시간 설정, 라운드 반복, 음성 안내, 화면 꺼짐 방지)를 제공합니다.</p>
-</div>
-</div>
 
 <!-- Ad Bottom -->
 <div class="mt-ad">
