@@ -1,0 +1,16 @@
+c = open('c:/Users/user/Documents/GitHub/modutools/css/common.css', 'r', encoding='utf-8').read()
+print('=== common.css layout check ===')
+print('main-content max-width:', 'max-width:' in c[c.find('main-content'):c.find('main-content')+80])
+print('header-inner max-width:', 'max-width:1080px' in c)
+print('main-content padding:', 'padding:28px 32px' in c)
+print('header-inner padding:', 'padding:0 32px' in c)
+print('sidebar width:', 'width:240px' in c)
+print('main-area margin-left:', 'margin-left:240px' in c)
+print()
+
+c2 = open('c:/Users/user/Documents/GitHub/modutools/index.html', 'r', encoding='utf-8').read()
+print('=== index.html check ===')
+print('.main max-width:', '.main{width:100%' in c2)
+print('hero max-width preserved:', 'max-width:600px' in c2)
+print('main-content class:', 'class="main-content"' in c2)
+print('header-inner padding inherits:', 'padding:0 32px' not in c2)  # from CSS, not inline
