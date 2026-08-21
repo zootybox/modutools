@@ -16,7 +16,7 @@ const CATEGORIES = [
   {
     id: 'calc',
     emoji: '💰',
-    label: '계산기',
+    label: '월급·세금 계산기',
     title: '금융 계산기',
     color: '#DBEAFE',
     tools: [
@@ -34,7 +34,7 @@ const CATEGORIES = [
   {
     id: 'image',
     emoji: '🖼️',
-    label: '이미지',
+    label: '사진·이미지 편집',
     title: '이미지 도구',
     color: '#FCE7F3',
     tools: [
@@ -50,7 +50,7 @@ const CATEGORIES = [
   {
     id: 'text',
     emoji: '📝',
-    label: '텍스트',
+    label: '글자수·텍스트 도구',
     title: '텍스트 도구',
     color: '#D1FAE5',
     tools: [
@@ -64,7 +64,7 @@ const CATEGORIES = [
   {
     id: 'convert',
     emoji: '🔄',
-    label: '변환기',
+    label: '파일·단위 변환',
     title: '변환기',
     color: '#FEF3C7',
     tools: [
@@ -83,7 +83,7 @@ const CATEGORIES = [
   {
     id: 'generate',
     emoji: '⚡',
-    label: '생성기',
+    label: 'QR·워터마크 생성',
     title: '생성기',
     color: '#EDE9FE',
     tools: [
@@ -96,7 +96,7 @@ const CATEGORIES = [
   {
     id: 'life',
     emoji: '🏠',
-    label: '생활',
+    label: '생활 정보 도구',
     title: '생활 도구',
     color: '#FFEDD5',
     tools: [
@@ -109,7 +109,7 @@ const CATEGORIES = [
   {
     id: 'sports',
     emoji: '🏋️',
-    label: '운동',
+    label: '운동 계산기',
     title: '운동 도구',
     color: '#FEE2E2',
     tools: [

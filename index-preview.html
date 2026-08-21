@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>모두의 도구 프리뷰 | modutools</title>
+<link rel="stylesheet" href="/css/common.css">
+<script src="js/categories.js"></script>
+<style>
+/* ===== 모달(오버레이) + 기존 tool-card 스타일 재사용 ===== */
+.pv-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(15,23,42,.55);opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s ease}
+.pv-modal.open{opacity:1;visibility:visible}
+.pv-modal-panel{width:100%;max-width:560px;max-height:80vh;display:flex;flex-direction:column;background:var(--card-bg);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-md);transform:scale(.92);transition:transform .2s ease;overflow:hidden}
+.pv-modal.open .pv-modal-panel{transform:scale(1)}
+.pv-modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 22px;border-bottom:1px solid var(--border);flex-shrink:0}
+.pv-modal-title{font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
+.pv-modal-count{font-size:12px;color:var(--g400);font-weight:600;margin-left:2px}
+.pv-modal-close{width:34px;height:34px;border:none;border-radius:9px;background:var(--g100);color:var(--g500);font-size:16px;cursor:pointer;transition:.15s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.pv-modal-close:hover{background:var(--g200);color:var(--g900)}
+.pv-modal-body{overflow-y:auto;padding:18px 22px;flex:1;-webkit-overflow-scrolling:touch}
+/* 기존 index.html 의 tool-card 디자인 그대로 (세로 리스트) */
+.pv-modal-body .tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;display:flex;align-items:flex-start;gap:12px;transition:.15s;cursor:pointer;text-decoration:none;margin-bottom:10px}
+.pv-modal-body .tool-card:last-child{margin-bottom:0}
+.pv-modal-body .tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.pv-modal-body .tool-emoji{font-size:24px;line-height:1;flex-shrink:0;margin-top:2px}
+.pv-modal-body .tool-info{flex:1;min-width:0}
+.pv-modal-body .tool-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px;color:var(--text)}
+.pv-modal-body .tool-desc{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.pv-modal-body .badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.pv-modal-body .badge-new{background:#DCFCE7;color:#16A34A}
+.pv-modal-body .badge-hot{background:#FEE2E2;color:#DC2626}
+</style>
+</head>
+<body>
+
+<!-- 상단: 로고 + 검색창 -->
+<header class="pv-top">
+  <div class="pv-logo">modu<span>tools</span></div>
+  <input class="pv-search" type="text" id="pvSearch" placeholder="도구 검색...">
+</header>
+
+<!-- 중앙: 짧은 타이틀 + 배지 2개 -->
+<section class="pv-hero">
+  <h1 class="pv-hero-title">필요한 도구, 한 곳에서 끝내세요</h1>
+  <div class="pv-badges">
+    <span class="pv-badge">🔒 서버 전송 없음</span>
+    <span class="pv-badge">⚡ 브라우저 안에서 처리</span>
+  </div>
+</section>
+
+<!-- 메인: 카테고리 7개 큰 카드 그리드 -->
+<main class="pv-main">
+  <div class="pv-grid" id="pvGrid"></div>
+</main>
+
+<!-- 하단: 인기 도구 태그 -->
+<section class="pv-popular">
+  <h2 class="pv-popular-title">🔥 인기 도구</h2>
+  <div class="pv-popular-tags" id="pvPopular"></div>
+</section>
+
+<!-- 모달(카테고리 도구 목록) -->
+<div class="pv-modal" id="pvModal" role="dialog" aria-modal="true">
+  <div class="pv-modal-panel">
+    <div class="pv-modal-head">
+      <div class="pv-modal-title" id="pvModalTitle"></div>
+      <span class="pv-modal-count" id="pvModalCount"></span>
+      <button class="pv-modal-close" id="pvModalClose" title="닫기">✕</button>
+    </div>
+    <div class="pv-modal-body" id="pvModalBody"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  if(typeof CATEGORIES==='undefined'){return;}
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  /* 현재 열린 모달 카테고리 id */
+  var openCat=null;
+  var modal=document.getElementById('pvModal');
+  var modalBody=document.getElementById('pvModalBody');
+  var modalTitle=document.getElementById('pvModalTitle');
+  var modalCount=document.getElementById('pvModalCount');
+
+  /* 카테고리 카드 그리드 */
+  var grid=document.getElementById('pvGrid');
+  var h='';
+  CATEGORIES.forEach(function(cat){
+    var tools=cat.tools||[];
+    var tag1=tools[0]?(tools[0].displayName||tools[0].name):'';
+    var tag2=tools[1]?(tools[1].displayName||tools[1].name):'';
+    h+='<div class="pv-card" data-cat="'+esc(cat.id)+'">';
+    h+='<div class="pv-card-top">';
+    h+='<div class="pv-card-icon" style="background:'+esc(cat.color||'#eee')+'">'+cat.emoji+'</div>';
+    h+='<span class="pv-card-count">'+tools.length+'개 도구</span>';
+    h+='</div>';
+    h+='<div class="pv-card-name">'+esc(cat.label)+'</div>';
+    h+='<div class="pv-card-tags">';
+    if(tag1){h+='<span class="pv-card-tag">'+esc(tag1)+'</span>';}
+    if(tag2){h+='<span class="pv-card-tag">'+esc(tag2)+'</span>';}
+    h+='</div></div>';
+  });
+  grid.innerHTML=h;
+
+  /* 모달 열기 */
+  function openModal(catId){
+    var cat=null;
+    CATEGORIES.forEach(function(c){if(c.id===catId){cat=c;}});
+    if(!cat)return;
+    openCat=catId;
+    modalTitle.innerHTML=cat.emoji+' '+esc(cat.title||cat.label);
+    modalCount.textContent=cat.tools.length+'개 도구';
+    var bh='';
+    (cat.tools||[]).forEach(function(t){
+      var badge='';
+      if(t.badge==='hot'){badge=' <span class="badge badge-hot">HOT</span>';}
+      else if(t.badge==='new'){badge=' <span class="badge badge-new">NEW</span>';}
+      var disp=t.displayName||t.name;
+      bh+='<a href="'+esc(t.url)+'" class="tool-card">';
+      bh+='<div class="tool-emoji">'+(t.toolEmoji||'🔧')+'</div>';
+      bh+='<div class="tool-info">';
+      bh+='<div class="tool-name">'+esc(disp)+badge+'</div>';
+      bh+='<div class="tool-desc">'+esc(t.desc)+'</div>';
+      bh+='</div></a>';
+    });
+    modalBody.innerHTML=bh;
+    modal.classList.add('open');
+    modalBody.scrollTop=0;
+    document.body.style.overflow='hidden';
+  }
+
+  /* 모달 닫기 */
+  function closeModal(){
+    modal.classList.remove('open');
+    openCat=null;
+    document.body.style.overflow='';
+  }
+
+  /* 카테고리 카드 클릭 -> 모달 열기 */
+  grid.addEventListener('click',function(e){
+    var card=e.target.closest('.pv-card');
+    if(card){openModal(card.dataset.cat);}
+  });
+
+  /* X 버튼 클릭 -> 닫기 */
+  document.getElementById('pvModalClose').addEventListener('click',closeModal);
+
+  /* 바깥 어두운 배경 클릭 -> 닫기 (패널 내부 클릭은 닫히지 않음) */
+  modal.addEventListener('click',function(e){
+    if(e.target===modal){closeModal();}
+  });
+
+  /* ESC 키 -> 닫기 */
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&openCat){closeModal();}
+  });
+
+  /* 인기 도구 태그 (HOT 배지 도구) -> 클릭 시 해당 카테고리 모달 열기 */
+  var pop=document.getElementById('pvPopular');
+  var pt='', addedHref={}, hotByCat={};
+  CATEGORIES.forEach(function(cat){
+    (cat.tools||[]).forEach(function(t){
+      if(t.badge==='hot'&&!addedHref[t.url]){
+        addedHref[t.url]=1;
+        if(!hotByCat[cat.id]){hotByCat[cat.id]=[];}
+        hotByCat[cat.id].push(t.displayName||t.name);
+      }
+    });
+  });
+  Object.keys(hotByCat).forEach(function(cid){
+    hotByCat[cid].forEach(function(nm){
+      pt+='<span class="pv-popular-tag" data-cat="'+esc(cid)+'">'+esc(nm)+'</span>';
+    });
+  });
+  pop.innerHTML=pt;
+  pop.addEventListener('click',function(e){
+    var tag=e.target.closest('[data-cat]');
+    if(tag){openModal(tag.dataset.cat);}
+  });
+
+  /* 검색: 카테고리/도구명 실시간 필터 */
+  var search=document.getElementById('pvSearch');
+  search.addEventListener('input',function(){
+    var q=this.value.toLowerCase().trim();
+    var cards=document.querySelectorAll('.pv-card');
+    if(!q){ cards.forEach(function(c){c.style.display='';}); return; }
+    CATEGORIES.forEach(function(cat,i){
+      var match=cat.label.toLowerCase().indexOf(q)!==-1;
+      (cat.tools||[]).forEach(function(t){
+        var nm=(t.displayName||t.name).toLowerCase();
+        var d=t.desc.toLowerCase();
+        if(nm.indexOf(q)!==-1||d.indexOf(q)!==-1){match=true;}
+      });
+      cards[i].style.display=match?'':'none';
+    });
+  });
+})();
+</script>
+</body>
+</html>

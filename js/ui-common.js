@@ -6,7 +6,7 @@
     try{localStorage.setItem(themeKey,t);}catch(e){}
     // Update toggle icon
     document.querySelectorAll('.theme-icon').forEach(function(el){
-      el.textContent=t==='dark'?'\u2600\ufe0f':'\U0001f319';
+      el.textContent=t==='dark'?'\u2600\ufe0f':'🌙';
     });
   }
   function getTheme(){
@@ -33,20 +33,20 @@
 
   // Category definition
   var cats=[
-    {id:'calc',emoji:'\U0001f4b0',label:'계산기'},
-    {id:'image',emoji:'\U0001f5bc\ufe0f',label:'이미지'},
-    {id:'text',emoji:'\U0001f4dd',label:'텍스트'},
-    {id:'convert',emoji:'\U0001f504',label:'변환기'},
-    {id:'generate',emoji:'\u26a1',label:'생성기'},
-    {id:'life',emoji:'\U0001f3e0',label:'생활'},
-    {id:'sports',emoji:'\U0001f3cb\ufe0f',label:'운동'}
+    {id:'calc',emoji:'💰',label:'계산기'},
+    {id:'image',emoji:'🖼️',label:'이미지'},
+    {id:'text',emoji:'📝',label:'텍스트'},
+    {id:'convert',emoji:'🔄',label:'변환기'},
+    {id:'generate',emoji:'⚡',label:'생성기'},
+    {id:'life',emoji:'🏠',label:'생활'},
+    {id:'sports',emoji:'🏋️',label:'운동'}
   ];
 
   // Build sidebar HTML
   var html='<aside class="sidebar">';
   html+='<div class="sidebar-logo-wrap"><a href="/" class="sidebar-logo">modu<span>tools</span></a></div>';
   html+='<nav class="sidebar-nav">';
-  html+='<a href="/" class="sidebar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">\U0001f3e0</span> 홈</a>';
+  html+='<a href="/" class="sidebar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">🏠</span> 홈</a>';
   html+='<div class="sidebar-divider"></div>';
   cats.forEach(function(cat){
     var active=isToolPage&&currentPath.indexOf('/'+cat.id+'/')===0?' active':'';
@@ -54,18 +54,18 @@
   });
   html+='</nav>';
   html+='<div class="sidebar-footer">';
-  html+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">\U0001f319</span> 테마 변경</button>';
+  html+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">🌙</span> 테마 변경</button>';
   html+='</div>';
   html+='</aside>';
 
   // Mobile bottom bar
   var mhtml='<div class="mobile-bar">';
-  mhtml+='<a href="/" class="mobile-bar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">\U0001f3e0</span>홈</a>';
+  mhtml+='<a href="/" class="mobile-bar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">🏠</span>홈</a>';
   cats.forEach(function(cat){
     var active=isToolPage&&currentPath.indexOf('/'+cat.id+'/')===0?' active':'';
     mhtml+='<a href="/#'+cat.id+'" class="mobile-bar-item'+active+'"><span class="emoji">'+cat.emoji+'</span>'+cat.label+'</a>';
   });
-  mhtml+='<button class="mobile-bar-item dark-toggle" data-theme-toggle><span class="theme-icon">\U0001f319</span></button>';
+  mhtml+='<button class="mobile-bar-item dark-toggle" data-theme-toggle><span class="theme-icon">🌙</span></button>';
   mhtml+='</div>';
 
   // Inject into body
