@@ -44,7 +44,7 @@ a{text-decoration:none;color:inherit}
 .sidebar-footer .sidebar-toggle .emoji{font-size:15px;width:22px;text-align:center;flex-shrink:0}
 
 /* ---- Main Area ---- */
-.main-area{flex:1;margin-left:240px;min-width:0;display:flex;flex-direction:column;transition:margin-left .3s}
+.main-area{flex:1;min-width:0;display:flex;flex-direction:column}
 .main-content{flex:1;padding:28px 32px 60px;display:flex;flex-direction:column;align-items:center}
 
 /* ---- Header ---- */
@@ -165,4 +165,25 @@ a{text-decoration:none;color:inherit}
   .pv-main,.pv-popular{padding-left:16px;padding-right:16px}
   .pv-top{padding:14px 16px}
   .pv-hero-title{font-size:22px}
+}
+
+/* ===== Top Bar (sidebar 대체) : 다크 네이비 테마 ===== */
+.tool-topbar{position:sticky;top:0;z-index:300;background:#0F172A;border-bottom:1px solid #1E293B}
+.tool-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 20px}
+.tool-logo{font-size:20px;font-weight:800;color:#38BDF8;letter-spacing:-.5px;text-decoration:none}
+.tool-logo span{color:#67E8F9;font-weight:400}
+.tool-theme-btn{width:36px;height:36px;border:1px solid #334155;border-radius:9px;background:#1E293B;color:#94A3B8;cursor:pointer;font-size:16px;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
+.tool-theme-btn:hover{border-color:#38BDF8;color:#67E8F9}
+.tool-theme-btn .theme-icon{font-size:18px}
+
+/* ===== Breadcrumb ===== */
+.tool-crumb{padding:10px 20px;background:#0F172A;border-bottom:1px solid #1E293B;margin-top:0}
+.tool-crumb-list{display:flex;align-items:center;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0;font-size:13px}
+.tool-crumb-item{color:#CBD5E1}
+.tool-crumb-item a{color:#67E8F9;text-decoration:none}
+.tool-crumb-item a:hover{color:#38BDF8;text-decoration:underline}
+.tool-crumb-sep{color:#475569;font-size:12px}
+@media(max-width:768px){
+  .tool-topbar-inner{padding:12px 16px}
+  .tool-crumb{padding:8px 16px;font-size:12px}
 }

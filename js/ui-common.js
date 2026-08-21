@@ -23,15 +23,12 @@
   });
 })();
 
-/* ===== Sidebar Injection ===== */
+/* ===== Top Bar + Breadcrumb Injection (sidebar 대체) ===== */
 (function(){
-  // Only inject if sidebar doesn't already exist in HTML
-  if(document.querySelector('.sidebar'))return;
-
   var isToolPage=!window.location.pathname.endsWith('/')&&!window.location.pathname.endsWith('index.html');
   var currentPath=window.location.pathname.replace(/\/$/,'')||'/';
 
-  // Category definition
+  // Category definition (사이드바 대신 breadcrumb/홈에서 재사용)
   var cats=[
     {id:'calc',emoji:'💰',label:'계산기'},
     {id:'image',emoji:'🖼️',label:'이미지'},
@@ -42,23 +39,46 @@
     {id:'sports',emoji:'🏋️',label:'운동'}
   ];
 
-  // Build sidebar HTML
-  var html='<aside class="sidebar">';
-  html+='<div class="sidebar-logo-wrap"><a href="/" class="sidebar-logo">modu<span>tools</span></a></div>';
-  html+='<nav class="sidebar-nav">';
-  html+='<a href="/" class="sidebar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">🏠</span> 홈</a>';
-  html+='<div class="sidebar-divider"></div>';
-  cats.forEach(function(cat){
-    var active=isToolPage&&currentPath.indexOf('/'+cat.id+'/')===0?' active':'';
-    html+='<a href="/#'+cat.id+'" class="sidebar-item'+active+'"><span class="emoji">'+cat.emoji+'</span> '+cat.label+'</a>';
-  });
-  html+='</nav>';
-  html+='<div class="sidebar-footer">';
-  html+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">🌙</span> 테마 변경</button>';
-  html+='</div>';
-  html+='</aside>';
+  // 현재 페이지의 카테고리 판별 (URL 경로 기반)
+  var curCat=null;
+  for(var ci=0;ci<cats.length;ci++){
+    if(currentPath.indexOf('/'+cats[ci].id+'/')===0){curCat=cats[ci];break;}
+  }
 
-  // Mobile bottom bar
+  // 도구명 추출: <title> 또는 <h1> 에서
+  var toolName='';
+  var h1=document.querySelector('h1');
+  if(h1){toolName=h1.textContent.replace(/\s+/g,' ').trim();}
+  if(!toolName){
+    var titleMatch=document.querySelector('title');
+    if(titleMatch){
+      toolName=titleMatch.textContent.replace(/\s+/g,' ').trim();
+      toolName=toolName.replace(/\s*[|-]\s*modutools.*/i,'').replace(/\s*[|-]\s*.*$/,'').trim();
+    }
+  }
+
+  // 상단 헤더 (sticky): 로고 + 다크모드 토글
+  var html='<header class="tool-topbar">';
+  html+='<div class="tool-topbar-inner">';
+  html+='<a href="/" class="tool-logo">modu<span>tools</span></a>';
+  html+='<button class="tool-theme-btn" data-theme-toggle><span class="emoji theme-icon">🌙</span></button>';
+  html+='</div></header>';
+
+  // breadcrumb: 홈 > 카테고리 > 도구명
+  html+='<nav class="tool-crumb" aria-label="breadcrumb">';
+  html+='<ol class="tool-crumb-list">';
+  html+='<li class="tool-crumb-item"><a href="/">홈</a></li>';
+  if(curCat){
+    html+='<li class="tool-crumb-sep">&rsaquo;</li>';
+    html+='<li class="tool-crumb-item"><a href="/#'+curCat.id+'">'+curCat.emoji+' '+curCat.label+'</a></li>';
+  }
+  if(isToolPage && toolName){
+    html+='<li class="tool-crumb-sep">&rsaquo;</li>';
+    html+='<li class="tool-crumb-item" aria-current="page">'+toolName+'</li>';
+  }
+  html+='</ol></nav>';
+
+  // Mobile bottom bar (사이드바 제거 후에도 유지)
   var mhtml='<div class="mobile-bar">';
   mhtml+='<a href="/" class="mobile-bar-item'+(currentPath==='/'?' active':'')+'"><span class="emoji">🏠</span>홈</a>';
   cats.forEach(function(cat){
@@ -72,23 +92,7 @@
   document.body.insertAdjacentHTML('afterbegin',html);
   document.body.insertAdjacentHTML('beforeend',mhtml);
 
-  // Wrap main content in .main-area if not already wrapped
-  if(!document.querySelector('.main-area')){
-    var mainContent=document.querySelector('main, .page, .main');
-    if(mainContent){
-      var wrapper=document.createElement('div');
-      wrapper.className='main-area';
-      mainContent.parentNode.insertBefore(wrapper,mainContent);
-      // Wrap in .main-content
-      var innerWrap=document.createElement('div');
-      innerWrap.className='main-content';
-      wrapper.appendChild(innerWrap);
-      innerWrap.appendChild(mainContent);
-      // Also move footer into main-area
-      var footer=document.querySelector('.mt-footer');
-      if(footer)wrapper.appendChild(footer);
-    }
-  }
+  // (사이드바 제거로 페이지 여백은 CSS에서 처리 — 여기서는 main 래핑 제거)
 })();
 
 /* ===== FAQ Accordion Toggle ===== */

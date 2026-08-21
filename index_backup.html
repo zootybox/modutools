@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+<meta name="google-site-verification" content="SSgzof6COd6DPSzZP8iQLjKNRy5BH7wyG2AgIrwVgc0">
+<!-- AdSense 심사 중 임시 비활성화
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8031004347843172" crossorigin="anonymous"></script>
+-->
+<title>모두의 도구 | modutools - 무료 온라인 도구 모음</title>
+<meta name="description" content="연봉 실수령액 계산기, 이미지 압축, 글자수 세기 등 무료 온라인 도구. 서버 전송 없이 브라우저에서 바로 사용하세요.">
+<meta property="og:title" content="모두의 도구 | modutools">
+<meta property="og:description" content="110+ 무료 온라인 도구. 계산기, 변환기, 이미지 도구를 브라우저에서 바로.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com">
+<link rel="canonical" href="https://modutools.com">
+<link rel="stylesheet" href="/css/common.css">
+<script src="js/categories.js"></script>
+<style>
+/* AdSense 심사 중 광고 슬롯 숨김 */
+.mt-ad{display:none}
+/* Hero */
+.hero{text-align:center;padding:48px 20px 32px;max-width:600px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--primary-light);color:var(--primary);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+.hero h1{font-size:28px;font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+.hero p{font-size:15px;color:var(--g500)}
+
+/* Search */
+.search-wrap{max-width:480px;margin:0 auto 32px;padding:0 20px}
+.search-box{display:flex;align-items:center;background:#fff;border:1.5px solid var(--g200);border-radius:12px;padding:0 16px;transition:.2s}
+.search-box:focus-within{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.search-box svg{width:18px;height:18px;color:var(--g400);flex-shrink:0}
+.search-box input{flex:1;border:none;outline:none;padding:12px 10px;font-size:15px;font-family:inherit;background:transparent}
+.search-box input::placeholder{color:var(--g400)}
+
+/* Quick Tags */
+.quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:600px;margin:0 auto 36px;padding:0 20px}
+.quick-tag{font-size:13px;color:var(--g500);background:#fff;border:1px solid var(--g200);padding:6px 14px;border-radius:20px;cursor:pointer;transition:.2s}
+.quick-tag:hover,.quick-tag.active{color:var(--primary);border-color:var(--primary);background:var(--primary-light)}
+
+/* Category */
+.main{width:100%}
+.category{margin-bottom:48px}
+.cat-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.cat-icon{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.cat-title{font-size:17px;font-weight:700}
+.cat-count{font-size:12px;color:var(--g400);margin-left:2px}
+
+/* Tool Grid */
+.search-no-result{display:none;text-align:center;padding:40px 20px;color:var(--g500)}
+.search-no-result .nr-icon{font-size:48px;margin-bottom:12px}
+.search-no-result .nr-text{font-size:16px;font-weight:700;color:var(--g700);margin-bottom:6px}
+.search-no-result .nr-sub{font-size:13px;color:var(--g400)}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:flex;align-items:flex-start;gap:12px;transition:.2s;cursor:pointer;height:100%}
+.tool-card:hover{border-color:var(--primary);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.tool-emoji{font-size:26px;line-height:1;flex-shrink:0;margin-top:2px}
+.tool-info{flex:1;min-width:0}
+.tool-name{font-size:14px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px;color:var(--text)}
+.tool-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.badge{font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.badge-new{background:#DCFCE7;color:#16A34A}
+.badge-hot{background:#FEE2E2;color:#DC2626}
+.badge-soon{background:var(--g100);color:var(--g400)}
+
+/* Responsive */
+.recent-section{padding:0 0 8px;margin-bottom:48px}
+.recent-section .main{padding-bottom:0}
+.recent-clear{margin-left:auto;background:none;border:1px solid var(--g200);color:var(--g400);font-size:11px;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:.2s}
+.recent-clear:hover{color:var(--g600);border-color:var(--g300)}
+.main .card:last-child{margin-bottom:0}
+.main .card + .card{margin-top:0}
+
+@media(max-width:640px){
+  .hero{padding:36px 20px 24px}
+  .hero h1{font-size:24px}
+  .tool-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .tool-card{padding:14px;flex-direction:column;gap:8px}
+  .tool-emoji{font-size:24px}
+  .category{margin-bottom:36px}
+  .main .card{padding:18px}
+}
+@media(max-width:380px){
+  .tool-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar"></aside>
+
+  <!-- Main Area -->
+  <div class="main-area">
+
+    <!-- Header -->
+    <header class="mt-header">
+      <div class="mt-header-inner">
+        <a href="/" class="mt-logo">modu<span>tools</span></a>
+        <nav class="mt-nav"></nav>
+      </div>
+    </header>
+
+    <div class="main-content">
+
+<!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">🔒 서버 전송 없음</div>
+      <div class="hero-badge">⚙️ 브라우저 안에서 처리</div>
+      <div class="hero-badge">🔓 로그인 불필요</div>
+      <h1>블로거·1인 운영자가 매일 쓰는 40가지 도구, 한 곳에서 끝내세요</h1>
+      <p>회원가입도, 설치도 필요 없습니다. 모든 처리는 브라우저 안에서만 끝납니다.</p>
+    </section>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="도구 검색 (예: 연봉, 이미지, 글자수)">
+      </div>
+    </div>
+
+    <!-- Quick Tags -->
+    <div class="quick-tags" id="quickTags">
+      <span class="quick-tag active" data-filter="all">전체</span>
+      <span class="quick-tag" data-filter="calc">💰 계산기</span>
+      <span class="quick-tag" data-filter="image">🖼️ 이미지</span>
+      <span class="quick-tag" data-filter="text">📝 텍스트</span>
+      <span class="quick-tag" data-filter="convert">🔄 변환기</span>
+      <span class="quick-tag" data-filter="generate">⚡ 생성기</span>
+      <span class="quick-tag" data-filter="life">🏠 생활</span>
+      <span class="quick-tag" data-filter="sports">🏋️ 운동</span>
+    </div>
+
+    <div class="search-no-result" id="noResult">
+      <div class="nr-icon">🔍</div>
+      <div class="nr-text">검색 결과가 없습니다</div>
+      <div class="nr-sub">다른 키워드로 검색해 보세요</div>
+    </div>
+
+    <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+
+    <section class="recent-section" id="recentSection" style="display:none">
+      <div class="main">
+        <div class="cat-head">
+          <div class="cat-icon" style="background:#EDE9FE">⏱️</div>
+          <div class="cat-title">최근 사용한 도구</div>
+          <button class="recent-clear" id="recentClear" title="기록 삭제">✕ 초기화</button>
+        </div>
+        <div class="tool-grid" id="recentGrid"></div>
+      </div>
+    </section>
+
+    <main class="main">
+
+  <!-- 금융 계산기 -->
+    <div id="categoryRoot"></div>
+
+    <script>
+    /* CATEGORIES 기반 동적 렌더링 - 사이드바/상단네비/카테고리 카드 */
+    (function(){
+      if(typeof CATEGORIES==='undefined'){console.error('[index] CATEGORIES 로드 실패');return;}
+      function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+      /* 1) 사이드바 */
+      var sb=document.querySelector('aside.sidebar');
+      if(sb){
+        var s='';
+        s+='<div class="sidebar-logo-wrap"><a href="/" class="sidebar-logo">modu<span>tools</span></a></div>';
+        s+='<nav class="sidebar-nav">';
+        s+='<a href="/" class="sidebar-item active"><span class="emoji">🏠</span> 홈</a>';
+        s+='<div class="sidebar-divider"></div>';
+        CATEGORIES.forEach(function(cat){
+          s+='<a href="#'+esc(cat.id)+'" class="sidebar-item"><span class="emoji">'+cat.emoji+'</span> '+esc(cat.label)+'</a>';
+        });
+        s+='</nav>';
+        s+='<div class="sidebar-footer">';
+        s+='<button class="sidebar-toggle" data-theme-toggle><span class="emoji theme-icon">🌙</span> <span>테마 변경</span></button>';
+        s+='</div>';
+        sb.innerHTML=s;
+      }
+
+      /* 2) 상단 네비게이션 */
+      var nav=document.querySelector('nav.mt-nav');
+      if(nav){
+        var n='';
+        n+='<a href="/" class="active">도구</a>';
+        CATEGORIES.forEach(function(cat){
+          n+='<a href="#'+esc(cat.id)+'">'+esc(cat.label)+'</a>';
+        });
+        n+='<button class="theme-btn" data-theme-toggle><span class="theme-icon">🌙</span></button>';
+        nav.innerHTML=n;
+      }
+
+      /* 3) 카테고리 카드 */
+      var root=document.getElementById('categoryRoot');
+      if(root){
+        var h='';
+        CATEGORIES.forEach(function(cat){
+          var title=cat.title||cat.label;
+          var color=cat.color||'#F1F5F9';
+          var tools=cat.tools||[];
+          h+='<section class="category" data-cat="'+esc(cat.id)+'" id="'+esc(cat.id)+'">';
+          h+='<div class="cat-head">';
+          h+='<div class="cat-icon" style="background:'+esc(color)+'">'+cat.emoji+'</div>';
+          h+='<div class="cat-title">'+esc(title)+'</div>';
+          h+='<span class="cat-count">'+tools.length+'개</span>';
+          h+='</div>';
+          h+='<div class="tool-grid">';
+          tools.forEach(function(t){
+            var badge='';
+            if(t.badge==='hot'){badge=' <span class="badge badge-hot">HOT</span>';}
+            else if(t.badge==='new'){badge=' <span class="badge badge-new">NEW</span>';}
+            var disp=t.displayName||t.name;
+            h+='<a href="'+esc(t.url)+'" class="tool-card" data-name="'+esc(t.name)+'" data-cat="'+esc(cat.id)+'">';
+            h+='<div class="tool-emoji">'+(t.toolEmoji||'🔧')+'</div>';
+            h+='<div class="tool-info">';
+            h+='<div class="tool-name">'+esc(disp)+badge+'</div>';
+            h+='<div class="tool-desc">'+esc(t.desc)+'</div>';
+            h+='</div></a>';
+          });
+          h+='</div></section>';
+        });
+        root.innerHTML=h;
+      }
+    })();
+    </script>
+  <!-- 3대 운영 원칙 -->
+  <div class="card" style="margin-top:40px;margin-bottom:0">
+    <div class="card-title">🔒 modutools의 3대 운영 원칙</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:100%;margin:0 auto">
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🔒</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">서버 전송 제로 보안</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">모든 도구는 사용자의 브라우저에서만 실행됩니다. 입력한 데이터(이미지, PDF, 텍스트, 금융 정보)가 외부 서버로 전송되지 않아 개인정보가 안전합니다.</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">🆓</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">무제한 무료</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">회원가입, 워터마크, 횟수 제한이 전혀 없습니다. 모든 기능을 제한 없이 무료로 사용할 수 있습니다. iLovePDF, Smallpdf 등 유료 서비스의 무료 대안입니다.</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;height:100%">
+        <div style="font-size:36px;margin-bottom:10px;flex-shrink:0">⚡</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;color:var(--g900);flex-shrink:0">즉시 처리 속도</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.6;flex:1;display:flex;align-items:center">서버 통신이 없어 업로드 즉시 결과를 확인할 수 있습니다. 대용량 파일도 브라우저 메모리에서 실시간 처리하여 대기 시간이 없습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 카테고리별 안내 -->
+  <div class="card" style="margin-top:0">
+    <div class="card-title">📂 카테고리별 도구 안내</div>
+    <div style="font-size:13px;line-height:1.8;color:var(--g600)">
+      <p style="margin-bottom:10px"><strong>💰 금융 계산기</strong> — 연봉 실수령액(4대보험·소득세 반영), 대출이자(원리금균등·원금균등·만기일시), 4대보험 공제액, 전월세 전환율, 퇴직금, 적금 이자(단리·복리), 최저시급 월급, 종합소득세, 상속세·증여세를 계산합니다. 모든 계산은 2026년 최신 세법·요율 기준을 적용합니다.</p>
+      <p style="margin-bottom:10px"><strong>🖼️ 이미지 도구</strong> — 이미지 압축(JPEG/PNG/WebP 품질 조절), 리사이즈(비율 유지 옵션), 크롭(자유/고정 비율), 포맷 변환, 워터마크 추가(텍스트·투명도·위치 설정), EXIF 메타데이터 제거(GPS 위치정보 삭제), 증명사진 규격 맞추기(여권·이력서·주민등록증)를 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>📝 텍스트 도구</strong> — 글자수 세기(공백 포함/제외, 바이트, 단어, 문장 수), 대소문자 변환(UPPER/lower/Title/Sentence/camelCase), 공백 정리(연속 공백·줄바꿈·탭 정리), 중복 줄 제거(순서 유지 옵션), OCR 이미지 텍스트 추출(한국어+영어)을 제공합니다.</p>
+      <p style="margin-bottom:10px"><strong>🔄 변환기</strong> — 이미지를 PDF로 변환(여러 장 합치기, 순서 변경, 용지 설정), PDF 병합, 단위 변환(길이·무게·면적·부피·온도·속도·데이터), 날짜 계산(D-Day·날짜 차이·날짜 더하기), 시간대 변환, 나이 계산(만나이·한국나이·띠), 색상 코드 변환(HEX·RGB·HSL), TTS 텍스트 음성 변환을 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>🎲 생성기</strong> — QR코드 생성(URL·텍스트·와이파이 정보, 크기·색상 커스텀), 비밀번호 생성(길이·문자 종류·강도 표시), 랜덤 숫자 생성(범위·중복 제외 옵션), 닉네임 생성(한글·영문·혼합)을 제공합니다.</p>
+      <p style="margin-bottom:10px"><strong>🏠 생활 도구</strong> — BMI 계산(대한비만학회 기준·정상 체중 범위·이상 체중), 전기요금 계산(주택용 누진세), 연차 계산(근로기준법 기준), 학점 계산(4.5/4.3만점)을 지원합니다.</p>
+      <p style="margin-bottom:10px"><strong>🏋️ 운동 도구</strong> — 인터벌 타이머(타바타·HIIT 운동, 운동/휴식 시간 설정, 라운드 반복, 음성 안내, 화면 꺼짐 방지)를 제공합니다.</p>
+    </div>
+  </div>
+
+</main>
+
+</div><!-- /.main-content -->
+
+<!-- Footer (inside main-area) -->
+<footer class="mt-footer">
+  <p>
+    <strong>modutools.com</strong> — 모두를 위한 무료 온라인 도구<br>
+    모든 도구는 브라우저에서 처리되며, 서버로 데이터가 전송되지 않습니다.<br>
+    <a href="/about.html">사이트 소개</a> · <a href="/privacy.html">개인정보처리방침</a> · <a href="/terms.html">이용약관</a><br>
+    &copy; 2026 modutools. All rights reserved.
+  </p>
+</footer>
+
+  </div><!-- /.main-area -->
+</div><!-- /.app-layout -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Search filter
+const searchInput = document.getElementById('searchInput');
+const cards = document.querySelectorAll('.tool-card');
+const categories = document.querySelectorAll('.category');
+const noResult = document.getElementById('noResult');
+
+searchInput.addEventListener('input', function(){
+  const q = this.value.toLowerCase().trim();
+  // Reset quick tags
+  document.querySelectorAll('.quick-tag').forEach(t => t.classList.remove('active'));
+  document.querySelector('[data-filter="all"]').classList.add('active');
+
+  let visibleCount = 0;
+  cards.forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const match = name.includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) visibleCount++;
+  });
+  categories.forEach(cat => {
+    const visible = cat.querySelectorAll('.tool-card:not([style*="display: none"])');
+    cat.style.display = visible.length ? '' : 'none';
+  });
+  noResult.style.display = (q && visibleCount === 0) ? '' : 'none';
+});
+
+// Quick tag filter
+document.getElementById('quickTags').addEventListener('click', function(e){
+  const tag = e.target.closest('.quick-tag');
+  if(!tag) return;
+  const filter = tag.dataset.filter;
+
+  document.querySelectorAll('.quick-tag').forEach(t => t.classList.remove('active'));
+  tag.classList.add('active');
+  searchInput.value = '';
+
+  if(filter === 'all'){
+    cards.forEach(c => c.style.display = '');
+    categories.forEach(c => c.style.display = '');
+  } else {
+    categories.forEach(cat => {
+      cat.style.display = cat.dataset.cat === filter ? '' : 'none';
+    });
+    cards.forEach(c => c.style.display = '');
+  }
+});
+
+// "준비중" cards show alert
+cards.forEach(card => {
+  if(!card.href && card.querySelector('.badge-soon')){
+    card.addEventListener('click', () => alert('준비 중인 도구입니다. 곧 출시됩니다!'));
+  }
+});
+
+// 최근 사용한 도구
+(function(){
+  const KEY='modutools_recent';
+  const MAX=6;
+  const section=document.getElementById('recentSection');
+  const grid=document.getElementById('recentGrid');
+
+  function getRecent(){
+    try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return [];}
+  }
+  function saveRecent(list){
+    try{localStorage.setItem(KEY,JSON.stringify(list));}catch(e){}
+  }
+
+  // 도구 클릭 시 기록
+  document.querySelectorAll('.tool-card[href]').forEach(function(card){
+    card.addEventListener('click',function(){
+      const href=this.getAttribute('href');
+      const name=this.dataset.name||'';
+      let emoji=this.querySelector('.tool-emoji');
+      emoji=emoji?emoji.textContent.trim():'🔧';
+      let desc=this.querySelector('.tool-desc');
+      desc=desc?desc.textContent.trim():'';
+
+      let list=getRecent();
+      // 이미 있으면 제거 후 맨 앞에 추가
+      list=list.filter(function(item){return item.href!==href;});
+      list.unshift({href:href,name:name,emoji:emoji,desc:desc,time:Date.now()});
+      if(list.length>MAX) list=list.slice(0,MAX);
+      saveRecent(list);
+    });
+  });
+
+  // 최근 사용 도구 렌더링
+  function render(){
+    const list=getRecent();
+    if(!list.length){section.style.display='none';return;}
+    section.style.display='';
+    grid.innerHTML=list.map(function(item){
+      return '<a href="'+item.href+'" class="tool-card">'
+        +'<div class="tool-emoji">'+item.emoji+'</div>'
+        +'<div class="tool-info">'
+        +'<div class="tool-name">'+item.name+'</div>'
+        +'<div class="tool-desc">'+item.desc+'</div>'
+        +'</div></a>';
+    }).join('');
+  }
+  render();
+
+  // 초기화 버튼
+  document.getElementById('recentClear').addEventListener('click',function(){
+    localStorage.removeItem(KEY);
+    section.style.display='none';
+  });
+})();
+</script>
+</body>
+</html>
