@@ -15,11 +15,6 @@
 <link rel="canonical" href="https://modutools.com/text/count.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 
 /* Textarea */
 .text-area{width:100%;min-height:200px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:15px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
@@ -39,10 +34,10 @@
 .detail-item .value{font-size:15px;font-weight:700;color:var(--g900)}
 
 /* Toolbar */
-.toolbar{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
-.tool-btn{padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.tool-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.tool-btn:active{transform:scale(.97)}
+.toolbar{display:flex;flex-direction:row;gap:8px;margin-top:12px;flex-wrap:wrap}
+.count-btn{padding:8px 14px;border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:var(--card-bg);color:var(--text);font-family:inherit;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.count-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+.count-btn:active{transform:scale(.97)}
 
 /* Toast */
 
@@ -82,37 +77,30 @@
 </head>
 <body>
 
-<header class="mt-header">
-<div class="mt-header-inner">
-<a href="/" class="mt-logo">modu<span>tools</span></a>
-<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
-</div>
-</header>
-
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<main class="page">
-<h1 class="page-title">글자수 세기</h1>
+<main class="tool-page">
+<h1 class="tool-title">글자수 세기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">텍스트를 입력하면 글자수·단어수·바이트수를 실시간으로 확인합니다</p>
+<p class="tool-sub">텍스트를 입력하면 글자수·단어수·바이트수를 실시간으로 확인합니다</p>
 
 <!-- 입력 -->
-<div class="card">
-<div class="card-title">📝 텍스트 입력</div>
+<div class="tool-card">
+<div class="tool-card-title">📝 텍스트 입력</div>
 <textarea class="text-area" id="textInput" placeholder="여기에 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
 <div class="toolbar">
-<button class="tool-btn" id="clearBtn">🗑️ 전체 삭제</button>
-<button class="tool-btn" id="copyBtn">📋 복사</button>
-<button class="tool-btn" id="pasteBtn">📌 붙여넣기</button>
-<button class="tool-btn" id="removeSpacesBtn">🧹 공백 제거</button>
-<button class="tool-btn" id="removeLineBreaksBtn">↩️ 줄바꿈 제거</button>
+<button class="count-btn" id="clearBtn">🗑️ 전체 삭제</button>
+<button class="count-btn" id="copyBtn">📋 복사</button>
+<button class="count-btn" id="pasteBtn">📌 붙여넣기</button>
+<button class="count-btn" id="removeSpacesBtn">🧹 공백 제거</button>
+<button class="count-btn" id="removeLineBreaksBtn">↩️ 줄바꿈 제거</button>
 </div>
 </div>
 
 <!-- 주요 통계 -->
-<div class="card">
-<div class="card-title">📊 글자수 통계</div>
+<div class="tool-card">
+<div class="tool-card-title">📊 글자수 통계</div>
 <div class="stats-grid">
 <div class="stat-box">
 <div class="stat-value" id="charWithSpace">0</div>
@@ -130,8 +118,8 @@
 </div>
 
 <!-- 상세 통계 -->
-<div class="card">
-<div class="card-title">📋 상세 정보</div>
+<div class="tool-card">
+<div class="tool-card-title">📋 상세 정보</div>
 <div class="detail-grid">
 <div class="detail-item">
 <span class="label">단어 수</span>
@@ -152,9 +140,9 @@
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">📖 글자수 세기 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
+<div class="tool-card">
+<div class="tool-card-title">📖 글자수 세기 가이드</div>
+<div style="font-size:14px;line-height:1.8">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">글자수 세기가 필요한 경우</h2>
 <p style="margin-bottom:12px">자기소개서, 에세이, 논문, 블로그 포스트, SNS 게시물 등 글자수 제한이 있는 글을 작성할 때 정확한 글자수 확인이 필요합니다. 특히 채용 공고의 자기소개서는 공백 포함 여부에 따라 기준이 다르므로 반드시 확인해야 합니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">공백 포함 vs 공백 제외</h2>
@@ -167,8 +155,8 @@
 </div>
 
 <!-- FAQ -->
-<div class="card">
-<div class="card-title">❓ 자주 묻는 질문</div>
+<div class="tool-card">
+<div class="tool-card-title">❓ 자주 묻는 질문</div>
 <details style="margin-bottom:12px">
 <summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">자기소개서 글자수 제한은 보통 얼마인가요?</summary>
 <p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">대부분의 기업 자소서는 항목당 500~1,000자(공백 포함)입니다. 삼성은 700자, LG는 500자, 현대차는 800자 내외가 일반적입니다. 정확한 기준은 각 기업 채용 공고를 확인하세요.</p>

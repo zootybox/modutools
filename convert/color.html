@@ -15,11 +15,6 @@
 <meta property="og:url" content="https://modutools.com/convert/color.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .color-preview{width:100%;height:120px;border-radius:10px;border:1px solid var(--g200);margin-bottom:16px;transition:background .2s}
 .picker-row{display:flex;gap:12px;align-items:center;margin-bottom:16px}
 .color-picker{width:60px;height:60px;border:none;border-radius:10px;cursor:pointer;padding:0;background:none}
@@ -73,15 +68,14 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">색상 코드 변환</h1>
+<main class="tool-page">
+<h1 class="tool-title">색상 코드 변환</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">HEX, RGB, HSL 색상 코드를 상호 변환합니다</p>
-<div class="card">
-<div class="card-title">🎨 색상 선택</div>
+<p class="tool-sub">HEX, RGB, HSL 색상 코드를 상호 변환합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">🎨 색상 선택</div>
 <div class="color-preview" id="colorPreview" style="background:#2563EB"></div>
 <div class="picker-row">
 <input type="color" class="color-picker" id="colorPicker" value="#2563EB">
@@ -126,8 +120,8 @@
 </div>
 </div>
 </div>
-<div class="card">
-<div class="card-title">🎨 자주 쓰는 색상</div>
+<div class="tool-card">
+<div class="tool-card-title">🎨 자주 쓰는 색상</div>
 <div class="palette-grid" id="palette"></div>
 </div>
 

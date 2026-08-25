@@ -15,34 +15,13 @@
 <link rel="canonical" href="https://modutools.com/convert/date.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .tab-row{display:flex;gap:8px;margin-bottom:20px}
 .tab-btn{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
 .tab-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
 .tab-btn:hover:not(.active){border-color:var(--g300)}
 .tab-content{display:none}
 .tab-content.active{display:block}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
 
-.result-area{display:none}
-.result-big{text-align:center;padding:20px 0}
-.result-number{font-size:42px;font-weight:800;color:var(--primary)}
-.result-label{font-size:15px;color:var(--g500);margin-top:4px}
 .result-sub{font-size:13px;color:var(--g400);margin-top:8px}
 .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
 .detail-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px;text-align:center}
@@ -81,13 +60,12 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">날짜 계산기</h1>
+<main class="tool-page">
+<h1 class="tool-title">날짜 계산기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">D-Day, 날짜 차이, 날짜 더하기/빼기를 계산합니다</p>
+<p class="tool-sub">D-Day, 날짜 차이, 날짜 더하기/빼기를 계산합니다</p>
 
 <div class="tab-row" id="mainTab">
 <button class="tab-btn active" data-tab="diff" onclick="switchTab(this)">📅 두 날짜 차이</button>
@@ -96,24 +74,24 @@
 
 <!-- 두 날짜 차이 -->
 <div class="tab-content active" id="tab-diff">
-<div class="card">
-<div class="card-title">📅 날짜 입력</div>
-<div class="input-group">
-<label class="input-label">시작 날짜</label>
-<input type="date" class="input-field" id="diffStart">
+<div class="tool-card">
+<div class="tool-card-title">📅 날짜 입력</div>
+<div class="tool-input-group">
+<label class="tool-label">시작 날짜</label>
+<input type="date" class="tool-field" id="diffStart">
 </div>
-<div class="input-group">
-<label class="input-label">종료 날짜</label>
-<input type="date" class="input-field" id="diffEnd">
+<div class="tool-input-group">
+<label class="tool-label">종료 날짜</label>
+<input type="date" class="tool-field" id="diffEnd">
 </div>
-<button class="calc-btn" onclick="calcDiff()">계산하기</button>
+<button class="tool-btn" onclick="calcDiff()">계산하기</button>
 </div>
-<div class="result-area" id="diffResult">
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="diffDays">-</div>
-<div class="result-label">일</div>
+<div class="tool-result" id="diffResult">
+<div class="tool-card">
+<div class="tool-card-title">📊 계산 결과</div>
+<div class="tool-result-big">
+<div class="tool-result-number" id="diffDays">-</div>
+<div class="tool-result-label">일</div>
 <div class="result-sub" id="diffSub"></div>
 </div>
 <div class="detail-grid">
@@ -127,36 +105,36 @@
 
 <!-- 날짜 더하기/빼기 -->
 <div class="tab-content" id="tab-add">
-<div class="card">
-<div class="card-title">📅 날짜 입력</div>
-<div class="input-group">
-<label class="input-label">기준 날짜</label>
-<input type="date" class="input-field" id="addBase">
+<div class="tool-card">
+<div class="tool-card-title">📅 날짜 입력</div>
+<div class="tool-input-group">
+<label class="tool-label">기준 날짜</label>
+<input type="date" class="tool-field" id="addBase">
 </div>
-<div class="input-group">
-<label class="input-label">더하기/빼기</label>
-<div class="toggle-row">
-<div class="toggle-btn active" data-dir="add" onclick="setDir(this)">➕ 더하기</div>
-<div class="toggle-btn" data-dir="sub" onclick="setDir(this)">➖ 빼기</div>
-</div>
-</div>
-<div class="input-group">
-<label class="input-label">일수</label>
-<div class="input-row">
-<input type="number" class="input-field" id="addDays" value="100" min="0" inputmode="numeric" style="text-align:right">
-<span class="input-unit">일</span>
+<div class="tool-input-group">
+<label class="tool-label">더하기/빼기</label>
+<div class="tool-toggle-row">
+<div class="tool-toggle-btn active" data-dir="add" onclick="setDir(this)">➕ 더하기</div>
+<div class="tool-toggle-btn" data-dir="sub" onclick="setDir(this)">➖ 빼기</div>
 </div>
 </div>
-<button class="calc-btn" onclick="calcAdd()">계산하기</button>
+<div class="tool-input-group">
+<label class="tool-label">일수</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="addDays" value="100" min="0" inputmode="numeric" style="text-align:right">
+<span class="tool-unit">일</span>
 </div>
-<div class="result-area" id="addResult">
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
+</div>
+<button class="tool-btn" onclick="calcAdd()">계산하기</button>
+</div>
+<div class="tool-result" id="addResult">
+<div class="tool-card">
+<div class="tool-card-title">📊 계산 결과</div>
 <div class="result-date-box">
 <div class="date" id="addResultDate">-</div>
 <div class="day" id="addResultDay">-</div>
 </div>
-<div class="result-big" style="padding-top:16px">
+<div class="tool-result-big" style="padding-top:16px">
 <div class="result-sub" id="addResultSub"></div>
 </div>
 </div>

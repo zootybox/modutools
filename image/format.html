@@ -15,11 +15,6 @@
 <meta property="og:url" content="https://modutools.com/image/format.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
 .upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
 .upload-zone.active{border-color:var(--primary);background:var(--primary-light)}
@@ -27,18 +22,6 @@
 .upload-text{font-size:14px;color:var(--g500)}
 .upload-text strong{color:var(--primary)}
 .file-input{display:none}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:12px;border:1.5px solid var(--g200);border-radius:10px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
 .file-list{margin-top:12px}
 .file-item{display:flex;align-items:center;gap:10px;padding:12px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;margin-bottom:8px}
 .file-thumb{width:48px;height:48px;border-radius:6px;object-fit:cover;border:1px solid var(--g200)}
@@ -50,8 +33,7 @@
 .download-all-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
 .download-all-btn:hover{background:var(--primary-dark)}
 .quality-row{display:none;margin-top:12px}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.toggle-btn{font-size:12px;padding:10px}}
+
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"이미지 포맷 변환","url":"https://modutools.com/image/format.html","description":"이미지를 PNG, JPG, WEBP 포맷으로 변환하는 무료 온라인 도구","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -59,15 +41,14 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">이미지 포맷 변환</h1>
+<main class="tool-page">
+<h1 class="tool-title">이미지 포맷 변환</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">이미지를 PNG, JPG, WEBP 포맷으로 변환합니다</p>
-<div class="card">
-<div class="card-title">🔄 이미지 업로드</div>
+<p class="tool-sub">이미지를 PNG, JPG, WEBP 포맷으로 변환합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">🔄 이미지 업로드</div>
 <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
 <div class="upload-icon">🖼️</div>
 <div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>여러 장 선택 가능 (최대 10장)</div>
@@ -76,39 +57,39 @@
 <div class="file-list" id="uploadList"></div>
 </div>
 <div id="settingsArea" style="display:none">
-<div class="card">
-<div class="card-title">⚙️ 변환 설정</div>
-<div class="input-group">
-<label class="input-label">변환할 포맷</label>
-<div class="toggle-row" id="formatRow">
-<div class="toggle-btn active" data-fmt="png" onclick="setFormat(this)">PNG</div>
-<div class="toggle-btn" data-fmt="jpeg" onclick="setFormat(this)">JPG</div>
-<div class="toggle-btn" data-fmt="webp" onclick="setFormat(this)">WEBP</div>
+<div class="tool-card">
+<div class="tool-card-title">⚙️ 변환 설정</div>
+<div class="tool-input-group">
+<label class="tool-label">변환할 포맷</label>
+<div class="tool-toggle-row" id="formatRow">
+<div class="tool-toggle-btn active" data-fmt="png" onclick="setFormat(this)">PNG</div>
+<div class="tool-toggle-btn" data-fmt="jpeg" onclick="setFormat(this)">JPG</div>
+<div class="tool-toggle-btn" data-fmt="webp" onclick="setFormat(this)">WEBP</div>
 </div>
 </div>
 <div class="quality-row" id="qualityRow">
-<div class="input-group">
-<label class="input-label">품질 (1~100)</label>
-<div class="input-row">
+<div class="tool-input-group">
+<label class="tool-label">품질 (1~100)</label>
+<div class="tool-input-row">
 <input type="range" style="flex:1" id="quality" min="1" max="100" value="90" oninput="document.getElementById('qualVal').textContent=this.value">
 <span id="qualVal" style="min-width:30px;text-align:right;font-weight:700;font-size:14px;color:var(--primary)">90</span>
 </div>
 </div>
 </div>
-<button class="calc-btn" onclick="doConvert()">변환하기</button>
+<button class="tool-btn" onclick="doConvert()">변환하기</button>
 </div>
 </div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 변환 결과</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">✅ 변환 결과</div>
 <div class="file-list" id="resultList"></div>
 <button class="download-all-btn" id="downloadAllBtn" onclick="downloadAll()" style="display:none">전체 다운로드</button>
 </div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+<p class="tool-disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
 </div>
 
 <!-- 가이드 섹션 -->
-<section class="card" style="margin-top:24px">
+<section class="tool-card" style="margin-top:24px">
 <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">📖 이미지 포맷 변환 가이드</h2>
 <div style="font-size:14px;color:var(--g600);line-height:1.8">
 
@@ -127,7 +108,7 @@
 </section>
 
 <!-- FAQ 섹션 -->
-<section class="card" style="margin-top:16px">
+<section class="tool-card" style="margin-top:16px">
 <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">❓ 자주 묻는 질문</h2>
 <div style="font-size:14px;color:var(--g600);line-height:1.8">
 
@@ -197,7 +178,7 @@ function handleFiles(fileList){
 }
 
 window.setFormat=function(el){
-  const btns=document.querySelectorAll("#formatRow .toggle-btn");
+  const btns=document.querySelectorAll("#formatRow .tool-toggle-btn");
   for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentFormat=el.dataset.fmt;

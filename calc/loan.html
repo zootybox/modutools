@@ -15,37 +15,13 @@
 <link rel="canonical" href="https://modutools.com/calc/loan.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.toggle-btn:hover:not(.active){border-color:var(--g300)}
-
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-
-/* Result */
-.result-area{display:none}
+/* 페이지 고유 : 통계 · 비교 · 상환표 */
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .stat-box{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center}
 .stat-box.highlight{background:var(--primary-light);border-color:var(--primary)}
 .stat-value{font-size:20px;font-weight:800;color:var(--primary);margin-bottom:2px}
 .stat-label{font-size:12px;color:var(--g500);font-weight:600}
 
-/* Compare */
 .compare-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
 .compare-card{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px}
 .compare-card.active{background:var(--primary-light);border-color:var(--primary)}
@@ -54,7 +30,6 @@
 .compare-row .label{color:var(--g500)}
 .compare-row .value{font-weight:700;color:var(--g900)}
 
-/* Table */
 .table-wrap{overflow-x:auto;margin-top:12px;border:1px solid var(--g200);border-radius:10px}
 .schedule-table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px}
 .schedule-table th{background:var(--g100);padding:10px 8px;text-align:center;font-weight:600;color:var(--g700);border-bottom:1px solid var(--g200)}
@@ -67,8 +42,6 @@
 @media(max-width:480px){
   .stats-grid{grid-template-columns:1fr 1fr;gap:8px}
   .stat-value{font-size:17px}
-  .toggle-row{flex-wrap:wrap}
-  .toggle-btn{min-width:calc(50% - 4px)}
 }
 </style>
 <script type="application/ld+json">
@@ -97,75 +70,68 @@
 </head>
 <body>
 
-<header class="mt-header">
-<div class="mt-header-inner">
-<a href="/" class="mt-logo">modu<span>tools</span></a>
-<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
-</div>
-</header>
-
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<main class="page">
-<h1 class="page-title">대출이자 계산기</h1>
+<main class="tool-page">
+<h1 class="tool-title">대출이자 계산기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">대출 조건을 입력하면 상환 방식별 월 납입금과 총 이자를 비교합니다</p>
+<p class="tool-sub">대출 조건을 입력하면 상환 방식별 월 납입금과 총 이자를 비교합니다</p>
 
 <!-- 입력 -->
-<div class="card">
-<div class="card-title">🏦 대출 조건 입력</div>
+<div class="tool-card">
+<div class="tool-card-title">🏦 대출 조건 입력</div>
 
-<div class="input-group">
-<label class="input-label">대출 원금</label>
-<div class="input-row">
-<input type="text" class="input-field" id="principal" placeholder="0" inputmode="numeric">
-<span class="input-unit">만원</span>
-</div>
-</div>
-
-<div class="input-group">
-<label class="input-label">연 이자율</label>
-<div class="input-row">
-<input type="text" class="input-field" id="rate" placeholder="0.0" inputmode="decimal">
-<span class="input-unit">%</span>
+<div class="tool-input-group">
+<label class="tool-label">대출 원금</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="principal" placeholder="0" inputmode="numeric">
+<span class="tool-unit">만원</span>
 </div>
 </div>
 
-<div class="input-group">
-<label class="input-label">대출 기간</label>
-<div class="input-row">
-<input type="text" class="input-field" id="period" placeholder="0" inputmode="numeric">
-<span class="input-unit" id="periodUnit">년</span>
+<div class="tool-input-group">
+<label class="tool-label">연 이자율</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="rate" placeholder="0.0" inputmode="decimal">
+<span class="tool-unit">%</span>
 </div>
 </div>
 
-<div class="input-group">
-<label class="input-label">기간 단위</label>
-<div class="toggle-row">
-<div class="toggle-btn active" data-unit="year" onclick="setUnit(this)">년</div>
-<div class="toggle-btn" data-unit="month" onclick="setUnit(this)">개월</div>
+<div class="tool-input-group">
+<label class="tool-label">대출 기간</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="period" placeholder="0" inputmode="numeric">
+<span class="tool-unit" id="periodUnit">년</span>
 </div>
 </div>
 
-<div class="input-group">
-<label class="input-label">상환 방식</label>
-<div class="toggle-row">
-<div class="toggle-btn active" data-type="equal_payment" onclick="setType(this)">원리금균등</div>
-<div class="toggle-btn" data-type="equal_principal" onclick="setType(this)">원금균등</div>
-<div class="toggle-btn" data-type="bullet" onclick="setType(this)">만기일시</div>
+<div class="tool-input-group">
+<label class="tool-label">기간 단위</label>
+<div class="tool-toggle-row">
+<div class="tool-toggle-btn active" data-unit="year" onclick="setUnit(this)">년</div>
+<div class="tool-toggle-btn" data-unit="month" onclick="setUnit(this)">개월</div>
 </div>
 </div>
 
-<button class="calc-btn" onclick="calculate()">계산하기</button>
+<div class="tool-input-group">
+<label class="tool-label">상환 방식</label>
+<div class="tool-toggle-row">
+<div class="tool-toggle-btn active" data-type="equal_payment" onclick="setType(this)">원리금균등</div>
+<div class="tool-toggle-btn" data-type="equal_principal" onclick="setType(this)">원금균등</div>
+<div class="tool-toggle-btn" data-type="bullet" onclick="setType(this)">만기일시</div>
+</div>
+</div>
+
+<button class="tool-btn" onclick="calculate()">계산하기</button>
 </div>
 
 <!-- 결과 -->
-<div class="result-area" id="resultArea">
+<div class="tool-result" id="resultArea">
 
 <!-- 선택 방식 결과 -->
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
+<div class="tool-card">
+<div class="tool-card-title">📊 계산 결과</div>
 <div class="stats-grid">
 <div class="stat-box highlight">
 <div class="stat-value" id="monthlyPayment">-</div>
@@ -187,16 +153,16 @@
 </div>
 
 <!-- 방식별 비교 -->
-<div class="card">
-<div class="card-title">📋 상환 방식별 비교</div>
+<div class="tool-card">
+<div class="tool-card-title">📋 상환 방식별 비교</div>
 <div class="compare-grid" id="compareGrid"></div>
 </div>
 
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
 <!-- 상환 스케줄 -->
-<div class="card">
-<div class="card-title">📅 월별 상환 스케줄</div>
+<div class="tool-card">
+<div class="tool-card-title">📅 월별 상환 스케줄</div>
 <div class="table-wrap" id="tableWrap" style="display:none">
 <table class="schedule-table">
 <thead>
@@ -209,9 +175,9 @@
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">📖 대출이자 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
+<div class="tool-card">
+<div class="tool-card-title">📖 대출이자 가이드</div>
+<div style="font-size:14px;line-height:1.8">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">대출 상환 방식의 종류</h2>
 <p style="margin-bottom:12px">대출 상환 방식은 크게 원리금균등상환, 원금균등상환, 만기일시상환 세 가지로 나뉩니다. 각 방식에 따라 매월 납입하는 금액과 총 이자 부담이 크게 달라지므로, 본인의 자금 상황에 맞는 방식을 선택하는 것이 중요합니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">원리금균등상환</h2>
@@ -224,8 +190,8 @@
 </div>
 
 <!-- FAQ -->
-<div class="card">
-<div class="card-title">❓ 자주 묻는 질문</div>
+<div class="tool-card">
+<div class="tool-card-title">❓ 자주 묻는 질문</div>
 <details style="margin-bottom:12px">
 <summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">원리금균등 vs 원금균등, 어떤 게 유리한가요?</summary>
 <p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0"><strong>원리금균등</strong>은 매월 같은 금액을 내므로 자금 관리가 쉽습니다. <strong>원금균등</strong>은 초반 납입금이 크지만 총 이자가 적어 장기적으로 유리합니다. 여유 자금이 있다면 원금균등, 안정적 납입을 원하면 원리금균등을 추천합니다.</p>

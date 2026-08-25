@@ -15,11 +15,6 @@
 <meta property="og:url" content="https://modutools.com/image/crop.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
 .upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
 .upload-icon{font-size:36px;margin-bottom:8px}
@@ -39,15 +34,7 @@
 .preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .preset-btn{padding:7px 12px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
 .preset-btn:hover,.preset-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary)}
 .input-sep{font-size:14px;color:var(--g400);font-weight:600}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.result-area{display:none}
 .preview-wrap{text-align:center;margin-bottom:16px}
 .preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
 .info-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid var(--g100)}
@@ -55,7 +42,6 @@
 .info-row .value{font-weight:700;color:var(--g900)}
 .download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
 .download-btn:hover{background:var(--primary-dark)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
 @media(max-width:480px){.preset-btn{font-size:11px;padding:5px 8px}}
 </style>
 <script type="application/ld+json">
@@ -64,15 +50,14 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">이미지 자르기</h1>
+<main class="tool-page">
+<h1 class="tool-title">이미지 자르기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">원하는 영역만 선택하여 이미지를 자릅니다</p>
-<div class="card">
-<div class="card-title">✂️ 이미지 업로드</div>
+<p class="tool-sub">원하는 영역만 선택하여 이미지를 자릅니다</p>
+<div class="tool-card">
+<div class="tool-card-title">✂️ 이미지 업로드</div>
 <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
 <div class="upload-icon">🖼️</div>
 <div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
@@ -80,8 +65,8 @@
 <input type="file" class="file-input" id="fileInput" accept="image/*">
 </div>
 <div id="editorArea" style="display:none">
-<div class="card">
-<div class="card-title">✂️ 자르기 영역 설정</div>
+<div class="tool-card">
+<div class="tool-card-title">✂️ 자르기 영역 설정</div>
 <div class="preset-row" id="presetRow">
 <button class="preset-btn active" onclick="setRatio(this,0)">자유</button>
 <button class="preset-btn" onclick="setRatio(this,1)">1:1</button>
@@ -99,30 +84,30 @@
 <div class="crop-handle crop-handle-br" data-handle="br"></div>
 </div>
 </div>
-<div class="input-group" style="margin-top:12px">
-<label class="input-label">자르기 크기 (px)</label>
-<div class="input-row">
-<input type="number" class="input-field" id="cropW" min="1">
+<div class="tool-input-group" style="margin-top:12px">
+<label class="tool-label">자르기 크기 (px)</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="cropW" min="1">
 <span class="input-sep">x</span>
-<input type="number" class="input-field" id="cropH" min="1">
+<input type="number" class="tool-field" id="cropH" min="1">
 </div>
 </div>
-<button class="calc-btn" onclick="doCrop()">자르기 실행</button>
+<button class="tool-btn" onclick="doCrop()">자르기 실행</button>
 </div>
 </div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 자르기 결과</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">✅ 자르기 결과</div>
 <div class="preview-wrap"><img id="previewImg" class="preview-img" alt="자르기 결과 미리보기"></div>
 <div class="info-row"><span class="label">원본 크기</span><span class="value" id="infoOrig">-</span></div>
 <div class="info-row"><span class="label">자른 크기</span><span class="value" id="infoCrop">-</span></div>
 <button class="download-btn" onclick="downloadResult()">다운로드</button>
 </div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+<p class="tool-disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
 </div>
 
 <!-- 가이드 섹션 -->
-<section class="card" style="margin-top:24px">
+<section class="tool-card" style="margin-top:24px">
 <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">📖 이미지 자르기 가이드</h2>
 <div style="font-size:14px;color:var(--g600);line-height:1.8">
 
@@ -141,7 +126,7 @@
 </section>
 
 <!-- FAQ 섹션 -->
-<section class="card" style="margin-top:16px">
+<section class="tool-card" style="margin-top:16px">
 <h2 style="font-size:18px;font-weight:700;margin-bottom:16px">❓ 자주 묻는 질문</h2>
 <div style="font-size:14px;color:var(--g600);line-height:1.8">
 

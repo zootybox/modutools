@@ -15,25 +15,10 @@
 <link rel="canonical" href="https://modutools.com/life/bmi.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
 
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
 
 /* Result */
-.result-area{display:none}
 .bmi-result{text-align:center;padding:20px 0}
 .bmi-number{font-size:48px;font-weight:800;margin-bottom:4px}
 .bmi-category{font-size:18px;font-weight:700;margin-bottom:4px}
@@ -91,45 +76,38 @@
 </head>
 <body>
 
-<header class="mt-header">
-<div class="mt-header-inner">
-<a href="/" class="mt-logo">modu<span>tools</span></a>
-<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
-</div>
-</header>
-
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<main class="page">
-<h1 class="page-title">BMI 계산기</h1>
+<main class="tool-page">
+<h1 class="tool-title">BMI 계산기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">키와 체중을 입력하면 체질량지수(BMI)와 비만도를 확인합니다</p>
+<p class="tool-sub">키와 체중을 입력하면 체질량지수(BMI)와 비만도를 확인합니다</p>
 
 <!-- 입력 -->
-<div class="card">
-<div class="card-title">⚖️ 신체 정보 입력</div>
-<div class="input-group">
-<label class="input-label">키</label>
-<div class="input-row">
-<input type="number" class="input-field" id="height" placeholder="170" inputmode="decimal" step="0.1">
-<span class="input-unit">cm</span>
+<div class="tool-card">
+<div class="tool-card-title">⚖️ 신체 정보 입력</div>
+<div class="tool-input-group">
+<label class="tool-label">키</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="height" placeholder="170" inputmode="decimal" step="0.1">
+<span class="tool-unit">cm</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">체중</label>
-<div class="input-row">
-<input type="number" class="input-field" id="weight" placeholder="65" inputmode="decimal" step="0.1">
-<span class="input-unit">kg</span>
+<div class="tool-input-group">
+<label class="tool-label">체중</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="weight" placeholder="65" inputmode="decimal" step="0.1">
+<span class="tool-unit">kg</span>
 </div>
 </div>
-<button class="calc-btn" onclick="calculate()">BMI 계산하기</button>
+<button class="tool-btn" onclick="calculate()">BMI 계산하기</button>
 </div>
 
 <!-- 결과 -->
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 BMI 결과</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">📊 BMI 결과</div>
 <div class="bmi-result">
 <div class="bmi-number" id="bmiNumber">-</div>
 <div class="bmi-category" id="bmiCategory">-</div>
@@ -166,8 +144,8 @@
 </div>
 
 <!-- 분류표 -->
-<div class="card">
-<div class="card-title">📋 BMI 분류 기준 (대한비만학회)</div>
+<div class="tool-card">
+<div class="tool-card-title">📋 BMI 분류 기준 (대한비만학회)</div>
 <table class="bmi-table">
 <thead><tr><th>분류</th><th>BMI 범위</th></tr></thead>
 <tbody id="bmiTableBody">
@@ -182,9 +160,9 @@
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">📖 BMI 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
+<div class="tool-card">
+<div class="tool-card-title">📖 BMI 가이드</div>
+<div style="font-size:14px;line-height:1.8">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">BMI 계산 공식</h2>
 <p style="margin-bottom:12px">BMI(Body Mass Index, 체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 예를 들어 키 170cm, 체중 70kg인 경우 BMI = 70 / (1.7 x 1.7) = 24.2 입니다. 간단한 계산으로 비만 여부를 대략적으로 판단할 수 있어 전 세계적으로 널리 사용됩니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">한국 vs WHO 기준 차이</h2>
@@ -197,8 +175,8 @@
 </div>
 
 <!-- FAQ -->
-<div class="card">
-<div class="card-title">❓ 자주 묻는 질문</div>
+<div class="tool-card">
+<div class="tool-card-title">❓ 자주 묻는 질문</div>
 <details style="margin-bottom:12px">
 <summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">BMI란 무엇인가요?</summary>
 <p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">BMI(Body Mass Index, 체질량지수)는 체중(kg)을 키(m)의 제곱으로 나눈 값입니다. 비만도를 판단하는 가장 보편적인 지표로, 대한비만학회 기준 18.5~22.9가 정상 범위입니다.</p>
@@ -302,7 +280,7 @@ function calculate(){
 }
 
 // Enter key
-document.querySelectorAll('.input-field').forEach(el=>{
+document.querySelectorAll('.tool-field').forEach(el=>{
   el.addEventListener('keydown',e=>{if(e.key==='Enter')calculate();});
 });
 

@@ -15,27 +15,7 @@
 <meta property="og:url" content="https://modutools.com/calc/savings.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.result-big{text-align:center;padding:16px 0}
-.result-number{font-size:32px;font-weight:800;color:var(--primary)}
-.result-label{font-size:14px;color:var(--g500);margin-top:4px}
+/* 페이지 고유 : 비교 */
 .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
 .compare-card{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px}
 .compare-card.highlight{background:var(--primary-light);border-color:var(--primary)}
@@ -43,8 +23,7 @@
 .compare-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px}
 .compare-row .label{color:var(--g500)}
 .compare-row .value{font-weight:700;color:var(--g900)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.result-number{font-size:26px}.compare-grid{grid-template-columns:1fr}.compare-row{font-size:11px}}
+@media(max-width:480px){.compare-grid{grid-template-columns:1fr}.compare-row{font-size:11px}}
 </style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"적금 이자 계산기","url":"https://modutools.com/calc/savings.html","description":"월 적립액, 금리, 기간으로 단리/복리 이자를 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
@@ -62,65 +41,64 @@
 
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">적금 이자 계산기</h1>
+<main class="tool-page">
+<h1 class="tool-title">적금 이자 계산기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">월 적립액, 금리, 기간을 입력하면 이자와 만기금액을 계산합니다</p>
-<div class="card">
-<div class="card-title">🐷 적금 정보 입력</div>
-<div class="input-group">
-<label class="input-label">월 적립액</label>
-<div class="input-row">
-<input type="text" class="input-field comma-input" id="monthly" placeholder="500,000" inputmode="numeric">
-<span class="input-unit">원</span>
+<p class="tool-sub">월 적립액, 금리, 기간을 입력하면 이자와 만기금액을 계산합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">🐷 적금 정보 입력</div>
+<div class="tool-input-group">
+<label class="tool-label">월 적립액</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field comma-input" id="monthly" placeholder="500,000" inputmode="numeric">
+<span class="tool-unit">원</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">연 이자율</label>
-<div class="input-row">
-<input type="number" class="input-field" id="rate" value="3.5" step="0.1" inputmode="decimal">
-<span class="input-unit">%</span>
+<div class="tool-input-group">
+<label class="tool-label">연 이자율</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="rate" value="3.5" step="0.1" inputmode="decimal">
+<span class="tool-unit">%</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">적금 기간</label>
-<div class="input-row">
-<input type="number" class="input-field" id="months" value="12" min="1" max="120" inputmode="numeric">
-<span class="input-unit">개월</span>
+<div class="tool-input-group">
+<label class="tool-label">적금 기간</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="months" value="12" min="1" max="120" inputmode="numeric">
+<span class="tool-unit">개월</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">세금 유형</label>
-<div class="toggle-row" id="taxRow">
-<div class="toggle-btn active" data-tax="normal" onclick="setTax(this)">일반과세 (15.4%)</div>
-<div class="toggle-btn" data-tax="low" onclick="setTax(this)">세금우대 (9.5%)</div>
-<div class="toggle-btn" data-tax="free" onclick="setTax(this)">비과세</div>
+<div class="tool-input-group">
+<label class="tool-label">세금 유형</label>
+<div class="tool-toggle-row" id="taxRow">
+<div class="tool-toggle-btn active" data-tax="normal" onclick="setTax(this)">일반과세 (15.4%)</div>
+<div class="tool-toggle-btn" data-tax="low" onclick="setTax(this)">세금우대 (9.5%)</div>
+<div class="tool-toggle-btn" data-tax="free" onclick="setTax(this)">비과세</div>
 </div>
 </div>
-<button class="calc-btn" onclick="calculate()">이자 계산하기</button>
+<button class="tool-btn" onclick="calculate()">이자 계산하기</button>
 </div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="mainResult">-</div>
-<div class="result-label">세후 만기 수령액</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">📊 계산 결과</div>
+<div class="tool-result-big">
+<div class="tool-result-number" id="mainResult">-</div>
+<div class="tool-result-label">세후 만기 수령액</div>
 </div>
 <div class="compare-grid" id="compareGrid"></div>
 </div>
-<p class="disclaimer">※ 본 결과는 참고용이며, 실제 이자는 금융기관 계산 방식에 따라 다를 수 있습니다.</p>
+<p class="tool-disclaimer">※ 본 결과는 참고용이며, 실제 이자는 금융기관 계산 방식에 따라 다를 수 있습니다.</p>
 </div>
 
-<div class="card">
-<div class="card-title">📖 적금 이자 가이드</div>
-<div style="font-size:13px;line-height:1.8;color:#64748B">
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">단리와 복리의 차이</strong><br>단리는 원금에 대해서만 이자를 계산하는 방식이고, 복리는 원금에 이자가 붙고 그 이자에 다시 이자가 붙는 방식입니다. 적금의 경우 대부분 단리가 적용되며, 예금은 복리 상품이 있습니다. 같은 금리라면 복리가 더 많은 이자를 받지만, 적금은 매월 불입하는 구조라 단리와 복리 차이가 크지 않습니다. 장기 저축일수록 복리 효과가 커집니다.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">이자 과세 종류</strong><br>일반과세는 이자소득의 15.4%(소득세 14% + 지방소득세 1.4%)를 세금으로 납부합니다. 세금우대는 9.5%만 과세되며, 조합 출자금이나 농협·수협·신협 등에서 가입 가능합니다. 비과세는 이자에 세금이 전혀 없으며, 청년희망적금, ISA 계좌 등 특정 조건에서만 적용됩니다. 같은 금리라도 과세 방식에 따라 실수령액이 달라지므로 반드시 비교하세요.</p>
-<p style="margin-bottom:16px"><strong style="font-size:15px;color:#0F172A">적금 이자 계산 원리</strong><br>적금 단리 이자는 매월 불입금에 남은 기간의 월 이자율을 곱해 합산합니다. 예를 들어 월 50만 원, 연 3.5%, 12개월 적금이면, 첫 달 불입금은 12개월분 이자, 마지막 달 불입금은 1개월분 이자만 받습니다. 따라서 총 이자는 단순히 원금 × 금리가 아니라, 평균 예치 기간을 고려해 계산됩니다.</p>
-<p><strong style="font-size:15px;color:#0F172A">적금 가입 팁</strong><br>고금리 특판 적금은 은행 앱이나 금융상품 비교 사이트에서 수시로 확인하세요. 자동이체를 설정하면 우대금리(0.1~0.5%p)를 추가로 받을 수 있는 상품이 많습니다. 중도 해지 시 약정 금리보다 훨씬 낮은 중도해지 이율이 적용되므로, 만기까지 유지할 수 있는 금액으로 가입하는 것이 중요합니다.</p>
+<div class="tool-card">
+<div class="tool-card-title">📖 적금 이자 가이드</div>
+<div style="font-size:13px;line-height:1.8">
+<p style="margin-bottom:16px"><strong style="font-size:15px">단리와 복리의 차이</strong><br>단리는 원금에 대해서만 이자를 계산하는 방식이고, 복리는 원금에 이자가 붙고 그 이자에 다시 이자가 붙는 방식입니다. 적금의 경우 대부분 단리가 적용되며, 예금은 복리 상품이 있습니다. 같은 금리라면 복리가 더 많은 이자를 받지만, 적금은 매월 불입하는 구조라 단리와 복리 차이가 크지 않습니다. 장기 저축일수록 복리 효과가 커집니다.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px">이자 과세 종류</strong><br>일반과세는 이자소득의 15.4%(소득세 14% + 지방소득세 1.4%)를 세금으로 납부합니다. 세금우대는 9.5%만 과세되며, 조합 출자금이나 농협·수협·신협 등에서 가입 가능합니다. 비과세는 이자에 세금이 전혀 없으며, 청년희망적금, ISA 계좌 등 특정 조건에서만 적용됩니다. 같은 금리라도 과세 방식에 따라 실수령액이 달라지므로 반드시 비교하세요.</p>
+<p style="margin-bottom:16px"><strong style="font-size:15px">적금 이자 계산 원리</strong><br>적금 단리 이자는 매월 불입금에 남은 기간의 월 이자율을 곱해 합산합니다. 예를 들어 월 50만 원, 연 3.5%, 12개월 적금이면, 첫 달 불입금은 12개월분 이자, 마지막 달 불입금은 1개월분 이자만 받습니다. 따라서 총 이자는 단순히 원금 × 금리가 아니라, 평균 예치 기간을 고려해 계산됩니다.</p>
+<p><strong style="font-size:15px">적금 가입 팁</strong><br>고금리 특판 적금은 은행 앱이나 금융상품 비교 사이트에서 수시로 확인하세요. 자동이체를 설정하면 우대금리(0.1~0.5%p)를 추가로 받을 수 있는 상품이 많습니다. 중도 해지 시 약정 금리보다 훨씬 낮은 중도해지 이율이 적용되므로, 만기까지 유지할 수 있는 금액으로 가입하는 것이 중요합니다.</p>
 </div>
 </div>
 
@@ -148,7 +126,7 @@ document.querySelectorAll(".comma-input").forEach(function(el){
 });
 
 function setTax(el){
-  const btns=document.querySelectorAll("#taxRow .toggle-btn");
+  const btns=document.querySelectorAll("#taxRow .tool-toggle-btn");
   for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentTax=el.dataset.tax;

@@ -19,11 +19,6 @@
 </script>
 <style>
 /* ── Layout ── */
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 
 /* ── Security Badge ── */
 
@@ -111,14 +106,12 @@
 </head>
 <body>
 
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
-
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<main class="page">
+<main class="tool-page">
 
-<h1 class="page-title">🔍 이미지 텍스트 추출 (OCR)</h1>
-<p class="page-sub">사진 속 글자를 인식하여 복사 가능한 텍스트로 변환 · 브라우저 100% 로컬 처리</p>
+<h1 class="tool-title">🔍 이미지 텍스트 추출 (OCR)</h1>
+<p class="tool-sub">사진 속 글자를 인식하여 복사 가능한 텍스트로 변환 · 브라우저 100% 로컬 처리</p>
 
 <div class="security-badge">
   <span class="badge-icon">🔒</span>
@@ -128,8 +121,8 @@
   </div>
 </div>
 
-<div class="card">
-  <div class="card-title">🖼️ 이미지 업로드</div>
+<div class="tool-card">
+  <div class="tool-card-title">🖼️ 이미지 업로드</div>
   <div class="upload-zone" id="uploadZone">
     <div class="upload-icon" id="uploadIcon">📷</div>
     <div class="upload-text" id="uploadText"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드<br>JPG, PNG, WebP 지원 · Ctrl+V 붙여넣기 가능</div>
@@ -146,8 +139,8 @@
   <input type="file" class="file-input" id="fileInput" accept="image/*" multiple>
 </div>
 
-<div class="card" id="settingsCard">
-  <div class="card-title">🌐 인식 언어 선택</div>
+<div class="tool-card" id="settingsCard">
+  <div class="tool-card-title">🌐 인식 언어 선택</div>
   <div class="lang-row">
     <div class="lang-btn active" data-lang="kor+eng">🇰🇷+🇺🇸 한국어+영어 <span class="lang-sub">추천</span></div>
     <div class="lang-btn" data-lang="kor">🇰🇷 한국어 전용 <span class="lang-sub">한글 문서</span></div>

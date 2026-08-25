@@ -18,11 +18,6 @@
 
 </script>
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 
 /* Tab */
 .tab-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
@@ -31,10 +26,6 @@
 .tab-btn:hover:not(.active){border-color:var(--g300)}
 
 /* Input */
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .text-area{width:100%;min-height:80px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s;resize:vertical}
 .text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 
@@ -43,9 +34,6 @@
 .options-row .input-group{flex:1;min-width:120px}
 .color-input{width:100%;height:44px;border:1.5px solid var(--g200);border-radius:10px;padding:4px;cursor:pointer;background:#fff}
 
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
 
 /* QR Result */
 .qr-result{display:none;text-align:center}
@@ -91,24 +79,17 @@
 </head>
 <body>
 
-<header class="mt-header">
-<div class="mt-header-inner">
-<a href="/" class="mt-logo">modu<span>tools</span></a>
-<nav class="mt-nav"><a href="/">← 도구 목록</a></nav>
-</div>
-</header>
-
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
 
-<main class="page">
-<h1 class="page-title">QR코드 생성기</h1>
+<main class="tool-page">
+<h1 class="tool-title">QR코드 생성기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">URL·텍스트·연락처·와이파이를 QR코드로 즉시 만들어 보세요</p>
+<p class="tool-sub">URL·텍스트·연락처·와이파이를 QR코드로 즉시 만들어 보세요</p>
 
 <!-- 입력 -->
-<div class="card">
-<div class="card-title">📱 QR코드 내용</div>
+<div class="tool-card">
+<div class="tool-card-title">📱 QR코드 내용</div>
 
 <div class="tab-row" id="tabRow">
 <button class="tab-btn active" data-tab="url">🔗 URL</button>
@@ -117,31 +98,31 @@
 </div>
 
 <div class="tab-content active" id="tab-url">
-<div class="input-group">
-<label class="input-label">URL 주소</label>
-<input type="url" class="input-field" id="inputUrl" placeholder="https://example.com" value="https://">
+<div class="tool-input-group">
+<label class="tool-label">URL 주소</label>
+<input type="url" class="tool-field" id="inputUrl" placeholder="https://example.com" value="https://">
 </div>
 </div>
 
 <div class="tab-content" id="tab-text">
-<div class="input-group">
-<label class="input-label">텍스트 내용</label>
+<div class="tool-input-group">
+<label class="tool-label">텍스트 내용</label>
 <textarea class="text-area" id="inputText" placeholder="QR코드에 담을 텍스트를 입력하세요"></textarea>
 </div>
 </div>
 
 <div class="tab-content" id="tab-wifi">
-<div class="input-group">
-<label class="input-label">네트워크 이름 (SSID)</label>
-<input type="text" class="input-field" id="wifiSsid" placeholder="Wi-Fi 이름">
+<div class="tool-input-group">
+<label class="tool-label">네트워크 이름 (SSID)</label>
+<input type="text" class="tool-field" id="wifiSsid" placeholder="Wi-Fi 이름">
 </div>
-<div class="input-group">
-<label class="input-label">비밀번호</label>
-<input type="text" class="input-field" id="wifiPass" placeholder="Wi-Fi 비밀번호">
+<div class="tool-input-group">
+<label class="tool-label">비밀번호</label>
+<input type="text" class="tool-field" id="wifiPass" placeholder="Wi-Fi 비밀번호">
 </div>
-<div class="input-group">
-<label class="input-label">보안 방식</label>
-<select class="input-field" id="wifiSec">
+<div class="tool-input-group">
+<label class="tool-label">보안 방식</label>
+<select class="tool-field" id="wifiSec">
 <option value="WPA">WPA/WPA2</option>
 <option value="WEP">WEP</option>
 <option value="nopass">없음 (개방형)</option>
@@ -151,34 +132,34 @@
 </div>
 
 <!-- 옵션 -->
-<div class="card">
-<div class="card-title">⚙️ 옵션</div>
+<div class="tool-card">
+<div class="tool-card-title">⚙️ 옵션</div>
 <div class="options-row">
-<div class="input-group">
-<label class="input-label">크기 (px)</label>
-<select class="input-field" id="qrSize">
+<div class="tool-input-group">
+<label class="tool-label">크기 (px)</label>
+<select class="tool-field" id="qrSize">
 <option value="200">200 x 200</option>
 <option value="300" selected>300 x 300</option>
 <option value="400">400 x 400</option>
 <option value="500">500 x 500</option>
 </select>
 </div>
-<div class="input-group">
-<label class="input-label">QR 색상</label>
+<div class="tool-input-group">
+<label class="tool-label">QR 색상</label>
 <input type="color" class="color-input" id="qrColor" value="#000000">
 </div>
-<div class="input-group">
-<label class="input-label">배경 색상</label>
+<div class="tool-input-group">
+<label class="tool-label">배경 색상</label>
 <input type="color" class="color-input" id="bgColor" value="#FFFFFF">
 </div>
 </div>
-<button class="calc-btn" onclick="generateQR()">QR코드 생성하기</button>
+<button class="tool-btn" onclick="generateQR()">QR코드 생성하기</button>
 </div>
 
 <!-- 결과 -->
 <div class="qr-result" id="qrResult">
-<div class="card" style="text-align:center">
-<div class="card-title" style="justify-content:center">✅ QR코드 생성 완료</div>
+<div class="tool-card" style="text-align:center">
+<div class="tool-card-title" style="justify-content:center">✅ QR코드 생성 완료</div>
 <div class="qr-canvas-wrap">
 <canvas id="qrCanvas"></canvas>
 </div>
@@ -187,9 +168,9 @@
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">📖 QR코드 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
+<div class="tool-card">
+<div class="tool-card-title">📖 QR코드 가이드</div>
+<div style="font-size:14px;line-height:1.8">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">QR코드란?</h2>
 <p style="margin-bottom:12px">QR코드(Quick Response Code)는 일본 덴소웨이브에서 1994년 개발한 2차원 바코드입니다. 기존 바코드가 수십 자의 정보만 담을 수 있는 것과 달리, QR코드는 최대 약 7,000자의 숫자 또는 약 4,300자의 영문을 담을 수 있습니다. 스마트폰 카메라로 간편하게 스캔할 수 있어 결제, 인증, 정보 전달 등 다양한 분야에서 활용됩니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">QR코드 활용 사례</h2>
@@ -200,8 +181,8 @@
 </div>
 
 <!-- FAQ -->
-<div class="card">
-<div class="card-title">❓ 자주 묻는 질문</div>
+<div class="tool-card">
+<div class="tool-card-title">❓ 자주 묻는 질문</div>
 <details style="margin-bottom:12px">
 <summary style="font-size:14px;font-weight:600;cursor:pointer;padding:8px 0;color:var(--g700)">QR코드 유효기간이 있나요?</summary>
 <p style="font-size:13px;color:var(--g500);line-height:1.7;padding:8px 0">QR코드 자체에는 유효기간이 없습니다. QR코드에 담긴 URL이 유효한 한 영구적으로 사용 가능합니다.</p>

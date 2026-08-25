@@ -16,13 +16,8 @@
 <link rel="stylesheet" href="/css/common.css">
 <style>
 /* 기존 상세 페이지 규격 반영 */
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
 
 /* 카드 및 입력창 최적화 */
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g600);margin-bottom:8px;display:block}
 .tts-textarea {
     width: 100%; min-height: 180px; padding: 16px;
     border: 1px solid var(--g200); border-radius: var(--radius);
@@ -74,24 +69,18 @@ input[type="range"] { width: 100%; accent-color: var(--primary); cursor: pointer
 </head>
 <body>
 
-<header class="header">
-    <div class="header-inner">
-        <a href="/" class="logo">modutools</a>
-    </div>
-</header>
-
-<main class="page">
-    <h1 class="page-title">TTS 음성 변환</h1>
+<main class="tool-page">
+    <h1 class="tool-title">TTS 음성 변환</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-    <p class="page-sub">텍스트를 입력하고 원하는 목소리로 변환하여 소장해 보세요.</p>
+    <p class="tool-sub">텍스트를 입력하고 원하는 목소리로 변환하여 소장해 보세요.</p>
 
-    <div class="card">
-        <label class="input-label">내용 입력</label>
+    <div class="tool-card">
+        <label class="tool-label">내용 입력</label>
         <textarea id="ttsInput" class="tts-textarea" placeholder="읽어줄 내용을 입력하세요..."></textarea>
 
-        <div class="input-group" style="margin-bottom: 20px;">
-            <label class="input-label">목소리 선택 (성별/언어)</label>
+        <div class="tool-input-group" style="margin-bottom: 20px;">
+            <label class="tool-label">목소리 선택 (성별/언어)</label>
             <select id="voiceSelect" class="mt-input" style="width: 100%; border-color: var(--g200);"></select>
         </div>
 

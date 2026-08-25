@@ -14,34 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/severance.html">
 <link rel="stylesheet" href="/css/common.css">
-<style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-unit{font-size:14px;color:var(--g500);font-weight:600;white-space:nowrap}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
-.result-big{text-align:center;padding:16px 0}
-.result-number{font-size:32px;font-weight:800;color:var(--primary)}
-.result-label{font-size:14px;color:var(--g500);margin-top:4px}
-.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--g100);font-size:13px}
-.detail-row:last-child{border-bottom:none}
-.detail-row .label{color:var(--g500)}
-.detail-row .value{font-weight:700;color:var(--g900)}
-.detail-row.total{border-top:2px solid var(--g200);padding-top:12px;font-size:15px}
-.detail-row.total .value{color:var(--primary)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
-@media(max-width:480px){.result-number{font-size:26px}}
-</style>
+<style></style>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"퇴직금 계산기","url":"https://modutools.com/calc/severance.html","description":"입사일, 퇴사일, 평균임금으로 퇴직금을 계산하는 무료 온라인 도구","applicationCategory":"FinanceApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
 
@@ -58,61 +31,60 @@
 
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">퇴직금 계산기</h1>
+<main class="tool-page">
+<h1 class="tool-title">퇴직금 계산기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">입사일, 퇴사일, 평균임금을 입력하면 퇴직금을 계산합니다</p>
-<div class="card">
-<div class="card-title">📦 근무 정보 입력</div>
-<div class="input-group">
-<label class="input-label">입사일</label>
-<input type="date" class="input-field" id="startDate">
+<p class="tool-sub">입사일, 퇴사일, 평균임금을 입력하면 퇴직금을 계산합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">📦 근무 정보 입력</div>
+<div class="tool-input-group">
+<label class="tool-label">입사일</label>
+<input type="date" class="tool-field" id="startDate">
 </div>
-<div class="input-group">
-<label class="input-label">퇴사일 (마지막 근무일)</label>
-<input type="date" class="input-field" id="endDate">
+<div class="tool-input-group">
+<label class="tool-label">퇴사일 (마지막 근무일)</label>
+<input type="date" class="tool-field" id="endDate">
 </div>
-<div class="input-group">
-<label class="input-label">퇴직 전 3개월 월 평균임금 (세전)</label>
-<div class="input-row">
-<input type="text" class="input-field" id="avgSalary" placeholder="3,000,000" inputmode="numeric">
-<span class="input-unit">원</span>
-</div>
-</div>
-<div class="input-group">
-<label class="input-label">연간 상여금 (없으면 0)</label>
-<div class="input-row">
-<input type="text" class="input-field" id="bonus" placeholder="0" inputmode="numeric" value="0">
-<span class="input-unit">원</span>
+<div class="tool-input-group">
+<label class="tool-label">퇴직 전 3개월 월 평균임금 (세전)</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="avgSalary" placeholder="3,000,000" inputmode="numeric">
+<span class="tool-unit">원</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">연차수당 (미사용 연차, 없으면 0)</label>
-<div class="input-row">
-<input type="text" class="input-field" id="annualPay" placeholder="0" inputmode="numeric" value="0">
-<span class="input-unit">원</span>
+<div class="tool-input-group">
+<label class="tool-label">연간 상여금 (없으면 0)</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="bonus" placeholder="0" inputmode="numeric" value="0">
+<span class="tool-unit">원</span>
 </div>
 </div>
-<button class="calc-btn" onclick="calculate()">퇴직금 계산하기</button>
+<div class="tool-input-group">
+<label class="tool-label">연차수당 (미사용 연차, 없으면 0)</label>
+<div class="tool-input-row">
+<input type="text" class="tool-field" id="annualPay" placeholder="0" inputmode="numeric" value="0">
+<span class="tool-unit">원</span>
 </div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">📊 퇴직금 계산 결과</div>
-<div class="result-big">
-<div class="result-number" id="mainResult">-</div>
-<div class="result-label">예상 퇴직금 (세전)</div>
+</div>
+<button class="tool-btn" onclick="calculate()">퇴직금 계산하기</button>
+</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">📊 퇴직금 계산 결과</div>
+<div class="tool-result-big">
+<div class="tool-result-number" id="mainResult">-</div>
+<div class="tool-result-label">예상 퇴직금 (세전)</div>
 </div>
 <div id="detailList"></div>
 </div>
-<p class="disclaimer">※ 근로기준법 제34조 기준이며, 1년 이상 근무 시 퇴직금 지급 의무가 있습니다.<br>퇴직소득세는 근속연수, 환산급여 등에 따라 달라지므로 정확한 세후 금액은 국세청에서 확인하세요.</p>
+<p class="tool-disclaimer">※ 근로기준법 제34조 기준이며, 1년 이상 근무 시 퇴직금 지급 의무가 있습니다.<br>퇴직소득세는 근속연수, 환산급여 등에 따라 달라지므로 정확한 세후 금액은 국세청에서 확인하세요.</p>
 </div>
 
-<div class="card">
-<div class="card-title">📖 퇴직금 가이드</div>
-<div style="font-size:14px;line-height:1.8;color:#334155">
+<div class="tool-card">
+<div class="tool-card-title">📖 퇴직금 가이드</div>
+<div style="font-size:14px;line-height:1.8">
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">퇴직금 지급 조건</h2>
 <p style="margin-bottom:12px">근로기준법에 따라 1년 이상 계속 근무한 근로자가 퇴직할 때 퇴직금을 지급받을 수 있습니다. 정규직뿐 아니라 계약직, 아르바이트도 주 15시간 이상, 1년 이상 근무하면 퇴직금 대상이 됩니다. 퇴직금은 퇴직일로부터 14일 이내에 지급해야 합니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">퇴직금 계산 공식</h2>
@@ -176,18 +148,18 @@ function calculate(){
   document.getElementById("mainResult").textContent=fmt(severance)+"원";
 
   let html="";
-  html+='<div class="detail-row"><span class="label">입사일</span><span class="value">'+startStr+'</span></div>';
-  html+='<div class="detail-row"><span class="label">퇴사일</span><span class="value">'+endStr+'</span></div>';
-  html+='<div class="detail-row"><span class="label">총 근무일수</span><span class="value">'+fmt(totalDays)+'일 ('+years+'년 '+remainDays+'일)</span></div>';
-  html+='<div class="detail-row"><span class="label">월 평균임금</span><span class="value">'+fmt(avgSalary)+'원</span></div>';
-  if(bonus>0)html+='<div class="detail-row"><span class="label">상여금 가산 (월)</span><span class="value">'+fmt(Math.round(bonus/12))+'원</span></div>';
-  if(annualPay>0)html+='<div class="detail-row"><span class="label">연차수당 가산 (월)</span><span class="value">'+fmt(Math.round(annualPay/12))+'원</span></div>';
-  html+='<div class="detail-row"><span class="label">1일 평균임금</span><span class="value">'+fmt(Math.round(totalDailyAvg))+'원</span></div>';
-  html+='<div class="detail-row total"><span class="label">예상 퇴직금</span><span class="value">'+fmt(severance)+'원</span></div>';
+  html+='<div class="tool-detail-row"><span class="label">입사일</span><span class="value">'+startStr+'</span></div>';
+  html+='<div class="tool-detail-row"><span class="label">퇴사일</span><span class="value">'+endStr+'</span></div>';
+  html+='<div class="tool-detail-row"><span class="label">총 근무일수</span><span class="value">'+fmt(totalDays)+'일 ('+years+'년 '+remainDays+'일)</span></div>';
+  html+='<div class="tool-detail-row"><span class="label">월 평균임금</span><span class="value">'+fmt(avgSalary)+'원</span></div>';
+  if(bonus>0)html+='<div class="tool-detail-row"><span class="label">상여금 가산 (월)</span><span class="value">'+fmt(Math.round(bonus/12))+'원</span></div>';
+  if(annualPay>0)html+='<div class="tool-detail-row"><span class="label">연차수당 가산 (월)</span><span class="value">'+fmt(Math.round(annualPay/12))+'원</span></div>';
+  html+='<div class="tool-detail-row"><span class="label">1일 평균임금</span><span class="value">'+fmt(Math.round(totalDailyAvg))+'원</span></div>';
+  html+='<div class="tool-detail-row total"><span class="label">예상 퇴직금</span><span class="value">'+fmt(severance)+'원</span></div>';
 
   if(severance>=10000000){
     const manwon=Math.round(severance/10000);
-    html+='<div class="detail-row"><span class="label"></span><span class="value" style="color:var(--g400)">약 '+fmt(manwon)+'만원</span></div>';
+    html+='<div class="tool-detail-row"><span class="label"></span><span class="value" style="color:var(--g400)">약 '+fmt(manwon)+'만원</span></div>';
   }
 
   document.getElementById("detailList").innerHTML=html;

@@ -18,11 +18,6 @@
 
 </script>
 <style>
-.page{max-width:680px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:20px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 
 .upload-zone{border:2px dashed var(--g300);border-radius:14px;padding:44px 24px;text-align:center;cursor:pointer;transition:.25s;background:var(--g50)}
 .upload-zone:hover,.upload-zone.dragover{border-color:var(--primary);background:var(--primary-light)}
@@ -60,7 +55,6 @@
 .ad-slot{margin:20px 0;text-align:center}
 .ad-label{font-size:10px;color:var(--g400);margin-bottom:4px;letter-spacing:.5px}
 .ad-slot-inner{background:var(--g100);border:1px dashed var(--g300);border-radius:var(--radius);padding:14px;color:var(--g400);font-size:12px;min-height:60px;display:flex;align-items:center;justify-content:center}
-.result-area{display:none}
 .result-box{background:linear-gradient(135deg,#059669,#047857);border-radius:var(--radius);padding:28px 24px;color:#fff;text-align:center}
 .result-icon{font-size:44px;margin-bottom:8px}
 .result-title{font-size:20px;font-weight:800;margin-bottom:4px}
@@ -89,19 +83,18 @@
 
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">📑 PDF 합치기</h1>
-<p class="page-sub">여러 PDF 파일을 하나로 무료 병합 · 브라우저에서 100% 로컬 처리</p>
+<main class="tool-page">
+<h1 class="tool-title">📑 PDF 합치기</h1>
+<p class="tool-sub">여러 PDF 파일을 하나로 무료 병합 · 브라우저에서 100% 로컬 처리</p>
 <div class="security-badge"><span>🔒</span> 서버 전송 없음 · 용량/횟수 무제한 무료</div>
-<div class="card"><div class="card-title">📁 PDF 파일 업로드</div>
+<div class="tool-card"><div class="tool-card-title">📁 PDF 파일 업로드</div>
 <div class="upload-zone" id="uploadZone"><div class="upload-icon">📄</div><div class="upload-text"><strong>클릭</strong> 또는 PDF 파일을 드래그하여 업로드</div>
 <div class="upload-sub">여러 파일을 한 번에 선택 가능 · 순서는 드래그로 변경</div></div>
 <input type="file" class="file-input" id="fileInput" accept=".pdf" multiple>
 </div>
-<div class="card" id="fileListCard" style="display:none">
-<div class="file-list-header"><div class="card-title" style="margin-bottom:0">📑 선택된 파일</div><span class="file-count-badge" id="fileCountBadge">0개</span></div>
+<div class="tool-card" id="fileListCard" style="display:none">
+<div class="file-list-header"><div class="tool-card-title" style="margin-bottom:0">📑 선택된 파일</div><span class="file-count-badge" id="fileCountBadge">0개</span></div>
 <div class="file-list" id="fileList"></div>
 <div class="merge-btn-wrap"><button class="action-btn" id="mergeBtn" disabled><span class="spinner"></span><span class="btn-text">📎 PDF 병합하기</span></button></div>
 </div>

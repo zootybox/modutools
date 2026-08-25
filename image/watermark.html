@@ -15,22 +15,12 @@
 <meta property="og:url" content="https://modutools.com/image/watermark.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .upload-zone{border:2px dashed var(--g300);border-radius:10px;padding:40px 20px;text-align:center;cursor:pointer;transition:.2s;background:var(--g50)}
 .upload-zone:hover{border-color:var(--primary);background:var(--primary-light)}
 .upload-icon{font-size:36px;margin-bottom:8px}
 .upload-text{font-size:14px;color:var(--g500)}
 .upload-text strong{color:var(--primary)}
 .file-input{display:none}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-field{width:100%;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:15px;font-family:inherit;outline:none;transition:.2s}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
-.input-row{display:flex;gap:8px;align-items:center}
 .range-input{flex:1;height:6px;-webkit-appearance:none;appearance:none;border-radius:3px;background:var(--g200);outline:none}
 .range-input::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--primary);cursor:pointer;border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .range-val{min-width:40px;text-align:right;font-size:14px;font-weight:700;color:var(--primary)}
@@ -39,20 +29,12 @@
 .pos-btn:hover{border-color:var(--primary);color:var(--primary)}
 .pos-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
 .color-input{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:10px;padding:4px;cursor:pointer;background:#fff}
-.toggle-row{display:flex;gap:8px;margin-bottom:16px}
-.toggle-btn{flex:1;padding:10px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
-.toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
 .preview-area{position:relative;margin:16px 0;border-radius:10px;overflow:hidden;border:1px solid var(--g200)}
 .preview-area canvas{display:block;width:100%;height:auto}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
-.result-area{display:none}
 .preview-wrap{text-align:center;margin-bottom:16px}
 .preview-img{max-width:100%;max-height:300px;border-radius:10px;border:1px solid var(--g200)}
 .download-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:12px}
 .download-btn:hover{background:var(--primary-dark)}
-.disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:16px;line-height:1.6}
 @media(max-width:480px){.pos-grid{gap:4px}.pos-btn{padding:8px;font-size:10px}}
 </style>
 <script type="application/ld+json">
@@ -71,15 +53,14 @@
 
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">워터마크 넣기</h1>
+<main class="tool-page">
+<h1 class="tool-title">워터마크 넣기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">이미지에 텍스트 워터마크를 추가합니다</p>
-<div class="card">
-<div class="card-title">💧 이미지 업로드</div>
+<p class="tool-sub">이미지에 텍스트 워터마크를 추가합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">💧 이미지 업로드</div>
 <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
 <div class="upload-icon">🖼️</div>
 <div class="upload-text"><strong>클릭</strong> 또는 이미지를 드래그하여 업로드</div>
@@ -87,14 +68,14 @@
 <input type="file" class="file-input" id="fileInput" accept="image/*">
 </div>
 <div id="editorArea" style="display:none">
-<div class="card">
-<div class="card-title">⚙️ 워터마크 설정</div>
-<div class="input-group">
-<label class="input-label">워터마크 텍스트</label>
-<input type="text" class="input-field" id="wmText" value="modutools.com" placeholder="워터마크 텍스트 입력">
+<div class="tool-card">
+<div class="tool-card-title">⚙️ 워터마크 설정</div>
+<div class="tool-input-group">
+<label class="tool-label">워터마크 텍스트</label>
+<input type="text" class="tool-field" id="wmText" value="modutools.com" placeholder="워터마크 텍스트 입력">
 </div>
-<div class="input-group">
-<label class="input-label">위치</label>
+<div class="tool-input-group">
+<label class="tool-label">위치</label>
 <div class="pos-grid" id="posGrid">
 <div class="pos-btn" data-pos="tl" onclick="setPos(this)">좌상단</div>
 <div class="pos-btn" data-pos="tc" onclick="setPos(this)">상단 중앙</div>
@@ -107,55 +88,55 @@
 <div class="pos-btn" data-pos="br" onclick="setPos(this)">우하단</div>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">모드</label>
-<div class="toggle-row" id="modeRow">
-<div class="toggle-btn active" data-mode="single" onclick="setMode(this)">단일</div>
-<div class="toggle-btn" data-mode="tile" onclick="setMode(this)">타일 (반복)</div>
+<div class="tool-input-group">
+<label class="tool-label">모드</label>
+<div class="tool-toggle-row" id="modeRow">
+<div class="tool-toggle-btn active" data-mode="single" onclick="setMode(this)">단일</div>
+<div class="tool-toggle-btn" data-mode="tile" onclick="setMode(this)">타일 (반복)</div>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">글자 크기</label>
-<div class="input-row">
+<div class="tool-input-group">
+<label class="tool-label">글자 크기</label>
+<div class="tool-input-row">
 <input type="range" class="range-input" id="fontSize" min="10" max="120" value="36" oninput="updateVal('fontSize','fontSizeVal','px');drawPreview()">
 <span class="range-val" id="fontSizeVal">36px</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">투명도</label>
-<div class="input-row">
+<div class="tool-input-group">
+<label class="tool-label">투명도</label>
+<div class="tool-input-row">
 <input type="range" class="range-input" id="opacity" min="5" max="100" value="30" oninput="updateVal('opacity','opacityVal','%');drawPreview()">
 <span class="range-val" id="opacityVal">30%</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">회전 각도</label>
-<div class="input-row">
+<div class="tool-input-group">
+<label class="tool-label">회전 각도</label>
+<div class="tool-input-row">
 <input type="range" class="range-input" id="rotation" min="-90" max="90" value="-30" oninput="updateVal('rotation','rotationVal','deg');drawPreview()">
 <span class="range-val" id="rotationVal">-30deg</span>
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">색상</label>
-<div class="input-row">
+<div class="tool-input-group">
+<label class="tool-label">색상</label>
+<div class="tool-input-row">
 <input type="color" class="color-input" id="wmColor" value="#ffffff" oninput="drawPreview()">
 <span style="font-size:13px;color:var(--g500);margin-left:4px">워터마크 글자 색상</span>
 </div>
 </div>
 </div>
-<div class="card">
-<div class="card-title">👁️ 미리보기</div>
+<div class="tool-card">
+<div class="tool-card-title">👁️ 미리보기</div>
 <div class="preview-area"><canvas id="previewCanvas"></canvas></div>
-<button class="calc-btn" onclick="doExport()">워터마크 적용 후 다운로드</button>
+<button class="tool-btn" onclick="doExport()">워터마크 적용 후 다운로드</button>
 </div>
 </div>
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✅ 완성</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">✅ 완성</div>
 <div class="preview-wrap"><img id="resultImg" class="preview-img" alt="워터마크 적용 결과 이미지"></div>
 <button class="download-btn" onclick="downloadResult()">다운로드</button>
 </div>
-<p class="disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
+<p class="tool-disclaimer">※ 모든 처리는 브라우저에서 이루어지며, 이미지가 서버로 전송되지 않습니다.</p>
 </div>
 
 <div class="guide-section"><div class="guide-card"><h2>클라이언트 브라우저 로컬 처리 안내</h2>
@@ -208,7 +189,7 @@ window.setPos=function(el){
 };
 
 window.setMode=function(el){
-  const btns=document.querySelectorAll("#modeRow .toggle-btn");
+  const btns=document.querySelectorAll("#modeRow .tool-toggle-btn");
   for(let i=0;i<btns.length;i++)btns[i].classList.remove("active");
   el.classList.add("active");
   currentMode=el.dataset.mode;

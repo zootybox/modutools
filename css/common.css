@@ -76,8 +76,10 @@ a{text-decoration:none;color:inherit}
 /* Guide Section */
 .guide-section{margin-top:24px}
 .guide-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:12px}
-.guide-card h2{font-size:16px;font-weight:700;margin-bottom:12px;color:var(--text)}
-.guide-card p{font-size:13px;line-height:1.8;color:var(--text-secondary);margin-bottom:10px}
+.guide-card *{color:inherit}
+.guide-card h2{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)!important}
+.guide-card p{font-size:13px;line-height:1.8;color:var(--text-secondary)!important;margin-bottom:10px}
+.guide-card strong{color:var(--text)!important}
 
 /* FAQ Item */
 .faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;background:var(--card-bg)}
@@ -92,9 +94,14 @@ a{text-decoration:none;color:inherit}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 [data-theme="dark"] .toast{background:#1E293B;color:var(--g900);border:1px solid var(--border)}
 
+/* Toggle Button (다크모드 대비 : 비활성=어두운 배경+밝은 회색 글자, 활성=파란 배경+흰 글자) */
+[data-theme="dark"] .toggle-btn{background:var(--g100);border-color:var(--g400);color:var(--g500)}
+[data-theme="dark"] .toggle-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+[data-theme="dark"] .toggle-btn:hover:not(.active){border-color:var(--g500)}
+
 /* Footer */
 .mt-footer{background:var(--card-bg);border-top:1px solid var(--border);padding:32px 20px;text-align:center;margin-top:60px}
-.mt-footer p{font-size:12px;color:var(--g400);line-height:1.8}
+.mt-footer p{font-size:12px;color:var(--g400);line-height:1.8;max-width:760px;margin:0 auto}
 .mt-footer a{color:var(--g500);text-decoration:underline}
 
 /* Responsive */
@@ -169,7 +176,7 @@ a{text-decoration:none;color:inherit}
 
 /* ===== Top Bar (sidebar 대체) : 다크 네이비 테마 ===== */
 .tool-topbar{position:sticky;top:0;z-index:300;background:#0F172A;border-bottom:1px solid #1E293B}
-.tool-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 20px}
+.tool-topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 20px;max-width:760px;margin:0 auto}
 .tool-logo{font-size:20px;font-weight:800;color:#38BDF8;letter-spacing:-.5px;text-decoration:none}
 .tool-logo span{color:#67E8F9;font-weight:400}
 .tool-theme-btn{width:36px;height:36px;border:1px solid #334155;border-radius:9px;background:#1E293B;color:#94A3B8;cursor:pointer;font-size:16px;transition:.15s;display:inline-flex;align-items:center;justify-content:center}
@@ -178,7 +185,7 @@ a{text-decoration:none;color:inherit}
 
 /* ===== Breadcrumb ===== */
 .tool-crumb{padding:10px 20px;background:#0F172A;border-bottom:1px solid #1E293B;margin-top:0}
-.tool-crumb-list{display:flex;align-items:center;flex-wrap:wrap;gap:4px;list-style:none;margin:0;padding:0;font-size:13px}
+.tool-crumb-list{display:flex;align-items:center;flex-wrap:wrap;gap:4px;list-style:none;margin:0 auto;padding:0 20px;max-width:760px;font-size:13px}
 .tool-crumb-item{color:#CBD5E1}
 .tool-crumb-item a{color:#67E8F9;text-decoration:none}
 .tool-crumb-item a:hover{color:#38BDF8;text-decoration:underline}
@@ -186,4 +193,84 @@ a{text-decoration:none;color:inherit}
 @media(max-width:768px){
   .tool-topbar-inner{padding:12px 16px}
   .tool-crumb{padding:8px 16px;font-size:12px}
+}
+
+/* ===== Tool Standard Layout (TYPE1 계산형 공용) : 다크모드 대비 ===== */
+.tool-layout{display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:start}
+.tool-input-panel{min-width:0;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.tool-input-panel .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--text)}
+.tool-result-panel{position:sticky;top:20px;min-width:0;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-md)}
+.tool-result-hero{background:var(--primary);border-radius:var(--radius);padding:26px 24px;color:#fff;text-align:center;margin-bottom:16px}
+.tool-result-hero .tool-hero-label{font-size:13px;opacity:.85;margin-bottom:6px;color:#fff}
+.tool-result-hero .tool-hero-value{font-size:40px;font-weight:800;letter-spacing:-1px;color:#fff}
+.tool-result-hero .tool-hero-sub{font-size:13px;opacity:.8;margin-top:6px;color:#fff}
+.tool-result-detail{margin-top:4px}
+.tool-result-detail .tool-detail-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border);font-size:14px}
+.tool-result-detail .tool-detail-row:last-child{border-bottom:none}
+.tool-result-detail .tool-detail-row .tool-detail-label{color:var(--text-secondary)}
+.tool-result-detail .tool-detail-row .tool-detail-value{font-weight:700;font-variant-numeric:tabular-nums;color:var(--text)}
+.tool-result-detail .tool-detail-row.total{border-top:2px solid var(--border);padding-top:14px;font-size:15px}
+.tool-result-detail .tool-detail-row.total .tool-detail-label{color:var(--text);font-weight:700}
+@media(max-width:768px){
+  .tool-layout{grid-template-columns:1fr}
+  .tool-result-panel{position:static}
+}
+/* ========================================
+   도구 페이지 공통 디자인 시스템 v2.0
+   모든 도구 페이지가 이 클래스를 사용
+   ======================================== */
+
+/* 본문 wrapper */
+.tool-page{max-width:760px;margin:0 auto;padding:24px 20px 80px}
+
+/* 페이지 타이틀 */
+.tool-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px;color:var(--text)}
+.tool-sub{font-size:14px;color:var(--text-secondary);margin-bottom:28px;line-height:1.6}
+
+/* 카드 */
+.tool-card{background:var(--card-bg);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.tool-card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--text)}
+
+/* 입력 그룹 */
+.tool-input-group{margin-bottom:16px}
+.tool-label{font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;display:block}
+.tool-input-row{display:flex;gap:8px;align-items:center}
+.tool-field{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:right;background:var(--card-bg);color:var(--text)}
+.tool-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.tool-unit{font-size:14px;color:var(--text-secondary);font-weight:600;white-space:nowrap}
+
+/* 토글 버튼 */
+.tool-toggle-row{display:flex;gap:8px;margin-bottom:16px}
+.tool-toggle-btn{flex:1;padding:11px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;transition:.2s;background:var(--card-bg);font-family:inherit;color:var(--text-secondary)}
+.tool-toggle-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+.tool-toggle-btn:hover:not(.active){border-color:var(--g300);background:var(--g50)}
+
+/* 계산 버튼 */
+.tool-btn{width:100%;padding:15px;border:none;border-radius:12px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px;min-height:52px}
+.tool-btn:hover{background:var(--primary-dark)}
+.tool-btn:active{transform:scale(.98)}
+
+/* 결과 영역 */
+.tool-result{display:none}
+.tool-result-big{text-align:center;padding:20px 0}
+.tool-result-number{font-size:36px;font-weight:800;color:var(--primary);line-height:1.2}
+.tool-result-label{font-size:14px;color:var(--text-secondary);margin-top:6px}
+.tool-detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.tool-detail-row:last-child{border-bottom:none}
+.tool-detail-row .label{color:var(--text-secondary)}
+.tool-detail-row .value{font-weight:700;color:var(--text)}
+.tool-disclaimer{font-size:11px;color:var(--text-secondary);text-align:center;margin-top:16px;line-height:1.6}
+
+/* 모바일 대응 */
+@media(max-width:768px){
+  .tool-page{padding:16px 16px 80px}
+  .tool-title{font-size:22px}
+  .tool-card{padding:18px;border-radius:12px}
+  .tool-btn{min-height:48px;font-size:15px}
+  .tool-field{font-size:16px}
+}
+@media(max-width:480px){
+  .tool-title{font-size:20px}
+  .tool-result-number{font-size:28px}
+  .tool-toggle-btn{font-size:12px;padding:9px}
 }

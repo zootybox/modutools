@@ -15,29 +15,15 @@
 <link rel="canonical" href="https://modutools.com/generate/random.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.input-group{margin-bottom:16px}
-.input-label{font-size:13px;font-weight:600;color:var(--g700);margin-bottom:6px;display:block}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-field{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:16px;font-family:inherit;outline:none;transition:.2s;text-align:center}
-.input-field:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
 .input-sep{font-size:16px;color:var(--g400);font-weight:600}
 .option-row{display:flex;gap:16px;margin:12px 0;flex-wrap:wrap}
 .option-label{font-size:13px;color:var(--g700);display:flex;align-items:center;gap:6px;cursor:pointer}
 .option-label input{width:16px;height:16px;cursor:pointer;accent-color:var(--primary)}
-.calc-btn{width:100%;padding:14px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;margin-top:8px}
-.calc-btn:hover{background:var(--primary-dark)}
-.calc-btn:active{transform:scale(.98)}
 .quick-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .quick-btn{padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g500);transition:.2s}
 .quick-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
 
 /* Result */
-.result-area{display:none}
 .number-display{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:20px 0}
 .number-ball{width:52px;height:52px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;animation:popIn .3s ease}
 @keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
@@ -82,16 +68,15 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">랜덤 숫자 생성기</h1>
+<main class="tool-page">
+<h1 class="tool-title">랜덤 숫자 생성기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">범위를 지정해 무작위 숫자를 생성합니다</p>
+<p class="tool-sub">범위를 지정해 무작위 숫자를 생성합니다</p>
 
-<div class="card">
-<div class="card-title">🎲 빠른 설정</div>
+<div class="tool-card">
+<div class="tool-card-title">🎲 빠른 설정</div>
 <div class="quick-btns">
 <button class="quick-btn" onclick="quickSet(1,45,6,true)">🍀 로또 (1~45, 6개)</button>
 <button class="quick-btn" onclick="quickSet(1,10,1,false)">🎯 1~10 뽑기</button>
@@ -100,30 +85,30 @@
 </div>
 </div>
 
-<div class="card">
-<div class="card-title">⚙️ 설정</div>
-<div class="input-group">
-<label class="input-label">숫자 범위</label>
-<div class="input-row">
-<input type="number" class="input-field" id="minVal" value="1" inputmode="numeric">
+<div class="tool-card">
+<div class="tool-card-title">⚙️ 설정</div>
+<div class="tool-input-group">
+<label class="tool-label">숫자 범위</label>
+<div class="tool-input-row">
+<input type="number" class="tool-field" id="minVal" value="1" inputmode="numeric">
 <span class="input-sep">~</span>
-<input type="number" class="input-field" id="maxVal" value="45" inputmode="numeric">
+<input type="number" class="tool-field" id="maxVal" value="45" inputmode="numeric">
 </div>
 </div>
-<div class="input-group">
-<label class="input-label">생성 개수</label>
-<input type="number" class="input-field" id="genCount" value="6" min="1" max="100" inputmode="numeric" style="text-align:center">
+<div class="tool-input-group">
+<label class="tool-label">생성 개수</label>
+<input type="number" class="tool-field" id="genCount" value="6" min="1" max="100" inputmode="numeric" style="text-align:center">
 </div>
 <div class="option-row">
 <label class="option-label"><input type="checkbox" id="optNoDup" checked> 중복 제외</label>
 <label class="option-label"><input type="checkbox" id="optSort" checked> 오름차순 정렬</label>
 </div>
-<button class="calc-btn" onclick="generate()">🎲 숫자 생성</button>
+<button class="tool-btn" onclick="generate()">🎲 숫자 생성</button>
 </div>
 
-<div class="result-area" id="resultArea">
-<div class="card">
-<div class="card-title">✨ 결과</div>
+<div class="tool-result" id="resultArea">
+<div class="tool-card">
+<div class="tool-card-title">✨ 결과</div>
 <div class="number-display" id="numberDisplay"></div>
 <div class="number-text" id="numberText"></div>
 <button class="copy-btn" onclick="copyResult()">📋 결과 복사</button>

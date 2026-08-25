@@ -15,11 +15,6 @@
 <link rel="canonical" href="https://modutools.com/convert/unit.html">
 <link rel="stylesheet" href="/css/common.css">
 <style>
-.page{max-width:640px;margin:0 auto;padding:24px 20px 60px}
-.page-title{font-size:24px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--g500);margin-bottom:28px}
-.card{background:#fff;border:1px solid var(--g200);border-radius:var(--radius);padding:24px;margin-bottom:16px}
-.card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
 .cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
 .cat-tab{padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
 .cat-tab.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
@@ -67,19 +62,18 @@
 </script>
 </head>
 <body>
-<header class="mt-header"><div class="mt-header-inner"><a href="/" class="mt-logo">modu<span>tools</span></a><nav class="mt-nav"><a href="/">← 도구 목록</a></nav></div></header>
 <div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
-<main class="page">
-<h1 class="page-title">단위 변환기</h1>
+<main class="tool-page">
+<h1 class="tool-title">단위 변환기</h1>
 <div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
 
-<p class="page-sub">길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 변환합니다</p>
-<div class="card">
-<div class="card-title">카테고리</div>
+<p class="tool-sub">길이, 무게, 면적, 부피, 온도, 속도, 데이터 단위를 변환합니다</p>
+<div class="tool-card">
+<div class="tool-card-title">카테고리</div>
 <div class="cat-tabs" id="catTabs"></div>
 </div>
-<div class="card">
-<div class="card-title" id="convertTitle">길이 변환</div>
+<div class="tool-card">
+<div class="tool-card-title" id="convertTitle">길이 변환</div>
 <div class="convert-wrap">
 <div class="convert-row">
 <input type="number" class="convert-input" id="fromVal" value="1" inputmode="decimal" step="any">
@@ -96,8 +90,8 @@
 <div class="result-formula" id="resultFormula"></div>
 </div>
 </div>
-<div class="card">
-<div class="card-title">자주 쓰는 변환</div>
+<div class="tool-card">
+<div class="tool-card-title">자주 쓰는 변환</div>
 <div id="commonList"></div>
 </div>
 
