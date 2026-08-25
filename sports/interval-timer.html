@@ -28,19 +28,24 @@
 
 /* Preset */
 .preset-row{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
-.preset-btn{padding:14px 10px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;transition:.2s;background:#fff;text-align:center;font-family:inherit}
+.preset-btn{padding:14px 10px;border:1.5px solid var(--g200);border-radius:10px;cursor:pointer;transition:.2s;background:var(--card-bg);color:var(--text-secondary);text-align:center;font-family:inherit}
 .preset-btn:hover{border-color:var(--primary);background:var(--primary-light)}
 .preset-btn.active{border-color:var(--primary);background:var(--primary-light)}
-.preset-name{font-size:14px;font-weight:700;color:var(--g900)}
-.preset-desc{font-size:11px;color:var(--g500);margin-top:2px}
+.preset-name{font-size:14px;font-weight:700;color:var(--text)}
+.preset-desc{font-size:11px;color:var(--text-secondary);margin-top:2px}
 
 /* Input */
 .num-ctrl{display:flex;align-items:center;gap:8px;width:100%}
-.num-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:10px;background:#fff;font-size:20px;font-weight:700;cursor:pointer;color:var(--primary);font-family:inherit;user-select:none}
+.num-btn{width:44px;height:44px;border:1.5px solid var(--border);border-radius:50%;background:var(--card-bg);font-size:20px;font-weight:700;cursor:pointer;color:var(--text);font-family:inherit;user-select:none;flex-shrink:0}
 .num-btn:hover{background:var(--primary-light)}
 .num-btn:active{transform:scale(.95)}
-.num-display{flex:1;text-align:center;font-size:20px;font-weight:800;color:var(--g900);font-variant-numeric:tabular-nums}
-.num-unit{font-size:13px;color:var(--g500);margin-left:4px}
+.num-display{flex:1;text-align:center;font-size:20px;font-weight:800;color:var(--text);font-variant-numeric:tabular-nums}
+.num-unit{font-size:13px;color:var(--text-secondary);margin-left:4px}
+
+/* 상세 설정 행 : 라벨 + 컨트롤 가로 정렬 */
+.setting-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.setting-row .tool-label{margin:0;flex-shrink:0}
+.setting-row .num-ctrl{width:auto;flex:1;max-width:220px}
 
 /* Start Button */
 .start-btn{width:100%;padding:20px;border:none;border-radius:14px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;font-size:18px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 4px 12px rgba(239,68,68,.3);transition:.2s}
@@ -151,7 +156,7 @@
 
 <div class="tool-card">
 <div class="tool-card-title">⚙️ 상세 설정</div>
-<div class="tool-input-group">
+<div class="setting-row">
 <label class="tool-label">준비 시간</label>
 <div class="num-ctrl">
 <button class="num-btn" onclick="adjustNum('prep',-1)">−</button>
@@ -159,7 +164,7 @@
 <button class="num-btn" onclick="adjustNum('prep',1)">+</button>
 </div>
 </div>
-<div class="tool-input-group">
+<div class="setting-row">
 <label class="tool-label">운동 시간</label>
 <div class="num-ctrl">
 <button class="num-btn" onclick="adjustNum('work',-5)">−</button>
@@ -167,7 +172,7 @@
 <button class="num-btn" onclick="adjustNum('work',5)">+</button>
 </div>
 </div>
-<div class="tool-input-group">
+<div class="setting-row">
 <label class="tool-label">휴식 시간</label>
 <div class="num-ctrl">
 <button class="num-btn" onclick="adjustNum('rest',-5)">−</button>
@@ -175,7 +180,7 @@
 <button class="num-btn" onclick="adjustNum('rest',5)">+</button>
 </div>
 </div>
-<div class="tool-input-group">
+<div class="setting-row">
 <label class="tool-label">라운드 수</label>
 <div class="num-ctrl">
 <button class="num-btn" onclick="adjustNum('rounds',-1)">−</button>
