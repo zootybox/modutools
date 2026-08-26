@@ -17,6 +17,10 @@
 <style>
 .cat-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
 .cat-tab{padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;background:#fff;font-family:inherit;color:var(--g700)}
+/* 다크모드: 비활성 카테고리 탭 흰 배경 → 카드 배경+밝은 글자. 활성(.active) 파란 스타일은 유지.
+   common.css는 .cat-tab이 아닌 .tab-btn만 다뤄 이 페이지엔 미적용이므로 이 페이지에서 직접 대응 */
+[data-theme="dark"] .cat-tab:not(.active){background:var(--card-bg)!important;color:var(--text)!important;border-color:var(--border)!important}
+[data-theme="dark"] .cat-tab:not(.active):hover{border-color:var(--primary)!important;color:var(--primary)!important;background:var(--primary-light)!important}
 .cat-tab.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
 .cat-tab:hover:not(.active){border-color:var(--g300)}
 .convert-wrap{display:flex;flex-direction:column;gap:12px}
@@ -27,6 +31,10 @@
 .convert-select:focus{border-color:var(--primary)}
 .swap-btn{width:44px;height:44px;border:1.5px solid var(--g200);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:#fff;font-size:18px;transition:.2s;margin:0 auto;flex-shrink:0}
 .swap-btn:hover{border-color:var(--primary);background:var(--primary-light)}
+/* 다크모드: 원형 스왑 버튼 흰 배경 → 카드 배경 + 밝은 아이콘 (이 페이지 .swap-btn 전용)
+   common.css의 동일 선택자 !important 규칙에 덮이지 않도록 !important로 우선순위 확보 */
+[data-theme="dark"] .swap-btn{background:var(--card-bg)!important;border-color:var(--border)!important;color:var(--text)!important}
+[data-theme="dark"] .swap-btn:hover{border-color:var(--primary)!important;background:var(--primary-light)!important;color:var(--primary)!important}
 .result-display{background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:16px;text-align:center;margin-top:12px}
 .result-formula{font-size:13px;color:var(--g500);margin-top:8px}
 .result-value{font-size:24px;font-weight:800;color:var(--primary)}

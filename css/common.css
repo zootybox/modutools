@@ -274,3 +274,109 @@ a{text-decoration:none;color:inherit}
   .tool-result-number{font-size:28px}
   .tool-toggle-btn{font-size:12px;padding:9px}
 }
+/* ============================================================
+   다크모드 강제 대응 (data-theme="dark" 기준)  2026-08
+   ------------------------------------------------------------
+   각 도구 페이지가 인라인 <style>로 하드코딩한 라이트 배경/라이트
+   글자(예: .text-area{background:#fff;color:var(--g900)},
+   .convert-btn{background:#fff;color:var(--g700)},
+   body{background:#f5f7fa;color:#1a1a2e} 등)는 다크 토글 시
+   흰배경+흰글씨/연회색 글씨로 읽기 어려워진다.
+   common.css는 인라인보다 먼저 로드되므로, [data-theme="dark"]
+   스코프(더 높은 특정도) + !important로 덮어 카드/입력/버튼/라벨이
+   기존 변수 기준 라이트↔다크로 정상 전환되게 한다.
+   헤더(.tool-topbar/.tool-crumb/.tool-logo/.tool-theme-btn)는
+   다크 네이비 고정이므로 건드리지 않는다.
+   ============================================================ */
+[data-theme="dark"] body{background:var(--bg)!important;color:var(--text)!important}
+
+/* 카드 / 패널 : 흰 배경 하드코딩 → 다크 카드 */
+[data-theme="dark"] .card,
+[data-theme="dark"] .tool-card,
+[data-theme="dark"] .tool-input-panel,
+[data-theme="dark"] .tool-result-panel,
+[data-theme="dark"] .guide-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .mt-card,
+[data-theme="dark"] .mt-guide,
+[data-theme="dark"] .mt-faq-item,
+[data-theme="dark"] .mt-file-item,
+[data-theme="dark"] .panel-card,
+[data-theme="dark"] .preview-card,
+[data-theme="dark"] .mt-upload{background:var(--card-bg)!important;border-color:var(--border)!important}
+
+/* 입력창(텍스트 계열) : 흰/연회색 배경 하드코딩 → 다크 입력 */
+[data-theme="dark"] input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+[data-theme="dark"] select,
+[data-theme="dark"] textarea{background:var(--card-bg)!important;color:var(--text)!important;border-color:var(--border)!important}
+
+/* 라이트(아웃라인) 버튼 : 배경 다크 + 글자 밝게 */
+[data-theme="dark"] .copy-btn,
+[data-theme="dark"] .convert-btn,
+[data-theme="dark"] .mt-btn-reset,
+[data-theme="dark"] .mt-btn-outline{background:var(--card-bg)!important;color:var(--text)!important;border-color:var(--border)!important}
+
+/* 라벨 / 타이틀 : 하드코딩 고정색 → 다크 기준 텍스트 */
+[data-theme="dark"] .mt-label,
+[data-theme="dark"] .tool-label,
+[data-theme="dark"] .card-title,
+[data-theme="dark"] .tool-card-title,
+[data-theme="dark"] .mt-card-title,
+[data-theme="dark"] .page-title,
+[data-theme="dark"] .tool-title{color:var(--text)!important}
+[data-theme="dark"] .mt-label-sub,
+[data-theme="dark"] .page-sub,
+[data-theme="dark"] .tool-sub{color:var(--text-secondary)!important}
+
+/* mt- (탭/업로드/결과/경고) 계열 : 고정 라이트 틴트 → 다크 틴트 */
+[data-theme="dark"] .mt-tabs{background:var(--g100)!important;border-color:var(--border)!important}
+[data-theme="dark"] .mt-tab{color:var(--text-secondary)!important}
+[data-theme="dark"] .mt-tab.active{background:var(--card-bg)!important;color:var(--primary)!important}
+[data-theme="dark"] .mt-warn,
+[data-theme="dark"] .mt-exif-detail{background:#3b2f06!important;border-color:#92600a!important;color:#fde68a!important}
+[data-theme="dark"] .mt-result-summary{background:#1e3a5f!important;color:var(--text)!important}
+[data-theme="dark"] .mt-result-summary .done-text{color:#93c5fd!important}
+[data-theme="dark"] .mt-result-summary .done-sub,
+[data-theme="dark"] .mt-file-size,
+[data-theme="dark"] .mt-upload-sub{color:var(--text-secondary)!important}
+[data-theme="dark"] .mt-upload-text{color:var(--text)!important}
+[data-theme="dark"] .mt-upload-text{color:var(--text)!important}
+
+/* ============================================================
+   다크모드 전수 대응 - 라이트 배경 잔여 요소 (2026-08)
+   ------------------------------------------------------------
+   1) 개별 페이지가 하드코딩한 흰 배경의 "브러시성 세컨더리 버튼"
+      (탭/선택/복사/스왑/다운로드-아웃라인 등) → 다크 카드 배경 + 밝은 글자.
+      active/primary/accent 특정 상태는 의도된 강조(파랑/어둠)이므로
+      :not()으로 보존한다.
+   2) 라이트 배경 "안내/결과/클립/파일" 박스 → 다크 틴트 또는 다크 카드.
+   ============================================================ */
+[data-theme="dark"] .tab-btn:not(.active),
+[data-theme="dark"] .lang-btn:not(.active),
+[data-theme="dark"] .reset-btn,
+[data-theme="dark"] .swap-btn,
+[data-theme="dark"] .now-btn,
+[data-theme="dark"] .spec-btn:not(.active),
+[data-theme="dark"] .preset-btn:not(.active),
+[data-theme="dark"] .nick-copy,
+[data-theme="dark"] .pw-btn:not(.primary),
+[data-theme="dark"] .multi-item .copy,
+[data-theme="dark"] .quick-btn,
+[data-theme="dark"] .tool-edit-btn:not(.accent),
+[data-theme="dark"] .tool-effect-btn,
+[data-theme="dark"] .pos-btn:not(.active),
+[data-theme="dark"] .btn-download-all,
+[data-theme="dark"] .file-download{background:var(--card-bg)!important;color:var(--text)!important;border-color:var(--border)!important}
+
+/* OCR 결과 다운로드(.primary-btn, 다크navy) : 다크에서 밝게 반전돼 흰배경+흰글씨가 되는 것 방지 */
+[data-theme="dark"] .result-btn:not(.primary-btn){background:var(--card-bg)!important;color:var(--text)!important;border-color:var(--border)!important}
+[data-theme="dark"] .result-btn.primary-btn{background:var(--primary)!important;border-color:var(--primary)!important;color:#fff!important}
+
+/* 라이트 배경 박스(클립/파일/팁/경고/생일) : 다크 틴트 또는 다크 카드 */
+[data-theme="dark"] .tool-clip,
+[data-theme="dark"] .file-item{background:var(--card-bg)!important;border-color:var(--border)!important}
+[data-theme="dark"] .tip-card,
+[data-theme="dark"] .birthday-box{background:#1e3a5f!important;border-color:#334155!important}
+[data-theme="dark"] .tip-card .tip-text,
+[data-theme="dark"] .birthday-box .label{color:var(--text-secondary)!important}
+[data-theme="dark"] .warn{background:#3b2f06!important;border-color:#92600a!important;color:#fde68a!important}
