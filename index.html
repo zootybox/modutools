@@ -63,11 +63,12 @@ a{text-decoration:none;color:inherit}
     <div class="tool-brand">modu<em>tools</em></div>
     <nav class="tool-navlinks">
       <a href="#tools">전체 도구</a>
+      <a href="#image-media">이미지·미디어</a>
+      <a href="#pdf-doc">PDF·문서</a>
       <a href="#calc">계산</a>
-      <a href="#image">이미지</a>
+      <a href="#precision-gen">생성기</a>
       <a href="#text">텍스트</a>
-      <a href="#convert">변환</a>
-      <a href="#life">생활</a>
+      <a href="#life-unit">생활·단위</a>
     </nav>
   </div>
 </header>
@@ -90,21 +91,37 @@ a{text-decoration:none;color:inherit}
   <div class="tool-section-title">🗂️ 카테고리</div>
   <div class="tool-section-sub">원하는 분야를 선택하면 해당 도구 모음으로 이동합니다.</div>
   <div class="tool-catgrid">
-    <div class="tool-catcard" data-scroll="calc"><span class="tool-cat-emoji">💰</span><h3>월급·세금 계산기</h3><p>급여·세금·대출·연금 등 금융 계산</p></div>
-    <div class="tool-catcard" data-scroll="image"><span class="tool-cat-emoji">🖼️</span><h3>사진·이미지 편집</h3><p>크기·압축·포맷·자르기 등 편집</p></div>
-    <div class="tool-catcard" data-scroll="text"><span class="tool-cat-emoji">📝</span><h3>글자수·텍스트 도구</h3><p>글자수, 중복 제거, OCR 등 처리</p></div>
-    <div class="tool-catcard" data-scroll="convert"><span class="tool-cat-emoji">🔄</span><h3>파일·단위 변환</h3><p>PDF, 단위, 날짜, 색상, 오디오 변환</p></div>
-    <div class="tool-catcard" data-scroll="generate"><span class="tool-cat-emoji">⚡</span><h3>QR·워터마크 생성</h3><p>QR코드, 비밀번호, 닉네임 생성</p></div>
-    <div class="tool-catcard" data-scroll="life"><span class="tool-cat-emoji">🏠</span><h3>생활 정보 도구</h3><p>BMI, 전기요금, 학점, 연차 계산</p></div>
-    <div class="tool-catcard" data-scroll="sports"><span class="tool-cat-emoji">🏋️</span><h3>운동 계산기</h3><p>운동용 인터벌 타이머</p></div>
+    <div class="tool-catcard" data-scroll="image-media"><span class="tool-cat-emoji">🖼️</span><h3>이미지·미디어 편집</h3><p>크기·압축·포맷·자르기 등 편집, 오디오까지</p></div>
+    <div class="tool-catcard" data-scroll="pdf-doc"><span class="tool-cat-emoji">📄</span><h3>PDF·문서 변환</h3><p>이미지·PDF 변환, 합치기, 자막 텍스트 추출</p></div>
+    <div class="tool-catcard" data-scroll="calc"><span class="tool-cat-emoji">💰</span><h3>세금·금융 계산기</h3><p>급여·세금·대출·연금 등 금융 계산</p></div>
+    <div class="tool-catcard" data-scroll="precision-gen"><span class="tool-cat-emoji">⚡</span><h3>정밀 생성기</h3><p>QR, 비밀번호, 랜덤 생성과 인터벌 타이머</p></div>
+    <div class="tool-catcard" data-scroll="text"><span class="tool-cat-emoji">📝</span><h3>텍스트 도구</h3><p>글자수, 중복 제거, OCR 등 처리</p></div>
+    <div class="tool-catcard" data-scroll="life-unit"><span class="tool-cat-emoji">🔧</span><h3>생활·단위 도구</h3><p>BMI·전기요금·학점·연차, TTS·단위·날짜·색상 변환</p></div>
   </div>
 </section>
-<section class="tool-wrap" id="tools">
-  <div class="tool-section-title">🛠️ 전체 도구</div>
-  <div class="tool-section-sub">카테고리별로 정리한 40가지 무료 도구입니다. 클릭하면 바로 사용하세요.</div>
-
-  <section id="calc" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">💰 월급·세금 계산기</h3>
+<section class="tool-wrap" id="tools"><section id="image-media" style="margin-top:8px">
+    <h3 class="tool-section-title" style="font-size:19px">🖼️ 이미지·미디어 편집</h3>
+    <div class="tool-cardgrid">
+      <a class="tool-card" href="/image/compress.html"><h4>이미지 압축기</h4><p>JPG·PNG·WEBP 이미지 용량을 화질 유지하며 줄이기</p></a>
+      <a class="tool-card" href="/image/resize.html"><h4>이미지 리사이즈</h4><p>원하는 크기로 이미지 가로·세로 변경</p></a>
+      <a class="tool-card" href="/image/format.html"><h4>이미지 포맷 변환</h4><p>PNG↔JPG↔WEBP↔GIF 포맷 자유 변환</p></a>
+      <a class="tool-card" href="/image/crop.html"><h4>이미지 자르기</h4><p>원하는 영역만 선택해서 자르기</p></a>
+      <a class="tool-card" href="/image/id-photo.html"><h4>증명사진 규격 맞추기</h4><p>여권·이력서·주민등록증 사진 규격에 맞게 편집</p></a>
+      <a class="tool-card" href="/image/watermark.html"><h4>워터마크 넣기</h4><p>이미지에 텍스트·로고 워터마크 추가</p></a>
+      <a class="tool-card" href="/image/exif-remove.html"><h4>EXIF 메타데이터 제거</h4><p>사진의 GPS 위치·촬영정보 등 개인정보 완전 삭제</p></a>
+      <a class="tool-card" href="/convert/audio-editor.html"><h4>오디오 편집기</h4><p>여러 음성 파일 합치기·순서 변경·WAV 저장</p></a>
+    </div>
+  </section>
+<section id="pdf-doc" style="margin-top:8px">
+    <h3 class="tool-section-title" style="font-size:19px">📄 PDF·문서 변환</h3>
+    <div class="tool-cardgrid">
+      <a class="tool-card" href="/convert/image-to-pdf.html"><h4>이미지 PDF 변환</h4><p>여러 장 이미지를 하나의 PDF로 변환</p></a>
+      <a class="tool-card" href="/convert/pdf-merge.html"><h4>PDF 합치기 / 분할</h4><p>여러 PDF 합치기, 페이지별 분할</p></a>
+      <a class="tool-card" href="/convert/subtitle-extractor.html"><h4>자막 텍스트 추출기</h4><p>SRT·VTT·ASS 자막에서 대본 텍스트 추출</p></a>
+    </div>
+  </section>
+<section id="calc" style="margin-top:8px">
+    <h3 class="tool-section-title" style="font-size:19px">💰 세금·금융 계산기</h3>
     <div class="tool-cardgrid">
       <a class="tool-card" href="/calc/salary.html"><h4>연봉 실수령액 계산기</h4><p>2026년 4대보험·소득세 반영, 연봉/월급별 실수령액 즉시 계산</p></a>
       <a class="tool-card" href="/calc/loan.html"><h4>대출이자 계산기</h4><p>원리금균등·원금균등·만기일시 상환 방식별 이자 계산</p></a>
@@ -117,20 +134,18 @@ a{text-decoration:none;color:inherit}
       <a class="tool-card" href="/calc/tax-inherit.html"><h4>상속세·증여세 계산기</h4><p>2026년 세율 기준, 공제 항목별 예상 세액 자동 계산</p></a>
     </div>
   </section>
-<section id="image" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">🖼️ 사진·이미지 편집</h3>
+<section id="precision-gen" style="margin-top:8px">
+    <h3 class="tool-section-title" style="font-size:19px">⚡ 정밀 생성기</h3>
     <div class="tool-cardgrid">
-      <a class="tool-card" href="/image/compress.html"><h4>이미지 압축기</h4><p>JPG·PNG·WEBP 이미지 용량을 화질 유지하며 줄이기</p></a>
-      <a class="tool-card" href="/image/resize.html"><h4>이미지 리사이즈</h4><p>원하는 크기로 이미지 가로·세로 변경</p></a>
-      <a class="tool-card" href="/image/format.html"><h4>이미지 포맷 변환</h4><p>PNG↔JPG↔WEBP↔GIF 포맷 자유 변환</p></a>
-      <a class="tool-card" href="/image/crop.html"><h4>이미지 자르기</h4><p>원하는 영역만 선택해서 자르기</p></a>
-      <a class="tool-card" href="/image/id-photo.html"><h4>증명사진 규격 맞추기</h4><p>여권·이력서·주민등록증 사진 규격에 맞게 편집</p></a>
-      <a class="tool-card" href="/image/watermark.html"><h4>워터마크 넣기</h4><p>이미지에 텍스트·로고 워터마크 추가</p></a>
-      <a class="tool-card" href="/image/exif-remove.html"><h4>EXIF 메타데이터 제거</h4><p>사진의 GPS 위치·촬영정보 등 개인정보 완전 삭제</p></a>
+      <a class="tool-card" href="/sports/interval-timer.html"><h4>인터벌 타이머</h4><p>타바타·HIIT 운동용 타이머, 음성 안내 지원</p></a>
+      <a class="tool-card" href="/generate/qr.html"><h4>QR코드 생성기</h4><p>URL·텍스트·연락처용 QR코드 즉시 생성</p></a>
+      <a class="tool-card" href="/generate/password.html"><h4>비밀번호 생성기</h4><p>안전한 랜덤 비밀번호 생성</p></a>
+      <a class="tool-card" href="/generate/nickname.html"><h4>닉네임 생성기</h4><p>게임·SNS용 랜덤 닉네임 추천</p></a>
+      <a class="tool-card" href="/generate/random.html"><h4>랜덤 숫자 생성기</h4><p>범위 지정 랜덤 숫자·추첨번호 생성</p></a>
     </div>
   </section>
 <section id="text" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">📝 글자수·텍스트 도구</h3>
+    <h3 class="tool-section-title" style="font-size:19px">📝 텍스트 도구</h3>
     <div class="tool-cardgrid">
       <a class="tool-card" href="/text/count.html"><h4>글자수 세기</h4><p>공백포함·제외·바이트수 실시간 카운트</p></a>
       <a class="tool-card" href="/text/dedupe.html"><h4>중복 줄 제거</h4><p>텍스트에서 중복된 줄을 자동으로 제거</p></a>
@@ -139,46 +154,23 @@ a{text-decoration:none;color:inherit}
       <a class="tool-card" href="/text/ocr.html"><h4>이미지 텍스트 추출 (OCR)</h4><p>이미지 속 글자를 텍스트로 변환</p></a>
     </div>
   </section>
-<section id="convert" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">🔄 파일·단위 변환</h3>
+<section id="life-unit" style="margin-top:8px">
+    <h3 class="tool-section-title" style="font-size:19px">🔧 생활·단위 도구</h3>
     <div class="tool-cardgrid">
-      <a class="tool-card" href="/convert/image-to-pdf.html"><h4>이미지 PDF 변환</h4><p>여러 장 이미지를 하나의 PDF로 변환</p></a>
-      <a class="tool-card" href="/convert/pdf-merge.html"><h4>PDF 합치기 / 분할</h4><p>여러 PDF 합치기, 페이지별 분할</p></a>
-      <a class="tool-card" href="/convert/unit.html"><h4>단위 변환기</h4><p>길이·무게·면적·부피 단위 변환</p></a>
+      <a class="tool-card" href="/life/electric.html"><h4>전기요금 계산기</h4><p>사용량 기준 예상 전기요금 계산</p></a>
+      <a class="tool-card" href="/life/annual-leave.html"><h4>연차 계산기</h4><p>입사일 기준 연차 발생일수 자동 계산</p></a>
+      <a class="tool-card" href="/convert/tts.html"><h4>TTS 음성 변환</h4><p>텍스트를 한국어·영어 음성으로 변환</p></a>
       <a class="tool-card" href="/convert/date.html"><h4>날짜 계산기</h4><p>D-Day 계산, 두 날짜 사이 일수 계산</p></a>
       <a class="tool-card" href="/convert/age.html"><h4>나이 계산기</h4><p>만나이·한국나이·띠 한번에 확인</p></a>
-      <a class="tool-card" href="/convert/color.html"><h4>색상 코드 변환</h4><p>HEX↔RGB↔HSL 색상 코드 상호 변환</p></a>
       <a class="tool-card" href="/convert/timezone.html"><h4>시간대 변환기</h4><p>전 세계 시간대 실시간 변환</p></a>
-      <a class="tool-card" href="/convert/tts.html"><h4>TTS 음성 변환</h4><p>텍스트를 한국어·영어 음성으로 변환</p></a>
-      <a class="tool-card" href="/convert/subtitle-extractor.html"><h4>자막 텍스트 추출기</h4><p>SRT·VTT·ASS 자막에서 대본 텍스트 추출</p></a>
-      <a class="tool-card" href="/convert/audio-editor.html"><h4>오디오 편집기</h4><p>여러 음성 파일 합치기·순서 변경·WAV 저장</p></a>
-    </div>
-  </section>
-<section id="generate" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">⚡ QR·워터마크 생성</h3>
-    <div class="tool-cardgrid">
-      <a class="tool-card" href="/generate/qr.html"><h4>QR코드 생성기</h4><p>URL·텍스트·연락처용 QR코드 즉시 생성</p></a>
-      <a class="tool-card" href="/generate/password.html"><h4>비밀번호 생성기</h4><p>안전한 랜덤 비밀번호 생성</p></a>
-      <a class="tool-card" href="/generate/nickname.html"><h4>닉네임 생성기</h4><p>게임·SNS용 랜덤 닉네임 추천</p></a>
-      <a class="tool-card" href="/generate/random.html"><h4>랜덤 숫자 생성기</h4><p>범위 지정 랜덤 숫자·추첨번호 생성</p></a>
-    </div>
-  </section>
-<section id="life" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">🏠 생활 정보 도구</h3>
-    <div class="tool-cardgrid">
+      <a class="tool-card" href="/convert/unit.html"><h4>단위 변환기</h4><p>길이·무게·면적·부피 단위 변환</p></a>
+      <a class="tool-card" href="/convert/color.html"><h4>색상 코드 변환</h4><p>HEX↔RGB↔HSL 색상 코드 상호 변환</p></a>
       <a class="tool-card" href="/life/bmi.html"><h4>BMI 계산기</h4><p>키·체중으로 체질량지수(BMI) 확인</p></a>
-      <a class="tool-card" href="/life/electric.html"><h4>전기요금 계산기</h4><p>사용량 기준 예상 전기요금 계산</p></a>
       <a class="tool-card" href="/life/gpa.html"><h4>학점 계산기</h4><p>4.3/4.5 만점 기준 평균 학점 계산</p></a>
-      <a class="tool-card" href="/life/annual-leave.html"><h4>연차 계산기</h4><p>입사일 기준 연차 발생일수 자동 계산</p></a>
     </div>
   </section>
-<section id="sports" style="margin-top:8px">
-    <h3 class="tool-section-title" style="font-size:19px">🏋️ 운동 계산기</h3>
-    <div class="tool-cardgrid">
-      <a class="tool-card" href="/sports/interval-timer.html"><h4>인터벌 타이머</h4><p>타바타·HIIT 운동용 타이머, 음성 안내 지원</p></a>
-    </div>
+
   </section>
-</section>
 <footer class="tool-footer">
   <div class="tool-wrap">
     <div class="tool-footlinks">
