@@ -13,7 +13,7 @@
 <meta property="og:description" content="2026년 4대보험·소득세 반영 연봉 실수령액. 연봉 또는 월급을 입력하면 공제 내역과 실수령액을 즉시 확인합니다.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modutools.com/calc/salary.html">
-<link rel="stylesheet" href="/css/common.css">
+<link rel="stylesheet" href="http://127.0.0.1:8000/css/common.css">
 <style>
 /* Slider */
 .slider-wrap{margin-bottom:16px}
@@ -401,6 +401,21 @@ calculate();
   </p>
 </footer>
 
-<script src="/js/ui-common.js"></script>
-</body>
+
+
+<script>
+window.__errors = [];
+window.onerror = function(m, s, l, c) { window.__errors.push(String(m) + '@' + l); };
+(function(){
+  var r = { hasFnCalculate: typeof calculate === 'function', hasFnOnInput: typeof onInput === 'function', resultExists: !!document.getElementById('resultArea') };
+  try { if (typeof calculate === 'function') calculate(); } catch(e){ r.runErr = String(e); }
+  var mr = document.getElementById('mainResult');
+  if (mr) r.mainResultText = mr.textContent;
+  var mrl = null;
+  var lbl = document.querySelector('.tool-result-label');
+  if (lbl) r.resultLabel = lbl.textContent;
+  r.errors = window.__errors;
+  document.title = 'RESULT:' + JSON.stringify(r);
+})();
+</script></body>
 </html>
