@@ -80,6 +80,9 @@ a{text-decoration:none;color:inherit}
 .guide-card h2{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)!important}
 .guide-card p{font-size:13px;line-height:1.8;color:var(--text-secondary)!important;margin-bottom:10px}
 .guide-card strong{color:var(--text)!important}
+.guide-card table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+.guide-card th,.guide-card td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--g200)}
+.guide-card th{background:var(--g100);font-weight:600;color:var(--g700)}
 
 /* FAQ Item */
 .faq-item{border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;background:var(--card-bg)}
@@ -304,6 +307,9 @@ a{text-decoration:none;color:inherit}
 [data-theme="dark"] .panel-card,
 [data-theme="dark"] .preview-card,
 [data-theme="dark"] .mt-upload{background:var(--card-bg)!important;border-color:var(--border)!important}
+[data-theme="dark"] .guide-card table{color:var(--text)!important}
+[data-theme="dark"] .guide-card th{background:var(--g100)!important;border-color:var(--border)!important;color:var(--text)!important}
+[data-theme="dark"] .guide-card td{border-color:var(--border)!important;color:var(--text-secondary)!important}
 
 /* 입력창(텍스트 계열) : 흰/연회색 배경 하드코딩 → 다크 입력 */
 [data-theme="dark"] input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),

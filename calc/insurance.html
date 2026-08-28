@@ -74,10 +74,10 @@
 <div class="tool-card-title">📋 요율 기준 (2026년)</div>
 <div class="tool-detail-row"><span class="label">국민연금</span><span class="value">4.5% + 4.5% (총 9%)</span></div>
 <div class="tool-detail-row"><span class="label">건강보험</span><span class="value">3.545% + 3.545% (총 7.09%)</span></div>
-<div class="tool-detail-row"><span class="label">장기요양보험</span><span class="value">건강보험의 12.81%</span></div>
+<div class="tool-detail-row"><span class="label">장기요양보험</span><span class="value">건강보험의 13.14%</span></div>
 <div class="tool-detail-row"><span class="label">고용보험</span><span class="value">0.9% + 0.9%~1.65%</span></div>
 <div class="tool-detail-row"><span class="label">산재보험</span><span class="value">업종별 (사업주 전액)</span></div>
-<div class="tool-detail-row"><span class="label">국민연금 상한</span><span class="value">기준소득월액 617만원</span></div>
+<div class="tool-detail-row"><span class="label">국민연금 상한</span><span class="value">기준소득월액 637만원</span></div>
 </div>
 <p class="tool-disclaimer">※ 2026년 4대보험 요율 기준 참고용이며, 실제 공제액은 사업장에 따라 다를 수 있습니다.<br>산재보험은 업종별 요율이 다르므로 별도 확인이 필요합니다.</p>
 </div>
@@ -88,9 +88,9 @@
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">4대보험이란?</h2>
 <p style="margin-bottom:12px">4대보험은 국민연금, 건강보험, 고용보험, 산업재해보상보험(산재보험)을 말합니다. 근로자와 사업주가 각각 일정 비율을 부담하며, 근로자의 노후, 질병, 실직, 산업재해에 대비하는 사회보장 제도입니다. 모든 사업장의 근로자는 의무적으로 가입해야 합니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">국민연금</h2>
-<p style="margin-bottom:12px">국민연금은 노후 소득 보장을 위한 제도로, 월 급여의 9%(근로자 4.5% + 사업주 4.5%)가 부과됩니다. 기준소득월액 상한은 617만원이며, 이를 초과하는 급여에 대해서는 추가 부과되지 않습니다. 만 60세부터 연금을 수령할 수 있으며, 가입 기간이 길수록 수령액이 증가합니다.</p>
+<p style="margin-bottom:12px">국민연금은 노후 소득 보장을 위한 제도로, 월 급여의 9%(근로자 4.5% + 사업주 4.5%)가 부과됩니다. 기준소득월액 상한은 637만원이며, 이를 초과하는 급여에 대해서는 추가 부과되지 않습니다. 만 60세부터 연금을 수령할 수 있으며, 가입 기간이 길수록 수령액이 증가합니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">건강보험과 장기요양보험</h2>
-<p style="margin-bottom:12px">건강보험은 질병, 부상 시 의료비 부담을 줄여주는 제도로, 월 급여의 7.09%(근로자 3.545% + 사업주 3.545%)가 부과됩니다. 장기요양보험은 건강보험료의 12.81%가 추가로 부과되며, 고령자나 노인성 질환자의 장기요양 서비스를 위해 사용됩니다.</p>
+<p style="margin-bottom:12px">건강보험은 질병, 부상 시 의료비 부담을 줄여주는 제도로, 월 급여의 7.09%(근로자 3.545% + 사업주 3.545%)가 부과됩니다. 장기요양보험은 건강보험료의 13.14%가 추가로 부과되며, 고령자나 노인성 질환자의 장기요양 서비스를 위해 사용됩니다.</p>
 <h2 style="font-size:16px;font-weight:700;margin-bottom:12px">고용보험과 산재보험</h2>
 <p style="margin-bottom:12px">고용보험은 실직 시 실업급여를 지급하기 위한 제도로, 근로자 0.9%, 사업주 0.9~1.65%(사업 규모에 따라 상이)를 부담합니다. 산재보험은 업무 중 발생한 재해에 대한 보상을 위해 사업주가 전액 부담하며, 업종별로 요율이 다릅니다.</p>
 </div>
@@ -110,9 +110,9 @@
 <footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
 <script>
 const NPS_RATE=0.045;
-const NPS_CAP=6170000;
+const NPS_CAP=6370000;
 const HEALTH_RATE=0.03545;
-const LONGTERM_RATE=0.1281;
+const LONGTERM_RATE=0.1314;
 const EMPLOY_WORKER=0.009;
 const EMPLOY_EMPLOYER=0.009;
 
@@ -151,7 +151,7 @@ function calculate(){
   let html="";
   html+='<tr><td>국민연금</td><td>4.5%</td><td>'+fmt(npsWorker)+'원</td><td>'+fmt(npsEmployer)+'원</td></tr>';
   html+='<tr><td>건강보험</td><td>3.545%</td><td>'+fmt(healthWorker)+'원</td><td>'+fmt(healthEmployer)+'원</td></tr>';
-  html+='<tr><td>장기요양</td><td>12.81%</td><td>'+fmt(longWorker)+'원</td><td>'+fmt(longEmployer)+'원</td></tr>';
+  html+='<tr><td>장기요양</td><td>13.14%</td><td>'+fmt(longWorker)+'원</td><td>'+fmt(longEmployer)+'원</td></tr>';
   html+='<tr><td>고용보험</td><td>0.9%</td><td>'+fmt(empWorker)+'원</td><td>'+fmt(empEmployer)+'원</td></tr>';
   html+='<tr><td>합계</td><td></td><td>'+fmt(totalWorker)+'원</td><td>'+fmt(totalEmployer)+'원</td></tr>';
   document.getElementById("insBody").innerHTML=html;
