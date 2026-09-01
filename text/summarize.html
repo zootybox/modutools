@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin">
+
+<title>AI 요약하기 - 긴 글 핵심만 한 번에 | modutools</title>
+<meta name="description" content="긴 기사, 이메일, 보고서를 붙여넣으면 AI가 핵심만 간결하게 요약해 줍니다. 입력한 텍스트는 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.">
+<meta property="og:title" content="AI 요약하기 - 긴 글 핵심만 한 번에 | modutools">
+<meta property="og:description" content="긴 글을 AI로 핵심만 간결하게 요약. 서버 전송 없이 브라우저에서 즉시 처리.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modutools.com/text/summarize.html">
+<link rel="canonical" href="https://modutools.com/text/summarize.html">
+<link rel="stylesheet" href="/css/common.css">
+<style>
+.text-area{width:100%;min-height:220px;border:1.5px solid var(--g200);border-radius:10px;padding:14px;font-size:14px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:.2s;background:#fff;color:var(--g900)}
+.text-area:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.text-area::placeholder{color:var(--g400)}
+.copy-btn{padding:10px 20px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;font-family:inherit;color:var(--g700);transition:.2s}
+.copy-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+
+/* AI 요약 기능 */
+.ai-summarize-btn{width:100%;margin-top:14px;padding:15px;border:1.5px solid var(--primary);border-radius:12px;background:var(--card-bg);color:var(--text);font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.ai-summarize-btn:hover:not(:disabled){background:var(--primary-light);border-color:var(--primary)}
+.ai-summarize-btn:disabled{opacity:.6;cursor:not-allowed}
+.ai-summarize-status{font-size:12px;color:var(--text-secondary);margin-top:10px;text-align:center;display:none}
+.ai-summarize-note{font-size:11px;color:var(--text-secondary);margin-top:6px;text-align:center;display:none}
+.ai-summarize-progress{height:6px;border-radius:3px;background:var(--g100);margin:8px 0 0;overflow:hidden}
+.ai-summarize-progress-fill{height:100%;width:0%;background:var(--primary);transition:width .3s}
+.ai-summarize-unsupported{font-size:12px;color:var(--text-secondary);margin-top:10px;text-align:center;line-height:1.6;display:none}
+.ai-summarize-card{margin-top:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:18px;display:none}
+.ai-summarize-card-title{font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:10px}
+.ai-summarize-body{font-size:14px;line-height:1.8;color:var(--text);white-space:pre-wrap}
+.ai-summarize-timeout{font-size:12px;color:#EAB308;margin-top:10px;line-height:1.5;display:none}
+.ai-summarize-local{font-size:11px;color:var(--text-secondary);margin-top:12px;line-height:1.5}
+.ai-summarize-counter{font-size:11px;color:var(--text-secondary);margin-top:8px;text-align:right}
+.ai-summarize-counter.over{color:#DC2626;font-weight:700}
+.ai-summarize-limitmsg{font-size:12px;color:#DC2626;margin-top:8px;text-align:center;display:none}
+
+/* 가이드/FAQ (case.html 패턴) */
+.mt-guide{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:16px}
+.mt-guide h2{font-size:17px;font-weight:700;margin-bottom:12px;color:var(--text)}
+.mt-guide h3{font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--primary)}
+.mt-guide p{font-size:13.5px;line-height:1.8;color:var(--text-secondary);margin-bottom:10px}
+.mt-guide ul{margin:8px 0 4px;padding-left:18px}
+.mt-guide li{font-size:13.5px;line-height:1.8;color:var(--text-secondary);margin-bottom:6px}
+.mt-faq{margin-top:16px}
+.mt-faq-item{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.mt-faq-q{padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+.mt-faq-q::after{content:'▼';font-size:11px;color:var(--g400);transition:transform .2s}
+.mt-faq-item.open .mt-faq-q::after{transform:rotate(180deg)}
+.mt-faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--text-secondary);line-height:1.8}
+.mt-faq-item.open .mt-faq-a{max-height:600px;padding:0 16px 14px}
+.mt-note{font-size:12px;color:var(--g400);text-align:center;margin-top:14px;line-height:1.6}
+@media(max-width:480px){.text-area{min-height:180px}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"AI 요약하기","url":"https://modutools.com/text/summarize.html","description":"긴 글을 브라우저 내장 AI로 핵심만 간결하게 요약하는 무료 온라인 도구","applicationCategory":"UtilityApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"다른 브라우저에서는 왜 안 되나요?","acceptedAnswer":{"@type":"Answer","text":"AI 요약 기능은 Chrome 브라우저에 내장된 Summarizer API를 사용합니다. 이 API는 현재 Chrome에서만 제공되므로, Firefox, Safari 등에서는 브라우저가 해당 기능을 지원하지 않아 이용할 수 없습니다."}},
+{"@type":"Question","name":"텍스트 길이 제한이 있나요?","acceptedAnswer":{"@type":"Answer","text":"과도하게 긴 텍스트는 브라우저 내장 AI 모델의 처리 한계로 인해 요약이 중간에 잘리거나 오류가 날 수 있습니다. 여러 문단으로 나누어 요약하거나, 길이를 조절해 다시 시도해 보세요."}},
+{"@type":"Question","name":"입력한 텍스트가 서버로 전송되나요?","acceptedAnswer":{"@type":"Answer","text":"아닙니다. 입력한 모든 텍스트는 브라우저 안에서만 처리됩니다. 서버로 전송되거나 저장되지 않으므로 기사, 이메일, 보고서 등 민감한 내용도 안심하고 요약할 수 있습니다."}}
+]}
+</script>
+</head>
+<body>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<main class="tool-page">
+<h1 class="tool-title">AI 요약하기</h1>
+<div class="security-badge"><span>🔒</span> 100% 브라우저 로컬 처리 · 서버 전송 없음 · 개인정보 보호</div>
+
+<p class="tool-sub">긴 글을 붙여넣으면 핵심만 간결하게 요약해 드립니다</p>
+<div class="tool-card">
+<div class="tool-card-title">📝 요약할 텍스트</div>
+<textarea class="text-area" id="summarizeText" placeholder="여기에 긴 기사, 이메일, 보고서 등의 텍스트를 입력하거나 붙여넣기 하세요..."></textarea>
+<div class="ai-summarize-counter" id="summarizeCounter">현재 0자 / 최대 3,000자</div>
+<div class="ai-summarize-limitmsg" id="summarizeLimitMsg">입력 텍스트가 너무 깁니다. 3,000자 이내로 줄여주세요.</div>
+<div class="ai-summarize-unsupported" id="summarizeUnsupported">✨ 이 기능은 Chrome 브라우저에서 이용 가능합니다.</div>
+<button type="button" class="ai-summarize-btn" id="summarizeBtn" style="display:none">🤖 AI 요약하기</button>
+<div class="ai-summarize-status" id="summarizeStatus"></div>
+<div class="ai-summarize-note" id="summarizeNote">※ 최초 1회만 소요되며, 다음 이용부터는 즉시 이용 가능합니다.</div>
+<div class="ai-summarize-progress" id="summarizeProgressWrap" style="display:none"><div class="ai-summarize-progress-fill" id="summarizeProgressFill"></div></div>
+</div>
+
+<div id="resultArea" style="display:none">
+<div class="ai-summarize-card" id="summarizeCard">
+<div class="ai-summarize-card-title">✅ AI 요약 결과</div>
+<div class="ai-summarize-body" id="summarizeBody"></div>
+<div class="ai-summarize-timeout" id="summarizeTimeout">⏱ 응답 생성이 예상보다 오래 걸려 여기까지 표시합니다.</div>
+<div style="margin-top:14px;text-align:right"><button class="copy-btn" onclick="copySummary()">📋 결과 복사</button></div>
+<div class="ai-summarize-local">🔒 입력하신 텍스트는 서버로 전송되지 않으며, 브라우저 안에서만 처리됩니다.</div>
+</div>
+</div>
+
+<div class="mt-guide">
+<h2>AI 요약하기 사용 가이드</h2>
+<p>기사, 메일, 보고서처럼 긴 글을 통째로 요약하고 싶을 때 활용하세요. 텍스트를 붙여넣고 <strong>AI 요약하기</strong> 버튼을 누르면, 브라우저에 내장된 AI가 핵심 내용을 불릿포인트 형태로 정리해 드립니다. 모든 처리는 여러분의 브라우저 안에서만 이루어지므로, 민감한 내용도 안심하고 사용할 수 있습니다.</p>
+<p>요약 결과는 길이 상관 없이 핵심 위주로 간결하게 만들어집니다. 복사 버튼으로 클립보드에 옮긴 뒤 메일, 문서, 메신저에 바로 활용할 수 있습니다.</p>
+<p><strong>입력 길이 안내:</strong> 한 번에 요약 가능한 텍스트는 약 3,000자 이내입니다. 너무 긴 텍스트는 여러 부분으로 나눠서 요약해 주세요.</p>
+</div>
+
+<div class="mt-guide">
+<h2>이런 상황에 활용하세요</h2>
+<ul>
+<li><strong>긴 기사 요약:</strong> 오래 걸리는 뉴스·블로그 글을 핵심만 빠르게 파악하고 싶을 때</li>
+<li><strong>이메일 핵심 파악:</strong> 길고 장황한 업무 이메일에서 지시사항·마감 일정만 쏙 뽑을 때</li>
+<li><strong>보고서 요점 정리:</strong> 긴 보고서·논문에서 결론과 핵심 근거를 정리할 때</li>
+</ul>
+</div>
+
+<div class="mt-faq">
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">다른 브라우저에서는 왜 안 되나요?</div>
+<div class="mt-faq-a">AI 요약 기능은 Chrome 브라우저에 내장된 Summarizer API를 사용합니다. 이 API는 현재 Chrome에서만 제공되므로, Firefox나 Safari 같은 브라우저에서는 해당 기능을 지원하지 않아 이용할 수 없습니다. Chrome에서 사용하시면 됩니다.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">텍스트 길이 제한이 있나요?</div>
+<div class="mt-faq-a">과도하게 긴 텍스트는 브라우저 내장 AI 모델의 처리 한계로 인해 요약이 중간에 잘리거나 오류가 날 수 있습니다. 여러 문단으로 나누어 요약하거나, 길이를 조절해 다시 시도해 보세요.</div>
+</div>
+<div class="mt-faq-item">
+<div class="mt-faq-q" onclick="this.parentElement.classList.toggle('open')">입력한 텍스트가 서버로 전송되나요?</div>
+<div class="mt-faq-a">아닙니다. 입력한 모든 텍스트는 브라우저 안에서만 처리되며 서버로 전송되거나 저장되지 않습니다. 기사, 이메일, 보고서 등 민감한 내용도 안심하고 요약할 수 있습니다.</div>
+</div>
+</div>
+
+<p class="mt-note">※ 100% 브라우저 로컬 처리 · 서버 전송 없음 · 회원가입 불필요</p>
+
+<div class="guide-section"><div class="guide-card"><h2>클라이언트 브라우저 로컬 처리 안내</h2>
+<p>본 도구는 100% 클라이언트 사이드(브라우저)에서만 동작합니다. 입력한 데이터는 외부 서버로 전혀 전송되지 않으며, 사용자의 브라우저 메모리에서만 일시적으로 처리됩니다. 모든 JavaScript 코드와 CSS 스타일은 브라우저 내에서 로컬 실행되므로, 개인정보, 금융 정보, 문서 등 민감한 데이터도 안심하고 사용할 수 있습니다.</p>
+<p>AI 요약 역시 브라우저에 내장된 모델이 로컬에서 처리하므로, 텍스트가 외부로 전송되거나 저장되지 않습니다. 작업 완료 후 브라우저 탭을 닫으면 모든 데이터는 자동으로 삭제됩니다.</p>
+</div>
+<div class="faq-item"><div class="faq-q">이 도구는 어떻게 작동하나요?</div><div class="faq-a">모든 처리는 사용자의 브라우저에서만 이루어집니다. 서버로 데이터를 전송하지 않기 때문에 업로드 속도가 빠르고, 개인정보가 외부로 유출될 위험이 없습니다. 회원가입이나 로그인도 필요하지 않습니다.</div></div>
+<div class="faq-item"><div class="faq-q">입력한 데이터는 안전한가요?</div><div class="faq-a">네, 입력한 모든 데이터는 사용자의 브라우저 메모리에서만 처리됩니다. 서버로 전송되거나 저장되지 않으며, 브라우저 탭을 닫으면 완전히 삭제됩니다. 금융 정보, 개인 문서, 민감한 파일도 안심하고 사용할 수 있습니다.</div></div>
+<div class="faq-item"><div class="faq-q">이용 횟수나 용량 제한이 있나요?</div><div class="faq-a">서버 기반 도구가 아니므로 횟수나 용량에 제한이 없습니다. 사용자의 브라우저 메모리가 허용하는 범위 내에서 무제한으로 사용할 수 있습니다. 회원가입이나 결제가 필요하지 않은 완전 무료 도구입니다.</div></div>
+<div class="faq-item"><div class="faq-q">모바일에서도 사용할 수 있나요?</div><div class="faq-a">네, 모든 도구는 반응형으로 설계되어 스마트폰, 태블릿, PC 등 모든 기기에서 사용할 수 있습니다. 모바일 브라우저에서도 동일한 기능을 제약 없이 사용할 수 있습니다.</div></div>
+</div>
+</main>
+<div class="mt-ad"><div class="mt-ad-box">광고 영역 (AD)</div></div>
+<footer class="mt-footer"><p><a href="/">← modutools 전체 도구 보기</a><br>&copy; 2026 modutools.com — 모두를 위한 무료 온라인 도구</p></footer>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== AI 요약 (Chrome 내장 Summarizer API) — 신규 기능 =====
+   - 지원 브라우저에서만 버튼 노출, 미지원 시 조용히 숨김 + 안내만.
+   - 생성 텍스트는 JS 메모리에서만 생성·표시(정적 저장 없음). */
+(function(){
+  var btn=document.getElementById('summarizeBtn');
+  var statusEl=document.getElementById('summarizeStatus');
+  var noteEl=document.getElementById('summarizeNote');
+  var pw=document.getElementById('summarizeProgressWrap');
+  var pf=document.getElementById('summarizeProgressFill');
+  var unsupported=document.getElementById('summarizeUnsupported');
+  var card=document.getElementById('summarizeCard');
+  var bodyEl=document.getElementById('summarizeBody');
+  var timeoutNote=document.getElementById('summarizeTimeout');
+  var resultArea=document.getElementById('resultArea');
+  var counterEl=document.getElementById('summarizeCounter');
+  var limitMsg=document.getElementById('summarizeLimitMsg');
+  var textEl=document.getElementById('summarizeText');
+  /* Summarizer API 입력 제한: Chrome 공식 문서에 명시된 하드 한도는 없으나,
+     브라우저 내장 모델의 처리 한계(요약 품질·중간 절단)를 고려해
+     보수적으로 안전한 관리 기준 3,000자로 설정. */
+  var MAX_LEN=3000;
+
+  /* 1) 지원 브라우저 여부 — 미지원이면 안내만 표시하고 버튼 미노출 */
+  if(!btn||typeof Summarizer==='undefined'){
+    if(unsupported){unsupported.style.display='block';}
+    return;
+  }
+  btn.style.display=''; /* 지원 브라우저에서만 버튼 노출 */
+
+  /* 0) 글자수 카운터 — 실시간 갱신 + 제한 초과 시 버튼 비활성화 */
+  function updateCounter(){
+    if(!textEl||!counterEl)return;
+    var len=textEl.value.length;
+    counterEl.textContent='현재 '+len.toLocaleString()+'자 / 최대 '+MAX_LEN.toLocaleString()+'자';
+    var over=len>MAX_LEN;
+    counterEl.classList.toggle('over',over);
+    if(btn){btn.disabled=over;}
+    if(limitMsg){limitMsg.style.display=over?'block':'none';}
+  }
+  if(textEl&&textEl.addEventListener){
+    textEl.addEventListener('input',updateCounter);
+  }
+  updateCounter();
+
+  /* 2) 입력값 읽기 */
+  function getText(){
+    return document.getElementById('summarizeText')?document.getElementById('summarizeText').value:'';
+  }
+
+  /* 3) 상태 초기화 */
+  function resetUI(){
+    statusEl.style.display='none';
+    if(noteEl){noteEl.style.display='none';}
+    pw.style.display='none';
+    pf.style.width='0%';
+    btn.disabled=false;
+  }
+
+  /* 4) 클릭 핸들러 */
+  btn.addEventListener('click',async function(){
+    var text=getText();
+    if(!text||!text.trim()){
+      statusEl.textContent='먼저 요약할 텍스트를 입력해 주세요.';
+      statusEl.style.display='block';
+      return;
+    }
+    /* 이중 안전장치 — 제한 초과 상태에서 AI 호출 차단 */
+    if(text.length>MAX_LEN){
+      statusEl.textContent='입력 텍스트가 너무 깁니다. '+MAX_LEN.toLocaleString()+'자 이내로 줄여주세요.';
+      statusEl.style.display='block';
+      if(btn){btn.disabled=true;}
+      if(limitMsg){limitMsg.style.display='block';}
+      updateCounter();
+      return;
+    }
+    btn.disabled=true;
+    timeoutNote.style.display='none';
+    card.style.display='none';
+    resultArea.style.display='none';
+
+    var session=null;
+    try{
+      var avail=await Summarizer.availability();
+
+      if(avail==='unavailable'){
+        btn.disabled=true;
+        statusEl.textContent='이 브라우저에서는 지원되지 않는 기능입니다';
+        statusEl.style.display='block';
+        return;
+      }
+
+      if(avail==='downloadable'||avail==='downloading'){
+        statusEl.textContent='AI 모델을 준비하는 중입니다 (최초 1회, 잠시만 기다려주세요)';
+        statusEl.style.display='block';
+        if(noteEl){noteEl.style.display='block';}
+        pw.style.display='block';
+        try{
+          await Summarizer.waitForAvailability({monitor:function(m){
+            if(pf&&('progress' in m)){pf.style.width=(m.progress*100)+'%';}
+            if(m.progress!==undefined){
+              statusEl.textContent='AI 모델 준비 중... '+Math.round(m.progress*100)+'%'+(m.downloadedBytes&&m.totalBytes?' ('+Math.round(m.downloadedBytes/1048576)+'MB/'+Math.round(m.totalBytes/1048576)+'MB)':'');
+              if(m.progress>=1){
+                statusEl.textContent='✅ 준비 완료! 요약을 준비하고 있습니다...';
+                if(noteEl){noteEl.style.display='none';}
+              }
+            }
+          }});
+        }catch(e){}
+        pw.style.display='none';
+        if(noteEl){noteEl.style.display='none';}
+        statusEl.textContent='요약을 작성하고 있습니다…';
+      }else{
+        statusEl.textContent='요약을 작성하고 있습니다…';
+        statusEl.style.display='block';
+      }
+
+      /* 세션 생성 — 요점(key-points) 요약 */
+      session=await Summarizer.create({
+        type:'key-points',
+        length:'short'
+      });
+
+      /* 스트리밍 출력 (누적형/증분형 대응 + 15초 타임아웃) */
+      var stream=session.summarizeStreaming(text);
+      var it=stream[Symbol.asyncIterator]();
+      var fullText='';
+      var timedOut=false;
+      var TT=60*1000;
+      resultArea.style.display='block';
+      card.style.display='block';
+      bodyEl.textContent='';
+      while(true){
+        var timerP=new Promise(function(res){setTimeout(function(){res('__TIMEOUT__');},TT);});
+        var stepP=it.next();
+        var outcome=await Promise.race([stepP,timerP]);
+        if(outcome==='__TIMEOUT__'){timedOut=true;break;}
+        if(outcome.done)break;
+        var chunk=outcome.value;
+        /* 누적형(prefix 포함)이면 교체, 증분형(delta)이면 이어붙임 */
+        if(chunk.length>=fullText.length && chunk.indexOf(fullText)===0){
+          fullText=chunk;
+        }else{
+          fullText+=chunk;
+        }
+        bodyEl.textContent=fullText;
+      }
+      bodyEl.textContent=fullText;
+      if(timedOut){timeoutNote.style.display='block';}
+      statusEl.style.display='none';
+    }catch(err){
+      btn.disabled=false;
+      resetUI();
+      statusEl.textContent='요약 생성 중 오류가 발생했습니다. 다시 시도해 주세요.';
+      statusEl.style.display='block';
+    }finally{
+      /* 모든 경로에서 세션 정리 */
+      if(session){try{session.destroy();}catch(e){}}
+    }
+  });
+
+  /* 5) 복사 */
+  window.copySummary=function(){
+    var t=bodyEl.textContent;
+    if(!t){showToast('복사할 내용이 없습니다');return;}
+    navigator.clipboard.writeText(t).then(function(){showToast('클립보드에 복사했습니다');});
+  };
+  function showToast(msg){var t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2000);}
+})();
+</script>
+<script src="/js/ui-common.js"></script>
+</body>
+</html>
